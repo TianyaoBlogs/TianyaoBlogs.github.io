@@ -1,13 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-  <link 
-  rel="stylesheet" 
-  href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" 
-  integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI+WdtXRGWt2kTvGFasHpSy3SV" 
-  crossorigin="anonymous">
-  
-<meta charset="UTF-8">
+  <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
 <meta name="generator" content="Hexo 7.3.0">
@@ -182,7 +176,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2025-09-15 02:49:30" itemprop="dateModified" datetime="2025-09-15T02:49:30+08:00">2025-09-15</time>
+                <time title="修改时间：2025-09-15 02:52:43" itemprop="dateModified" datetime="2025-09-15T02:52:43+08:00">2025-09-15</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -205,37 +199,68 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>用于无监督视觉表示学习的动量对比<br><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1911.05722v3">CaltechData</a>! </p>
+          <p>用于无监督视觉表示学习的动量对比<br>
+<a target="_blank" rel="noopener" href="https://arxiv.org/abs/1911.05722v3">CaltechData</a>!</p>
 <p>Momentum Contrast for Unsupervised Visual Representation Learning</p>
-<h1 id="1-Momentum-Contrast"><a href="#1-Momentum-Contrast" class="headerlink" title="1. Momentum Contrast"></a>1. Momentum Contrast</h1><h2 id="1-1-定义"><a href="#1-1-定义" class="headerlink" title="1.1 定义"></a>1.1 定义</h2><ul>
-<li><strong>内容</strong>: 对比学习（Contrastive Learning） 通过让模型学习区分相似<strong>正样本</strong>与不相似<strong>负样本</strong>的数据点来学习有用的特征。<h2 id="1-2-正样本对（Positive-Pairs）"><a href="#1-2-正样本对（Positive-Pairs）" class="headerlink" title="1.2 正样本对（Positive Pairs）:"></a>1.2 正样本对（Positive Pairs）:</h2></li>
-<li><strong>内容</strong>: 通常来自同一数据点的不同数据增强视图（例如，同一张图片的两次随机裁剪、颜色抖动等）。它们应该具有相似的语义信息。<h2 id="1-3-负样本（Negatives）"><a href="#1-3-负样本（Negatives）" class="headerlink" title="1.3 负样本（Negatives）:"></a>1.3 负样本（Negatives）:</h2></li>
-<li><strong>内容</strong>: 来自与<strong>查询样本（Query）</strong>不同的其他数据点。它们代表不同的语义内容。<h2 id="1-4-目标-模型的目标是学习一个编码器（Encoder）"><a href="#1-4-目标-模型的目标是学习一个编码器（Encoder）" class="headerlink" title="1.4 目标: 模型的目标是学习一个编码器（Encoder）"></a>1.4 目标: 模型的目标是学习一个编码器（Encoder）</h2></li>
+<h1>1. Momentum Contrast</h1>
+<h2 id="1-1-定义"><a class="header-anchor" href="#1-1-定义">¶</a>1.1 定义</h2>
+<ul>
+<li><strong>内容</strong>: 对比学习（Contrastive Learning） 通过让模型学习区分相似<strong>正样本</strong>与不相似<strong>负样本</strong>的数据点来学习有用的特征。</li>
+</ul>
+<h2 id="1-2-正样本对（Positive-Pairs）"><a class="header-anchor" href="#1-2-正样本对（Positive-Pairs）">¶</a>1.2 正样本对（Positive Pairs）:</h2>
+<ul>
+<li><strong>内容</strong>: 通常来自同一数据点的不同数据增强视图（例如，同一张图片的两次随机裁剪、颜色抖动等）。它们应该具有相似的语义信息。</li>
+</ul>
+<h2 id="1-3-负样本（Negatives）"><a class="header-anchor" href="#1-3-负样本（Negatives）">¶</a>1.3 负样本（Negatives）:</h2>
+<ul>
+<li><strong>内容</strong>: 来自与**查询样本（Query）**不同的其他数据点。它们代表不同的语义内容。</li>
+</ul>
+<h2 id="1-4-目标-模型的目标是学习一个编码器（Encoder）"><a class="header-anchor" href="#1-4-目标-模型的目标是学习一个编码器（Encoder）">¶</a>1.4 目标: 模型的目标是学习一个编码器（Encoder）</h2>
+<ul>
 <li><strong>内容</strong>: 查询样本与其对应的正样本在特征空间中的距离<strong>很近</strong>（相似度高）。</li>
 <li><strong>内容</strong>: 查询样本与大量负样本在特征空间中的距离<strong>很远</strong>（相似度低）。</li>
 </ul>
-<h1 id="2-创新"><a href="#2-创新" class="headerlink" title="2. 创新"></a>2. 创新</h1><h2 id="2-1-动态字典（Dynamic-Dictionary）"><a href="#2-1-动态字典（Dynamic-Dictionary）" class="headerlink" title="2.1 动态字典（Dynamic Dictionary）:"></a>2.1 动态字典（Dynamic Dictionary）:</h2><ul>
-<li><strong>内容</strong>: MoCo 维护一个<strong>先进先出（FIFO）</strong>的队列来存储编码后的特征（键，Keys）。</li>
+<h1>2. 创新</h1>
+<h2 id="2-1-动态字典（Dynamic-Dictionary）"><a class="header-anchor" href="#2-1-动态字典（Dynamic-Dictionary）">¶</a>2.1 动态字典（Dynamic Dictionary）:</h2>
+<ul>
+<li><strong>内容</strong>: MoCo 维护一个**先进先出（FIFO）**的队列来存储编码后的特征（键，Keys）。</li>
 <li><strong>内容</strong>:当前批次的数据经过键编码器编码后，其特征被入队添加到字典队列尾部。</li>
 <li><strong>内容</strong>:同时，队列中最老的批次特征被出<strong>队（dequeue）</strong> 移除。</li>
-<li><strong>内容</strong>:队列可以将字典大小 $K$ 设计得远大于单个批次的大小，从而提供海量且一致的负样本来源（一致性由下面的动量更新保证）。队列解耦了字典大小与批次大小的限制。</li>
+<li><strong>内容</strong>:队列可以将字典大小 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>K</mi></mrow><annotation encoding="application/x-tex">K</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.68333em;"></span><span class="strut bottom" style="height:0.68333em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right:0.07153em;">K</span></span></span></span> 设计得远大于单个批次的大小，从而提供海量且一致的负样本来源（一致性由下面的动量更新保证）。队列解耦了字典大小与批次大小的限制。</li>
 </ul>
-<h2 id="2-2-动量更新编码器（Momentum-Update-of-Key-Encoder）"><a href="#2-2-动量更新编码器（Momentum-Update-of-Key-Encoder）" class="headerlink" title="2.2 动量更新编码器（Momentum Update of Key Encoder）:"></a>2.2 动量更新编码器（Momentum Update of Key Encoder）:</h2><ul>
+<h2 id="2-2-动量更新编码器（Momentum-Update-of-Key-Encoder）"><a class="header-anchor" href="#2-2-动量更新编码器（Momentum-Update-of-Key-Encoder）">¶</a>2.2 动量更新编码器（Momentum Update of Key Encoder）:</h2>
+<ul>
 <li><strong>内容</strong>: 查询编码器使用标准的梯度下降更新（如SGD）</li>
 <li><strong>内容</strong>: 键编码器<strong>不通过反向传播更新</strong>。</li>
-<li><strong>内容</strong>: 键编码器的参数 $θ_k$  通过动量更新（Momentum Update） 从查询编码器的参数 $θ_q$  获得：<script type="math/tex">\theta_k \gets m \cdot \theta_k + (1 - m) \cdot \theta_q</script>其中 $m$ 是一个动量系数（如 $m$ = $0.999$），非常接近$1$。<h2 id="2-3-优势"><a href="#2-3-优势" class="headerlink" title="2.3 优势:"></a>2.3 优势:</h2></li>
+<li><strong>内容</strong>: 键编码器的参数 θ_k  通过动量更新（Momentum Update） 从查询编码器的参数 θ_q  获得：$$ \theta_k \gets m \cdot \theta_k + (1 - m) \cdot \theta_q $$其中 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>m</mi></mrow><annotation encoding="application/x-tex">m</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.43056em;"></span><span class="strut bottom" style="height:0.43056em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathit">m</span></span></span></span> 是一个动量系数（如 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>m</mi></mrow><annotation encoding="application/x-tex">m</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.43056em;"></span><span class="strut bottom" style="height:0.43056em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathit">m</span></span></span></span> = <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>0</mn><mi mathvariant="normal">.</mi><mn>9</mn><mn>9</mn><mn>9</mn></mrow><annotation encoding="application/x-tex">0.999</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">0</span><span class="mord mathrm">.</span><span class="mord mathrm">9</span><span class="mord mathrm">9</span><span class="mord mathrm">9</span></span></span></span>），非常接近<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn></mrow><annotation encoding="application/x-tex">1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">1</span></span></span></span>。</li>
+</ul>
+<h2 id="2-3-优势"><a class="header-anchor" href="#2-3-优势">¶</a>2.3 优势:</h2>
+<ul>
 <li><strong>内容</strong>:动量更新使得键编码器 f_k 的参数变化非常缓慢和平滑。</li>
 </ul>
-<h2 id="待学习：RHF-MRCI-Q-CC-KA-GPR-MOB"><a href="#待学习：RHF-MRCI-Q-CC-KA-GPR-MOB" class="headerlink" title="待学习：RHF, MRCI+Q, CC, KA-GPR, MOB"></a>待学习：RHF, MRCI+Q, CC, KA-GPR, MOB</h2><h1 id="3-对比损失函数（InfoNCE-Loss"><a href="#3-对比损失函数（InfoNCE-Loss" class="headerlink" title="3. 对比损失函数（InfoNCE Loss:"></a>3. 对比损失函数（InfoNCE Loss:</h1><h2 id="3-1-InfoNCE-Loss-Noise-Contrastive-Estimation-Loss-："><a href="#3-1-InfoNCE-Loss-Noise-Contrastive-Estimation-Loss-：" class="headerlink" title="3.1  InfoNCE Loss (Noise-Contrastive Estimation Loss)："></a>3.1  InfoNCE Loss (Noise-Contrastive Estimation Loss)：</h2><p>\documentclass{article}<br>\usepackage{amsmath}<br>\usepackage{amssymb}</p>
+<h1>3. 对比损失函数（InfoNCE Loss:</h1>
+<h2 id="3-1-InfoNCE-Loss-Noise-Contrastive-Estimation-Loss-："><a class="header-anchor" href="#3-1-InfoNCE-Loss-Noise-Contrastive-Estimation-Loss-：">¶</a>3.1  InfoNCE Loss (Noise-Contrastive Estimation Loss)：</h2>
+<p>\documentclass{article}<br>
+\usepackage{amsmath}<br>
+\usepackage{amssymb}</p>
 <p>\begin{document}</p>
 <p>对比损失函数（InfoNCE/NT-Xent Loss）定义为：</p>
-<script type="math/tex; mode=display">
 \mathcal{L}_{\text{q}} = -\log \underbrace{\left[ \frac{
     \exp(\mathbf{q} \cdot \mathbf{k}^{+} / \tau)
 }{
     \exp(\mathbf{q} \cdot \mathbf{k}^{+} / \tau) + 
     \sum\limits_{i=1}^{N} \exp(\mathbf{q} \cdot \mathbf{k}_{i}^{-} / \tau)
-} \right]}_{\text{Softmax概率}}</script><h2 id="3-2其中："><a href="#3-2其中：" class="headerlink" title="3.2其中："></a>3.2其中：</h2><p>\begin{itemize}<br>    \item $\mathbf{q}$: 查询向量 (query vector)<br>    \item $\mathbf{k}^{+}$: 正样本键向量 (positive key vector)<br>    \item $\mathbf{k}_{i}^{-}$: 负样本键向量 (negative key vectors), $i=1,\dots,N$<br>    \item $\tau$: 温度参数 (temperature), $\tau &gt; 0$<br>    \item $\cdot$: 向量点积 (dot product)<br>    \item $N$: 负样本数量<br>\end{itemize}</p>
+} \right]}_{\text{Softmax概率}}
+
+<h2 id="3-2其中："><a class="header-anchor" href="#3-2其中：">¶</a>3.2其中：</h2>
+<p>\begin{itemize}<br>
+\item <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mrow><mi mathvariant="bold">q</mi></mrow></mrow><annotation encoding="application/x-tex">\mathbf{q}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.44444em;"></span><span class="strut bottom" style="height:0.63888em;vertical-align:-0.19444em;"></span><span class="base textstyle uncramped"><span class="mord textstyle uncramped"><span class="mord mathbf">q</span></span></span></span></span>: 查询向量 (query vector)<br>
+\item <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msup><mrow><mi mathvariant="bold">k</mi></mrow><mrow><mo>+</mo></mrow></msup></mrow><annotation encoding="application/x-tex">\mathbf{k}^{+}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.771331em;"></span><span class="strut bottom" style="height:0.771331em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class=""><span class="mord textstyle uncramped"><span class="mord mathbf">k</span></span><span class="vlist"><span style="top:-0.363em;margin-right:0.05em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle uncramped"><span class="mord scriptstyle uncramped"><span class="mord">+</span></span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span></span></span></span>: 正样本键向量 (positive key vector)<br>
+\item <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msubsup><mrow><mi mathvariant="bold">k</mi></mrow><mrow><mi>i</mi></mrow><mrow><mo>−</mo></mrow></msubsup></mrow><annotation encoding="application/x-tex">\mathbf{k}_{i}^{-}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.811462em;"></span><span class="strut bottom" style="height:1.088326em;vertical-align:-0.276864em;"></span><span class="base textstyle uncramped"><span class=""><span class="mord textstyle uncramped"><span class="mord mathbf">k</span></span><span class="vlist"><span style="top:0.276864em;margin-right:0.05em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord scriptstyle cramped"><span class="mord mathit">i</span></span></span></span><span style="top:-0.403131em;margin-right:0.05em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle uncramped"><span class="mord scriptstyle uncramped"><span class="mord">−</span></span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span></span></span></span>: 负样本键向量 (negative key vectors), i=1,\dots,N<br>
+\item <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>τ</mi></mrow><annotation encoding="application/x-tex">\tau</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.43056em;"></span><span class="strut bottom" style="height:0.43056em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right:0.1132em;">τ</span></span></span></span>: 温度参数 (temperature), <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>τ</mi><mo>&gt;</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">\tau &gt; 0</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.68354em;vertical-align:-0.0391em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right:0.1132em;">τ</span><span class="mrel">&gt;</span><span class="mord mathrm">0</span></span></span></span><br>
+\item <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>⋅</mo></mrow><annotation encoding="application/x-tex">\cdot</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.44445em;"></span><span class="strut bottom" style="height:0.44445em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord">⋅</span></span></span></span>: 向量点积 (dot product)<br>
+\item <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>N</mi></mrow><annotation encoding="application/x-tex">N</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.68333em;"></span><span class="strut bottom" style="height:0.68333em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right:0.10903em;">N</span></span></span></span>: 负样本数量<br>
+\end{itemize}</p>
 <p>\end{document}</p>
 
       
