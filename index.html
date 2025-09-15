@@ -199,50 +199,73 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>用于无监督视觉表示学习的动量对比<br>
-<a target="_blank" rel="noopener" href="https://arxiv.org/abs/1911.05722v3">Momentum Contrast for Unsupervised Visual Representation Learning</a></p>
-<h1>1. Momentum Contrast</h1>
-<h2 id="1-1-定义">1.1 定义</h2>
+          <p>用于无监督视觉表示学习的动量对比 <a
+target="_blank" rel="noopener" href="https://arxiv.org/abs/1911.05722v3">Momentum Contrast for
+Unsupervised Visual Representation Learning</a></p>
+<h1 id="momentum-contrast">1. Momentum Contrast</h1>
+<h2 id="定义">1.1 定义</h2>
 <ul>
-<li><strong>内容</strong>: 对比学习（Contrastive Learning） 通过让模型学习区分相似<strong>正样本</strong>与不相似<strong>负样本</strong>的数据点来学习有用的特征。</li>
+<li><strong>内容</strong>: 对比学习（Contrastive Learning）
+通过让模型学习区分相似<strong>正样本</strong>与不相似<strong>负样本</strong>的数据点来学习有用的特征。
+## 1.2 正样本对（Positive Pairs）:</li>
+<li><strong>内容</strong>:
+通常来自同一数据点的不同数据增强视图（例如，同一张图片的两次随机裁剪、颜色抖动等）。它们应该具有相似的语义信息。
+## 1.3 负样本（Negatives）:</li>
+<li><strong>内容</strong>:
+来自与<strong>查询样本</strong>不同的其他数据点。它们代表不同的语义内容。
+## 1.4 目标: 模型的目标是学习一个编码器（Encoder）</li>
+<li><strong>内容</strong>:
+查询样本与其对应的正样本在特征空间中的距离<strong>很近</strong>（相似度高）。</li>
+<li><strong>内容</strong>:
+查询样本与大量负样本在特征空间中的距离<strong>很远</strong>（相似度低）。</li>
 </ul>
-<h2 id="1-2-正样本对（Positive-Pairs）">1.2 正样本对（Positive Pairs）:</h2>
+<h1 id="创新">2. 创新</h1>
+<h2 id="动态字典dynamic-dictionary">2.1 动态字典（Dynamic
+Dictionary）:</h2>
 <ul>
-<li><strong>内容</strong>: 通常来自同一数据点的不同数据增强视图（例如，同一张图片的两次随机裁剪、颜色抖动等）。它们应该具有相似的语义信息。</li>
-</ul>
-<h2 id="1-3-负样本（Negatives）">1.3 负样本（Negatives）:</h2>
-<ul>
-<li><strong>内容</strong>: 来自与<strong>查询样本</strong>不同的其他数据点。它们代表不同的语义内容。</li>
-</ul>
-<h2 id="1-4-目标-模型的目标是学习一个编码器（Encoder）">1.4 目标: 模型的目标是学习一个编码器（Encoder）</h2>
-<ul>
-<li><strong>内容</strong>: 查询样本与其对应的正样本在特征空间中的距离<strong>很近</strong>（相似度高）。</li>
-<li><strong>内容</strong>: 查询样本与大量负样本在特征空间中的距离<strong>很远</strong>（相似度低）。</li>
-</ul>
-<h1>2. 创新</h1>
-<h2 id="2-1-动态字典（Dynamic-Dictionary）">2.1 动态字典（Dynamic Dictionary）:</h2>
-<ul>
-<li><strong>内容</strong>: MoCo 维护一个<strong>先进先出FIFO</strong>的队列来存储编码后的特征<strong>Keys</strong>。</li>
+<li><strong>内容</strong>: MoCo
+维护一个<strong>先进先出FIFO</strong>的队列来存储编码后的特征<strong>Keys</strong>。</li>
 <li><strong>内容</strong>:当前批次的数据经过键编码器编码后，其特征被入队添加到字典队列尾部。</li>
-<li><strong>内容</strong>:同时，队列中最老的批次特征被出<strong>队dequeue</strong> 移除。</li>
-<li><strong>内容</strong>:队列可以将字典大小 $K$ 设计得远大于单个批次的大小，从而提供海量且一致的负样本来源（一致性由下面的动量更新保证）。队列解耦了字典大小与批次大小的限制。</li>
+<li><strong>内容</strong>:同时，队列中最老的批次特征被出<strong>队dequeue</strong>
+移除。</li>
+<li><strong>内容</strong>:队列可以将字典大小 <span
+class="math inline">\(K\)</span>
+设计得远大于单个批次的大小，从而提供海量且一致的负样本来源（一致性由下面的动量更新保证）。队列解耦了字典大小与批次大小的限制。</li>
 </ul>
-<h2 id="2-2-动量更新编码器（Momentum-Update-of-Key-Encoder）">2.2 动量更新编码器（Momentum Update of Key Encoder）:</h2>
+<h2 id="动量更新编码器momentum-update-of-key-encoder">2.2
+动量更新编码器（Momentum Update of Key Encoder）:</h2>
 <ul>
-<li><strong>内容</strong>: 查询编码器使用标准的梯度下降更新（<strong>SGD</strong>）</li>
-<li><strong>内容</strong>: 键编码器<strong>不通过反向传播更新</strong>。</li>
-<li><strong>内容</strong>: 键编码器的参数 $θ_k$  通过动量更新<strong>Momentum Update</strong>从查询编码器的参数 $θ_q$  获得：$$ \theta_k \gets m \cdot \theta_k + (1 - m) \cdot \theta_q $$其中 $m$ 是一个动量系数（如 $m$ = $0.999$），非常接近$1$。</li>
+<li><strong>内容</strong>:
+查询编码器使用标准的梯度下降更新（<strong>SGD</strong>）</li>
+<li><strong>内容</strong>:
+键编码器<strong>不通过反向传播更新</strong>。</li>
+<li><strong>内容</strong>: 键编码器的参数 <span
+class="math inline">\(θ_k\)</span> 通过动量更新<strong>Momentum
+Update</strong>从查询编码器的参数 <span
+class="math inline">\(θ_q\)</span> 获得：<span class="math display">\[
+\theta_k \gets m \cdot \theta_k + (1 - m) \cdot \theta_q \]</span>其中
+<span class="math inline">\(m\)</span> 是一个动量系数（如 <span
+class="math inline">\(m\)</span> = <span
+class="math inline">\(0.999\)</span>），非常接近<span
+class="math inline">\(1\)</span>。 ## 2.3 优势:</li>
+<li><strong>内容</strong>:动量更新使得键编码器 <span
+class="math inline">\(f_k\)</span> 的参数变化非常缓慢和平滑。</li>
 </ul>
-<h2 id="2-3-优势">2.3 优势:</h2>
-<ul>
-<li><strong>内容</strong>:动量更新使得键编码器 $f_k$ 的参数变化非常缓慢和平滑。</li>
-</ul>
-<h1>3. 对比损失函数（InfoNCE Loss:</h1>
-<h2 id="3-1-InfoNCE-Loss-Noise-Contrastive-Estimation-Loss-：">3.1  InfoNCE Loss (Noise-Contrastive Estimation Loss)：</h2>
-<p>对比损失函数（InfoNCE/NT-Xent Loss）定义为：<br>
-$\mathcal{L}<em>{\text{q}} = -\log \underbrace{\left( \frac{\exp\left( \mathbf{q} \cdot \mathbf{k}^{+} / \tau \right)}{\exp\left( \mathbf{q} \cdot \mathbf{k}^{+} / \tau \right) + \sum\limits</em>{i=1}^{N} \exp\left( \mathbf{q} \cdot \mathbf{k}<em>{i}^{-} / \tau \right)} \right)}</em>{\text{Softmax 概率}}$</p>
-<h2 id="3-2其中：">3.2其中：</h2>
+<h1 id="对比损失函数infonce-loss">3. 对比损失函数（InfoNCE Loss:</h1>
+<h2 id="infonce-loss-noise-contrastive-estimation-loss">3.1 InfoNCE Loss
+(Noise-Contrastive Estimation Loss)：</h2>
+<p>对比损失函数（InfoNCE/NT-Xent Loss）定义为： <span
+class="math inline">\(\mathcal{L}_{\text{q}} = -\log \underbrace{\left(
+\frac{\exp\left( \mathbf{q} \cdot \mathbf{k}^{+} / \tau
+\right)}{\exp\left( \mathbf{q} \cdot \mathbf{k}^{+} / \tau \right) +
+\sum\limits_{i=1}^{N} \exp\left( \mathbf{q} \cdot \mathbf{k}_{i}^{-} /
+\tau \right)} \right)}_{\text{Softmax 概率}}\)</span></p>
+<h2 id="其中">3.2其中：</h2>
 <table>
+<colgroup>
+<col style="width: 23%" />
+<col style="width: 76%" />
+</colgroup>
 <thead>
 <tr>
 <th>参数</th>
@@ -251,24 +274,33 @@ $\mathcal{L}<em>{\text{q}} = -\log \underbrace{\left( \frac{\exp\left( \mathbf{q
 </thead>
 <tbody>
 <tr>
-<td>$\mathbf{q}$</td>
-<td>查询向量（Query Vector）：由查询编码器 $f_q$ 输出（如 $2048$ 维）。</td>
+<td><span class="math inline">\(\mathbf{q}\)</span></td>
+<td>查询向量（Query Vector）：由查询编码器 <span
+class="math inline">\(f_q\)</span> 输出（如 <span
+class="math inline">\(2048\)</span> 维）。</td>
 </tr>
 <tr>
-<td>$\mathbf{k}^{+}$</td>
-<td>正样本键向量（Positive Key）：由键编码器 $f_k$ 输出（来自同一数据的不同增强视图）。</td>
+<td><span class="math inline">\(\mathbf{k}^{+}\)</span></td>
+<td>正样本键向量（Positive Key）：由键编码器 <span
+class="math inline">\(f_k\)</span>
+输出（来自同一数据的不同增强视图）。</td>
 </tr>
 <tr>
-<td>$\mathbf{k}_{i}^{-}$</td>
-<td>负样本键向量（Negative Keys）：来自字典队列的其他数据样本（数量为 $N$，如 $65536$）。</td>
+<td><span class="math inline">\(\mathbf{k}_{i}^{-}\)</span></td>
+<td>负样本键向量（Negative Keys）：来自字典队列的其他数据样本（数量为
+<span class="math inline">\(N\)</span>，如 <span
+class="math inline">\(65536\)</span>）。</td>
 </tr>
 <tr>
-<td>$\tau$</td>
-<td>温度参数（Temperature）：控制相似度分布的尖锐程度（典型值 $0.05 \sim 0.2$）。</td>
+<td><span class="math inline">\(\tau\)</span></td>
+<td>温度参数（Temperature）：控制相似度分布的尖锐程度（典型值 <span
+class="math inline">\(0.05 \sim 0.2\)</span>）。</td>
 </tr>
 <tr>
-<td>$\cdot$</td>
-<td>向量点积（L2归一化后等价于余弦相似度，即 $\mathbf{q} \cdot \mathbf{k} = \cos\theta$）。</td>
+<td><span class="math inline">\(\cdot\)</span></td>
+<td>向量点积（L2归一化后等价于余弦相似度，即 <span
+class="math inline">\(\mathbf{q} \cdot \mathbf{k} =
+\cos\theta\)</span>）。</td>
 </tr>
 </tbody>
 </table>
@@ -345,82 +377,103 @@ $\mathcal{L}<em>{\text{q}} = -\log \underbrace{\left( \frac{\exp\left( \mathbf{q
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>用于MOB-ML（KA-GPR）的Criegee、H10链、小自由基、水键解离和具有MOB特征的QMSpin能量数据集<br>
-<a target="_blank" rel="noopener" href="https://data.caltech.edu/records/cvjkq-tjt86">CaltechData</a>!</p>
-<p>Criegee, H10 chain, small radicals, water bond dissociation, and QMSpin energy datasets with MOB features for MOB-ML(KA-GPR)</p>
+          <p>用于MOB-ML（KA-GPR）的Criegee、H10链、小自由基、水键解离和具有MOB特征的QMSpin能量数据集
+<a
+target="_blank" rel="noopener" href="https://data.caltech.edu/records/cvjkq-tjt86">CaltechData</a>!</p>
+<p>Criegee, H10 chain, small radicals, water bond dissociation, and
+QMSpin energy datasets with MOB features for MOB-ML(KA-GPR)</p>
 <h2 id="目录">目录</h2>
-<ol>
-<li>[Criegee数据集)](#Criegee数据集 criegee.zip)</li>
-<li>[H10链数据集](#H10链数据集 h10.zip)</li>
-<li>[小自由基数据集](#小自由基数据集 small_radicals.zip)</li>
-<li>[水分子键解离数据集](#水分子键解离数据集 h2o_dissociation.zip)</li>
-<li>[QMSpin数据集](#QMSpin数据集 qmspin.zip)</li>
+<ol type="1">
+<li><a href="#Criegee数据集%20criegee.zip">Criegee数据集)</a><br />
+</li>
+<li><a href="#H10链数据集%20h10.zip">H10链数据集</a><br />
+</li>
+<li><a
+href="#小自由基数据集%20small_radicals.zip">小自由基数据集</a><br />
+</li>
+<li><a
+href="#水分子键解离数据集%20h2o_dissociation.zip">水分子键解离数据集</a></li>
+<li><a href="#QMSpin数据集%20qmspin.zip">QMSpin数据集</a></li>
 </ol>
-<h2 id="1-Criegee数据集">1. Criegee数据集</h2>
-<h3 id="1-1-能量文件-criegee-csv">1.1 能量文件 (criegee.csv)</h3>
+<h2 id="criegee数据集">1. Criegee数据集</h2>
+<h3 id="能量文件-criegee.csv">1.1 能量文件 (criegee.csv)</h3>
 <ul>
-<li><strong>内容</strong>: 包含 RHF 和 MRCI+Q 能量（cc-pVTZ 基组计算）。</li>
-</ul>
-<h3 id="1-2-诊断文件-criegee-diagnostic-csv">1.2 诊断文件 (criegee_diagnostic.csv):</h3>
-<ul>
-<li><strong>内容</strong>: 包含 CCSD/cc-pVTZ 计算的 T1 和 D1 诊断指标。</li>
-</ul>
-<h3 id="1-3-结构文件夹-共-800-个">1.3 结构文件夹 (共 800 个):</h3>
-<ul>
+<li><strong>内容</strong>: 包含 RHF 和 MRCI+Q 能量（cc-pVTZ 基组计算）。
+### 1.2 诊断文件 (criegee_diagnostic.csv):</li>
+<li><strong>内容</strong>: 包含 CCSD/cc-pVTZ 计算的 T1 和 D1 诊断指标。
+### 1.3 结构文件夹 (共 800 个):</li>
 <li><strong>内容</strong>: geo.xyz: 分子构型坐标</li>
-<li><strong>内容</strong>: features_tz.hdf5: 用于 KA-GPR 的 对角 MOB 特征。</li>
+<li><strong>内容</strong>: features_tz.hdf5: 用于 KA-GPR 的 对角 MOB
+特征。</li>
 </ul>
-<h2 id="待学习：RHF-MRCI-Q-CC-KA-GPR-MOB">待学习：RHF, MRCI+Q, CC, KA-GPR, MOB</h2>
-<h2 id="2-H10-链数据集-h10-zip">2. H10 链数据集 (h10.zip)</h2>
-<h3 id="2-1-能量文件-h10-csv">2.1 能量文件 (h10.csv):</h3>
+<h2 id="待学习rhf-mrciq-cc-ka-gpr-mob">待学习：RHF, MRCI+Q, CC, KA-GPR,
+MOB</h2>
+<h2 id="h10-链数据集-h10.zip">2. H10 链数据集 (h10.zip)</h2>
+<h3 id="能量文件-h10.csv">2.1 能量文件 (h10.csv):</h3>
 <ul>
-<li><strong>内容</strong>: 包含 RHF 和 MRCI+Q-F12 能量（cc-pVTZ-F12 基组计算）。</li>
-</ul>
-<h3 id="2-2-结构文件夹">2.2 结构文件夹:</h3>
-<ul>
+<li><strong>内容</strong>: 包含 RHF 和 MRCI+Q-F12 能量（cc-pVTZ-F12
+基组计算）。 ### 2.2 结构文件夹:</li>
 <li><strong>内容</strong>: geo.xyz: 分子构型坐标</li>
-<li><strong>内容</strong>: features_tz.hdf5: 用于 KA-GPR 的 对角 MOB 特征。</li>
+<li><strong>内容</strong>: features_tz.hdf5: 用于 KA-GPR 的 对角 MOB
+特征。</li>
 </ul>
-<h2 id="待学习：RHF-MRCI-Q-CC-KA-GPR-MOB-2">待学习：RHF, MRCI+Q, CC, KA-GPR, MOB</h2>
-<h2 id="3-小自由基数据集-small-radicals-zip">3. 小自由基数据集 (small_radicals.zip)</h2>
-<h3 id="3-1-包含-9-种自由基，每种自由基有：">3.1 包含 9 种自由基，每种自由基有：</h3>
-<h3 id="3-1-1-能量文件-x-csv">3.1.1 能量文件 (x.csv):</h3>
+<h2 id="待学习rhf-mrciq-cc-ka-gpr-mob-1">待学习：RHF, MRCI+Q, CC,
+KA-GPR, MOB</h2>
+<h2 id="小自由基数据集-small_radicals.zip">3. 小自由基数据集
+(small_radicals.zip)</h2>
+<h3 id="包含-9-种自由基每种自由基有">3.1 包含 9
+种自由基，每种自由基有：</h3>
+<h3 id="能量文件-x.csv">3.1.1 能量文件 (x.csv):</h3>
 <ul>
-<li><strong>内容</strong>: 包含 ROHF 和 MRCI+Q 能量（cc-pVTZ 基组计算）。</li>
-</ul>
-<h3 id="3-1-2-热化结构文件夹-每种-200-个">3.1.2 热化结构文件夹 (每种 200 个):</h3>
-<ul>
+<li><strong>内容</strong>: 包含 ROHF 和 MRCI+Q 能量（cc-pVTZ
+基组计算）。 ### 3.1.2 热化结构文件夹 (每种 200 个):</li>
 <li><strong>内容</strong>: geo.xyz: 分子构型坐标</li>
-<li><strong>内容</strong>: features_alpha.hdf5: α 自旋轨道的 MOB 特征</li>
-<li><strong>内容</strong>: features_beta.hdf5: β 自旋轨道的 MOB 特征。</li>
+<li><strong>内容</strong>: features_alpha.hdf5: α 自旋轨道的 MOB
+特征</li>
+<li><strong>内容</strong>: features_beta.hdf5: β 自旋轨道的 MOB
+特征。</li>
 </ul>
-<h2 id="待学习：RHF-ROHF-MRCI-Q-CC-KA-GPR-MOB-α-自旋轨道的-MOB-特征-β-自旋轨道的-MOB-特征">待学习：RHF, ROHF, MRCI+Q, CC, KA-GPR, MOB, α 自旋轨道的 MOB 特征, β 自旋轨道的 MOB 特征</h2>
-<h2 id="4-水分子键解离数据集-h2o-dissociation-zip">4. 水分子键解离数据集 (h2o_dissociation.zip)</h2>
-<h3 id="4-1-能量文件-h2o-dissociation-csv">4.1 能量文件 (h2o_dissociation.csv)</h3>
+<h2
+id="待学习rhf-rohf-mrciq-cc-ka-gpr-mob-α-自旋轨道的-mob-特征-β-自旋轨道的-mob-特征">待学习：RHF,
+ROHF, MRCI+Q, CC, KA-GPR, MOB, α 自旋轨道的 MOB 特征, β 自旋轨道的 MOB
+特征</h2>
+<h2 id="水分子键解离数据集-h2o_dissociation.zip">4. 水分子键解离数据集
+(h2o_dissociation.zip)</h2>
+<h3 id="能量文件-h2o_dissociation.csv">4.1 能量文件
+(h2o_dissociation.csv)</h3>
 <ul>
-<li><strong>内容</strong>: 包含 初始构象 ID、OH 键解离路径的键长比例因子、ROHF 和 MRCI+Q 能量（aug-cc-pVTZ 基组计算）。</li>
+<li><strong>内容</strong>: 包含 初始构象 ID、OH
+键解离路径的键长比例因子、ROHF 和 MRCI+Q 能量（aug-cc-pVTZ 基组计算）。
+### 4.2 初始构象文件夹 (共 50 个): ### 4.2.1 每个构象包含 20
+个解离路径结构:</li>
+<li><strong>内容</strong>: features_alpha.hdf5: α 自旋轨道的 MOB
+特征</li>
+<li><strong>内容</strong>: features_beta.hdf5: β 自旋轨道的 MOB
+特征。</li>
 </ul>
-<h3 id="4-2-初始构象文件夹-共-50-个">4.2 初始构象文件夹 (共 50 个):</h3>
-<h3 id="4-2-1-每个构象包含-20-个解离路径结构">4.2.1 每个构象包含 20 个解离路径结构:</h3>
+<h2
+id="待学习初始构象-idoh-键解离路径的键长比例因子-rohf-mrciq-cc-α-自旋轨道的-mob-特征-β-自旋轨道的-mob-特征">待学习：初始构象
+ID、OH 键解离路径的键长比例因子, ROHF, MRCI+Q, CC, α 自旋轨道的 MOB
+特征, β 自旋轨道的 MOB 特征</h2>
+<h2 id="qmspin-数据集-qmspin.zip">3. QMSpin 数据集 (qmspin.zip)</h2>
+<h3 id="能量文件-qmspin.csv">3.1 能量文件 (qmspin.csv)：</h3>
 <ul>
-<li><strong>内容</strong>: features_alpha.hdf5: α 自旋轨道的 MOB 特征</li>
-<li><strong>内容</strong>: features_beta.hdf5: β 自旋轨道的 MOB 特征。</li>
-</ul>
-<h2 id="待学习：初始构象-ID、OH-键解离路径的键长比例因子-ROHF-MRCI-Q-CC-α-自旋轨道的-MOB-特征-β-自旋轨道的-MOB-特征">待学习：初始构象 ID、OH 键解离路径的键长比例因子, ROHF, MRCI+Q, CC, α 自旋轨道的 MOB 特征, β 自旋轨道的 MOB 特征</h2>
-<h2 id="3-QMSpin-数据集-qmspin-zip">3. QMSpin 数据集 (qmspin.zip)</h2>
-<h3 id="3-1-能量文件-qmspin-csv-：">3.1 能量文件 (qmspin.csv)：</h3>
-<ul>
-<li><strong>内容</strong>: 包含 单重态 (RHF) 和 三重态 (ROHF) 的 MRCI+Q 能量（cc-pVDZ 基组计算），自旋状态标记为 0（单重态）或 2（三重态）。</li>
-</ul>
-<h3 id="3-2-结构文件夹">3.2 结构文件夹:</h3>
-<ul>
+<li><strong>内容</strong>: 包含 单重态 (RHF) 和 三重态 (ROHF) 的 MRCI+Q
+能量（cc-pVDZ 基组计算），自旋状态标记为 0（单重态）或 2（三重态）。 ###
+3.2 结构文件夹:</li>
 <li><strong>内容</strong>: geometries_singlet: 单重态优化结构</li>
 <li><strong>内容</strong>: geometries_triplet: 三重态优化结构</li>
-<li><strong>内容</strong>: 单重态特征文件:features_dz_singlet.hdf5: 单重态能量的 MOB 特征</li>
-<li><strong>内容</strong>: 单重态特征文件:features_dz_singlet.hdf5: 单重态能量的 MOB 特征</li>
-<li><strong>内容</strong>: 三重态特征文件:features_alpha_dz_triplet.hdf5: α 自旋轨道特征 features_beta_dz_triplet.hdf5: β 自旋轨道特征。</li>
+<li><strong>内容</strong>: 单重态特征文件:features_dz_singlet.hdf5:
+单重态能量的 MOB 特征</li>
+<li><strong>内容</strong>: 单重态特征文件:features_dz_singlet.hdf5:
+单重态能量的 MOB 特征</li>
+<li><strong>内容</strong>:
+三重态特征文件:features_alpha_dz_triplet.hdf5: α 自旋轨道特征
+features_beta_dz_triplet.hdf5: β 自旋轨道特征。</li>
 </ul>
-<h2 id="待学习：RHF-ROHF-MRCI-Q-CC-MOB-α-自旋轨道的-MOB-特征-β-自旋轨道的-MOB-特征">待学习：RHF, ROHF, MRCI+Q, CC, MOB, α 自旋轨道的 MOB 特征, β 自旋轨道的 MOB 特征</h2>
+<h2
+id="待学习rhf-rohf-mrciq-cc-mob-α-自旋轨道的-mob-特征-β-自旋轨道的-mob-特征">待学习：RHF,
+ROHF, MRCI+Q, CC, MOB, α 自旋轨道的 MOB 特征, β 自旋轨道的 MOB 特征</h2>
 
       
     </div>
@@ -488,33 +541,48 @@ $\mathcal{L}<em>{\text{q}} = -\log \underbrace{\left( \frac{\exp\left( \mathbf{q
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>Welcome to <a href="https://tianyaoblogs.github.io/">TianyaoBlogs</a>! This is my very first post. It has shown my process of building blogs!</p>
-<h2 id="Start-to-own-your-blogs">Start to own your blogs</h2>
-<h3 id="Download-NodeJS-npm-and-check-its-version">Download NodeJS &amp; npm and check its version</h3>
+          <p>Welcome to <a
+href="https://tianyaoblogs.github.io/">TianyaoBlogs</a>! This is my very
+first post. It has shown my process of building blogs!</p>
+<h2 id="start-to-own-your-blogs">Start to own your blogs</h2>
+<h3 id="download-nodejs-npm-and-check-its-version">Download NodeJS &amp;
+npm and check its version</h3>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ node -v</span><br></pre></td></tr></table></figure>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm -v</span><br></pre></td></tr></table></figure>
-<p>More info: <a target="_blank" rel="noopener" href="https://www.nodejs.com.cn/download.html">Download</a><br>
-More info: <a target="_blank" rel="noopener" href="https://blog.csdn.net/Natsuago/article/details/145567734">Download</a></p>
-<h3 id="Prepare-your-path">Prepare your path</h3>
+<p>More info: <a
+target="_blank" rel="noopener" href="https://www.nodejs.com.cn/download.html">Download</a> More info:
+<a
+target="_blank" rel="noopener" href="https://blog.csdn.net/Natsuago/article/details/145567734">Download</a></p>
+<h3 id="prepare-your-path">Prepare your path</h3>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ npm config <span class="built_in">set</span> prefix <span class="string">&quot;D:\Program Files (x86)\node_modules\node_global&quot;</span></span><br><span class="line">$ npm config <span class="built_in">set</span> cache <span class="string">&quot;D:\Program Files (x86)\node_modules\node_cache&quot;</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a target="_blank" rel="noopener" href="https://blog.csdn.net/Natsuago/article/details/145567734">Check</a></p>
-<h3 id="Check-your-environmental-path">Check your environmental path</h3>
+<p>More info: <a
+target="_blank" rel="noopener" href="https://blog.csdn.net/Natsuago/article/details/145567734">Check</a></p>
+<h3 id="check-your-environmental-path">Check your environmental
+path</h3>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">echo</span> %NODE_PATH%</span><br></pre></td></tr></table></figure>
-<p>More info: <a target="_blank" rel="noopener" href="https://blog.csdn.net/Natsuago/article/details/145567734">Check</a></p>
-<h3 id="Generate-SSH-keys-for-the-second-account-For-those-people-who-have-two-or-more-github-account">Generate SSH keys for the second account (For those people who have two or more github account)</h3>
+<p>More info: <a
+target="_blank" rel="noopener" href="https://blog.csdn.net/Natsuago/article/details/145567734">Check</a></p>
+<h3
+id="generate-ssh-keys-for-the-second-account-for-those-people-who-have-two-or-more-github-account">Generate
+SSH keys for the second account (For those people who have two or more
+github account)</h3>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ssh-keygen -t ed25519 -C <span class="string">&quot;your_email@second_account.com&quot;</span></span><br></pre></td></tr></table></figure>
-<h3 id="Add-the-new-public-key-to-the-second-GitHub-account">Add the new public key to the second GitHub account</h3>
+<h3 id="add-the-new-public-key-to-the-second-github-account">Add the new
+public key to the second GitHub account</h3>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$   <span class="built_in">cat</span> ~/.ssh/id_ed25519_second.pub</span><br></pre></td></tr></table></figure>
-<h3 id="Configuring-SSH-multi-account-rules">Configuring SSH multi-account rules</h3>
+<h3 id="configuring-ssh-multi-account-rules">Configuring SSH
+multi-account rules</h3>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">$    cnano ~/.ssh/config</span><br><span class="line">$    <span class="comment">#  (peninsula824)</span></span><br><span class="line">$    Host github.com-peninsula</span><br><span class="line">$    HostName github.com</span><br><span class="line">$    User git</span><br><span class="line">$    IdentityFile ~/.ssh/id_rsa  <span class="comment"># peninsula824_key</span></span><br><span class="line">$    IdentitiesOnly <span class="built_in">yes</span></span><br><span class="line"></span><br><span class="line">$    <span class="comment">#  (TianyaoBlogs)</span></span><br><span class="line">$    Host github.com-tianyao</span><br><span class="line">$    HostName github.com</span><br><span class="line">$    User git</span><br><span class="line">$    IdentityFile ~/.ssh/0901102262  <span class="comment"># TianyaoBlogs_key</span></span><br><span class="line">$    IdentitiesOnly <span class="built_in">yes</span></span><br></pre></td></tr></table></figure>
-<h3 id="Test-the-connection">Test the connection</h3>
+<h3 id="test-the-connection">Test the connection</h3>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$   ssh -T git@github.com-peninsula</span><br><span class="line">$   ssh -T git@github.com-tianyao</span><br></pre></td></tr></table></figure>
-<h3 id="Update-Hexo-deployment-configuration">Update Hexo deployment configuration</h3>
+<h3 id="update-hexo-deployment-configuration">Update Hexo deployment
+configuration</h3>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$   deploy:</span><br><span class="line">$     <span class="built_in">type</span>: git</span><br><span class="line">$    repo: </span><br><span class="line">$       github: git@github.com-tianyao:TianyaoBlogs/TianyaoBlogs.github.io.git</span><br><span class="line">$     branch: main</span><br></pre></td></tr></table></figure>
-<h3 id="Complete-the-deployment">Complete the deployment</h3>
+<h3 id="complete-the-deployment">Complete the deployment</h3>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$   hexo clean</span><br><span class="line">$   hexo generate</span><br><span class="line">$   hexo deploy</span><br></pre></td></tr></table></figure>
-<h3 id="Push-new-blog">Push new blog</h3>
+<h3 id="push-new-blog">Push new blog</h3>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$   hexo g -d</span><br></pre></td></tr></table></figure>
+
       
     </div>
 
