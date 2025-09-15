@@ -176,7 +176,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2025-09-15 10:52:15" itemprop="dateModified" datetime="2025-09-15T10:52:15+08:00">2025-09-15</time>
+                <time title="修改时间：2025-09-15 11:46:07" itemprop="dateModified" datetime="2025-09-15T11:46:07+08:00">2025-09-15</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -304,6 +304,51 @@ class="math inline">\(\mathbf{q} \cdot \mathbf{k} =
 </tr>
 </tbody>
 </table>
+<h2 id="数据流">3.2 数据流：</h2>
+<ul>
+<li><strong>原始输入</strong>: 一张图片 <span
+class="math inline">\(P\)</span>.jpg (256x256 原始尺寸)</li>
+<li><strong>预处理Step1</strong>: 随机裁剪出 224x224 的区域</li>
+<li><strong>预处理Step2</strong>: 随机轻微改变颜色和亮度。</li>
+<li><strong>预处理Step3</strong>: 归一化像素值。</li>
+<li><strong>结果</strong>: <strong>[3, 224, 224]</strong> (一个
+3x224x224 的张量)。输入到编码器的形式。</li>
+<li><strong>查询编码器 <span class="math inline">\(f_q\)</span>
+处理</strong>:</li>
+<li><strong>Step1</strong>: 输入：<strong>[3, 224, 224]</strong>
+张量。</li>
+<li><strong>Step2</strong>: 经过<strong>Model</strong></li>
+<li><strong>Step3</strong>: 全局平均池化层 (Global Average Pooling)
+将空间维度压缩掉。</li>
+<li><strong>Step4</strong>: 一个线性投影层将特征维度映射到
+<strong>D</strong>。</li>
+<li><strong>结果</strong>:一个 <span class="math inline">\(D\)</span>
+维（如 <span class="math inline">\(M\)</span> 维）的归一化向量 <span
+class="math inline">\(q\)</span>。这个 <span
+class="math inline">\(q\)</span>
+代表了经过裁剪、颜色扰动后的猫头像的抽象特征。例如， <strong>[0.12,
+-0.05, 0.87, …, 0.03]</strong> (<span
+class="math inline">\(M\)</span>个数值)。</li>
+<li><strong>键编码器 <span class="math inline">\(f_k\)</span>
+处理</strong>:</li>
+<li><strong>Step1</strong>: 输入：<strong>[3, 224, 224]</strong>
+张量。(对 <span class="math inline">\(P\)</span>.jpg
+应用另一组随机预处理得到的另一个 [3, 224, 224] 张量。)</li>
+<li><strong>Step2</strong>: 经过结构相同但参数由动量更新的 <span
+class="math inline">\(f_k\)</span>。</li>
+<li><strong>Step3</strong>: 一个 <span class="math inline">\(D\)</span>
+维（如 <span class="math inline">\(M\)</span> 维）的归一化向量 <span
+class="math inline">\(k\)</span>。例如 <strong>[0.15, -0.08, 0.84, …,
+0.02]</strong>。这个 <span class="math inline">\(k\)</span>
+代表了同一数据但不同视角/颜色下的抽象特征。</li>
+<li><strong>动态字典</strong>:</li>
+<li><strong>Step1</strong>:包含之前通过 <span
+class="math inline">\(f_k\)</span> 计算出的 <span
+class="math inline">\(k\)</span> 向量。例如，队列大小是 <span
+class="math inline">\(L\)</span>，里面存储了 <span
+class="math inline">\(L\)</span> 个不同的 D=128
+维向量，每个代表处理过的一张数据的特征。</li>
+</ul>
 
       
     </div>
