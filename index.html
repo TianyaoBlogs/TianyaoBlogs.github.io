@@ -145,6 +145,105 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://tianyaoblogs.github.io/2025/09/15/Pandoc_Deployment/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="TianyaoBlogs">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2025/09/15/Pandoc_Deployment/" class="post-title-link" itemprop="url">Pandoc Deployment</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2025-09-15 10:00:00 / 修改时间：12:04:09" itemprop="dateCreated datePublished" datetime="2025-09-15T10:00:00+08:00">2025-09-15</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%8A%80%E6%9C%AF/" itemprop="url" rel="index"><span itemprop="name">技术</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>Download <a
+target="_blank" rel="noopener" href="https://github.com/jgm/pandoc/releases/tag/3.8">Pandoc</a>!
+<strong>pandoc-3.8-windows-x86_64.msi</strong></p>
+<h2
+id="主要为了解决默认的next渲染器无法渲染复杂公式的问题">主要为了解决默认的Next渲染器无法渲染复杂公式的问题</h2>
+<h3
+id="在系统变量中找到path点击编辑">在系统变量中找到<strong>Path→点击编辑</strong></h3>
+<h3
+id="点击新建输入pandoc.exe的父目录路径c点击确定">点击新建→输入pandoc.exe的父目录路径（C:）→点击确定</h3>
+<h3 id="重启终端">重启终端</h3>
+<h3
+id="安装pandoc-3.8-windows-x86_64.msi">安装pandoc-3.8-windows-x86_64.msi</h3>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ pandoc --version</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm list --depth=0 | Select-String <span class="string">&quot;renderer&quot;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm uninstall hexo-renderer-kramed --save</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm uninstall hexo-renderer-markdown-it --save</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm list --depth=0 | Select-String <span class="string">&quot;renderer&quot;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm install hexo-renderer-pandoc --save</span><br></pre></td></tr></table></figure>
+<p>More info: <a
+target="_blank" rel="noopener" href="https://blog.csdn.net/gitblog_00216/article/details/141763934">Ref</a></p>
+<h3
+id="在你所在的博客头加入必要的引入">在你所在的博客头加入必要的引入</h3>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ mathjax: <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+<h3
+id="在d_ailab_hkust_machine_learning的_config.yaml文件中确保你的pandoc路径能被找到">在D:_AILab_HKUST_Machine_Learning的_config.yaml文件中确保你的Pandoc路径能被找到</h3>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ pandoc:</span><br><span class="line">$ pandoc_path: <span class="string">&quot;C:/Users/Aprine/AppData/Local/Pandoc/pandoc.exe&quot;</span> <span class="comment"># </span></span><br><span class="line">$ args:</span><br><span class="line">$   - <span class="string">&quot;--mathjax&quot;</span></span><br></pre></td></tr></table></figure>
+<h3
+id="在d_ailab_hkust_machine_learning_config.yaml文件中确保你的math信息配置正确">在D:_AILab_HKUST_Machine_Learning_config.yaml文件中确保你的math信息配置正确</h3>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ mathjax:</span><br><span class="line">$   <span class="built_in">enable</span>: <span class="literal">true</span></span><br><span class="line">$   <span class="comment"># See: https://mhchem.github.io/MathJax-mhchem/</span></span><br><span class="line">$   mhchem: <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+<h3 id="修改你的head文件的基础格式">修改你的head文件的基础格式</h3>
+<p>More info: <a
+target="_blank" rel="noopener" href="https://blog.csdn.net/ALexander_Monster/article/details/105717091">Ref</a></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://tianyaoblogs.github.io/2025/09/14/contrastive_learning/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -176,7 +275,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2025-09-15 11:46:07" itemprop="dateModified" datetime="2025-09-15T11:46:07+08:00">2025-09-15</time>
+                <time title="修改时间：2025-09-15 11:49:42" itemprop="dateModified" datetime="2025-09-15T11:49:42+08:00">2025-09-15</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -306,13 +405,14 @@ class="math inline">\(\mathbf{q} \cdot \mathbf{k} =
 </table>
 <h2 id="数据流">3.2 数据流：</h2>
 <ul>
-<li><strong>原始输入</strong>: 一张图片 <span
-class="math inline">\(P\)</span>.jpg (256x256 原始尺寸)</li>
-<li><strong>预处理Step1</strong>: 随机裁剪出 224x224 的区域</li>
+<li><strong>原始输入</strong>: 一张图片 <strong>P.jpg</strong>
+(<strong>256x256</strong> 原始尺寸)</li>
+<li><strong>预处理Step1</strong>: 随机裁剪出 <strong>224x224</strong>
+的区域</li>
 <li><strong>预处理Step2</strong>: 随机轻微改变颜色和亮度。</li>
 <li><strong>预处理Step3</strong>: 归一化像素值。</li>
 <li><strong>结果</strong>: <strong>[3, 224, 224]</strong> (一个
-3x224x224 的张量)。输入到编码器的形式。</li>
+<strong>3x224x224</strong> 的张量)。输入到编码器的形式。</li>
 <li><strong>查询编码器 <span class="math inline">\(f_q\)</span>
 处理</strong>:</li>
 <li><strong>Step1</strong>: 输入：<strong>[3, 224, 224]</strong>
@@ -332,8 +432,8 @@ class="math inline">\(M\)</span>个数值)。</li>
 <li><strong>键编码器 <span class="math inline">\(f_k\)</span>
 处理</strong>:</li>
 <li><strong>Step1</strong>: 输入：<strong>[3, 224, 224]</strong>
-张量。(对 <span class="math inline">\(P\)</span>.jpg
-应用另一组随机预处理得到的另一个 [3, 224, 224] 张量。)</li>
+张量。(对 <strong>P.jpg</strong> 应用另一组随机预处理得到的另一个
+<strong>[3, 224, 224]</strong> 张量。)</li>
 <li><strong>Step2</strong>: 经过结构相同但参数由动量更新的 <span
 class="math inline">\(f_k\)</span>。</li>
 <li><strong>Step3</strong>: 一个 <span class="math inline">\(D\)</span>
@@ -346,7 +446,7 @@ class="math inline">\(k\)</span>。例如 <strong>[0.15, -0.08, 0.84, …,
 class="math inline">\(f_k\)</span> 计算出的 <span
 class="math inline">\(k\)</span> 向量。例如，队列大小是 <span
 class="math inline">\(L\)</span>，里面存储了 <span
-class="math inline">\(L\)</span> 个不同的 D=128
+class="math inline">\(L\)</span> 个不同的 <strong>D=128</strong>
 维向量，每个代表处理过的一张数据的特征。</li>
 </ul>
 
@@ -708,7 +808,7 @@ configuration</h3>
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">3</span>
+          <span class="site-state-item-count">4</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
