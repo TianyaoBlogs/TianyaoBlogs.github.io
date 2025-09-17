@@ -28,7 +28,7 @@
 <meta property="og:description" content="统计机器学习Lecture-3 Lecturer: Prof.XIA DONG 1. General linear regression model.  1.1 general linear regression model  内容: general linear regression model.  the fundamental equation: \[y_i &#x3D; \">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2025-09-16T13:00:00.000Z">
-<meta property="article:modified_time" content="2025-09-17T05:48:44.112Z">
+<meta property="article:modified_time" content="2025-09-17T05:50:20.858Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="Machine Learning">
 <meta name="twitter:card" content="summary">
@@ -181,7 +181,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2025-09-17 13:48:44" itemprop="dateModified" datetime="2025-09-17T13:48:44+08:00">2025-09-17</time>
+                <time title="修改时间：2025-09-17 13:50:20" itemprop="dateModified" datetime="2025-09-17T13:50:20+08:00">2025-09-17</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -298,7 +298,6 @@ actual response values.实际响应值的向量。</li>
 <p>Statistical software and programming libraries (like Scikit-learn in
 Python) use this equation (or more computationally stable versions of
 it) to find the best coefficients for you instantly.</p>
-<hr>
 <h3 id="an-alternative-method-gradient-descent-梯度下降">## An
 Alternative Method: Gradient Descent 梯度下降</h3>
 <p>While the Normal Equation gives a direct answer, it can be very slow
@@ -323,6 +322,256 @@ the <strong>learning rate</strong>. Gradient Descent is the foundational
 optimization algorithm for many complex models, including neural
 networks.
 每次“步进”的大小由一个称为<strong>学习率</strong>的参数控制。梯度下降是许多复杂模型（包括神经网络）的基础优化算法。</p>
+<h3 id="summary-ols-vs.-gradient-descent">## Summary: OLS vs. Gradient
+Descent</h3>
+<table>
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr>
+<th style="text-align: left;">Feature</th>
+<th style="text-align: left;">Ordinary Least Squares (OLS)</th>
+<th style="text-align: left;">Gradient Descent</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>How it works</strong></td>
+<td style="text-align: left;">Direct calculation using the Normal
+Equation.</td>
+<td style="text-align: left;">Iterative; takes steps to minimize
+error.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Pros</strong></td>
+<td style="text-align: left;">Provides an exact, optimal solution. No
+parameters to tune.</td>
+<td style="text-align: left;">More efficient for very large datasets.
+Very versatile.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Cons</strong></td>
+<td style="text-align: left;">Can be computationally expensive with many
+features.</td>
+<td style="text-align: left;">Requires choosing a learning rate. May not
+find the exact minimum.</td>
+</tr>
+</tbody>
+</table>
+<h1 id="simple-linear-regression">2. Simple Linear Regression</h1>
+
+<h2 id="simple-linear-regression-1">2.1 Simple Linear Regression</h2>
+<ul>
+<li><strong>内容</strong>: <strong>Simple Linear Regression:</strong> a
+special case of the general model you showed earlier where you only have
+<strong>one</strong> predictor variable (<span class="math inline">\(p=1\)</span>).</li>
+</ul>
+<h3 id="the-model-and-the-goal-模型和目标">## The Model and the Goal
+模型和目标</h3>
+<p>Sets up the simplified equation for a line: <span class="math display">\[y_i = \beta_0 + \beta_1x_i + \epsilon_i\]</span>
+* <span class="math inline">\(y_i\)</span> is the outcome you want to
+predict.要预测的结果。 * <span class="math inline">\(x_i\)</span> is
+your single input feature or covariate.单个输入特征或协变量。 * <span class="math inline">\(\beta_1\)</span> is the <strong>slope</strong> of
+the line. It tells you how much <span class="math inline">\(y\)</span>
+is expected to increase for a one-unit increase in <span class="math inline">\(x\)</span>.表示 <span class="math inline">\(x\)</span> 每增加一个单位，<span class="math inline">\(y\)</span> 预计会增加多少。 * <span class="math inline">\(\beta_0\)</span> is the
+<strong>intercept</strong>. It’s the predicted value of <span class="math inline">\(y\)</span> when <span class="math inline">\(x\)</span> is zero.当 <span class="math inline">\(x\)</span> 为零时 <span class="math inline">\(y\)</span> 的预测值。 * <span class="math inline">\(\epsilon_i\)</span> is the random error
+term.是随机误差项。</p>
+<p>The goal, stated as “Minimize the sum of squares of err,” is exactly
+the <strong>Ordinary Least Squares (OLS)</strong> method we just
+discussed. It’s written here as: <span class="math display">\[\min_{a,b}
+\sum_{i=1}^{n} (y_i - a - bx_i)^2\]</span> This is just a different way
+of writing the same thing, where they use <code>a</code> for the
+intercept (<span class="math inline">\(\beta_0\)</span>) and
+<code>b</code> for the slope (<span class="math inline">\(\beta_1\)</span>). You’re trying to find the
+specific values of the slope and intercept that make the sum of all the
+squared errors as small as possible.
+目标，即“最小化误差平方和”，正是<strong>普通最小二乘法
+(OLS)</strong>。： <span class="math display">\[\min_{a,b}
+\sum_{i=1}^{n} (y_i - a - bx_i)^2\]</span> 这是另一种写法，其中用
+<code>a</code> 表示截距 (<span class="math inline">\(\beta_0\)</span>)，<code>b</code> 表示斜率 (<span class="math inline">\(\beta_1\)</span>)。尝试找到斜率和截距的具体值，使得所有平方误差之和尽可能小。</p>
+<h3 id="the-solution-the-estimator-formulas-解决方案估计公式">## The
+Solution: The Estimator Formulas 解决方案：估计公式</h3>
+<p>The most important part of this slide is the
+<strong>solution</strong>. For the simple case with only one variable,
+you don’t need complex matrix algebra (the Normal Equation). Instead,
+the minimization problem can be solved with these two straightforward
+formulas:
+对于只有一个变量的简单情况，不需要复杂的矩阵代数（正态方程）。相反，最小化问题可以用以下两个简单的公式来解决：</p>
+<h4 id="the-slope-hatbeta_1">1. The Slope: <span class="math inline">\(\hat{\beta}_1\)</span></h4>
+<p><span class="math display">\[\hat{\beta}_1 = \frac{\sum_{i=1}^{n}
+(x_i - \bar{x})(y_i - \bar{y})}{\sum_{i=1}^{n} (x_i -
+\bar{x})^2}\]</span> * <strong>Intuition:</strong> This formula might
+look complex, but it’s actually very intuitive. * The numerator, <span class="math inline">\(\sum(x_i - \bar{x})(y_i - \bar{y})\)</span>, is
+closely related to the <strong>covariance</strong> between X and Y. It
+measures whether X and Y tend to move in the same direction (positive
+slope) or in opposite directions (negative slope). 与 X 和 Y
+之间的<strong>协方差</strong>密切相关。它衡量 X 和 Y
+是倾向于朝相同方向（正斜率）还是朝相反方向（负斜率）移动。 * The
+denominator, <span class="math inline">\(\sum(x_i - \bar{x})^2\)</span>,
+is related to the <strong>variance</strong> of X. It measures how much X
+varies on its own. 它衡量 X 自身的变化量。 * <strong>In short, the slope
+is a measure of how X and Y vary together, scaled by how much X varies
+by itself.</strong> 斜率衡量的是 X 和 Y 共同变化的程度，并以 X
+自身的变化量为标度。</p>
+<h4 id="the-intercept-hatbeta_0-截距">2. The Intercept: <span class="math inline">\(\hat{\beta}_0\)</span> 截距</h4>
+<p><span class="math display">\[\hat{\beta}_0 = \bar{y} -
+\hat{\beta}_1\bar{x}\]</span> * <strong>Intuition:</strong> This formula
+is even simpler and has a wonderful geometric meaning. It ensures that
+the <strong>line of best fit always passes through the “center of mass”
+of the data</strong>, which is the point of averages <span class="math inline">\((\bar{x}, \bar{y})\)</span>.
+它确保<strong>最佳拟合线始终穿过数据的“质心”</strong>，即平均值 <span class="math inline">\((\bar{x}, \bar{y})\)</span> 的点。计算出最佳斜率
+(<span class="math inline">\(\hat{\beta}_1\)</span>)
+后，就可以将其代入此公式。然后，可以调整截距 (<span class="math inline">\(\hat{\beta}_0\)</span>)，使直线完美地围绕数据云的中心点旋转。
+* Once you’ve calculated the best slope (<span class="math inline">\(\hat{\beta}_1\)</span>), you can plug it into this
+formula. You then adjust the intercept (<span class="math inline">\(\hat{\beta}_0\)</span>) so that the line pivots
+perfectly around the central point of your data cloud.</p>
+<p>In summary, this slide provides the precise, closed-form formulas to
+calculate the slope and intercept for the line of best fit in a simple
+linear regression model.</p>
+<h1 id="statistical-inference">3. Statistical Inference</h1>
+
+
+<h2 id="statistical-inference-1">3.1 Statistical Inference</h2>
+<ul>
+<li><strong>内容</strong>: <strong>Statistical Inference:</strong> These
+two slides are deeply connected and explain how we go from just
+<em>calculating</em> the coefficients to understanding how
+<em>accurate</em> and <em>reliable</em> they are.
+解释了我们如何从仅仅<em>计算</em>系数到理解它们的<em>准确性</em>和<em>可靠性</em>。</li>
+</ul>
+<h3 id="the-core-problem-quantifying-uncertainty-量化不确定性">## The
+Core Problem: Quantifying Uncertainty 量化不确定性</h3>
+<p>The second slide poses the fundamental questions: * “How accurate are
+<span class="math inline">\(\hat{\beta}_0\)</span> and <span class="math inline">\(\hat{\beta}_1\)</span>?”准确性如何？ * “What are
+the distributions of <span class="math inline">\(\hat{\beta}_0\)</span>
+and <span class="math inline">\(\hat{\beta}_1\)</span>?”分布是什么？</p>
+<p>The reason we ask this is that our estimated coefficients (<span class="math inline">\(\hat{\beta}_0, \hat{\beta}_1\)</span>) were
+calculated from a <strong>specific sample of data</strong>. If we
+collected a different random sample from the same population, we would
+get slightly different estimates.估计的系数 (<span class="math inline">\(\hat{\beta}_0, \hat{\beta}_1\)</span>)
+是根据<strong>特定的数据样本</strong>计算出来的。如果我们从同一总体中随机抽取不同的样本，我们得到的估计值会略有不同。</p>
+<p>The goal of statistical inference is to use the estimates from our
+single sample to make conclusions about the <strong>true, unknown
+population parameters</strong> (<span class="math inline">\(\beta_0,
+\beta_1\)</span>) and to quantify our uncertainty about
+them.统计推断的目标是利用单个样本的估计值得出关于<strong>真实、未知的总体参数</strong>（<span class="math inline">\(\beta_0,
+\beta_1\)</span>）的结论，并量化对这些参数的不确定性。</p>
+<h3 id="the-key-assumption-that-makes-it-possible-实现这一目标的关键假设">##
+The Key Assumption That Makes It Possible 实现这一目标的关键假设</h3>
+<p>To figure out the distribution of our estimates, we must make an
+assumption about the distribution of the errors. This is the most
+important assumption in linear regression for inference:
+为了确定估计值的分布，必须对误差的分布做出假设。这是线性回归推断中最重要的假设：
+<strong>Assumption:</strong> <span class="math inline">\(\epsilon_i
+\stackrel{\text{i.i.d.}}{\sim} N(0, \sigma^2)\)</span></p>
+<p>This means we assume the random error terms are: * <strong>Normally
+distributed</strong> (<span class="math inline">\(N\)</span>).*
+<strong>正态分布</strong>（<span class="math inline">\(N\)</span>）。 *
+Have a mean of <strong>zero</strong> (our model is correct on average).*
+均值为<strong>零</strong>（模型平均而言是正确的）。 * Have a constant
+variance <strong><span class="math inline">\(\sigma^2\)</span></strong>
+(homoscedasticity).* 方差为常数<strong><span class="math inline">\(\sigma^2\)</span></strong>（方差齐性）。 * Are
+<strong>independent and identically distributed</strong> (i.i.d.),
+meaning each error is independent of the others.*
+是<strong>独立同分布</strong>（i.i.d.）的，这意味着每个误差都独立于其他误差。</p>
+<p><strong>Why is this important?</strong> Because our coefficients
+<span class="math inline">\(\hat{\beta}_0\)</span> and <span class="math inline">\(\hat{\beta}_1\)</span> are calculated as weighted
+sums of the <span class="math inline">\(y_i\)</span> values, and the
+<span class="math inline">\(y_i\)</span> values depend on the errors
+<span class="math inline">\(\epsilon_i\)</span>. This assumption about
+the errors allows us to prove that our estimated coefficients themselves
+are also normally distributed. 系数 <span class="math inline">\(\hat{\beta}_0\)</span> 和 <span class="math inline">\(\hat{\beta}_1\)</span> 是通过 <span class="math inline">\(y_i\)</span> 值的加权和计算的，而 <span class="math inline">\(y_i\)</span> 值取决于误差 <span class="math inline">\(\epsilon_i\)</span>。这个关于误差的假设使能够证明估计的系数本身也服从正态分布。</p>
+<h3 id="the-solution-the-theorem-and-the-t-distribution-定理和-t-分布">##
+The Solution: The Theorem and the t-distribution 定理和 t 分布</h3>
+<p>The first slide provides the central theorem that allows us to
+perform inference. It tells us exactly how to standardize our estimated
+coefficients so they follow a known distribution.
+第一张幻灯片提供了进行推断的核心定理。它准确地告诉我们如何对估计的系数进行标准化，使其服从已知的分布。</p>
+<h4 id="the-standard-error-s.e.-标准误差-s.e.">1. The Standard Error
+(s.e.) 标准误差 (s.e.)</h4>
+<p>First, look at the denominators in the red dotted boxes. These are
+the <strong>standard errors</strong> of the coefficients,
+<code>s.e.($\hat&#123;\beta&#125;_1$)</code> and
+<code>s.e.($\hat&#123;\beta&#125;_0$)</code>.
+第一张幻灯片提供了进行推断的核心定理。它准确地告诉我们如何对估计的系数进行标准化，使其服从已知的分布。</p>
+<ul>
+<li><strong>What it is:</strong> The standard error is the estimated
+<strong>standard deviation of the coefficient’s sampling
+distribution</strong>. In simpler terms, it’s a measure of the average
+amount by which our estimate <span class="math inline">\(\hat{\beta}_1\)</span> would differ from the true
+<span class="math inline">\(\beta_1\)</span> if we were to repeat the
+experiment many times.
+标准误差是系数抽样分布的<strong>标准差</strong>估计值。简单来说，它衡量的是如果我们重复实验多次，我们估计的
+<span class="math inline">\(\hat{\beta}_1\)</span> 与真实的 <span class="math inline">\(\beta_1\)</span> 之间的平均差异。</li>
+<li><strong>A smaller standard error means a more precise and reliable
+estimate.</strong>
+<strong>标准误差越小，估计值越精确可靠。</strong></li>
+</ul>
+<h4 id="the-t-statistic-t-统计量">2. The t-statistic t 统计量</h4>
+<p>The theorem shows two fractions that form a
+<strong>t-statistic</strong>. The general structure for this is:
+该定理展示了两个构成<strong>t 统计量</strong>的分数。其一般结构如下：
+<span class="math display">\[t = \frac{\text{ (Sample Estimate - True
+Value) }}{\text{ Standard Error of the Estimate }}\]</span></p>
+<p>For <span class="math inline">\(\beta_1\)</span>, this is: <span class="math inline">\(\frac{\hat{\beta}_1 -
+\beta_1}{\text{s.e.}(\hat{\beta}_1)}\)</span>.</p>
+<p>The key insight is that this specific quantity follows a
+<strong>Student’s t-distribution</strong> with <strong><span class="math inline">\(n-2\)</span> degrees of freedom</strong>.
+关键在于，这个特定量服从<strong>学生 t
+分布</strong>，其自由度为<strong><span class="math inline">\(n-2\)</span>。 * </strong>Student’s
+t-distribution:** This is a probability distribution that looks very
+similar to the normal distribution but has slightly “heavier” tails. We
+use it instead of the normal distribution because we had to
+<em>estimate</em> the standard deviation of the errors (<code>s</code>
+in the formula), which adds extra uncertainty.
+这是一种概率分布，与正态分布非常相似，但尾部略重。使用它来代替正态分布，是因为必须<em>估计</em>误差的标准差（公式中的
+<code>s</code>），这会增加额外的不确定性。 * <strong>Degrees of Freedom
+(n-2):</strong> We start with <code>n</code> data points, but we lose
+two degrees of freedom because we used the data to estimate two
+parameters: <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span>. 从 <code>n</code>
+个数据点开始，但由于用这些数据估计了两个参数：<span class="math inline">\(\beta_0\)</span> 和 <span class="math inline">\(\beta_1\)</span>，因此损失了两个自由度。 #### 3.
+Estimating the Error Variance (<span class="math inline">\(s^2\)</span>)估计误差方差 (<span class="math inline">\(s^2\)</span>) To calculate the standard errors, we
+need a value for <code>s</code>, which is our estimate of the true error
+standard deviation <span class="math inline">\(\sigma\)</span>. This is
+calculated from the <strong>Residual Sum of Squares (RSS)</strong>.
+为了计算标准误差，我们需要一个 <code>s</code> 的值，它是对真实误差标准差
+<span class="math inline">\(\sigma\)</span>
+的估计值。该值由<strong>残差平方和 (RSS)</strong> 计算得出。 *
+<strong>RSS:</strong> First, we calculate the RSS = <span class="math inline">\(\sum(y_i - \hat{y}_i)^2\)</span>, which is the sum
+of all the squared errors.* <strong>RSS</strong>：首先，计算 RSS = <span class="math inline">\(\sum(y_i -
+\hat{y}_i)^2\)</span>，即所有平方误差之和。 * <strong><span class="math inline">\(s^2\)</span>:</strong> Then, we find the estimate
+of the error variance: <span class="math inline">\(s^2 = \text{RSS} /
+(n-2)\)</span>. We divide by <span class="math inline">\(n-2\)</span> to
+get an unbiased estimate. * <strong><span class="math inline">\(s^2\)</span></strong>：然后，计算误差方差的估计值：<span class="math inline">\(s^2 = \text{RSS} / (n-2)\)</span>。我们将其除以
+<span class="math inline">\(n-2\)</span> 即可得到无偏估计值。 *
+<code>s</code> is simply the square root of <span class="math inline">\(s^2\)</span>. This <code>s</code> is the value
+used in the standard error formulas.* <code>s</code> 就是 <span class="math inline">\(s^2\)</span> 的平方根。这个 <code>s</code>
+是标准误差公式中使用的值。</p>
+<h3 id="what-this-allows-us-to-do-the-practical-use">## What This Allows
+Us To Do (The Practical Use)</h3>
+<p>Because we know the exact distribution of our t-statistic, we can now
+achieve our goal of quantifying uncertainty: 因为知道 t
+统计量的精确分布，所以现在可以实现量化不确定性的目标：</p>
+<ol type="1">
+<li><strong>Hypothesis Testing:</strong> We can test if a predictor is
+actually useful. The most common test is for the null hypothesis <span class="math inline">\(H_0: \beta_1 = 0\)</span>. If we can prove the
+observed <span class="math inline">\(\hat{\beta}_1\)</span> is very
+unlikely to occur if the true <span class="math inline">\(\beta_1\)</span> were zero, we can conclude there
+is a statistically significant relationship between <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span>.
+可以检验一个预测变量是否真的有用。最常见的检验是零假设 <span class="math inline">\(H_0: \beta_1 = 0\)</span>。如果能证明，当真实的
+<span class="math inline">\(\beta_1\)</span> 为零时，观测到的 <span class="math inline">\(\hat{\beta}_1\)</span>
+不太可能发生，那么就可以得出结论，<span class="math inline">\(x\)</span>
+和 <span class="math inline">\(y\)</span>
+之间存在统计学上的显著关系。</li>
+<li><strong>Confidence Intervals:</strong> We can construct a range of
+plausible values for the true coefficient. For example, we can calculate
+a 95% confidence interval for <span class="math inline">\(\beta_1\)</span>. This gives us a range where we
+are 95% confident the true value of <span class="math inline">\(\beta_1\)</span> lies.
+可以为真实系数构建一系列合理的值。</li>
+</ol>
 
     </div>
 
@@ -413,7 +662,15 @@ The Main Method: Ordinary Least Squares (OLS) 普通最小二乘法 (OLS)</span>
 The Cost Function: Sum of Squared Residuals 成本函数：残差平方和</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#solving-for-the-coefficients-the-normal-equation-%E6%B1%82%E8%A7%A3%E7%B3%BB%E6%95%B0%E6%AD%A3%E6%80%81%E6%96%B9%E7%A8%8B"><span class="nav-number">1.2.1.3.</span> <span class="nav-text">3.
 Solving for the Coefficients: The Normal Equation
 求解系数：正态方程</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#an-alternative-method-gradient-descent-%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D"><span class="nav-number">1.2.2.</span> <span class="nav-text">## An
-Alternative Method: Gradient Descent 梯度下降</span></a></li></ol></li></ol></li></ol></div>
+Alternative Method: Gradient Descent 梯度下降</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#summary-ols-vs.-gradient-descent"><span class="nav-number">1.2.3.</span> <span class="nav-text">## Summary: OLS vs. Gradient
+Descent</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#simple-linear-regression"><span class="nav-number">2.</span> <span class="nav-text">2. Simple Linear Regression</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#simple-linear-regression-1"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 Simple Linear Regression</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#the-model-and-the-goal-%E6%A8%A1%E5%9E%8B%E5%92%8C%E7%9B%AE%E6%A0%87"><span class="nav-number">2.1.1.</span> <span class="nav-text">## The Model and the Goal
+模型和目标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#the-solution-the-estimator-formulas-%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88%E4%BC%B0%E8%AE%A1%E5%85%AC%E5%BC%8F"><span class="nav-number">2.1.2.</span> <span class="nav-text">## The
+Solution: The Estimator Formulas 解决方案：估计公式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#the-slope-hatbeta_1"><span class="nav-number">2.1.2.1.</span> <span class="nav-text">1. The Slope: \(\hat{\beta}_1\)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#the-intercept-hatbeta_0-%E6%88%AA%E8%B7%9D"><span class="nav-number">2.1.2.2.</span> <span class="nav-text">2. The Intercept: \(\hat{\beta}_0\) 截距</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#statistical-inference"><span class="nav-number">3.</span> <span class="nav-text">3. Statistical Inference</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#statistical-inference-1"><span class="nav-number">3.1.</span> <span class="nav-text">3.1 Statistical Inference</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#the-core-problem-quantifying-uncertainty-%E9%87%8F%E5%8C%96%E4%B8%8D%E7%A1%AE%E5%AE%9A%E6%80%A7"><span class="nav-number">3.1.1.</span> <span class="nav-text">## The
+Core Problem: Quantifying Uncertainty 量化不确定性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#the-key-assumption-that-makes-it-possible-%E5%AE%9E%E7%8E%B0%E8%BF%99%E4%B8%80%E7%9B%AE%E6%A0%87%E7%9A%84%E5%85%B3%E9%94%AE%E5%81%87%E8%AE%BE"><span class="nav-number">3.1.2.</span> <span class="nav-text">##
+The Key Assumption That Makes It Possible 实现这一目标的关键假设</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#the-solution-the-theorem-and-the-t-distribution-%E5%AE%9A%E7%90%86%E5%92%8C-t-%E5%88%86%E5%B8%83"><span class="nav-number">3.1.3.</span> <span class="nav-text">##
+The Solution: The Theorem and the t-distribution 定理和 t 分布</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#the-standard-error-s.e.-%E6%A0%87%E5%87%86%E8%AF%AF%E5%B7%AE-s.e."><span class="nav-number">3.1.3.1.</span> <span class="nav-text">1. The Standard Error
+(s.e.) 标准误差 (s.e.)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#the-t-statistic-t-%E7%BB%9F%E8%AE%A1%E9%87%8F"><span class="nav-number">3.1.3.2.</span> <span class="nav-text">2. The t-statistic t 统计量</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#what-this-allows-us-to-do-the-practical-use"><span class="nav-number">3.1.4.</span> <span class="nav-text">## What This Allows
+Us To Do (The Practical Use)</span></a></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
