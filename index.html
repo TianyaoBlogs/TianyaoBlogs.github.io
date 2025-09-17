@@ -145,6 +145,246 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://tianyaoblogs.github.io/2025/09/16/5054C3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="TianyaoBlogs">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2025/09/16/5054C3/" class="post-title-link" itemprop="url">Statistical Machine Learning-L3</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2025-09-16 21:00:00" itemprop="dateCreated datePublished" datetime="2025-09-16T21:00:00+08:00">2025-09-16</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2025-09-17 13:08:40" itemprop="dateModified" datetime="2025-09-17T13:08:40+08:00">2025-09-17</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Machine-Learning/" itemprop="url" rel="index"><span itemprop="name">Machine Learning</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>统计机器学习Lecture-3</p>
+<p><a target="_blank" rel="noopener" href="https://www.math.hkust.edu.hk/~madxia/">Lecturer: Prof.XIA
+DONG</a></p>
+<h1 id="general-linear-regression-model.">1. General linear regression
+model.</h1>
+<p><img src="/.io//屏幕截图%202025-09-15%20191805.png" alt="图片描述"> ## 1.1 general linear regression model -
+<strong>内容</strong>: <strong>general linear regression
+model</strong>.</p>
+<p>the fundamental equation:</p>
+<p><span class="math display">\[y_i = \beta_0 + \beta_1x_{i1} + \dots +
+\beta_px_{ip} + \epsilon_i\]</span></p>
+<p>And it correctly identifies the main goal: to <strong>estimate the
+parameters</strong> (the coefficients <span class="math inline">\(\beta_0, \beta_1, \dots, \beta_p\)</span>) from
+data so we can make predictions on new data.</p>
+<p>核心目标：通过数据<strong>估计参数</strong>（即系数 <span class="math inline">\(\beta_0, \beta_1, \dots,
+\beta_p\)</span>），从而对新数据进行预测。</p>
+<h2 id="how-we-actually-find-the-best-values-for-the-β-coefficients-parameter-estimation">1.2
+How we actually find the best values for the <span class="math inline">\(β\)</span> coefficients (parameter
+estimation)?:</h2>
+<ul>
+<li><strong>内容</strong>: We find the best values for the <span class="math inline">\(\beta\)</span> coefficients by finding the values
+that <strong>minimize the overall error</strong> of the model. The most
+common and fundamental method for this is called <strong>Ordinary Least
+Squares (OLS)</strong>.</li>
+</ul>
+<hr>
+<h3 id="the-main-method-ordinary-least-squares-ols-普通最小二乘法-ols">##
+The Main Method: Ordinary Least Squares (OLS) 普通最小二乘法 (OLS)</h3>
+<p>The core idea of OLS is to find the line (or hyperplane in multiple
+dimensions) that is as close as possible to all the data points
+simultaneously. OLS
+的核心思想是找到一条尽可能同时接近所有数据点的直线（或多维超平面）。</p>
+<h4 id="define-the-error-residuals-误差">1. Define the Error (Residuals)
+误差</h4>
+<p>First, we need to define what “error” means. For any single data
+point, the error is the difference between the actual value (<span class="math inline">\(y_i\)</span>) and the value predicted by our model
+(<span class="math inline">\(\hat{y}_i\)</span>). This difference is
+called the <strong>residual</strong>.
+首先，需要定义“误差”的含义。对于任何单个数据点，误差是实际值 (<span class="math inline">\(y_i\)</span>) 与模型预测值 (<span class="math inline">\(\hat{y}_i\)</span>)
+之间的差值。这个差值称为<strong>残差</strong>。</p>
+<p><strong>Residual</strong> = Actual Value - Predicted Value
+<strong>残差</strong> = 实际值 - 预测值 <span class="math display">\[e_i
+= y_i - \hat{y}_i\]</span></p>
+<p>You can visualize residuals as the vertical distance from each data
+point to the regression line.
+可以将残差可视化为每个数据点到回归线的垂直距离。</p>
+<h4 id="the-cost-function-sum-of-squared-residuals-成本函数残差平方和">2.
+The Cost Function: Sum of Squared Residuals 成本函数：残差平方和</h4>
+<p>We want to make all these residuals as small as possible. We can’t
+just add them up, because some are positive and some are negative, and
+they would cancel each other out.
+所有残差尽可能小。不能简单地将它们相加，因为有些是正数，有些是负数，它们会相互抵消。</p>
+<p>So, we square each residual (which makes them all positive) and then
+sum them up. This gives us the <strong>Sum of Squared Residuals
+(SSR)</strong>, which is our “cost function.”
+因此，将每个残差求平方（使它们都为正数），然后将它们相加。这就得到了<strong>残差平方和
+(SSR)</strong>，也就是“成本函数”。</p>
+<p><span class="math display">\[SSR = \sum_{i=1}^{n} e_i^2 =
+\sum_{i=1}^{n} (y_i - \hat{y}_i)^2\]</span></p>
+<p>The goal of OLS is simple: <strong>find the values of <span class="math inline">\(\beta_0, \beta_1, \dots, \beta_p\)</span> that
+make this SSR value as small as possible.</strong></p>
+<h4 id="solving-for-the-coefficients-the-normal-equation-求解系数正态方程">3.
+Solving for the Coefficients: The Normal Equation
+求解系数：正态方程</h4>
+<p>For linear regression, calculus provides a direct, exact solution to
+this minimization problem. By taking the derivative of the SSR function
+with respect to each <span class="math inline">\(\beta\)</span>
+coefficient and setting it to zero, we can solve for the optimal values.
+对于线性回归，微积分为这个最小化问题提供了直接、精确的解。通过对 SSR
+函数的每个 <span class="math inline">\(\beta\)</span>
+系数求导并将其设为零，就可以求解出最优值。</p>
+<p>This process results in a formula known as the <strong>Normal
+Equation</strong>, which can be expressed cleanly using matrix algebra:
+这个过程会得到一个称为<strong>正态方程</strong>的公式，它可以用矩阵代数清晰地表示出来：</p>
+<p><span class="math display">\[\hat{\boldsymbol{\beta}} =
+(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\mathbf{y}\]</span></p>
+<ul>
+<li><span class="math inline">\(\hat{\boldsymbol{\beta}}\)</span> is the
+vector of our estimated coefficients.估计系数的向量。</li>
+<li><span class="math inline">\(\mathbf{X}\)</span> is a matrix where
+each row is an observation and each column is a feature (with an added
+column of 1s for the intercept <span class="math inline">\(\beta_0\)</span>).其中每一行代表一个观测值，每一列代表一个特征（截距
+<span class="math inline">\(\beta_0\)</span> 增加了一列全为 1
+的值）。</li>
+<li><span class="math inline">\(\mathbf{y}\)</span> is the vector of the
+actual response values.实际响应值的向量。</li>
+</ul>
+<p>Statistical software and programming libraries (like Scikit-learn in
+Python) use this equation (or more computationally stable versions of
+it) to find the best coefficients for you instantly.</p>
+<hr>
+<h3 id="an-alternative-method-gradient-descent-梯度下降">## An
+Alternative Method: Gradient Descent 梯度下降</h3>
+<p>While the Normal Equation gives a direct answer, it can be very slow
+if you have a massive number of features (e.g., hundreds of thousands).
+An alternative, iterative method used across machine learning is
+<strong>Gradient Descent</strong>.</p>
+<p><strong>The Intuition:</strong> Imagine the SSR cost function is a
+big valley. Your initial (random) <span class="math inline">\(\beta\)</span> coefficients place you somewhere on
+the slope of this valley.</p>
+<ol type="1">
+<li><strong>Check the slope</strong> (the gradient) at your current
+position. <strong>检查您当前位置的斜率</strong>（梯度）。</li>
+<li><strong>Take a small step</strong> in the steepest <em>downhill</em>
+direction. <strong>朝最陡的<em>下坡</em>方向</strong>迈出一小步**。</li>
+<li><strong>Repeat.</strong> You keep taking steps downhill until you
+reach the bottom of the valley. The bottom of the valley represents the
+minimum SSR, and your coordinates at that point are the optimal <span class="math inline">\(\beta\)</span> coefficients.
+<strong>重复</strong>。您继续向下走，直到到达山谷底部。谷底代表最小SSR，该点的坐标即为最优<span class="math inline">\(\beta\)</span>系数。</li>
+</ol>
+<p>The size of each “step” you take is controlled by a parameter called
+the <strong>learning rate</strong>. Gradient Descent is the foundational
+optimization algorithm for many complex models, including neural
+networks.
+每次“步进”的大小由一个称为<strong>学习率</strong>的参数控制。梯度下降是许多复杂模型（包括神经网络）的基础优化算法。</p>
+<h3 id="summary-ols-vs.-gradient-descent">## Summary: OLS vs. Gradient
+Descent</h3>
+<table>
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr>
+<th style="text-align: left;">Feature</th>
+<th style="text-align: left;">Ordinary Least Squares (OLS)</th>
+<th style="text-align: left;">Gradient Descent</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>How it works</strong></td>
+<td style="text-align: left;">Direct calculation using the Normal
+Equation.</td>
+<td style="text-align: left;">Iterative; takes steps to minimize
+error.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Pros</strong></td>
+<td style="text-align: left;">Provides an exact, optimal solution. No
+parameters to tune.</td>
+<td style="text-align: left;">More efficient for very large datasets.
+Very versatile.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Cons</strong></td>
+<td style="text-align: left;">Can be computationally expensive with many
+features.</td>
+<td style="text-align: left;">Requires choosing a learning rate. May not
+find the exact minimum.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="负样本negatives">1.3 负样本（Negatives）:</h2>
+<ul>
+<li><strong>内容</strong>:
+来自与<strong>查询样本</strong>不同的其他数据点。它们代表不同的语义内容。</li>
+</ul>
+<h2 id="目标-模型的目标是学习一个编码器encoder">1.4 目标:
+模型的目标是学习一个编码器（Encoder）</h2>
+<ul>
+<li><strong>内容</strong>:
+查询样本与其对应的正样本在特征空间中的距离<strong>很近</strong>（相似度高）。</li>
+<li><strong>内容</strong>:
+查询样本与大量负样本在特征空间中的距离<strong>很远</strong>（相似度低）。</li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://tianyaoblogs.github.io/2025/09/15/Pandoc_Deployment/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -824,18 +1064,18 @@ configuration</h3>
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">4</span>
+          <span class="site-state-item-count">5</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
-        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-count">4</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
-        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-count">4</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
