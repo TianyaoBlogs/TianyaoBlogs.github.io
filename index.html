@@ -253,7 +253,7 @@ id="step4不需要此插件终端中运行以下命令来卸载插件">Step4:不
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2025-09-19 02:31:01" itemprop="dateModified" datetime="2025-09-19T02:31:01+08:00">2025-09-19</time>
+                <time title="修改时间：2025-09-19 03:09:12" itemprop="dateModified" datetime="2025-09-19T03:09:12+08:00">2025-09-19</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -1589,10 +1589,9 @@ H</strong> is the projection onto this space.</p></li>
 <code>L₀</code> 是</strong>正交“误差”空间<strong>。矩阵 </strong>I - H**
 是到该空间的投影。</li>
 </ul>
-<h1 id="singular-value-decomposition-svd-奇异值分解-svd-1">8.Singular
-Value Decomposition (SVD) 奇异值分解 (SVD)</h1>
-<p><img src="/imgs/5054C3/SVD1.png">
-<img src="/imgs/5054C3/SVD2.png"></p>
+<h1 id="statistical-inference-1">9.statistical inference</h1>
+<p><img src="/imgs/5054C3/statistical_inference_in_linear_regression1.png">
+<img src="/imgs/5054C3/statistical_inference_in_linear_regression2.png"></p>
 <ul>
 <li><strong>内容</strong>:</li>
 </ul>
@@ -1796,6 +1795,330 @@ and provides a better fit than a model with no predictors. 如果 F
 检验得出的 p
 值较小，则可以得出结论，您的模型整体上具有统计显著性，并且比没有预测因子的模型拟合效果更好。</p></li>
 </ul>
+<h1 id="construct-different-types-of-intervals">10.construct different
+types of intervals</h1>
+<p><img src="/imgs/5054C3/construct_different_types_of_intervals1.png">
+<img src="/imgs/5054C3/construct_different_types_of_intervals2.png"></p>
+<ul>
+<li><strong>内容</strong>:</li>
+</ul>
+<p>These slides explain how to use the statistical properties of the
+least squares estimates to construct different types of intervals, which
+are essential for quantifying the uncertainty in your model’s
+predictions and parameters.
+这些幻灯片解释了如何利用最小二乘估计的统计特性来构建不同类型的区间，这对于量化模型预测和参数中的不确定性至关重要。</p>
+<h3 id="summary-4">Summary</h3>
+<p>These slides show how to calculate three distinct types of intervals
+in linear regression, each answering a different question about
+uncertainty:
+展示了如何计算线性回归中三种不同类型的区间，每种区间分别回答了关于不确定性的不同问题：</p>
+<ol type="1">
+<li><strong>Confidence Interval for a Parameter (<span
+class="math inline">\(\beta_j\)</span>):</strong> Provides a plausible
+range for a single, true unknown coefficient in the model.
+为模型中单个真实未知系数提供一个合理的范围。</li>
+<li><strong>Confidence Interval for the Mean Response:</strong> Provides
+a plausible range for the <em>average</em> outcome for a given set of
+predictor values.
+为给定一组预测变量值的<em>平均</em>结果提供一个合理的范围。</li>
+<li><strong>Prediction Interval:</strong> Provides a plausible range for
+a <em>single future</em> outcome for a given set of predictor values.
+This interval is always wider than the confidence interval for the mean
+response because it must also account for individual random error.
+为给定一组预测变量值的<em>单个未来</em>结果提供一个合理的范围。该区间始终比平均响应的置信区间更宽，因为它还必须考虑单个随机误差。</li>
+</ol>
+<h3 id="deeper-dive-into-concepts-and-processes-1">Deeper Dive into
+Concepts and Processes</h3>
+<h4
+id="confidence-interval-for-a-single-parameter-单个参数的置信区间">1.
+Confidence Interval for a Single Parameter 单个参数的置信区间</h4>
+<p>This interval addresses the uncertainty around one specific
+coefficient, like the slope for your most important predictor.
+此区间用于解决围绕某个特定系数的不确定性，例如最重要的预测因子的斜率。</p>
+<ul>
+<li><strong>The Question It Answers:</strong> “I’ve calculated a slope
+of <span class="math inline">\(\hat{\beta}_1 = 10.5\)</span>. How sure
+am I about this number? What is a plausible range for the <em>true</em>
+population slope?” 我计算出了斜率为 <span
+class="math inline">\(\hat{\beta}_1 =
+10.5\)</span>。我对这个数字有多确定？<em>真实</em>总体斜率的合理范围是多少？”</li>
+<li><strong>The Formula:</strong> <span
+class="math inline">\(\hat{\beta}_j \pm t_{n-p-1}(\alpha/2) s
+\sqrt{c_{jj}}\)</span>
+<ul>
+<li><strong><span class="math inline">\(\hat{\beta}_j\)</span></strong>:
+This is your best point estimate for the coefficient, taken directly
+from the model output. 这是该系数的最佳点估计值，直接取自模型输出。</li>
+<li><strong><span
+class="math inline">\(t_{n-p-1}(\alpha/2)\)</span></strong>: This is the
+<strong>critical value</strong> from a t-distribution. It’s a multiplier
+that sets the width of the interval based on your desired confidence
+level (e.g., for 95% confidence, <span
+class="math inline">\(\alpha=0.05\)</span>). 这是 t
+分布的<strong>临界值</strong>。它是一个乘数，根据您所需的置信水平设置区间宽度（例如，对于
+95% 的置信度，<span class="math inline">\(\alpha=0.05\)</span>）。</li>
+<li><strong><span class="math inline">\(s
+\sqrt{c_{jj}}\)</span></strong>: This whole term is the <strong>standard
+error</strong> of the coefficient <span
+class="math inline">\(\hat{\beta}_j\)</span>. It measures the precision
+of your estimate. A smaller standard error means a narrower, more
+precise interval. 这整个项是系数 <span
+class="math inline">\(\hat{\beta}_j\)</span>
+的<strong>标准误差</strong>。它衡量您估计的精度。标准误差越小，区间越窄，精度越高。</li>
+</ul></li>
+</ul>
+<h4 id="confidence-interval-for-the-mean-response-平均响应的置信区间">2.
+Confidence Interval for the Mean Response 平均响应的置信区间</h4>
+<p>This interval addresses the uncertainty about the location of the
+regression line itself. 这个区间解决了回归线本身位置的不确定性。</p>
+<ul>
+<li><strong>The Question It Answers:</strong> “For a house with 3
+bedrooms and 2 bathrooms, what is the plausible range for the
+<em>average</em> selling price of <em>all such houses</em>?”
+<strong>它回答的问题</strong>：“对于一栋有 3 间卧室和 2
+间浴室的房子，<em>所有此类房屋</em>的<em>平均</em>售价的合理范围是多少？”</li>
+<li><strong>The Formula:</strong> <span
+class="math inline">\(\hat{\boldsymbol{\beta}}^T \mathbf{x} \pm
+t_{n-p-1}(\alpha/2)s\sqrt{\mathbf{x}^T(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{x}}\)</span>
+<ul>
+<li><strong><span class="math inline">\(\hat{\boldsymbol{\beta}}^T
+\mathbf{x}\)</span></strong>: This is your point prediction, <span
+class="math inline">\(\hat{y}\)</span>, for the given input vector
+<strong>x</strong>. 这是给定输入向量 <strong>x</strong> 的点预测 <span
+class="math inline">\(\hat{y}\)</span>。</li>
+<li><strong><span
+class="math inline">\(s\sqrt{\mathbf{x}^T(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{x}}\)</span></strong>:
+This is the standard error of the mean response. Its value depends on
+how far the input vector <strong>x</strong> is from the center of the
+data. This means the confidence interval is narrowest near the average
+of your data and gets wider as you move toward the extremes.
+这是平均响应的标准误差。其值取决于输入向量 <strong>x</strong>
+距离数据中心的距离。这意味着置信区间在数据平均值附近最窄，并且随着接近极值而变宽。</li>
+</ul></li>
+</ul>
+<h4
+id="prediction-interval-for-an-individual-response-单个响应的预测区间">3.
+Prediction Interval for an Individual Response 单个响应的预测区间</h4>
+<p>This is the most comprehensive interval and is often the most useful
+for making real-world predictions.
+这是最全面的区间，通常对于进行实际预测最有用。</p>
+<ul>
+<li><strong>The Question It Answers:</strong> “I want to predict the
+selling price for <em>one specific house</em> that has 3 bedrooms and 2
+bathrooms. What is a plausible price range for this <em>single
+house</em>?”</li>
+<li><strong>The Formula:</strong> <span
+class="math inline">\(\hat{\boldsymbol{\beta}}^T \mathbf{x} \pm
+t_{n-p-1}(\alpha/2)s\sqrt{1 +
+\mathbf{x}^T(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{x}}\)</span></li>
+<li><strong>The Key Difference:</strong> Notice the formula is identical
+to the one above, except for the <strong><code>1 + ...</code></strong>
+inside the square root. This “1” is critically important. It accounts
+for the second source of uncertainty.
+<strong>请注意，该公式与上面的公式完全相同，只是平方根中的</strong><code>1 + ...</code>**不同。这个“1”至关重要。它解释了第二个不确定性来源。
+<ol type="1">
+<li><strong>Uncertainty in the model:</strong> We are not perfectly
+certain about the true location of the regression line. This is captured
+by the <span
+class="math inline">\(\mathbf{x}^T(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{x}\)</span>
+term. **我们无法完全确定回归线的真实位置。这可以通过 <span
+class="math inline">\(\mathbf{x}^T(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{x}\)</span>
+项来捕捉。</li>
+<li><strong>Uncertainty in the individual data point:</strong> Even if
+we knew the true regression line perfectly, individual data points would
+still be scattered around it due to random error (<span
+class="math inline">\(\epsilon\)</span>). The “1” in the formula
+accounts for this irreducible, random error of a single observation.
+即使我们完全了解真实的回归线，由于随机误差 (<span
+class="math inline">\(\epsilon\)</span>)，单个数据点仍然会散布在其周围。公式中的“1”解释了单个观测值中这种不可约的随机误差。</li>
+</ol></li>
+</ul>
+<p>Because it accounts for both types of uncertainty, the
+<strong>prediction interval is always wider than the confidence interval
+for the mean</strong>.
+由于它同时考虑了两种不确定性，因此<strong>预测区间</strong>总是比均值的置信区间更宽。</p>
+<h4 id="the-core-difference-an-analogy-一个类比">The Core Difference: An
+Analogy 一个类比</h4>
+<ul>
+<li><p><strong>Confidence Interval (Mean) 均值置信区间:</strong> Like
+predicting the <strong>average</strong> arrival time for a specific
+flight that runs every day. After observing it for a year, you can
+predict the average very accurately (e.g., 10:05 AM ± 2 minutes).
+就像预测每天特定航班的<strong>平均</strong>到达时间。经过一年的观察，您可以非常准确地预测平均值（例如，上午
+10:05 ± 2 分钟）。</p></li>
+<li><p><strong>Prediction Interval (Individual) 个体预测区间:</strong>
+Like predicting the arrival time for that same flight on <strong>one
+specific day</strong> next week. You have to account for the uncertainty
+in the average <em>plus</em> the potential for random, one-time events
+like weather or air traffic delays. Your prediction must be wider to be
+safe (e.g., 10:05 AM ± 15 minutes).
+就像预测同一航班下周<strong>某一天</strong>的到达时间。您必须考虑平均值的不确定性，以及*可能出现的随机、一次性事件，例如天气或空中交通延误。您的预测范围必须更广才能安全（例如，上午
+10:05 ± 15 分钟）。</p></li>
+</ul>
+<h1 id="construct-different-types-of-intervals-1">11.construct different
+types of intervals</h1>
+<p><img src="/imgs/5054C3/ANOVA1.png">
+<img src="/imgs/5054C3/ANOVA2.png"></p>
+<ul>
+<li><strong>内容</strong>:</li>
+</ul>
+<p>These slides explain <strong>Analysis of Variance (ANOVA)</strong>, a
+method used in regression to break down the total variability in your
+data to test if your model is statistically significant as a
+whole.这些幻灯片讲解了<strong>方差分析
+(ANOVA)</strong>，这是一种用于回归分析的方法，用于分解数据中的总变异性，以检验模型整体是否具有统计显著性。</p>
+<h3 id="summary-5">Summary</h3>
+<p>The core idea is to decompose the total variation in the response
+variable (<strong>Total Sum of Squares, SS_total</strong>) into two
+parts: the variation that is explained by your regression model
+(<strong>Regression Sum of Squares, SS_reg</strong>) and the variation
+that is left unexplained (<strong>Error Sum of Squares,
+SS_error</strong>).
+其核心思想是将响应变量的总变异（<strong>总平方和，SS_total</strong>）分解为两部分：回归模型可以解释的变异（<strong>回归平方和，SS_reg</strong>）和未解释的变异（<strong>误差平方和，SS_error</strong>）。</p>
+<p>By comparing the size of the explained variation to the unexplained
+variation using an <strong>F-statistic</strong>, we can formally test
+the hypothesis that our model has predictive power. This entire process
+is neatly organized in an <strong>ANOVA table</strong>.
+通过使用<strong>F
+统计量</strong>比较已解释变异与未解释变异的大小，我们可以正式检验模型具有预测能力的假设。整个过程都整齐地组织在<strong>方差分析表</strong>中。</p>
+<h3 id="deeper-dive-into-concepts-and-connections">Deeper Dive into
+Concepts and Connections</h3>
+<h4
+id="the-decomposition-of-variances-the-core-equation-方差分解核心方程">1.
+The Decomposition of Variances (The Core Equation)
+方差分解（核心方程）</h4>
+<p>The first slide starts with the fundamental equation of ANOVA, which
+stems directly from the geometric properties of least squares:
+第一张幻灯片以方差分析的基本方程开头，该方程直接源于最小二乘的几何性质：</p>
+<p><span class="math display">\[SS_{total} = SS_{reg} +
+SS_{error}\]</span></p>
+<ul>
+<li><strong>SS_total (Total Sum of Squares):</strong> <span
+class="math inline">\(\sum(y_i - \bar{y})^2\)</span>
+<ul>
+<li><strong>Concept:</strong> This measures the <strong>total
+variation</strong> in your response variable, <code>y</code>. Imagine
+you didn’t have a model and your only prediction for any <code>y</code>
+was its overall average, <code>ȳ</code>. SS_total is the total squared
+error of this simple “mean-only” model. It represents the total amount
+of variation you are trying to explain.
+这测量的是响应变量“y”的<strong>总变异</strong>。假设你没有模型，你对任何“y”的唯一预测是它的整体平均值“ȳ”。SS_total
+是这个简单的“仅均值”模型的总平方误差。它代表了你试图解释的变异总量。</li>
+</ul></li>
+<li><strong>SS_reg (Regression Sum of Squares):</strong> <span
+class="math inline">\(\sum(\hat{y}_i - \bar{y})^2\)</span>
+<ul>
+<li><strong>Concept:</strong> This measures the <strong>explained
+variation</strong>. It’s the amount of variation in <code>y</code> that
+is captured by your regression model. It calculates the difference
+between your model’s predictions (<code>ŷ</code>) and the simple average
+(<code>ȳ</code>). A large SS_reg means your model’s predictions are a
+big improvement over just guessing the average.
+<strong>它衡量</strong>解释变异**。它是回归模型捕捉到的 y
+的变异量。它计算模型预测值（“ŷ”）与简单平均值（“ȳ”）之间的差异。较大的
+SS_reg 意味着模型的预测结果比仅仅猜测平均值有显著改善。</li>
+</ul></li>
+<li><strong>SS_error (Error Sum of Squares):</strong> <span
+class="math inline">\(\sum(y_i - \hat{y}_i)^2\)</span>
+<ul>
+<li><strong>Concept:</strong> This measures the <strong>unexplained
+variation</strong> (also called the Residual Sum of Squares). It’s the
+amount of variation your model <em>failed</em> to capture. It’s the sum
+of the squared differences between the actual data (<code>y</code>) and
+your model’s predictions (<code>ŷ</code>).
+<strong>它衡量</strong>未解释变异**（也称为残差平方和）。它是模型<em>未能</em>捕捉到的变异量。它是实际数据
+(<code>y</code>) 与模型预测值 (<code>ŷ</code>) 之间平方差之和。</li>
+</ul></li>
+</ul>
+<p>The <strong>R-squared</strong> value is a direct consequence of this
+decomposition. It’s the proportion of the total variance that is
+explained by the model: <strong>R 平方</strong>
+值是这种分解的直接结果。它是模型解释的总方差的比例：</p>
+<p><span class="math display">\[R^2 =
+\frac{SS_{reg}}{SS_{total}}\]</span></p>
+<h4 id="the-anova-table-and-the-f-test">2. The ANOVA Table and the
+F-test</h4>
+<p>方差分析表和 F 检验 The second slide organizes these sums of squares
+to perform a formal hypothesis test.
+第二张幻灯片整理了这些平方和，以进行正式的假设检验。</p>
+<ul>
+<li><strong>The Question:</strong> “Is there <em>any</em> relationship
+between my set of predictors and the response variable?” or “Is my model
+better than nothing?”
+“我的预测变量集和响应变量之间是否存在<em>任何</em>关系？”或“我的模型比没有模型好吗？”</li>
+<li><strong>The Hypotheses:</strong>
+<ul>
+<li><strong>Null Hypothesis (<span
+class="math inline">\(H_0\)</span>):</strong> <span
+class="math inline">\(\beta_1 = \beta_2 = \dots = \beta_p = 0\)</span>.
+(None of the predictors have a relationship with the response; the model
+is useless). <strong>零假设 (<span
+class="math inline">\(H_0\)</span>)</strong>：<span
+class="math inline">\(\beta_1 = \beta_2 = \dots = \beta_p = 0\)</span>。
+（所有预测变量都与响应变量无关；该模型毫无用处）。</li>
+<li><strong>Alternative Hypothesis (<span
+class="math inline">\(H_1\)</span>):</strong> At least one <span
+class="math inline">\(\beta_j\)</span> is not zero. (The model has some
+predictive value). <strong>备择假设 (<span
+class="math inline">\(H_1\)</span>)：</strong>至少有一个 <span
+class="math inline">\(\beta_j\)</span>
+不为零。（该模型具有一定的预测值）。</li>
+</ul></li>
+</ul>
+<p>To test this, we can’t just compare the raw SS values, because they
+depend on the number of data points and predictors. We need to normalize
+them. 为了验证这一点，我们不能仅仅比较原始的 SS
+值，因为它们取决于数据点和预测变量的数量。我们需要对它们进行归一化。</p>
+<ul>
+<li><strong>Mean Squares (MS):</strong> This is the “average” variation.
+We calculate it by dividing the Sum of Squares by its <strong>degrees of
+freedom (df)</strong>.
+<strong>这是“平均”变异。我们通过将平方和除以其</strong>自由度 (df)**
+来计算它。
+<ul>
+<li><strong>MS_reg</strong> = <span class="math inline">\(SS_{reg} /
+p\)</span>. This is the average explained variation <em>per
+predictor</em>. 这是<em>每个预测变量</em>的平均解释变异。</li>
+<li><strong>MS_error</strong> = <span class="math inline">\(SS_{error} /
+(n - p - 1)\)</span>. This is the average unexplained variation, which
+is our estimate of the error variance, <span
+class="math inline">\(s^2\)</span>. 这是平均未解释变异，即我们对误差方差
+<span class="math inline">\(s^2\)</span> 的估计值。</li>
+</ul></li>
+</ul>
+<h4 id="the-connection-the-f-statistic-联系f-统计量">3. The Connection:
+The F-statistic 联系：F 统计量</h4>
+<p>The <strong>F-statistic</strong> is the key that connects everything.
+It’s the ratio of the two mean squares: <strong>F
+统计量</strong>是连接一切的关键。它是两个均方的比值： <span
+class="math display">\[F = \frac{\text{Mean Squared
+Regression}}{\text{Mean Squared Error}} =
+\frac{MS_{reg}}{MS_{error}}\]</span></p>
+<ul>
+<li><strong>Intuitive Meaning:</strong> The F-statistic is a ratio of
+the <strong>average explained variation</strong> to the <strong>average
+unexplained variation</strong>. F
+统计量是<strong>平均解释变异</strong>与<strong>平均未解释变异</strong>的比值。
+<ul>
+<li>If your model is useless (<span class="math inline">\(H_0\)</span>
+is true), the explained variation should be about the same as the
+random, unexplained variation. The F-statistic will be close to 1.
+如果你的模型无效（H_0$
+为真），则解释变异应该与随机的未解释变异大致相同。F 统计量接近 1。</li>
+<li>If your model is useful (<span class="math inline">\(H_1\)</span> is
+true), the explained variation should be significantly larger than the
+unexplained variation. The F-statistic will be much greater than 1.
+如果你的模型有效（H_1$ 为真），则解释变异应该显著大于未解释变异。 F
+统计量将远大于 1。</li>
+</ul></li>
+</ul>
+<p>We compare our calculated F-statistic to an
+<strong>F-distribution</strong> to get a <strong>p-value</strong>. A
+small p-value (&lt; 0.05) provides strong evidence to reject the null
+hypothesis and conclude that your model, as a whole, is statistically
+significant. 我们将计算出的 F 统计量与<strong>F
+分布</strong>进行比较，得出<strong>p 值</strong>。较小的 p 值（&lt;
+0.05）可以提供强有力的证据来拒绝零假设，并得出您的模型整体具有统计显著性的结论。</p>
 
       
     </div>
