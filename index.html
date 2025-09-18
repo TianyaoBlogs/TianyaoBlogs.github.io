@@ -253,7 +253,7 @@ id="step4不需要此插件终端中运行以下命令来卸载插件">Step4:不
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2025-09-18 12:19:49" itemprop="dateModified" datetime="2025-09-18T12:19:49+08:00">2025-09-18</time>
+                <time title="修改时间：2025-09-18 19:37:07" itemprop="dateModified" datetime="2025-09-18T19:37:07+08:00">2025-09-18</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -1286,6 +1286,258 @@ projection matrix. It takes the original data vector <span
 class="math inline">\(\mathbf{y}\)</span> and projects it onto the space
 that is orthogonal to all of your predictors, giving you the residual
 vector directly.</p>
+<h1
+id="visualization-of-ordinary-least-squares-ols-regression">8.visualization
+of Ordinary Least Squares (OLS) regression</h1>
+<p><img src="/imgs/5054C3/visualization_of_Ordinary_Least_Squares_(OLS)_regression.png"></p>
+<ul>
+<li><strong>内容</strong>:</li>
+</ul>
+<p>This slide provides an excellent geometric visualization of what’s
+happening “under the hood” in Ordinary Least Squares (OLS) regression.
+It translates the algebraic formulas into a more intuitive spatial
+concept. 这张幻灯片以出色的几何可视化方式展现了普通最小二乘 (OLS)
+回归的“幕后”机制。它将代数公式转化为更直观的空间概念。</p>
+<h3 id="summary-1">## Summary</h3>
+<p>The image shows that the process of finding the least squares
+estimates is geometrically equivalent to taking the <strong>actual
+outcome vector</strong> (<span
+class="math inline">\(\mathbf{y}\)</span>) and finding its
+<strong>orthogonal projection</strong> (<span
+class="math inline">\(\hat{\mathbf{y}}\)</span>) onto a
+<strong>hyperplane</strong> formed by the predictor variables (<span
+class="math inline">\(\mathbf{x}_1\)</span> and <span
+class="math inline">\(\mathbf{x}_2\)</span>). The projection <span
+class="math inline">\(\hat{\mathbf{y}}\)</span> is the vector of fitted
+values, representing the closest possible approximation of the real data
+that the model can achieve.</p>
+<p>该图显示，寻找最小二乘估计值的过程在几何上等同于将<strong>实际结果向量</strong>
+(<span class="math inline">\(\mathbf{y}\)</span>)
+求出其<strong>正交投影</strong> (<span
+class="math inline">\(\hat{\mathbf{y}}\)</span>) 到由预测变量 (<span
+class="math inline">\(\mathbf{x}_1\)</span> 和 <span
+class="math inline">\(\mathbf{x}_2\)</span>
+构成的<strong>超平面</strong>上。投影 <span
+class="math inline">\(\hat{\mathbf{y}}\)</span>
+是拟合值的向量，表示模型能够达到的与真实数据最接近的近似值。</p>
+<h3 id="the-concepts-explained-spatially空间概念解释">## The Concepts
+Explained Spatially空间概念解释</h3>
+<p>Let’s break down each element of the diagram and its meaning:</p>
+<h4 id="the-space-itself-空间本身">1. The Space Itself 空间本身</h4>
+<ul>
+<li><strong>Concept:</strong> We are not in a simple 2D or 3D graph
+where axes are X and Y. Instead, we are in an <strong>n-dimensional
+space</strong>, where <strong>n is the number of observations</strong>
+in your dataset. Each axis in this space corresponds to one observation
+(e.g., one person, one day).
+我们并非身处一个简单的二维或三维图形中，其中坐标轴为 X 和
+Y。相反，我们身处一个 <strong>n 维空间</strong>，其中 <strong>n
+是数据集中的观测值数量</strong>。此空间中的每个轴对应一个观测值（例如，一个人，一天）。</li>
+<li><strong>Meaning:</strong> A vector like <strong>y</strong> or
+<strong>x₁</strong> is a single point in this high-dimensional space.
+For example, if you have 50 data points, <strong>y</strong> is a vector
+pointing to a specific location in a 50-dimensional space. 像
+<strong>y</strong> 或 <strong>x₁</strong>
+这样的向量是这个高维空间中的单个点。例如，如果您有 50
+个数据点，<strong>y</strong> 就是指向 50 维空间中特定位置的向量。</li>
+</ul>
+<h4
+id="the-predictor-hyperplane-the-yellow-surface预测变量超平面黄色表面">2.
+The Predictor Hyperplane (The Yellow
+Surface)预测变量超平面（黄色表面）</h4>
+<ul>
+<li><strong>Concept:</strong> The vectors for your predictor variables,
+<strong>x₁</strong> and <strong>x₂</strong>, define a flat surface. If
+you had only one predictor, this would be a line. With two, it’s a
+plane. With more, it’s a <strong>hyperplane</strong>.预测变量的向量
+<strong>x₁</strong> 和 <strong>x₂</strong>
+定义了一个平面。如果只有一个预测变量，它就是一条线。如果有两个，它就是一个平面。如果有更多的预测变量，它就是一个<strong>超平面</strong>。</li>
+<li><strong>Meaning:</strong> This yellow plane represents the
+<strong>“world of possible predictions”</strong> that your model is
+allowed to make. Any linear combination of your predictors—which is what
+a linear regression model calculates—will result in a vector that lies
+<em>somewhere</em> on this surface.
+这个黄色平面代表你的模型可以做出的<strong>“可能预测的世界”</strong>。任何预测变量的线性组合（也就是线性回归模型计算的结果）都会产生一个位于这个平面<em>某处</em>的向量。
+#### 3. The Actual Outcome Vector (y)实际结果向量 (y)</li>
+<li><strong>Concept:</strong> The red vector <strong>y</strong>
+represents your actual, observed data. It’s a single point in the
+n-dimensional space. 红色向量 <strong>y</strong>
+代表你实际观察到的数据。它是 n 维空间中的一个点。</li>
+<li><strong>Meaning:</strong> Critically, this vector usually does
+<strong>not</strong> lie on the predictor hyperplane. If it did, your
+model would be a perfect fit with zero error. The fact that it’s “off
+the plane” represents the real-world noise and variation that the model
+cannot fully capture.
+至关重要的是，这个向量通常<strong>不</strong>位于预测变量超平面上。如果它位于超平面上，你的模型将完美拟合，误差为零。它“偏离平面”代表了模型无法完全捕捉到的真实世界的噪声和变化。</li>
+</ul>
+<h4 id="the-fitted-value-vector-ŷ拟合值向量-ŷ">4. The Fitted Value
+Vector (ŷ)拟合值向量 (ŷ)</h4>
+<ul>
+<li><strong>Concept:</strong> Since <strong>y</strong> is not on the
+plane, we find the point on the plane that is <strong>geometrically
+closest</strong> to <strong>y</strong>. This closest point is found by
+dropping a perpendicular line from <strong>y</strong> to the plane. The
+point where it lands is the <strong>orthogonal projection</strong>,
+labeled <strong>ŷ</strong> (y-hat). 由于 <strong>y</strong>
+不在平面上，因此我们在平面上找到与 <strong>y</strong>
+<strong>几何上最接近的点。这个最接近点是通过从 </strong>y**
+到平面做一条垂直线找到的。垂直线所在的点就是<strong>正交投影</strong>，标记为
+<strong>ŷ</strong> (y-hat)。</li>
+<li><strong>Meaning:</strong> <strong>ŷ is the vector of your model’s
+fitted values.</strong> It is the “best” possible approximation of the
+real data that can be created using the given predictors because it
+minimizes the distance (and therefore the squared error) between the
+actual data (<strong>y</strong>) and the model’s prediction. <strong>ŷ
+是模型拟合值的向量。</strong>它是使用给定预测变量可以创建的对真实数据的“最佳”近似值，因为它最小化了实际数据
+(<strong>y</strong>)
+与模型预测值之间的距离（从而最小化了平方误差）。</li>
+</ul>
+<h4 id="the-residual-vector-the-dashed-line残差向量虚线">5. The Residual
+Vector (The Dashed Line)残差向量（虚线）</h4>
+<ul>
+<li><strong>Concept:</strong> The dashed line connecting the tip of
+<strong>y</strong> to the tip of <strong>ŷ</strong> is the
+<strong>residual vector</strong> (<span
+class="math inline">\(\boldsymbol{\epsilon} = \mathbf{y} -
+\hat{\mathbf{y}}\)</span>). Its length is the shortest possible distance
+from <strong>y</strong> to the hyperplane.
+连接<strong>y</strong>顶点和<strong>ŷ</strong>顶点的虚线是<strong>残差向量</strong>
+(<span class="math inline">\(\boldsymbol{\epsilon} = \mathbf{y} -
+\hat{\mathbf{y}}\)</span>)。其长度是从<strong>y</strong>到超平面的最短可能距离。</li>
+<li><strong>Meaning:</strong> This vector represents the
+<strong>error</strong> of the model—the part of the actual data that is
+left over after accounting for the predictors. The right-angle symbol
+(└) is the most important part of the diagram, as it shows this error is
+<strong>orthogonal</strong> (perpendicular) to the prediction and to all
+the predictors. This visualizes the core property that the model’s
+errors are uncorrelated with the predictors.
+连接<strong>y</strong>顶点和<strong>ŷ</strong>顶点的虚线是<strong>残差向量</strong>
+(<span class="math inline">\(\boldsymbol{\epsilon} = \mathbf{y} -
+\hat{\mathbf{y}}\)</span>)。其长度是从<strong>y</strong>到超平面的最短可能距离。</li>
+</ul>
+<h1 id="singular-value-decomposition-svd">8.Singular Value Decomposition
+(SVD)</h1>
+<ul>
+<li><strong>内容</strong>:</li>
+</ul>
+<p>Of course. These slides delve into the more advanced linear algebra
+behind the projection matrix (<strong>H</strong>), explaining its
+fundamental properties and offering a new way to construct it using
+<strong>Singular Value Decomposition (SVD)</strong>.</p>
+<h3 id="summary-2">## Summary</h3>
+<p>These slides show that the <strong>projection matrix (H)</strong>,
+which is central to least squares, has two key mathematical properties:
+it’s <strong>symmetric</strong> and <strong>idempotent</strong>
+(projecting twice is the same as projecting once). These properties
+dictate that its eigenvalues must be either 1 or 0. Singular Value
+Decomposition (SVD) of the data matrix <strong>X</strong> provides an
+elegant and numerically stable way to express <strong>H</strong> as
+<strong>UUᵀ</strong>, which makes these fundamental properties easier to
+understand and prove.</p>
+<h3 id="concepts-and-process-explained-in-detail-1">## Concepts and
+Process Explained in Detail</h3>
+<h4 id="singular-value-decomposition-svd-1">1. Singular Value
+Decomposition (SVD)</h4>
+<p>The first slide introduces SVD, a powerful method for factoring any
+matrix.</p>
+<ul>
+<li><strong>Concept:</strong> SVD breaks down your data matrix
+<strong>X</strong> into three simpler matrices: <strong>X =
+UDVᵀ</strong>. Think of this as revealing the fundamental structure of
+your data.
+<ul>
+<li><strong>U:</strong> An <strong>orthogonal matrix</strong> whose
+columns form a perfect, orthonormal basis for the space spanned by your
+predictors (the column space of <strong>X</strong>). These columns
+represent the principal directions of your data’s space.</li>
+<li><strong>D:</strong> A <strong>diagonal matrix</strong> containing
+the “singular values,” which measure the importance or magnitude of each
+of these principal directions.</li>
+<li><strong>V:</strong> Another <strong>orthogonal matrix</strong>.</li>
+</ul></li>
+<li><strong>Process (How SVD simplifies the Projection Matrix):</strong>
+The main takeaway from this slide is the new, simpler formula for the
+hat matrix: <span class="math display">\[\mathbf{H} =
+\mathbf{UU}^T\]</span> This result is derived by substituting <strong>X
+= UDVᵀ</strong> into the original, more complex formula for
+<strong>H</strong>: <span class="math display">\[\mathbf{H} =
+\mathbf{X}(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\]</span> When you
+perform this substitution and use the fact that for orthogonal matrices
+<strong>U</strong> and <strong>V</strong>, we have <strong>UᵀU =
+I</strong> and <strong>VᵀV = I</strong>, the <strong>D</strong> and
+<strong>V</strong> matrices completely cancel out, leaving the
+beautifully simple form <strong>H = UUᵀ</strong>. This tells us that
+projection is fundamentally about the basis vectors (<strong>U</strong>)
+of the predictor space.</li>
+</ul>
+<h4 id="the-properties-of-the-projection-matrix-h">2. The Properties of
+the Projection Matrix (H)</h4>
+<p>The second slide describes the essential nature of any projection
+matrix.</p>
+<ul>
+<li><p><strong>Symmetric (H = Hᵀ):</strong> This property ensures that
+the projection is orthogonal (i.e., it finds the closest point by moving
+perpendicularly).</p></li>
+<li><p><strong>Idempotent (H² = H):</strong> This is the most intuitive
+property of a projection.</p>
+<ul>
+<li><strong>Concept:</strong> “Doing it twice is the same as doing it
+once.”</li>
+<li><strong>Geometric Meaning:</strong> Imagine you project a point onto
+a flat tabletop. That projected point is now <em>on the table</em>. If
+you try to project it onto the table <em>again</em>, it doesn’t move.
+The projection of a projection is just the projection itself.
+Mathematically, this is <strong>H(Hv) = Hv</strong>, which simplifies to
+<strong>H² = H</strong>.</li>
+</ul></li>
+</ul>
+<h4 id="eigenvalues-and-eigenspaces">3. Eigenvalues and Eigenspaces</h4>
+<p>The idempotency property has a profound consequence for the matrix’s
+eigenvalues.</p>
+<ul>
+<li><strong>Concept:</strong> The eigenvalues of <strong>H</strong> can
+only be <strong>1 or 0</strong>.</li>
+<li><strong>Process (The Proof):</strong>
+<ol type="1">
+<li>Let <strong>v</strong> be an eigenvector of <strong>H</strong> with
+eigenvalue <span class="math inline">\(\lambda\)</span>. By definition,
+<strong>Hv</strong> = <span
+class="math inline">\(\lambda\)</span><strong>v</strong>.</li>
+<li>If we apply <strong>H</strong> again, we get <strong>H(Hv)</strong>
+= <strong>H</strong>(<span
+class="math inline">\(\lambda\)</span><strong>v</strong>) = <span
+class="math inline">\(\lambda\)</span>(<strong>Hv</strong>) = <span
+class="math inline">\(\lambda\)</span>(<span
+class="math inline">\(\lambda\)</span><strong>v</strong>) = <span
+class="math inline">\(\lambda^2\)</span><strong>v</strong>.</li>
+<li>So, we have <strong>H²v</strong> = <span
+class="math inline">\(\lambda^2\)</span><strong>v</strong>.</li>
+<li>But since <strong>H</strong> is idempotent, <strong>H² = H</strong>,
+which means <strong>H²v = Hv</strong> = <span
+class="math inline">\(\lambda\)</span><strong>v</strong>.</li>
+<li>Therefore, we must have <span
+class="math inline">\(\lambda^2\)</span><strong>v</strong> = <span
+class="math inline">\(\lambda\)</span><strong>v</strong>, which means
+<span class="math inline">\(\lambda^2 = \lambda\)</span>. The only two
+numbers in existence that satisfy this equation are <strong>0 and
+1</strong>.</li>
+</ol></li>
+<li><strong>Connecting Eigenvalues to the Model:</strong>
+<ul>
+<li><strong>Eigenvalue = 1:</strong> The eigenvectors associated with an
+eigenvalue of 1 are the vectors that <strong>do not change</strong> when
+projected. This is only possible if they were already in the space being
+projected onto. Therefore, the space <code>L₁</code> is the
+<strong>column space of X</strong>—the “model space.” <strong>H</strong>
+is the projection onto this space.</li>
+<li><strong>Eigenvalue = 0:</strong> The eigenvectors associated with an
+eigenvalue of 0 are the vectors that get sent to the zero vector when
+projected. This happens to vectors that are <strong>orthogonal</strong>
+to the projection space. Therefore, the space <code>L₀</code> is the
+<strong>orthogonal “error” space</strong>. The matrix <strong>I -
+H</strong> is the projection onto this space.</li>
+</ul></li>
+</ul>
 
       
     </div>
