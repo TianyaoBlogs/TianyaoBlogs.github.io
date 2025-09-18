@@ -253,7 +253,7 @@ id="step4不需要此插件终端中运行以下命令来卸载插件">Step4:不
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2025-09-19 03:09:12" itemprop="dateModified" datetime="2025-09-19T03:09:12+08:00">2025-09-19</time>
+                <time title="修改时间：2025-09-19 03:20:07" itemprop="dateModified" datetime="2025-09-19T03:20:07+08:00">2025-09-19</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -1415,7 +1415,7 @@ errors are uncorrelated with the predictors.
 (<span class="math inline">\(\boldsymbol{\epsilon} = \mathbf{y} -
 \hat{\mathbf{y}}\)</span>)。其长度是从<strong>y</strong>到超平面的最短可能距离。</li>
 </ul>
-<h1 id="singular-value-decomposition-svd-奇异值分解-svd">8.Singular
+<h1 id="singular-value-decomposition-svd-奇异值分解-svd">9.Singular
 Value Decomposition (SVD) 奇异值分解 (SVD)</h1>
 <p><img src="/imgs/5054C3/SVD1.png">
 <img src="/imgs/5054C3/SVD2.png"></p>
@@ -1589,7 +1589,7 @@ H</strong> is the projection onto this space.</p></li>
 <code>L₀</code> 是</strong>正交“误差”空间<strong>。矩阵 </strong>I - H**
 是到该空间的投影。</li>
 </ul>
-<h1 id="statistical-inference-1">9.statistical inference</h1>
+<h1 id="statistical-inference-1">10.statistical inference</h1>
 <p><img src="/imgs/5054C3/statistical_inference_in_linear_regression1.png">
 <img src="/imgs/5054C3/statistical_inference_in_linear_regression2.png"></p>
 <ul>
@@ -1795,7 +1795,7 @@ and provides a better fit than a model with no predictors. 如果 F
 检验得出的 p
 值较小，则可以得出结论，您的模型整体上具有统计显著性，并且比没有预测因子的模型拟合效果更好。</p></li>
 </ul>
-<h1 id="construct-different-types-of-intervals">10.construct different
+<h1 id="construct-different-types-of-intervals">11.construct different
 types of intervals</h1>
 <p><img src="/imgs/5054C3/construct_different_types_of_intervals1.png">
 <img src="/imgs/5054C3/construct_different_types_of_intervals2.png"></p>
@@ -1955,7 +1955,7 @@ safe (e.g., 10:05 AM ± 15 minutes).
 就像预测同一航班下周<strong>某一天</strong>的到达时间。您必须考虑平均值的不确定性，以及*可能出现的随机、一次性事件，例如天气或空中交通延误。您的预测范围必须更广才能安全（例如，上午
 10:05 ± 15 分钟）。</p></li>
 </ul>
-<h1 id="construct-different-types-of-intervals-1">11.construct different
+<h1 id="construct-different-types-of-intervals-1">12.construct different
 types of intervals</h1>
 <p><img src="/imgs/5054C3/ANOVA1.png">
 <img src="/imgs/5054C3/ANOVA2.png"></p>
@@ -2119,6 +2119,170 @@ hypothesis and conclude that your model, as a whole, is statistically
 significant. 我们将计算出的 F 统计量与<strong>F
 分布</strong>进行比较，得出<strong>p 值</strong>。较小的 p 值（&lt;
 0.05）可以提供强有力的证据来拒绝零假设，并得出您的模型整体具有统计显著性的结论。</p>
+<h1 id="construct-different-types-of-intervals-2">12.construct different
+types of intervals</h1>
+<p><img src="/imgs/5054C3/Gauss_Markov1.png">
+<img src="/imgs/5054C3/Gauss_Markov2.png"></p>
+<ul>
+<li><strong>内容</strong>: These slides explain the <strong>Gauss-Markov
+theorem</strong>, a cornerstone result in statistics that establishes
+why the Least Squares Estimator (LSE) is considered the gold standard
+for fitting linear models under a specific set of assumptions.
+这些幻灯片解释了<strong>高斯-马尔可夫定理</strong>，这是统计学中的一个基石性成果，它阐明了为什么最小二乘估计量
+(LSE) 被认为是在特定假设条件下拟合线性模型的黄金标准。</li>
+</ul>
+<h3 id="summary-6">Summary</h3>
+<p>The slides argue for the superiority of the Least Squares Estimator
+(LSE) by highlighting its key properties: it’s easy to compute,
+consistent, and efficient. This culminates in the <strong>Gauss-Markov
+Theorem</strong>, which proves that LSE is <strong>BLUE</strong>: the
+<strong>B</strong>est <strong>L</strong>inear <strong>U</strong>nbiased
+<strong>E</strong>stimator. This means that among all estimators that
+are both linear and unbiased, the LSE is the “best” because it has the
+smallest possible variance, making it the most precise. The second slide
+provides the key steps for the mathematical proof of this important
+theorem. 这些幻灯片通过强调最小二乘估计量 (LSE)
+的关键特性来论证其优越性：易于计算、一致性高且高效。最终得出了<strong>高斯-马尔可夫定理</strong>，该定理证明了
+LSE
+是<strong>BLUE</strong>：<strong>最佳</strong>线性<strong>无偏</strong>估计量。这意味着在所有线性且无偏的估计量中，LSE
+是“最佳”的，因为它具有最小的方差，因此精度最高。第二张幻灯片提供了这一重要定理的数学证明的关键步骤。</p>
+<h3 id="deeper-dive-into-the-concepts">Deeper Dive into the
+Concepts</h3>
+<h4 id="properties-of-lse-slide-1-局部正交估计-lse-的性质">Properties of
+LSE (Slide 1) 局部正交估计 (LSE) 的性质</h4>
+<ul>
+<li><strong>Easy Computation易于计算:</strong> The LSE has a direct,
+closed-form solution called the Normal Equation (<span
+class="math inline">\(\hat{\boldsymbol{\beta}} =
+(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\mathbf{y}\)</span>). You can
+calculate it directly without needing complex iterative algorithms.</li>
+<li><strong>Consistency一致性:</strong> As your sample size gets larger
+and larger, the LSE estimate (<span
+class="math inline">\(\hat{\boldsymbol{\beta}}\)</span>) is guaranteed
+to get closer and closer to the true population value (<span
+class="math inline">\(\boldsymbol{\beta}\)</span>). With enough data, it
+will find the truth. 随着样本量越来越大，LSE 估计值 (<span
+class="math inline">\(\hat{\boldsymbol{\beta}}\)</span>)
+必然会越来越接近真实的总体值 (<span
+class="math inline">\(\boldsymbol{\beta}\)</span>)。只要有足够的数据，它就能找到真相。</li>
+<li><strong>Efficiency效率:</strong> An efficient estimator is the one
+with the lowest possible variance. This means its estimates are the most
+precise and least spread out.
+高效的估计器是方差尽可能低的估计器。这意味着它的估计值最精确，且分布最均匀。</li>
+<li><strong>BLUE (Best Linear Unbiased
+Estimator)BLUE（最佳线性无偏估计器）:</strong> This acronym elegantly
+summarizes the Gauss-Markov theorem.
+这个缩写完美地概括了高斯-马尔可夫定理。
+<ul>
+<li><strong>Linear:</strong> The estimator is a linear function of the
+response variable <strong>y</strong>. We can write it as <span
+class="math inline">\(\hat{\boldsymbol{\beta}} =
+\mathbf{A}\mathbf{y}\)</span> for some matrix <strong>A</strong>.
+估计器是响应变量<strong>y</strong>的线性函数。对于某个矩阵<strong>A</strong>，我们可以将其写成
+<span class="math inline">\(\hat{\boldsymbol{\beta}} =
+\mathbf{A}\mathbf{y}\)</span>。</li>
+<li><strong>Unbiased:</strong> The estimator does not systematically
+overestimate or underestimate the true parameter. On average, its
+expected value is the true value: <span
+class="math inline">\(E[\hat{\boldsymbol{\beta}}] =
+\boldsymbol{\beta}\)</span>.
+估计器不会系统性地高估或低估真实参数。平均而言，其预期值即为真实值：<span
+class="math inline">\(E[\hat{\boldsymbol{\beta}}] =
+\boldsymbol{\beta}\)</span>。</li>
+<li><strong>Best:</strong> It has the <strong>minimum variance</strong>
+of all possible linear unbiased estimators. It’s the most precise and
+reliable estimator in its class.
+在所有可能的线性无偏估计器中，它的<strong>方差</strong>最小。它是同类中最精确、最可靠的估计器。</li>
+</ul></li>
+</ul>
+<h4 id="the-gauss-markov-theorem-高斯-马尔可夫定理">The Gauss-Markov
+Theorem 高斯-马尔可夫定理</h4>
+<p>The theorem provides the theoretical justification for using OLS.
+该定理为使用最小二乘法 (OLS) 提供了理论依据。 * <strong>The Core
+Idea:</strong> You could invent many different ways to estimate the
+coefficients of a linear model. As long as your proposed methods are
+both linear and unbiased, the Gauss-Markov theorem guarantees that none
+of them will be more precise than the standard least squares method. LSE
+gives the “sharpest” possible estimates.
+你可以发明许多不同的方法来估计线性模型的系数。只要你提出的方法是线性的且无偏的，高斯-马尔可夫定理就能保证，它们都不会比标准最小二乘法更精确。最小二乘法
+(LSE) 给出了“最精确”的估计值。</p>
+<ul>
+<li><strong>The Logic of the Proof (Slide 2) 证明逻辑:</strong> The
+proof is a clever comparison of variances. **该证明巧妙地比较了方差。
+<ol type="1">
+<li>It starts by defining <strong>any</strong> other linear unbiased
+estimator as <span class="math inline">\(\tilde{\boldsymbol{\beta}} =
+\mathbf{A}\mathbf{y}\)</span>.
+首先，将<strong>任何</strong>其他线性无偏估计量定义为 <span
+class="math inline">\(\tilde{\boldsymbol{\beta}} =
+\mathbf{A}\mathbf{y}\)</span>。</li>
+<li>It uses the “unbiased” property to force a condition on the matrix
+<strong>A</strong>, which ultimately leads to the insight that
+<strong>A</strong> can be written in terms of the LSE matrix plus some
+other matrix <strong>D</strong>, where <strong>DX = 0</strong>.
+它利用“无偏”性质对矩阵<strong>A</strong>强制施加一个条件，最终得出<strong>A</strong>可以写成LSE矩阵加上另一个矩阵<strong>D</strong>，其中<strong>DX
+= 0</strong>。</li>
+<li>It then calculates the variance of this other estimator, which turns
+out to be: <span class="math display">\[Var(\tilde{\boldsymbol{\beta}})
+= Var(\text{LSE}) + \text{a non-negative term involving }
+\mathbf{D}\]</span> 然后计算另一个估计量的方差，结果为： <span
+class="math display">\[Var(\tilde{\boldsymbol{\beta}}) = Var(\text{LSE})
++ \text{一个包含 } \mathbf{D} 的非负项\]</span></li>
+<li>Since the variance of any other linear unbiased estimator is the
+variance of the LSE <em>plus</em> something non-negative, the variance
+of the LSE must be the smallest possible value.
+由于任何其他线性无偏估计量的方差都是LSE的方差<em>加上</em>一个非负项，因此LSE的方差必须是最小的可能值。</li>
+</ol></li>
+</ul>
+<h3 id="further-understandings-beyond-the-slides">Further Understandings
+Beyond the Slides</h3>
+<h4 id="what-are-the-required-assumptions需要哪些假设">1. What are the
+required assumptions?需要哪些假设？</h4>
+<p>The Gauss-Markov theorem is powerful, but it’s not magic. It only
+holds if a set of assumptions about the model’s errors (<span
+class="math inline">\(\epsilon\)</span>) are met:
+高斯-马尔可夫定理虽然强大，但并非魔法。它仅在满足以下关于模型误差 (<span
+class="math inline">\(\epsilon\)</span>) 的假设时成立： * <strong>Zero
+Mean零均值:</strong> The average of the errors is zero (<span
+class="math inline">\(E[\epsilon] = 0\)</span>). 误差的平均值为零 (<span
+class="math inline">\(E[\epsilon] = 0\)</span>)。 * <strong>Constant
+Variance (Homoscedasticity)恒定方差（同方差性）:</strong> The errors
+have the same variance, <span class="math inline">\(\sigma^2\)</span>,
+at all levels of the predictors.
+<strong>在预测变量的各个水平上，误差具有相同的方差 <span
+class="math inline">\(\sigma^2\)</span>。 * </strong>Uncorrelated
+Errors不相关误差:** The error for one observation is not correlated with
+the error for another. 一个观测值的误差与另一个观测值的误差不相关。 *
+<strong>No Perfect Multicollinearity非完全多重共线性:</strong> The
+predictor variables are not perfectly linearly related.
+预测变量并非完全线性相关。</p>
+<p><strong>Crucially, the Gauss-Markov theorem does NOT require the
+errors to be normally distributed.</strong> The normality assumption is
+only needed later for constructing confidence intervals and conducting
+t-tests and F-tests.
+至关重要的是，高斯-马尔可夫定理并不要求误差服从正态分布。**正态性假设仅在构建置信区间以及进行
+t 检验和 F 检验时需要。</p>
+<h4
+id="when-is-lse-not-the-best-the-bias-variance-tradeoff-什么时候-lse-不是最佳选择-偏差-方差权衡">2.
+When is LSE NOT the Best? (The Bias-Variance Tradeoff) 什么时候 LSE
+不是最佳选择？ （偏差-方差权衡）</h4>
+<p>While LSE is the best <em>unbiased</em> estimator, sometimes we can
+get better predictive performance by accepting a little bit of bias in
+exchange for a large reduction in variance. This is the core idea behind
+modern regularization methods: 虽然 LSE
+是最好的<em>无偏</em>估计器，但有时我们可以通过接受少量偏差来大幅降低方差，从而获得更好的预测性能。这是现代正则化方法背后的核心思想：
+* <strong>Ridge Regression and LASSO岭回归和 LASSO:</strong> These are
+popular techniques that produce <em>biased</em> estimates of the
+coefficients. However, by introducing this small amount of bias, they
+can often produce models with a lower overall error (Mean Squared Error)
+than LSE, especially when predictors are highly correlated.
+这些是产生<em>有偏</em>系数估计的流行技术。然而，通过引入少量偏差，它们通常可以生成比
+LSE
+具有更低总体误差（均方误差）的模型，尤其是在预测变量高度相关的情况下。
+Therefore, while LSE is the theoretical champion in the world of
+unbiased estimators, in the world of predictive modeling, methods that
+intentionally introduce bias can sometimes be superior. 因此，虽然 LSE
+是无偏估计领域的理论冠军，但在预测模型领域，有意引入偏差的方法有时会更胜一筹。</p>
 
       
     </div>
