@@ -27,18 +27,18 @@
 <meta property="og:site_name" content="TianyaoBlogs">
 <meta property="og:description" content="统计机器学习Lecture-3 Lecturer: Prof.XIA DONG 1. General linear regression model.  ## 1.1 general linear regression model - 内容: general linear regression model. the fundamental equation: \[y_i &#x3D; \b">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://tianyaoblogs.github.io/.io//5054C3/General_linear_regression_model.png">
-<meta property="og:image" content="https://tianyaoblogs.github.io/.io//5054C3/Simple_Linear_Regression.png">
-<meta property="og:image" content="https://tianyaoblogs.github.io/.io//5054C3/Statistical_Inference1.png">
-<meta property="og:image" content="https://tianyaoblogs.github.io/.io//5054C3/Statistical_Inference2.png">
-<meta property="og:image" content="https://tianyaoblogs.github.io/.io//5054C3/Multiple_Linear%20Regression1.png">
-<meta property="og:image" content="https://tianyaoblogs.github.io/.io//5054C3/Multiple_Linear%20Regression2.png">
+<meta property="og:image" content="https://tianyaoblogs.github.io/imgs/5054C3/General_linear_regression_model.png">
+<meta property="og:image" content="https://tianyaoblogs.github.io/imgs/5054C3/Simple_Linear_Regression.png">
+<meta property="og:image" content="https://tianyaoblogs.github.io/imgs/5054C3/Statistical_Inference1.png">
+<meta property="og:image" content="https://tianyaoblogs.github.io/imgs/5054C3/Statistical_Inference2.png">
+<meta property="og:image" content="https://tianyaoblogs.github.io/imgs/5054C3/Multiple_Linear%20Regression1.png">
+<meta property="og:image" content="https://tianyaoblogs.github.io/imgs/5054C3/Multiple_Linear%20Regression2.png">
 <meta property="article:published_time" content="2025-09-16T13:00:00.000Z">
-<meta property="article:modified_time" content="2025-09-18T03:09:24.498Z">
+<meta property="article:modified_time" content="2025-09-18T03:24:14.004Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="Machine Learning">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://tianyaoblogs.github.io/.io//5054C3/General_linear_regression_model.png">
+<meta name="twitter:image" content="https://tianyaoblogs.github.io/imgs/5054C3/General_linear_regression_model.png">
 
 <link rel="canonical" href="https://tianyaoblogs.github.io/2025/09/16/5054C3/">
 
@@ -188,7 +188,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2025-09-18 11:09:24" itemprop="dateModified" datetime="2025-09-18T11:09:24+08:00">2025-09-18</time>
+                <time title="修改时间：2025-09-18 11:24:14" itemprop="dateModified" datetime="2025-09-18T11:24:14+08:00">2025-09-18</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -216,27 +216,33 @@
 DONG</a></p>
 <h1 id="general-linear-regression-model.">1. General linear regression
 model.</h1>
-<p><img src="/.io//5054C3/General_linear_regression_model.png" alt="Diagram of a linear regression model">
+<p><img src="/imgs/5054C3/General_linear_regression_model.png" alt="Diagram of a linear regression model">
 ## 1.1 general linear regression model - <strong>内容</strong>:
 <strong>general linear regression model</strong>.</p>
 <p>the fundamental equation:</p>
 <p><span class="math display">\[y_i = \beta_0 + \beta_1x_{i1} + \dots +
 \beta_px_{ip} + \epsilon_i\]</span></p>
 <p>And it correctly identifies the main goal: to <strong>estimate the
-parameters</strong> (the coefficients <span class="math inline">\(\beta_0, \beta_1, \dots, \beta_p\)</span>) from
+parameters</strong> (the coefficients <span
+class="math inline">\(\beta_0, \beta_1, \dots, \beta_p\)</span>) from
 data so we can make predictions on new data.</p>
-<p>核心目标：通过数据<strong>估计参数</strong>（即系数 <span class="math inline">\(\beta_0, \beta_1, \dots,
+<p>核心目标：通过数据<strong>估计参数</strong>（即系数 <span
+class="math inline">\(\beta_0, \beta_1, \dots,
 \beta_p\)</span>），从而对新数据进行预测。</p>
-<h2 id="how-we-actually-find-the-best-values-for-the-β-coefficients-parameter-estimation">1.2
-How we actually find the best values for the <span class="math inline">\(β\)</span> coefficients (parameter
+<h2
+id="how-we-actually-find-the-best-values-for-the-β-coefficients-parameter-estimation">1.2
+How we actually find the best values for the <span
+class="math inline">\(β\)</span> coefficients (parameter
 estimation)?:</h2>
 <ul>
-<li><strong>内容</strong>: We find the best values for the <span class="math inline">\(\beta\)</span> coefficients by finding the values
+<li><strong>内容</strong>: We find the best values for the <span
+class="math inline">\(\beta\)</span> coefficients by finding the values
 that <strong>minimize the overall error</strong> of the model. The most
 common and fundamental method for this is called <strong>Ordinary Least
 Squares (OLS)</strong>.</li>
 </ul>
-<h3 id="the-main-method-ordinary-least-squares-ols-普通最小二乘法-ols">##
+<h3
+id="the-main-method-ordinary-least-squares-ols-普通最小二乘法-ols">##
 The Main Method: Ordinary Least Squares (OLS) 普通最小二乘法 (OLS)</h3>
 <p>The core idea of OLS is to find the line (or hyperplane in multiple
 dimensions) that is as close as possible to all the data points
@@ -245,10 +251,13 @@ simultaneously. OLS
 <h4 id="define-the-error-residuals-误差">1. Define the Error (Residuals)
 误差</h4>
 <p>First, we need to define what “error” means. For any single data
-point, the error is the difference between the actual value (<span class="math inline">\(y_i\)</span>) and the value predicted by our model
+point, the error is the difference between the actual value (<span
+class="math inline">\(y_i\)</span>) and the value predicted by our model
 (<span class="math inline">\(\hat{y}_i\)</span>). This difference is
 called the <strong>residual</strong>.
-首先，需要定义“误差”的含义。对于任何单个数据点，误差是实际值 (<span class="math inline">\(y_i\)</span>) 与模型预测值 (<span class="math inline">\(\hat{y}_i\)</span>)
+首先，需要定义“误差”的含义。对于任何单个数据点，误差是实际值 (<span
+class="math inline">\(y_i\)</span>) 与模型预测值 (<span
+class="math inline">\(\hat{y}_i\)</span>)
 之间的差值。这个差值称为<strong>残差</strong>。</p>
 <p><strong>Residual</strong> = Actual Value - Predicted Value
 <strong>残差</strong> = 实际值 - 预测值 <span class="math display">\[e_i
@@ -256,7 +265,8 @@ called the <strong>residual</strong>.
 <p>You can visualize residuals as the vertical distance from each data
 point to the regression line.
 可以将残差可视化为每个数据点到回归线的垂直距离。</p>
-<h4 id="the-cost-function-sum-of-squared-residuals-成本函数残差平方和">2.
+<h4
+id="the-cost-function-sum-of-squared-residuals-成本函数残差平方和">2.
 The Cost Function: Sum of Squared Residuals 成本函数：残差平方和</h4>
 <p>We want to make all these residuals as small as possible. We can’t
 just add them up, because some are positive and some are negative, and
@@ -269,9 +279,11 @@ sum them up. This gives us the <strong>Sum of Squared Residuals
 (SSR)</strong>，也就是“成本函数”。</p>
 <p><span class="math display">\[SSR = \sum_{i=1}^{n} e_i^2 =
 \sum_{i=1}^{n} (y_i - \hat{y}_i)^2\]</span></p>
-<p>The goal of OLS is simple: <strong>find the values of <span class="math inline">\(\beta_0, \beta_1, \dots, \beta_p\)</span> that
+<p>The goal of OLS is simple: <strong>find the values of <span
+class="math inline">\(\beta_0, \beta_1, \dots, \beta_p\)</span> that
 make this SSR value as small as possible.</strong></p>
-<h4 id="solving-for-the-coefficients-the-normal-equation-求解系数正态方程">3.
+<h4
+id="solving-for-the-coefficients-the-normal-equation-求解系数正态方程">3.
 Solving for the Coefficients: The Normal Equation
 求解系数：正态方程</h4>
 <p>For linear regression, calculus provides a direct, exact solution to
@@ -291,7 +303,8 @@ Equation</strong>, which can be expressed cleanly using matrix algebra:
 vector of our estimated coefficients.估计系数的向量。</li>
 <li><span class="math inline">\(\mathbf{X}\)</span> is a matrix where
 each row is an observation and each column is a feature (with an added
-column of 1s for the intercept <span class="math inline">\(\beta_0\)</span>).其中每一行代表一个观测值，每一列代表一个特征（截距
+column of 1s for the intercept <span
+class="math inline">\(\beta_0\)</span>).其中每一行代表一个观测值，每一列代表一个特征（截距
 <span class="math inline">\(\beta_0\)</span> 增加了一列全为 1
 的值）。</li>
 <li><span class="math inline">\(\mathbf{y}\)</span> is the vector of the
@@ -307,7 +320,8 @@ if you have a massive number of features (e.g., hundreds of thousands).
 An alternative, iterative method used across machine learning is
 <strong>Gradient Descent</strong>.</p>
 <p><strong>The Intuition:</strong> Imagine the SSR cost function is a
-big valley. Your initial (random) <span class="math inline">\(\beta\)</span> coefficients place you somewhere on
+big valley. Your initial (random) <span
+class="math inline">\(\beta\)</span> coefficients place you somewhere on
 the slope of this valley.</p>
 <ol type="1">
 <li><strong>Check the slope</strong> (the gradient) at your current
@@ -316,8 +330,10 @@ position. <strong>检查您当前位置的斜率</strong>（梯度）。</li>
 direction. <strong>朝最陡的<em>下坡</em>方向</strong>迈出一小步**。</li>
 <li><strong>Repeat.</strong> You keep taking steps downhill until you
 reach the bottom of the valley. The bottom of the valley represents the
-minimum SSR, and your coordinates at that point are the optimal <span class="math inline">\(\beta\)</span> coefficients.
-<strong>重复</strong>。您继续向下走，直到到达山谷底部。谷底代表最小SSR，该点的坐标即为最优<span class="math inline">\(\beta\)</span>系数。</li>
+minimum SSR, and your coordinates at that point are the optimal <span
+class="math inline">\(\beta\)</span> coefficients.
+<strong>重复</strong>。您继续向下走，直到到达山谷底部。谷底代表最小SSR，该点的坐标即为最优<span
+class="math inline">\(\beta\)</span>系数。</li>
 </ol>
 <p>The size of each “step” you take is controlled by a parameter called
 the <strong>learning rate</strong>. Gradient Descent is the foundational
@@ -328,9 +344,9 @@ networks.
 Descent</h3>
 <table>
 <colgroup>
-<col style="width: 33%">
-<col style="width: 33%">
-<col style="width: 33%">
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
 </colgroup>
 <thead>
 <tr>
@@ -364,22 +380,34 @@ find the exact minimum.</td>
 </tbody>
 </table>
 <h1 id="simple-linear-regression">2. Simple Linear Regression</h1>
-<p><img src="/.io//5054C3/Simple_Linear_Regression.png" alt="Simple_Linear_Regression"></p>
+<p><img src="/imgs/5054C3/Simple_Linear_Regression.png" alt="Simple_Linear_Regression"></p>
 <h2 id="simple-linear-regression-1">2.1 Simple Linear Regression</h2>
 <ul>
 <li><strong>内容</strong>: <strong>Simple Linear Regression:</strong> a
 special case of the general model you showed earlier where you only have
-<strong>one</strong> predictor variable (<span class="math inline">\(p=1\)</span>).</li>
+<strong>one</strong> predictor variable (<span
+class="math inline">\(p=1\)</span>).</li>
 </ul>
 <h3 id="the-model-and-the-goal-模型和目标">## The Model and the Goal
 模型和目标</h3>
-<p>Sets up the simplified equation for a line: <span class="math display">\[y_i = \beta_0 + \beta_1x_i + \epsilon_i\]</span>
+<p>Sets up the simplified equation for a line: <span
+class="math display">\[y_i = \beta_0 + \beta_1x_i + \epsilon_i\]</span>
 * <span class="math inline">\(y_i\)</span> is the outcome you want to
 predict.要预测的结果。 * <span class="math inline">\(x_i\)</span> is
-your single input feature or covariate.单个输入特征或协变量。 * <span class="math inline">\(\beta_1\)</span> is the <strong>slope</strong> of
+your single input feature or covariate.单个输入特征或协变量。 * <span
+class="math inline">\(\beta_1\)</span> is the <strong>slope</strong> of
 the line. It tells you how much <span class="math inline">\(y\)</span>
-is expected to increase for a one-unit increase in <span class="math inline">\(x\)</span>.表示 <span class="math inline">\(x\)</span> 每增加一个单位，<span class="math inline">\(y\)</span> 预计会增加多少。 * <span class="math inline">\(\beta_0\)</span> is the
-<strong>intercept</strong>. It’s the predicted value of <span class="math inline">\(y\)</span> when <span class="math inline">\(x\)</span> is zero.当 <span class="math inline">\(x\)</span> 为零时 <span class="math inline">\(y\)</span> 的预测值。 * <span class="math inline">\(\epsilon_i\)</span> is the random error
+is expected to increase for a one-unit increase in <span
+class="math inline">\(x\)</span>.表示 <span
+class="math inline">\(x\)</span> 每增加一个单位，<span
+class="math inline">\(y\)</span> 预计会增加多少。 * <span
+class="math inline">\(\beta_0\)</span> is the
+<strong>intercept</strong>. It’s the predicted value of <span
+class="math inline">\(y\)</span> when <span
+class="math inline">\(x\)</span> is zero.当 <span
+class="math inline">\(x\)</span> 为零时 <span
+class="math inline">\(y\)</span> 的预测值。 * <span
+class="math inline">\(\epsilon_i\)</span> is the random error
 term.是随机误差项。</p>
 <p>The goal, stated as “Minimize the sum of squares of err,” is exactly
 the <strong>Ordinary Least Squares (OLS)</strong> method we just
@@ -387,13 +415,16 @@ discussed. It’s written here as: <span class="math display">\[\min_{a,b}
 \sum_{i=1}^{n} (y_i - a - bx_i)^2\]</span> This is just a different way
 of writing the same thing, where they use <code>a</code> for the
 intercept (<span class="math inline">\(\beta_0\)</span>) and
-<code>b</code> for the slope (<span class="math inline">\(\beta_1\)</span>). You’re trying to find the
+<code>b</code> for the slope (<span
+class="math inline">\(\beta_1\)</span>). You’re trying to find the
 specific values of the slope and intercept that make the sum of all the
 squared errors as small as possible.
 目标，即“最小化误差平方和”，正是<strong>普通最小二乘法
 (OLS)</strong>。： <span class="math display">\[\min_{a,b}
 \sum_{i=1}^{n} (y_i - a - bx_i)^2\]</span> 这是另一种写法，其中用
-<code>a</code> 表示截距 (<span class="math inline">\(\beta_0\)</span>)，<code>b</code> 表示斜率 (<span class="math inline">\(\beta_1\)</span>)。尝试找到斜率和截距的具体值，使得所有平方误差之和尽可能小。</p>
+<code>a</code> 表示截距 (<span
+class="math inline">\(\beta_0\)</span>)，<code>b</code> 表示斜率 (<span
+class="math inline">\(\beta_1\)</span>)。尝试找到斜率和截距的具体值，使得所有平方误差之和尽可能小。</p>
 <h3 id="the-solution-the-estimator-formulas-解决方案估计公式">## The
 Solution: The Estimator Formulas 解决方案：估计公式</h3>
 <p>The most important part of this slide is the
@@ -402,11 +433,13 @@ you don’t need complex matrix algebra (the Normal Equation). Instead,
 the minimization problem can be solved with these two straightforward
 formulas:
 对于只有一个变量的简单情况，不需要复杂的矩阵代数（正态方程）。相反，最小化问题可以用以下两个简单的公式来解决：</p>
-<h4 id="the-slope-hatbeta_1">1. The Slope: <span class="math inline">\(\hat{\beta}_1\)</span></h4>
+<h4 id="the-slope-hatbeta_1">1. The Slope: <span
+class="math inline">\(\hat{\beta}_1\)</span></h4>
 <p><span class="math display">\[\hat{\beta}_1 = \frac{\sum_{i=1}^{n}
 (x_i - \bar{x})(y_i - \bar{y})}{\sum_{i=1}^{n} (x_i -
 \bar{x})^2}\]</span> * <strong>Intuition:</strong> This formula might
-look complex, but it’s actually very intuitive. * The numerator, <span class="math inline">\(\sum(x_i - \bar{x})(y_i - \bar{y})\)</span>, is
+look complex, but it’s actually very intuitive. * The numerator, <span
+class="math inline">\(\sum(x_i - \bar{x})(y_i - \bar{y})\)</span>, is
 closely related to the <strong>covariance</strong> between X and Y. It
 measures whether X and Y tend to move in the same direction (positive
 slope) or in opposite directions (negative slope). 与 X 和 Y
@@ -418,24 +451,30 @@ varies on its own. 它衡量 X 自身的变化量。 * <strong>In short, the slo
 is a measure of how X and Y vary together, scaled by how much X varies
 by itself.</strong> 斜率衡量的是 X 和 Y 共同变化的程度，并以 X
 自身的变化量为标度。</p>
-<h4 id="the-intercept-hatbeta_0-截距">2. The Intercept: <span class="math inline">\(\hat{\beta}_0\)</span> 截距</h4>
+<h4 id="the-intercept-hatbeta_0-截距">2. The Intercept: <span
+class="math inline">\(\hat{\beta}_0\)</span> 截距</h4>
 <p><span class="math display">\[\hat{\beta}_0 = \bar{y} -
 \hat{\beta}_1\bar{x}\]</span> * <strong>Intuition:</strong> This formula
 is even simpler and has a wonderful geometric meaning. It ensures that
 the <strong>line of best fit always passes through the “center of mass”
-of the data</strong>, which is the point of averages <span class="math inline">\((\bar{x}, \bar{y})\)</span>.
-它确保<strong>最佳拟合线始终穿过数据的“质心”</strong>，即平均值 <span class="math inline">\((\bar{x}, \bar{y})\)</span> 的点。计算出最佳斜率
+of the data</strong>, which is the point of averages <span
+class="math inline">\((\bar{x}, \bar{y})\)</span>.
+它确保<strong>最佳拟合线始终穿过数据的“质心”</strong>，即平均值 <span
+class="math inline">\((\bar{x}, \bar{y})\)</span> 的点。计算出最佳斜率
 (<span class="math inline">\(\hat{\beta}_1\)</span>)
-后，就可以将其代入此公式。然后，可以调整截距 (<span class="math inline">\(\hat{\beta}_0\)</span>)，使直线完美地围绕数据云的中心点旋转。
-* Once you’ve calculated the best slope (<span class="math inline">\(\hat{\beta}_1\)</span>), you can plug it into this
-formula. You then adjust the intercept (<span class="math inline">\(\hat{\beta}_0\)</span>) so that the line pivots
+后，就可以将其代入此公式。然后，可以调整截距 (<span
+class="math inline">\(\hat{\beta}_0\)</span>)，使直线完美地围绕数据云的中心点旋转。
+* Once you’ve calculated the best slope (<span
+class="math inline">\(\hat{\beta}_1\)</span>), you can plug it into this
+formula. You then adjust the intercept (<span
+class="math inline">\(\hat{\beta}_0\)</span>) so that the line pivots
 perfectly around the central point of your data cloud.</p>
 <p>In summary, this slide provides the precise, closed-form formulas to
 calculate the slope and intercept for the line of best fit in a simple
 linear regression model.</p>
 <h1 id="statistical-inference">3. Statistical Inference</h1>
-<p><img src="/.io//5054C3/Statistical_Inference1.png" alt="Statistical_Inference1">
-<img src="/.io//5054C3/Statistical_Inference2.png" alt="Statistical_Inference2">
+<p><img src="/imgs/5054C3/Statistical_Inference1.png" alt="Statistical_Inference1">
+<img src="/imgs/5054C3/Statistical_Inference2.png" alt="Statistical_Inference2">
 ## 3.1 Statistical Inference - <strong>内容</strong>:
 <strong>Statistical Inference:</strong> These two slides are deeply
 connected and explain how we go from just <em>calculating</em> the
@@ -445,21 +484,26 @@ coefficients to understanding how <em>accurate</em> and
 <h3 id="the-core-problem-quantifying-uncertainty-量化不确定性">## The
 Core Problem: Quantifying Uncertainty 量化不确定性</h3>
 <p>The second slide poses the fundamental questions: * “How accurate are
-<span class="math inline">\(\hat{\beta}_0\)</span> and <span class="math inline">\(\hat{\beta}_1\)</span>?”准确性如何？ * “What are
+<span class="math inline">\(\hat{\beta}_0\)</span> and <span
+class="math inline">\(\hat{\beta}_1\)</span>?”准确性如何？ * “What are
 the distributions of <span class="math inline">\(\hat{\beta}_0\)</span>
 and <span class="math inline">\(\hat{\beta}_1\)</span>?”分布是什么？</p>
-<p>The reason we ask this is that our estimated coefficients (<span class="math inline">\(\hat{\beta}_0, \hat{\beta}_1\)</span>) were
+<p>The reason we ask this is that our estimated coefficients (<span
+class="math inline">\(\hat{\beta}_0, \hat{\beta}_1\)</span>) were
 calculated from a <strong>specific sample of data</strong>. If we
 collected a different random sample from the same population, we would
-get slightly different estimates.估计的系数 (<span class="math inline">\(\hat{\beta}_0, \hat{\beta}_1\)</span>)
+get slightly different estimates.估计的系数 (<span
+class="math inline">\(\hat{\beta}_0, \hat{\beta}_1\)</span>)
 是根据<strong>特定的数据样本</strong>计算出来的。如果我们从同一总体中随机抽取不同的样本，我们得到的估计值会略有不同。</p>
 <p>The goal of statistical inference is to use the estimates from our
 single sample to make conclusions about the <strong>true, unknown
 population parameters</strong> (<span class="math inline">\(\beta_0,
 \beta_1\)</span>) and to quantify our uncertainty about
-them.统计推断的目标是利用单个样本的估计值得出关于<strong>真实、未知的总体参数</strong>（<span class="math inline">\(\beta_0,
+them.统计推断的目标是利用单个样本的估计值得出关于<strong>真实、未知的总体参数</strong>（<span
+class="math inline">\(\beta_0,
 \beta_1\)</span>）的结论，并量化对这些参数的不确定性。</p>
-<h3 id="the-key-assumption-that-makes-it-possible-实现这一目标的关键假设">##
+<h3
+id="the-key-assumption-that-makes-it-possible-实现这一目标的关键假设">##
 The Key Assumption That Makes It Possible 实现这一目标的关键假设</h3>
 <p>To figure out the distribution of our estimates, we must make an
 assumption about the distribution of the errors. This is the most
@@ -473,18 +517,26 @@ distributed</strong> (<span class="math inline">\(N\)</span>).*
 Have a mean of <strong>zero</strong> (our model is correct on average).*
 均值为<strong>零</strong>（模型平均而言是正确的）。 * Have a constant
 variance <strong><span class="math inline">\(\sigma^2\)</span></strong>
-(homoscedasticity).* 方差为常数<strong><span class="math inline">\(\sigma^2\)</span></strong>（方差齐性）。 * Are
+(homoscedasticity).* 方差为常数<strong><span
+class="math inline">\(\sigma^2\)</span></strong>（方差齐性）。 * Are
 <strong>independent and identically distributed</strong> (i.i.d.),
 meaning each error is independent of the others.*
 是<strong>独立同分布</strong>（i.i.d.）的，这意味着每个误差都独立于其他误差。</p>
 <p><strong>Why is this important?</strong> Because our coefficients
-<span class="math inline">\(\hat{\beta}_0\)</span> and <span class="math inline">\(\hat{\beta}_1\)</span> are calculated as weighted
+<span class="math inline">\(\hat{\beta}_0\)</span> and <span
+class="math inline">\(\hat{\beta}_1\)</span> are calculated as weighted
 sums of the <span class="math inline">\(y_i\)</span> values, and the
 <span class="math inline">\(y_i\)</span> values depend on the errors
 <span class="math inline">\(\epsilon_i\)</span>. This assumption about
 the errors allows us to prove that our estimated coefficients themselves
-are also normally distributed. 系数 <span class="math inline">\(\hat{\beta}_0\)</span> 和 <span class="math inline">\(\hat{\beta}_1\)</span> 是通过 <span class="math inline">\(y_i\)</span> 值的加权和计算的，而 <span class="math inline">\(y_i\)</span> 值取决于误差 <span class="math inline">\(\epsilon_i\)</span>。这个关于误差的假设使能够证明估计的系数本身也服从正态分布。</p>
-<h3 id="the-solution-the-theorem-and-the-t-distribution-定理和-t-分布">##
+are also normally distributed. 系数 <span
+class="math inline">\(\hat{\beta}_0\)</span> 和 <span
+class="math inline">\(\hat{\beta}_1\)</span> 是通过 <span
+class="math inline">\(y_i\)</span> 值的加权和计算的，而 <span
+class="math inline">\(y_i\)</span> 值取决于误差 <span
+class="math inline">\(\epsilon_i\)</span>。这个关于误差的假设使能够证明估计的系数本身也服从正态分布。</p>
+<h3
+id="the-solution-the-theorem-and-the-t-distribution-定理和-t-分布">##
 The Solution: The Theorem and the t-distribution 定理和 t 分布</h3>
 <p>The first slide provides the central theorem that allows us to
 perform inference. It tells us exactly how to standardize our estimated
@@ -501,11 +553,13 @@ the <strong>standard errors</strong> of the coefficients,
 <li><strong>What it is:</strong> The standard error is the estimated
 <strong>standard deviation of the coefficient’s sampling
 distribution</strong>. In simpler terms, it’s a measure of the average
-amount by which our estimate <span class="math inline">\(\hat{\beta}_1\)</span> would differ from the true
+amount by which our estimate <span
+class="math inline">\(\hat{\beta}_1\)</span> would differ from the true
 <span class="math inline">\(\beta_1\)</span> if we were to repeat the
 experiment many times.
 标准误差是系数抽样分布的<strong>标准差</strong>估计值。简单来说，它衡量的是如果我们重复实验多次，我们估计的
-<span class="math inline">\(\hat{\beta}_1\)</span> 与真实的 <span class="math inline">\(\beta_1\)</span> 之间的平均差异。</li>
+<span class="math inline">\(\hat{\beta}_1\)</span> 与真实的 <span
+class="math inline">\(\beta_1\)</span> 之间的平均差异。</li>
 <li><strong>A smaller standard error means a more precise and reliable
 estimate.</strong>
 <strong>标准误差越小，估计值越精确可靠。</strong></li>
@@ -516,12 +570,15 @@ estimate.</strong>
 该定理展示了两个构成<strong>t 统计量</strong>的分数。其一般结构如下：
 <span class="math display">\[t = \frac{\text{ (Sample Estimate - True
 Value) }}{\text{ Standard Error of the Estimate }}\]</span></p>
-<p>For <span class="math inline">\(\beta_1\)</span>, this is: <span class="math inline">\(\frac{\hat{\beta}_1 -
+<p>For <span class="math inline">\(\beta_1\)</span>, this is: <span
+class="math inline">\(\frac{\hat{\beta}_1 -
 \beta_1}{\text{s.e.}(\hat{\beta}_1)}\)</span>.</p>
 <p>The key insight is that this specific quantity follows a
-<strong>Student’s t-distribution</strong> with <strong><span class="math inline">\(n-2\)</span> degrees of freedom</strong>.
+<strong>Student’s t-distribution</strong> with <strong><span
+class="math inline">\(n-2\)</span> degrees of freedom</strong>.
 关键在于，这个特定量服从<strong>学生 t
-分布</strong>，其自由度为<strong><span class="math inline">\(n-2\)</span>。 * </strong>Student’s
+分布</strong>，其自由度为<strong><span
+class="math inline">\(n-2\)</span>。 * </strong>Student’s
 t-distribution:** This is a probability distribution that looks very
 similar to the normal distribution but has slightly “heavier” tails. We
 use it instead of the normal distribution because we had to
@@ -531,24 +588,36 @@ in the formula), which adds extra uncertainty.
 <code>s</code>），这会增加额外的不确定性。 * <strong>Degrees of Freedom
 (n-2):</strong> We start with <code>n</code> data points, but we lose
 two degrees of freedom because we used the data to estimate two
-parameters: <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span>. 从 <code>n</code>
-个数据点开始，但由于用这些数据估计了两个参数：<span class="math inline">\(\beta_0\)</span> 和 <span class="math inline">\(\beta_1\)</span>，因此损失了两个自由度。 #### 3.
-Estimating the Error Variance (<span class="math inline">\(s^2\)</span>)估计误差方差 (<span class="math inline">\(s^2\)</span>) To calculate the standard errors, we
+parameters: <span class="math inline">\(\beta_0\)</span> and <span
+class="math inline">\(\beta_1\)</span>. 从 <code>n</code>
+个数据点开始，但由于用这些数据估计了两个参数：<span
+class="math inline">\(\beta_0\)</span> 和 <span
+class="math inline">\(\beta_1\)</span>，因此损失了两个自由度。 #### 3.
+Estimating the Error Variance (<span
+class="math inline">\(s^2\)</span>)估计误差方差 (<span
+class="math inline">\(s^2\)</span>) To calculate the standard errors, we
 need a value for <code>s</code>, which is our estimate of the true error
 standard deviation <span class="math inline">\(\sigma\)</span>. This is
 calculated from the <strong>Residual Sum of Squares (RSS)</strong>.
 为了计算标准误差，我们需要一个 <code>s</code> 的值，它是对真实误差标准差
 <span class="math inline">\(\sigma\)</span>
 的估计值。该值由<strong>残差平方和 (RSS)</strong> 计算得出。 *
-<strong>RSS:</strong> First, we calculate the RSS = <span class="math inline">\(\sum(y_i - \hat{y}_i)^2\)</span>, which is the sum
-of all the squared errors.* <strong>RSS</strong>：首先，计算 RSS = <span class="math inline">\(\sum(y_i -
-\hat{y}_i)^2\)</span>，即所有平方误差之和。 * <strong><span class="math inline">\(s^2\)</span>:</strong> Then, we find the estimate
+<strong>RSS:</strong> First, we calculate the RSS = <span
+class="math inline">\(\sum(y_i - \hat{y}_i)^2\)</span>, which is the sum
+of all the squared errors.* <strong>RSS</strong>：首先，计算 RSS = <span
+class="math inline">\(\sum(y_i -
+\hat{y}_i)^2\)</span>，即所有平方误差之和。 * <strong><span
+class="math inline">\(s^2\)</span>:</strong> Then, we find the estimate
 of the error variance: <span class="math inline">\(s^2 = \text{RSS} /
 (n-2)\)</span>. We divide by <span class="math inline">\(n-2\)</span> to
-get an unbiased estimate. * <strong><span class="math inline">\(s^2\)</span></strong>：然后，计算误差方差的估计值：<span class="math inline">\(s^2 = \text{RSS} / (n-2)\)</span>。我们将其除以
+get an unbiased estimate. * <strong><span
+class="math inline">\(s^2\)</span></strong>：然后，计算误差方差的估计值：<span
+class="math inline">\(s^2 = \text{RSS} / (n-2)\)</span>。我们将其除以
 <span class="math inline">\(n-2\)</span> 即可得到无偏估计值。 *
-<code>s</code> is simply the square root of <span class="math inline">\(s^2\)</span>. This <code>s</code> is the value
-used in the standard error formulas.* <code>s</code> 就是 <span class="math inline">\(s^2\)</span> 的平方根。这个 <code>s</code>
+<code>s</code> is simply the square root of <span
+class="math inline">\(s^2\)</span>. This <code>s</code> is the value
+used in the standard error formulas.* <code>s</code> 就是 <span
+class="math inline">\(s^2\)</span> 的平方根。这个 <code>s</code>
 是标准误差公式中使用的值。</p>
 <h3 id="what-this-allows-us-to-do-the-practical-use">## What This Allows
 Us To Do (The Practical Use)</h3>
@@ -557,39 +626,51 @@ achieve our goal of quantifying uncertainty: 因为知道 t
 统计量的精确分布，所以现在可以实现量化不确定性的目标：</p>
 <ol type="1">
 <li><strong>Hypothesis Testing:</strong> We can test if a predictor is
-actually useful. The most common test is for the null hypothesis <span class="math inline">\(H_0: \beta_1 = 0\)</span>. If we can prove the
+actually useful. The most common test is for the null hypothesis <span
+class="math inline">\(H_0: \beta_1 = 0\)</span>. If we can prove the
 observed <span class="math inline">\(\hat{\beta}_1\)</span> is very
-unlikely to occur if the true <span class="math inline">\(\beta_1\)</span> were zero, we can conclude there
-is a statistically significant relationship between <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span>.
-可以检验一个预测变量是否真的有用。最常见的检验是零假设 <span class="math inline">\(H_0: \beta_1 = 0\)</span>。如果能证明，当真实的
-<span class="math inline">\(\beta_1\)</span> 为零时，观测到的 <span class="math inline">\(\hat{\beta}_1\)</span>
+unlikely to occur if the true <span
+class="math inline">\(\beta_1\)</span> were zero, we can conclude there
+is a statistically significant relationship between <span
+class="math inline">\(x\)</span> and <span
+class="math inline">\(y\)</span>.
+可以检验一个预测变量是否真的有用。最常见的检验是零假设 <span
+class="math inline">\(H_0: \beta_1 = 0\)</span>。如果能证明，当真实的
+<span class="math inline">\(\beta_1\)</span> 为零时，观测到的 <span
+class="math inline">\(\hat{\beta}_1\)</span>
 不太可能发生，那么就可以得出结论，<span class="math inline">\(x\)</span>
 和 <span class="math inline">\(y\)</span>
 之间存在统计学上的显著关系。</li>
 <li><strong>Confidence Intervals:</strong> We can construct a range of
 plausible values for the true coefficient. For example, we can calculate
-a 95% confidence interval for <span class="math inline">\(\beta_1\)</span>. This gives us a range where we
-are 95% confident the true value of <span class="math inline">\(\beta_1\)</span> lies.
+a 95% confidence interval for <span
+class="math inline">\(\beta_1\)</span>. This gives us a range where we
+are 95% confident the true value of <span
+class="math inline">\(\beta_1\)</span> lies.
 可以为真实系数构建一系列合理的值。</li>
 </ol>
 <h1 id="multiple-linear-regression">4. Multiple Linear Regression</h1>
-<p><img src="/.io//5054C3/Multiple_Linear Regression1.png" alt="Multiple_Linear Regression1">
-<img src="/.io//5054C3/Multiple_Linear Regression2.png" alt="Multiple_Linear Regression2">
+<p><img src="/imgs/5054C3/Multiple_Linear Regression1.png" alt="Multiple_Linear Regression1">
+<img src="/imgs/5054C3/Multiple_Linear Regression2.png" alt="Multiple_Linear Regression2">
 ## 4.1 Multiple Linear Regression - <strong>内容</strong>:
 <strong>Multiple Linear Regression:</strong></p>
 <p>Here’s a detailed breakdown that connects both slides.</p>
-<h3 id="the-model-from-one-to-many-predictors-从单预测变量到多预测变量">##
+<h3
+id="the-model-from-one-to-many-predictors-从单预测变量到多预测变量">##
 The Model: From One to Many Predictors 从单预测变量到多预测变量</h3>
 <p>The first slide introduces the <strong>Multiple Linear Regression
 model</strong>. This is a direct extension of the simple model, but
-instead of using just one predictor variable, we use multiple (<span class="math inline">\(p\)</span>) predictors to explain our response
+instead of using just one predictor variable, we use multiple (<span
+class="math inline">\(p\)</span>) predictors to explain our response
 variable.
-多元线性回归模型是简单模型的直接扩展，但不是只使用一个预测变量，而是使用多个（<span class="math inline">\(p\)</span>）预测变量来解释响应变量。</p>
+多元线性回归模型是简单模型的直接扩展，但不是只使用一个预测变量，而是使用多个（<span
+class="math inline">\(p\)</span>）预测变量来解释响应变量。</p>
 <p>The general formula is: <span class="math display">\[y_i = \beta_0 +
 \beta_1x_{i1} + \beta_2x_{i2} + \dots + \beta_px_{ip} +
 \epsilon_i\]</span></p>
 <h4 id="key-change-in-interpretation">Key Change in Interpretation</h4>
-<p>This is the most important new concept. In simple regression, <span class="math inline">\(\beta_1\)</span> was just the slope. In multiple
+<p>This is the most important new concept. In simple regression, <span
+class="math inline">\(\beta_1\)</span> was just the slope. In multiple
 regression, each coefficient has a more nuanced meaning:
 在简单回归中，<span class="math inline">\(\beta_1\)</span>
 只是斜率。在多元回归中，每个系数都有更微妙的含义：</p>
@@ -600,7 +681,8 @@ predictors constant.</strong></p>
 <p>This is incredibly powerful. Using the advertising example from your
 slide: * <span class="math inline">\(y_i = \beta_0 +
 \beta_1(\text{TV}_i) + \beta_2(\text{Radio}_i) +
-\beta_3(\text{Newspaper}_i) + \epsilon_i\)</span> * <span class="math inline">\(\beta_1\)</span> represents the effect of TV
+\beta_3(\text{Newspaper}_i) + \epsilon_i\)</span> * <span
+class="math inline">\(\beta_1\)</span> represents the effect of TV
 advertising on sales, <strong>after controlling for</strong> the amount
 spent on Radio and Newspaper ads. This allows you to isolate the unique
 contribution of each advertising
@@ -620,24 +702,30 @@ Goal: Minimizing the Sum of Squares 最小化平方和</h4>
 <p>Just like before, our goal is to minimize the sum of the squared
 errors (or residuals): 目标是最小化平方误差（或残差）之和。</p>
 <ul>
-<li><strong>Scalar Form:</strong> <span class="math inline">\(\sum_{i=1}^{n} (y_i - \beta_0 - \beta_1x_{i1} -
+<li><strong>Scalar Form:</strong> <span
+class="math inline">\(\sum_{i=1}^{n} (y_i - \beta_0 - \beta_1x_{i1} -
 \beta_2x_{i2} - \beta_3x_{i3})^2\)</span>
 <ul>
 <li>This is easy to read but gets very long with more variables.
 代码易于阅读，但变量越多，代码越长。</li>
 </ul></li>
-<li><strong>Vector Form:</strong> <span class="math inline">\(\sum_{i=1}^{n} (y_i - \boldsymbol{\beta}^T
+<li><strong>Vector Form:</strong> <span
+class="math inline">\(\sum_{i=1}^{n} (y_i - \boldsymbol{\beta}^T
 \mathbf{x}_i)^2\)</span>
 <ul>
 <li>This is a more compact and powerful way to write the same thing
-using linear algebra, where <span class="math inline">\(\boldsymbol{\beta}^T \mathbf{x}_i\)</span> is the
-dot product that calculates the entire predicted value <span class="math inline">\(\hat{y}_i\)</span>.
-这是一种更简洁、更强大的线性代数表示方法，其中 <span class="math inline">\(\boldsymbol{\beta}^T \mathbf{x}_i\)</span>
+using linear algebra, where <span
+class="math inline">\(\boldsymbol{\beta}^T \mathbf{x}_i\)</span> is the
+dot product that calculates the entire predicted value <span
+class="math inline">\(\hat{y}_i\)</span>.
+这是一种更简洁、更强大的线性代数表示方法，其中 <span
+class="math inline">\(\boldsymbol{\beta}^T \mathbf{x}_i\)</span>
 是计算整个预测值 <span class="math inline">\(\hat{y}_i\)</span>
 的点积。</li>
 </ul></li>
 </ul>
-<h4 id="the-method-using-calculus-to-find-the-minimum-使用微积分求最小值">2.
+<h4
+id="the-method-using-calculus-to-find-the-minimum-使用微积分求最小值">2.
 The Method: Using Calculus to Find the Minimum 使用微积分求最小值</h4>
 <p>To find the set of <span class="math inline">\(\beta\)</span> values
 that results in the lowest possible error, we use calculus.</p>
@@ -647,7 +735,8 @@ function depends on multiple <span class="math inline">\(\beta\)</span>
 coefficients, we can’t take a simple derivative. Instead, we take the
 <strong>gradient</strong>, which is a vector of partial derivatives (one
 for each coefficient). This tells us the “slope” of the error function
-in every direction. 导数（梯度） 误差函数依赖于多个 <span class="math inline">\(\beta\)</span>
+in every direction. 导数（梯度） 误差函数依赖于多个 <span
+class="math inline">\(\beta\)</span>
 系数，因此我们不能简单地求导数。相反，采用<strong>梯度</strong>，它是一个由偏导数组成的向量（每个系数对应一个偏导数）。这告诉误差函数在各个方向上的“斜率”。</p></li>
 <li><p><strong>Setting the Gradient to Zero:</strong> The minimum of a
 function occurs where its slope is zero (the very bottom of the error
@@ -658,7 +747,8 @@ zero.函数的最小值出现在其斜率为零的地方（即误差“谷底”
 <p>The equation shown on the slide: <span class="math display">\[2
 \sum_{i=1}^{n} (\boldsymbol{\beta}^T \mathbf{x}_i - y_i)\mathbf{x}_i^T =
 0\]</span> …is the result of this calculus step. The goal is now to
-algebraically rearrange this equation to solve for <span class="math inline">\(\boldsymbol{\beta}\)</span>.
+algebraically rearrange this equation to solve for <span
+class="math inline">\(\boldsymbol{\beta}\)</span>.
 是这一微积分步骤的结果。现在的目标是用代数方法重新排列这个方程，以求解
 <span class="math inline">\(\boldsymbol{\beta}\)</span>。</p>
 <h4 id="the-result-the-normal-equation-正则方程">3. The Result: The
@@ -666,7 +756,8 @@ Normal Equation 正则方程</h4>
 <p>After rearranging the equation from the previous step and expressing
 the sums in their full matrix form, we arrive at a clean and beautiful
 solution. While the slide doesn’t show the final step, the result of
-“Setting the gradient zero and solve <span class="math inline">\(\beta\)</span>” is the <strong>Normal
+“Setting the gradient zero and solve <span
+class="math inline">\(\beta\)</span>” is the <strong>Normal
 Equation</strong>:
 重新排列上一步中的方程，并将和表示为完整的矩阵形式后，得到了一个简洁美观的解。虽然幻灯片没有展示最后一步，“设置梯度零点并求解
 <span class="math inline">\(\beta\)</span>”
@@ -690,6 +781,92 @@ how many predictors you have. This is what statistical software
 calculates for you under the hood.
 无论有多少个预测变量，这个简单的方程都是<strong>任何</strong>线性回归模型中
 OLS 系数的通解。</p>
+<h1 id="matrix-notatio">5. matrix notatio</h1>
+<h2 id="section">5.1:</h2>
+<ul>
+<li><strong>内容</strong>: This slide introduces the <strong>matrix
+notation</strong> for multiple linear regression, which is a powerful
+way to represent the entire system of equations in a compact form. This
+notation isn’t just for tidiness—it’s the foundation for how the
+solutions are derived and calculated in software.</li>
+</ul>
+<p>Here is a more detailed breakdown.</p>
+<h3 id="why-use-matrix-notation">## Why Use Matrix Notation?</h3>
+<p>Imagine you have 10,000 observations (<span
+class="math inline">\(n=10,000\)</span>) and 5 predictor variables
+(<span class="math inline">\(p=5\)</span>). Writing out the model
+equation for each observation would be impossible: <span
+class="math inline">\(y_1 = \beta_0 + \beta_1x_{11} + \dots +
+\beta_5x_{15} + \epsilon_1\)</span> <span class="math inline">\(y_2 =
+\beta_0 + \beta_1x_{21} + \dots + \beta_5x_{25} + \epsilon_2\)</span>
+…and so on for 10,000 lines.</p>
+<p>Matrix notation allows us to consolidate this entire system into a
+single, elegant equation: <span class="math display">\[\mathbf{y} =
+\mathbf{X}\boldsymbol{\beta} + \boldsymbol{\epsilon}\]</span> Let’s
+break down each component shown on your slide.</p>
+<h3 id="the-components-explained">## The Components Explained</h3>
+<h4 id="the-design-matrix-mathbfx">1. The Design Matrix: <span
+class="math inline">\(\mathbf{X}\)</span></h4>
+<p><span class="math display">\[\mathbf{X} = \begin{pmatrix} 1 &amp;
+x_{11} &amp; x_{12} &amp; \cdots &amp; x_{1p} \\ 1 &amp; x_{21} &amp;
+x_{22} &amp; \cdots &amp; x_{2p} \\ \vdots &amp; \vdots &amp; \vdots
+&amp; \ddots &amp; \vdots \\ 1 &amp; x_{n1} &amp; x_{n2} &amp; \cdots
+&amp; x_{np} \end{pmatrix}\]</span> This is the most important matrix.
+It contains all of your predictor variable data. *
+<strong>Rows:</strong> Each row represents a single observation (e.g., a
+person, a company, a day). There are <strong>n</strong> rows. *
+<strong>Columns:</strong> Each column represents a predictor variable.
+There are <strong>p</strong> predictor columns, plus one special column.
+* <strong>The Column of Ones:</strong> This is a crucial detail. This
+first column of all ones is a placeholder for the <strong>intercept term
+(<span class="math inline">\(\beta_0\)</span>)</strong>. When you
+perform matrix multiplication, this <code>1</code> gets multiplied by
+<span class="math inline">\(\beta_0\)</span>, ensuring the intercept is
+included in the model for every single observation.</p>
+<h4 id="the-coefficient-vector-boldsymbolbeta">2. The Coefficient
+Vector: <span class="math inline">\(\boldsymbol{\beta}\)</span></h4>
+<p><span class="math display">\[\boldsymbol{\beta} = \begin{pmatrix}
+\beta_0 \\ \beta_1 \\ \vdots \\ \beta_p \end{pmatrix}\]</span> This is a
+column vector that contains all the model parameters—the unknown values
+we want to estimate. The goal of linear regression is to find the
+numerical values for this vector.</p>
+<h4 id="the-response-vector-mathbfy">3. The Response Vector: <span
+class="math inline">\(\mathbf{y}\)</span></h4>
+<p><span class="math display">\[\mathbf{y} = \begin{pmatrix} y_1 \\
+\vdots \\ y_n \end{pmatrix}\]</span> This is a column vector containing
+all the observed outcomes you are trying to predict (e.g., sales, test
+scores, stock prices).</p>
+<h4 id="the-error-vector-boldsymbolepsilon">4. The Error Vector: <span
+class="math inline">\(\boldsymbol{\epsilon}\)</span></h4>
+<p><span class="math display">\[\boldsymbol{\epsilon} = \begin{pmatrix}
+\epsilon_1 \\ \vdots \\ \epsilon_n \end{pmatrix}\]</span> This column
+vector bundles together all the individual, unobserved random errors. It
+represents the portion of <strong>y</strong> that our model cannot
+explain with <strong>X</strong>.</p>
+<h3 id="putting-it-all-together">## Putting It All Together</h3>
+<p>When you write the equation <span class="math inline">\(\mathbf{y} =
+\mathbf{X}\boldsymbol{\beta} + \boldsymbol{\epsilon}\)</span>, you are
+actually representing the entire system of individual equations.</p>
+<p>Let’s look at the multiplication <span
+class="math inline">\(\mathbf{X}\boldsymbol{\beta}\)</span>: <span
+class="math display">\[\begin{pmatrix} 1 &amp; x_{11} &amp; \dots &amp;
+x_{1p} \\ 1 &amp; x_{21} &amp; \dots &amp; x_{2p} \\ \vdots &amp; \vdots
+&amp; \ddots &amp; \vdots \\ 1 &amp; x_{n1} &amp; \dots &amp; x_{np}
+\end{pmatrix} \begin{pmatrix} \beta_0 \\ \beta_1 \\ \vdots \\ \beta_p
+\end{pmatrix} = \begin{pmatrix} 1\cdot\beta_0 + x_{11}\cdot\beta_1 +
+\dots + x_{1p}\cdot\beta_p \\ 1\cdot\beta_0 + x_{21}\cdot\beta_1 + \dots
++ x_{2p}\cdot\beta_p \\ \vdots \\ 1\cdot\beta_0 + x_{n1}\cdot\beta_1 +
+\dots + x_{np}\cdot\beta_p \end{pmatrix}\]</span> As you can see, the
+result of this multiplication is a single column vector where each row
+is the “predictor” part of the regression equation for that
+observation.</p>
+<p>By setting this equal to <span class="math inline">\(\mathbf{y} -
+\boldsymbol{\epsilon}\)</span>, you perfectly recreate the entire set of
+<code>n</code> equations in one clean statement. This compact form is
+what allows us to easily derive and compute the <strong>Normal
+Equation</strong> solution: <span
+class="math inline">\(\hat{\boldsymbol{\beta}} =
+(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\mathbf{y}\)</span>.</p>
 
     </div>
 
@@ -792,7 +969,8 @@ The Model: From One to Many Predictors 从单预测变量到多预测变量</spa
 Solution: Deriving the Normal Equation 推导正态方程</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#the-goal-minimizing-the-sum-of-squares-%E6%9C%80%E5%B0%8F%E5%8C%96%E5%B9%B3%E6%96%B9%E5%92%8C"><span class="nav-number">4.0.2.1.</span> <span class="nav-text">1. The
 Goal: Minimizing the Sum of Squares 最小化平方和</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#the-method-using-calculus-to-find-the-minimum-%E4%BD%BF%E7%94%A8%E5%BE%AE%E7%A7%AF%E5%88%86%E6%B1%82%E6%9C%80%E5%B0%8F%E5%80%BC"><span class="nav-number">4.0.2.2.</span> <span class="nav-text">2.
 The Method: Using Calculus to Find the Minimum 使用微积分求最小值</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#the-result-the-normal-equation-%E6%AD%A3%E5%88%99%E6%96%B9%E7%A8%8B"><span class="nav-number">4.0.2.3.</span> <span class="nav-text">3. The Result: The
-Normal Equation 正则方程</span></a></li></ol></li></ol></li></ol></li></ol></div>
+Normal Equation 正则方程</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#matrix-notatio"><span class="nav-number">5.</span> <span class="nav-text">5. matrix notatio</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#section"><span class="nav-number">5.1.</span> <span class="nav-text">5.1:</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#why-use-matrix-notation"><span class="nav-number">5.1.1.</span> <span class="nav-text">## Why Use Matrix Notation?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#the-components-explained"><span class="nav-number">5.1.2.</span> <span class="nav-text">## The Components Explained</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#the-design-matrix-mathbfx"><span class="nav-number">5.1.2.1.</span> <span class="nav-text">1. The Design Matrix: \(\mathbf{X}\)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#the-coefficient-vector-boldsymbolbeta"><span class="nav-number">5.1.2.2.</span> <span class="nav-text">2. The Coefficient
+Vector: \(\boldsymbol{\beta}\)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#the-response-vector-mathbfy"><span class="nav-number">5.1.2.3.</span> <span class="nav-text">3. The Response Vector: \(\mathbf{y}\)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#the-error-vector-boldsymbolepsilon"><span class="nav-number">5.1.2.4.</span> <span class="nav-text">4. The Error Vector: \(\boldsymbol{\epsilon}\)</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#putting-it-all-together"><span class="nav-number">5.1.3.</span> <span class="nav-text">## Putting It All Together</span></a></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
