@@ -36,8 +36,10 @@
 <meta property="og:image" content="https://tianyaoblogs.github.io/imgs/5054C3/matrix_notatio.png">
 <meta property="og:image" content="https://tianyaoblogs.github.io/imgs/5054C3/OLS1.png">
 <meta property="og:image" content="https://tianyaoblogs.github.io/imgs/5054C3/OLS2.png">
+<meta property="og:image" content="https://tianyaoblogs.github.io/imgs/5054C3/geometric_interpretation.png">
+<meta property="og:image" content="https://tianyaoblogs.github.io/imgs/5054C3/geometric_interpretation.png">
 <meta property="article:published_time" content="2025-09-16T13:00:00.000Z">
-<meta property="article:modified_time" content="2025-09-18T03:56:06.255Z">
+<meta property="article:modified_time" content="2025-09-18T04:03:36.572Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="Machine Learning">
 <meta name="twitter:card" content="summary">
@@ -191,7 +193,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2025-09-18 11:56:06" itemprop="dateModified" datetime="2025-09-18T11:56:06+08:00">2025-09-18</time>
+                <time title="修改时间：2025-09-18 12:03:36" itemprop="dateModified" datetime="2025-09-18T12:03:36+08:00">2025-09-18</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -1062,6 +1064,168 @@ class="math inline">\(||\mathbf{y} -
 equal to the error from our LSE, <span
 class="math inline">\(||\mathbf{y} -
 \mathbf{X}\hat{\boldsymbol{\beta}}||^2\)</span>.</p>
+<h1 id="geometric-interpretation">7.geometric interpretation</h1>
+<p><img src="/imgs/5054C3/geometric_interpretation.png">
+<img src="/imgs/5054C3/geometric_interpretation.png"></p>
+<ul>
+<li><strong>内容</strong>:</li>
+</ul>
+<p>These two slides together provide a powerful geometric interpretation
+of how Ordinary Least Squares (OLS) works, centered on the concepts of
+<strong>orthogonality</strong> and <strong>projection</strong>.
+以<strong>正交性</strong>和<strong>投影</strong>的概念为中心，从几何角度有力地诠释了普通最小二乘法
+(OLS) 的工作原理。</p>
+<p>Here’s a detailed summary of the concepts and the processes they
+describe.</p>
+<h3 id="summary">## Summary</h3>
+<p>These slides explain that the process of finding the “best fit” line
+in regression is geometrically equivalent to <strong>projecting</strong>
+the actual data vector (<span class="math inline">\(\mathbf{y}\)</span>)
+onto a hyperplane defined by the predictor variables (<span
+class="math inline">\(\mathbf{X}\)</span>). This projection splits the
+actual data into two perpendicular components:
+解释了回归分析中寻找“最佳拟合”直线的过程，其几何意义等同于将实际数据向量
+(<span class="math inline">\(\mathbf{y}\)</span>)
+<strong>投影</strong>到由预测变量 (<span
+class="math inline">\(\mathbf{X}\)</span>)
+定义的超平面上。此投影将实际数据拆分为两个垂直分量：</p>
+<ol type="1">
+<li><strong>The Fitted Values (<span
+class="math inline">\(\hat{\mathbf{y}}\)</span>):</strong> The part of
+the data that is perfectly explained by the model (the projection).
+数据中能够被模型完美解释的部分（投影）。</li>
+<li><strong>The Residuals (<span
+class="math inline">\(\hat{\boldsymbol{\epsilon}}\)</span>):</strong>
+The part of the data that is unexplained (the error), which is
+perpendicular to the explained part.
+数据中无法解释的部分（误差），它与被解释部分垂直。 A special tool called
+the <strong>projection matrix (H)</strong>, or “hat matrix,” is
+introduced as the operator that performs this projection.
+引入一个称为<strong>投影矩阵
+(H)</strong>（或称“帽子矩阵”）的特殊工具，作为执行此投影的运算符。</li>
+</ol>
+<h3 id="concepts-and-process-explained-in-detail">## Concepts and
+Process Explained in Detail</h3>
+<h4 id="the-fitted-values-as-a-linear-combination-拟合值作为线性组合">1.
+The Fitted Values as a Linear Combination 拟合值作为线性组合</h4>
+<p>The first slide starts by stating that the fitted value vector <span
+class="math inline">\(\hat{\mathbf{y}} =
+\mathbf{X}\hat{\boldsymbol{\beta}}\)</span> is a <strong>linear
+combination</strong> of the columns of <span
+class="math inline">\(\mathbf{X}\)</span> (your predictors).</p>
+<ul>
+<li><p><strong>Concept:</strong> This means that the vector of fitted
+values, <span class="math inline">\(\hat{\mathbf{y}}\)</span>, must lie
+within the geometric space (a line, plane, or hyperplane) spanned by
+your predictor variables. The model is incapable of producing a
+prediction that does not live in this space. 这意味着拟合值向量 <span
+class="math inline">\(\hat{\mathbf{y}}\)</span>
+必须位于预测变量所构成的几何空间（直线、平面或超平面）内。模型无法生成不存在于此空间的预测。
+#### 2. The Projection Matrix (The “Hat Matrix”) 投影矩阵（“帽子矩阵”）
+The second slide introduces the tool that makes this projection happen:
+the <strong>projection matrix</strong>, also called the <strong>hat
+matrix</strong>, <strong>H</strong>.</p></li>
+<li><p><strong>Definition:</strong> <span
+class="math inline">\(\mathbf{H} =
+\mathbf{X}(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\)</span></p></li>
+<li><p><strong>Process:</strong> This matrix has a special job. When you
+multiply it by any vector (like our data vector <span
+class="math inline">\(\mathbf{y}\)</span>), it projects that vector onto
+the space spanned by the columns of <span
+class="math inline">\(\mathbf{X}\)</span>. We can see this by starting
+with our definition of fitted values and substituting the normal
+equation solution for <span
+class="math inline">\(\hat{\boldsymbol{\beta}}\)</span>: <span
+class="math display">\[\hat{\mathbf{y}} =
+\mathbf{X}\hat{\boldsymbol{\beta}} =
+\mathbf{X}[(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\mathbf{y}] =
+[\mathbf{X}(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T]\mathbf{y}\]</span>
+This shows that: <span class="math display">\[\hat{\mathbf{y}} =
+\mathbf{H}\mathbf{y}\]</span> This is why <strong>H</strong> is
+nicknamed the <strong>hat matrix</strong>—it “puts the hat” on <span
+class="math inline">\(\mathbf{y}\)</span>.
+这个矩阵有其特殊的用途。当你将它乘以任何向量（例如我们的数据向量 <span
+class="math inline">\(\mathbf{y}\)</span>）时，它会将该向量投影到由
+<span class="math inline">\(\mathbf{X}\)</span> 的列所跨越的空间上。
+#### 3. The Orthogonality of Fitted Values and Residuals
+拟合值和残差的正交性 This is the central concept of the first slide and
+a fundamental property of least squares.</p></li>
+<li><p><strong>Concept:</strong> The fitted value vector (<span
+class="math inline">\(\hat{\mathbf{y}}\)</span>) and the residual vector
+(<span class="math inline">\(\hat{\boldsymbol{\epsilon}} = \mathbf{y} -
+\hat{\mathbf{y}}\)</span>) are <strong>orthogonal</strong>
+(perpendicular) to each other.</p></li>
+<li><p><strong>Mathematical Statement:</strong> Their dot product is
+zero: <span class="math inline">\(\hat{\mathbf{y}}^T(\mathbf{y} -
+\hat{\mathbf{y}}) = 0\)</span>.</p></li>
+<li><p><strong>Geometric Intuition:</strong> This means the vectors
+<span class="math inline">\(\mathbf{y}\)</span>, <span
+class="math inline">\(\hat{\mathbf{y}}\)</span>, and <span
+class="math inline">\(\hat{\boldsymbol{\epsilon}}\)</span> form a
+<strong>right-angled triangle</strong> in n-dimensional space. The
+actual data vector <span class="math inline">\(\mathbf{y}\)</span> is
+the hypotenuse, while the model’s prediction <span
+class="math inline">\(\hat{\mathbf{y}}\)</span> and the error <span
+class="math inline">\(\hat{\boldsymbol{\epsilon}}\)</span> are the two
+perpendicular legs. 这意味着向量 <span
+class="math inline">\(\mathbf{y}\)</span>、<span
+class="math inline">\(\hat{\mathbf{y}}\)</span> 和 <span
+class="math inline">\(\hat{\boldsymbol{\epsilon}}\)</span> 在 n
+维空间中构成一个<strong>直角三角形</strong>。实际数据向量 <span
+class="math inline">\(\mathbf{y}\)</span> 是斜边，而模型的预测值 <span
+class="math inline">\(\hat{\mathbf{y}}\)</span> 和误差值 <span
+class="math inline">\(\hat{\boldsymbol{\epsilon}}\)</span>
+是两条垂直边。</p></li>
+</ul>
+<h4 id="the-pythagorean-theorem-of-least-squares">4. The Pythagorean
+Theorem of Least Squares</h4>
+<p>The orthogonality relationship directly implies the Pythagorean
+theorem.</p>
+<ul>
+<li><strong>Formula:</strong> <span
+class="math inline">\(||\mathbf{y}||^2 = ||\hat{\mathbf{y}}||^2 +
+||\mathbf{y} - \hat{\mathbf{y}}||^2\)</span></li>
+<li><strong>Concept:</strong> This is one of the most important
+equations in statistics, as it partitions the total variance in the
+data. 这是统计学中最重要的方程之一，因为它可以分割数据中的总方差。
+<ul>
+<li><span class="math inline">\(||\mathbf{y}||^2\)</span> is
+proportional to the <strong>Total Sum of Squares (TSS):</strong> The
+total variation of the response variable around its
+mean.响应变量围绕其均值的总变异。</li>
+<li><span class="math inline">\(||\hat{\mathbf{y}}||^2\)</span> is
+proportional to the <strong>Explained Sum of Squares (ESS):</strong> The
+portion of the total variation that is explained by your regression
+model.回归模型可以解释的总变异部分。</li>
+<li><span class="math inline">\(||\mathbf{y} -
+\hat{\mathbf{y}}||^2\)</span> is the <strong>Residual Sum of Squares
+(RSS):</strong> The portion of the total variation that is left
+unexplained (the error).总变异中未解释的部分（即误差）。</li>
+</ul></li>
+</ul>
+<p>This relationship, <strong>Total Variation = Explained Variation +
+Unexplained Variation</strong>, is the foundation for calculating
+metrics like <strong>R-squared (<span
+class="math inline">\(R^2\)</span>)</strong>, which measures the
+goodness of fit of your model. <strong>总变异 = 解释变异 +
+未解释变异</strong>，是计算<strong>R 平方 (<span
+class="math inline">\(R^2\)</span>)</strong>
+等指标的基础，该指标用于衡量模型的拟合优度。</p>
+<h4 id="residuals-and-the-identity-matrix-残差和单位矩阵">5. Residuals
+and the Identity Matrix 残差和单位矩阵</h4>
+<p>Finally, the second slide shows that just as <strong>H</strong>
+projects onto the “model space,” a related matrix projects onto the
+“error space.” 最后，第二张幻灯片显示，正如<strong>H</strong>
+投影到“模型空间”一样，相关矩阵也会投影到“误差空间”。 *
+<strong>Process:</strong> We can express the residuals using the hat
+matrix: <span class="math display">\[\hat{\boldsymbol{\epsilon}} =
+\mathbf{y} - \hat{\mathbf{y}} = \mathbf{y} - \mathbf{H}\mathbf{y} =
+(\mathbf{I} - \mathbf{H})\mathbf{y}\]</span> The matrix <span
+class="math inline">\((\mathbf{I} - \mathbf{H})\)</span> is also a
+projection matrix. It takes the original data vector <span
+class="math inline">\(\mathbf{y}\)</span> and projects it onto the space
+that is orthogonal to all of your predictors, giving you the residual
+vector directly.</p>
 
     </div>
 
@@ -1176,7 +1340,11 @@ Solution: The Least Squares Estimator (LSE)最小二乘估计器
 (LSE)</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#part-2-the-geometric-property-and-proofs-slide-2%E5%87%A0%E4%BD%95%E6%80%A7%E8%B4%A8%E5%8F%8A%E8%AF%81%E6%98%8E"><span class="nav-number">6.0.2.</span> <span class="nav-text">##
 Part 2: The Geometric Property and Proofs (Slide 2)几何性质及证明</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#the-concept-orthogonality-of-residuals%E6%AE%8B%E5%B7%AE%E7%9A%84%E6%AD%A3%E4%BA%A4%E6%80%A7"><span class="nav-number">6.0.2.1.</span> <span class="nav-text">The
 Concept: Orthogonality of Residuals残差的正交性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#the-calculation-process-the-proofs"><span class="nav-number">6.0.2.2.</span> <span class="nav-text">The Calculation
-Process (The Proofs)</span></a></li></ol></li></ol></li></ol></li></ol></div>
+Process (The Proofs)</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#geometric-interpretation"><span class="nav-number">7.</span> <span class="nav-text">7.geometric interpretation</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#summary"><span class="nav-number">7.0.1.</span> <span class="nav-text">## Summary</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#concepts-and-process-explained-in-detail"><span class="nav-number">7.0.2.</span> <span class="nav-text">## Concepts and
+Process Explained in Detail</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#the-fitted-values-as-a-linear-combination-%E6%8B%9F%E5%90%88%E5%80%BC%E4%BD%9C%E4%B8%BA%E7%BA%BF%E6%80%A7%E7%BB%84%E5%90%88"><span class="nav-number">7.0.2.1.</span> <span class="nav-text">1.
+The Fitted Values as a Linear Combination 拟合值作为线性组合</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#the-pythagorean-theorem-of-least-squares"><span class="nav-number">7.0.2.2.</span> <span class="nav-text">4. The Pythagorean
+Theorem of Least Squares</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#residuals-and-the-identity-matrix-%E6%AE%8B%E5%B7%AE%E5%92%8C%E5%8D%95%E4%BD%8D%E7%9F%A9%E9%98%B5"><span class="nav-number">7.0.2.3.</span> <span class="nav-text">5. Residuals
+and the Identity Matrix 残差和单位矩阵</span></a></li></ol></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
