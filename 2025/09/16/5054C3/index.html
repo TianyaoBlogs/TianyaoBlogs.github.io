@@ -39,8 +39,12 @@
 <meta property="og:image" content="https://tianyaoblogs.github.io/imgs/5054C3/geometric_interpretation1.png">
 <meta property="og:image" content="https://tianyaoblogs.github.io/imgs/5054C3/geometric_interpretation2.png">
 <meta property="og:image" content="https://tianyaoblogs.github.io/imgs/5054C3/visualization_of_Ordinary_Least_Squares_(OLS)_regression.png">
+<meta property="og:image" content="https://tianyaoblogs.github.io/imgs/5054C3/SVD1.png">
+<meta property="og:image" content="https://tianyaoblogs.github.io/imgs/5054C3/SVD2.png">
+<meta property="og:image" content="https://tianyaoblogs.github.io/imgs/5054C3/SVD1.png">
+<meta property="og:image" content="https://tianyaoblogs.github.io/imgs/5054C3/SVD2.png">
 <meta property="article:published_time" content="2025-09-16T13:00:00.000Z">
-<meta property="article:modified_time" content="2025-09-18T11:37:07.006Z">
+<meta property="article:modified_time" content="2025-09-18T18:31:01.227Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="Machine Learning">
 <meta name="twitter:card" content="summary">
@@ -194,7 +198,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2025-09-18 19:37:07" itemprop="dateModified" datetime="2025-09-18T19:37:07+08:00">2025-09-18</time>
+                <time title="修改时间：2025-09-19 02:31:01" itemprop="dateModified" datetime="2025-09-19T02:31:01+08:00">2025-09-19</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -1356,15 +1360,19 @@ errors are uncorrelated with the predictors.
 (<span class="math inline">\(\boldsymbol{\epsilon} = \mathbf{y} -
 \hat{\mathbf{y}}\)</span>)。其长度是从<strong>y</strong>到超平面的最短可能距离。</li>
 </ul>
-<h1 id="singular-value-decomposition-svd">8.Singular Value Decomposition
-(SVD)</h1>
+<h1 id="singular-value-decomposition-svd-奇异值分解-svd">8.Singular
+Value Decomposition (SVD) 奇异值分解 (SVD)</h1>
+<p><img src="/imgs/5054C3/SVD1.png">
+<img src="/imgs/5054C3/SVD2.png"></p>
 <ul>
 <li><strong>内容</strong>:</li>
 </ul>
-<p>Of course. These slides delve into the more advanced linear algebra
-behind the projection matrix (<strong>H</strong>), explaining its
-fundamental properties and offering a new way to construct it using
-<strong>Singular Value Decomposition (SVD)</strong>.</p>
+<p>These slides delve into the more advanced linear algebra behind the
+projection matrix (<strong>H</strong>), explaining its fundamental
+properties and offering a new way to construct it using <strong>Singular
+Value Decomposition (SVD)</strong>. 探讨了投影矩阵 (<strong>H</strong>)
+背后更高级的线性代数，解释了它的基本性质，并提供了一种使用<strong>奇异值分解
+(SVD)</strong> 构造它的新方法。</p>
 <h3 id="summary-2">## Summary</h3>
 <p>These slides show that the <strong>projection matrix (H)</strong>,
 which is central to least squares, has two key mathematical properties:
@@ -1374,10 +1382,14 @@ dictate that its eigenvalues must be either 1 or 0. Singular Value
 Decomposition (SVD) of the data matrix <strong>X</strong> provides an
 elegant and numerically stable way to express <strong>H</strong> as
 <strong>UUᵀ</strong>, which makes these fundamental properties easier to
-understand and prove.</p>
+understand and prove. 这些幻灯片展示了<strong>投影矩阵
+(H)</strong>（最小二乘法的核心）的两个关键数学性质：<strong>对称</strong>和<strong>幂等</strong>（投影两次等于投影一次）。这些性质决定了它的特征值必须为
+1 或 0。数据矩阵 <strong>X</strong> 的奇异值分解 (SVD)
+提供了一种优雅且数值稳定的方式，将<strong>H</strong> 表示为
+<strong>UUᵀ</strong>，这使得这些基本性质更容易理解和证明。</p>
 <h3 id="concepts-and-process-explained-in-detail-1">## Concepts and
 Process Explained in Detail</h3>
-<h4 id="singular-value-decomposition-svd-1">1. Singular Value
+<h4 id="singular-value-decomposition-svd">1. Singular Value
 Decomposition (SVD)</h4>
 <p>The first slide introduces SVD, a powerful method for factoring any
 matrix.</p>
@@ -1385,23 +1397,30 @@ matrix.</p>
 <li><strong>Concept:</strong> SVD breaks down your data matrix
 <strong>X</strong> into three simpler matrices: <strong>X =
 UDVᵀ</strong>. Think of this as revealing the fundamental structure of
-your data.
+your data.SVD 将数据矩阵 <strong>X</strong>
+分解为三个更简单的矩阵：<strong>X =
+UDVᵀ</strong>。这可以理解为揭示数据的基本结构。
 <ul>
 <li><strong>U:</strong> An <strong>orthogonal matrix</strong> whose
 columns form a perfect, orthonormal basis for the space spanned by your
 predictors (the column space of <strong>X</strong>). These columns
-represent the principal directions of your data’s space.</li>
+represent the principal directions of your data’s
+space.一个<strong>正交矩阵</strong>，其列构成预测变量所占空间（<strong>X</strong>
+的列空间）的完美正交基。这些列代表数据空间的主方向。</li>
 <li><strong>D:</strong> A <strong>diagonal matrix</strong> containing
 the “singular values,” which measure the importance or magnitude of each
-of these principal directions.</li>
-<li><strong>V:</strong> Another <strong>orthogonal matrix</strong>.</li>
+of these principal
+directions.一个<strong>对角矩阵</strong>，包含“奇异值”，用于衡量每个主方向的重要性或大小。</li>
+<li><strong>V:</strong> Another <strong>orthogonal
+matrix</strong>.另一个<strong>正交矩阵</strong>。</li>
 </ul></li>
-<li><strong>Process (How SVD simplifies the Projection Matrix):</strong>
-The main takeaway from this slide is the new, simpler formula for the
-hat matrix: <span class="math display">\[\mathbf{H} =
-\mathbf{UU}^T\]</span> This result is derived by substituting <strong>X
-= UDVᵀ</strong> into the original, more complex formula for
-<strong>H</strong>: <span class="math display">\[\mathbf{H} =
+<li><strong>Process (How SVD simplifies the Projection Matrix) SVD
+如何简化投影矩阵:</strong> The main takeaway from this slide is the new,
+simpler formula for the hat matrix: <span
+class="math display">\[\mathbf{H} = \mathbf{UU}^T\]</span> This result
+is derived by substituting <strong>X = UDVᵀ</strong> into the original,
+more complex formula for <strong>H</strong>: <span
+class="math display">\[\mathbf{H} =
 \mathbf{X}(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\]</span> When you
 perform this substitution and use the fact that for orthogonal matrices
 <strong>U</strong> and <strong>V</strong>, we have <strong>UᵀU =
@@ -1409,75 +1428,318 @@ I</strong> and <strong>VᵀV = I</strong>, the <strong>D</strong> and
 <strong>V</strong> matrices completely cancel out, leaving the
 beautifully simple form <strong>H = UUᵀ</strong>. This tells us that
 projection is fundamentally about the basis vectors (<strong>U</strong>)
-of the predictor space.</li>
+of the predictor space. 执行此代入并利用正交矩阵 <strong>U</strong> 和
+<strong>V</strong> 的公式，即 <strong>UᵀU = I</strong> 和 <strong>VᵀV =
+I</strong>，<strong>D</strong> 和 <strong>V</strong>
+矩阵完全抵消，剩下简洁的形式 <strong>H =
+UUᵀ</strong>。这告诉我们，投影本质上是关于预测空间的基向量（<strong>U</strong>）的。</li>
 </ul>
-<h4 id="the-properties-of-the-projection-matrix-h">2. The Properties of
-the Projection Matrix (H)</h4>
+<h4 id="the-properties-of-the-projection-matrix-h-投影矩阵-h-的性质">2.
+The Properties of the Projection Matrix (H) 投影矩阵 (H) 的性质</h4>
 <p>The second slide describes the essential nature of any projection
 matrix.</p>
 <ul>
 <li><p><strong>Symmetric (H = Hᵀ):</strong> This property ensures that
 the projection is orthogonal (i.e., it finds the closest point by moving
-perpendicularly).</p></li>
+perpendicularly).
+此性质确保投影是正交的（即，它通过垂直移动找到最近的点）。</p></li>
 <li><p><strong>Idempotent (H² = H):</strong> This is the most intuitive
-property of a projection.</p>
+property of a projection. 这是投影最直观的性质。</p>
 <ul>
 <li><strong>Concept:</strong> “Doing it twice is the same as doing it
-once.”</li>
+once.” “两次和一次相同。”</li>
 <li><strong>Geometric Meaning:</strong> Imagine you project a point onto
 a flat tabletop. That projected point is now <em>on the table</em>. If
 you try to project it onto the table <em>again</em>, it doesn’t move.
 The projection of a projection is just the projection itself.
 Mathematically, this is <strong>H(Hv) = Hv</strong>, which simplifies to
-<strong>H² = H</strong>.</li>
+<strong>H² = H</strong>.
+想象一下，你将一个点投影到平坦的桌面上。这个投影点现在<em>在桌子上</em>。如果你尝试<em>再次</em>将它投影到桌子上，它不会移动。投影的投影就是投影本身。从数学上讲，这是<strong>H(Hv)
+= Hv</strong>，简化为<strong>H² = H</strong>。</li>
 </ul></li>
 </ul>
-<h4 id="eigenvalues-and-eigenspaces">3. Eigenvalues and Eigenspaces</h4>
+<h4 id="eigenvalues-and-eigenspaces-特征值和特征空间">3. Eigenvalues and
+Eigenspaces 特征值和特征空间</h4>
 <p>The idempotency property has a profound consequence for the matrix’s
 eigenvalues.</p>
 <ul>
 <li><strong>Concept:</strong> The eigenvalues of <strong>H</strong> can
-only be <strong>1 or 0</strong>.</li>
+only be <strong>1 or 0</strong>.
+<strong>H</strong>的特征值只能是<strong>1</strong>或0**。</li>
 <li><strong>Process (The Proof):</strong>
 <ol type="1">
 <li>Let <strong>v</strong> be an eigenvector of <strong>H</strong> with
 eigenvalue <span class="math inline">\(\lambda\)</span>. By definition,
 <strong>Hv</strong> = <span
-class="math inline">\(\lambda\)</span><strong>v</strong>.</li>
+class="math inline">\(\lambda\)</span><strong>v</strong>.
+设<strong>v</strong>是<strong>H</strong>的特征向量，其特征值为<span
+class="math inline">\(\lambda\)</span>。根据定义，<strong>Hv</strong> =
+<span class="math inline">\(\lambda\)</span><strong>v</strong>。</li>
 <li>If we apply <strong>H</strong> again, we get <strong>H(Hv)</strong>
 = <strong>H</strong>(<span
 class="math inline">\(\lambda\)</span><strong>v</strong>) = <span
 class="math inline">\(\lambda\)</span>(<strong>Hv</strong>) = <span
 class="math inline">\(\lambda\)</span>(<span
 class="math inline">\(\lambda\)</span><strong>v</strong>) = <span
-class="math inline">\(\lambda^2\)</span><strong>v</strong>.</li>
+class="math inline">\(\lambda^2\)</span><strong>v</strong>.
+如果我们再次应用<strong>H</strong>，我们得到<strong>H(Hv)</strong> =
+<strong>H</strong>(<span
+class="math inline">\(\lambda\)</span><strong>v</strong>) = <span
+class="math inline">\(\lambda\)</span>(<strong>Hv</strong>) = <span
+class="math inline">\(\lambda\)</span>(<span
+class="math inline">\(\lambda\)</span><strong>v</strong>) = <span
+class="math inline">\(\lambda^2\)</span><strong>v</strong>。</li>
 <li>So, we have <strong>H²v</strong> = <span
-class="math inline">\(\lambda^2\)</span><strong>v</strong>.</li>
+class="math inline">\(\lambda^2\)</span><strong>v</strong>.
+因此，我们有<strong>H²v</strong> = <span
+class="math inline">\(\lambda^2\)</span><strong>v</strong>。</li>
 <li>But since <strong>H</strong> is idempotent, <strong>H² = H</strong>,
 which means <strong>H²v = Hv</strong> = <span
-class="math inline">\(\lambda\)</span><strong>v</strong>.</li>
+class="math inline">\(\lambda\)</span><strong>v</strong>.
+但由于<strong>H</strong>是幂等的，<strong>H² =
+H</strong>，这意味着<strong>H²v = Hv</strong> = <span
+class="math inline">\(\lambda\)</span><strong>v</strong>。</li>
 <li>Therefore, we must have <span
 class="math inline">\(\lambda^2\)</span><strong>v</strong> = <span
 class="math inline">\(\lambda\)</span><strong>v</strong>, which means
 <span class="math inline">\(\lambda^2 = \lambda\)</span>. The only two
 numbers in existence that satisfy this equation are <strong>0 and
-1</strong>.</li>
+1</strong>. 因此，我们必须有<span
+class="math inline">\(\lambda^2\)</span><strong>v</strong> = <span
+class="math inline">\(\lambda\)</span><strong>v</strong>，这意味着<span
+class="math inline">\(\lambda^2 =
+\lambda\)</span>。满足此等式的仅有两个数字是<strong>0</strong>和<strong>1</strong>。</li>
 </ol></li>
-<li><strong>Connecting Eigenvalues to the Model:</strong>
+<li><strong>Connecting Eigenvalues to the Model
+将特征值连接到模型:</strong>
 <ul>
-<li><strong>Eigenvalue = 1:</strong> The eigenvectors associated with an
-eigenvalue of 1 are the vectors that <strong>do not change</strong> when
-projected. This is only possible if they were already in the space being
-projected onto. Therefore, the space <code>L₁</code> is the
+<li><p><strong>Eigenvalue = 1:</strong> The eigenvectors associated with
+an eigenvalue of 1 are the vectors that <strong>do not change</strong>
+when projected. This is only possible if they were already in the space
+being projected onto. Therefore, the space <code>L₁</code> is the
 <strong>column space of X</strong>—the “model space.” <strong>H</strong>
-is the projection onto this space.</li>
-<li><strong>Eigenvalue = 0:</strong> The eigenvectors associated with an
-eigenvalue of 0 are the vectors that get sent to the zero vector when
+is the projection onto this space. <strong>与特征值为 1
+相关联的特征向量是投影时</strong>不会改变<strong>的向量。只有当它们已经存在于投影到的空间中时，这种情况才有可能发生。因此，空间
+<code>L₁</code> 是 X 的</strong>列空间<strong>——“模型空间”。</strong>H**
+是到该空间的投影。</p></li>
+<li><p><strong>Eigenvalue = 0:</strong> The eigenvectors associated with
+an eigenvalue of 0 are the vectors that get sent to the zero vector when
 projected. This happens to vectors that are <strong>orthogonal</strong>
 to the projection space. Therefore, the space <code>L₀</code> is the
 <strong>orthogonal “error” space</strong>. The matrix <strong>I -
-H</strong> is the projection onto this space.</li>
+H</strong> is the projection onto this space.</p></li>
+</ul>
+<strong>与特征值为 0
+相关联的特征向量是投影时被发送到零向量的向量。这种情况发生在与投影空间</strong>正交<strong>的向量上。因此，空间
+<code>L₀</code> 是</strong>正交“误差”空间<strong>。矩阵 </strong>I - H**
+是到该空间的投影。</li>
+</ul>
+<h1 id="singular-value-decomposition-svd-奇异值分解-svd-1">8.Singular
+Value Decomposition (SVD) 奇异值分解 (SVD)</h1>
+<p><img src="/imgs/5054C3/SVD1.png">
+<img src="/imgs/5054C3/SVD2.png"></p>
+<ul>
+<li><strong>内容</strong>:</li>
+</ul>
+<p>These slides cover the theoretical backbone of statistical inference
+in linear regression. They explain the necessary assumptions and the
+resulting probability distributions of our estimates, which is what
+allows us to perform hypothesis tests and create confidence
+intervals.</p>
+<p>这些幻灯片涵盖了线性回归中统计推断的理论基础。它们解释了必要的假设以及由此得出的估计概率分布，这使我们能够进行假设检验并创建置信区间。</p>
+<h3 id="summary-3">## Summary</h3>
+<p>These slides lay out the statistical assumptions required for the
+Least Squares Estimator (LSE). The core idea is that if we assume the
+errors are independent and normally distributed, we can then prove that:
+这些幻灯片列出了最小二乘估计量 (LSE)
+所需的统计假设。其核心思想是，如果我们假设误差是独立的且服从正态分布，那么我们可以证明：</p>
+<ol type="1">
+<li><p>Our estimated coefficients (<span
+class="math inline">\(\hat{\boldsymbol{\beta}}\)</span>) also follow a
+<strong>Normal distribution</strong> (or a
+<strong>t-distribution</strong> when standardized). 我们的估计系数
+(<span class="math inline">\(\hat{\boldsymbol{\beta}}\)</span>)
+也服从<strong>正态分布</strong>（标准化后服从<strong>t
+分布</strong>）。</p></li>
+<li><p>Our summed-up squared errors (RSS) follow a <strong>Chi-squared
+distribution</strong>. 我们的平方误差总和 (RSS)
+服从<strong>卡方分布</strong>。</p></li>
+<li><p>A specific ratio of the explained variance to the unexplained
+variance follows an <strong>F-distribution</strong>, which is used to
+test the overall significance of the model.
+解释方差与未解释方差的特定比率服从<strong>F
+分布</strong>，该分布用于检验模型的整体显著性。</p></li>
+</ol>
+<p>These known distributions are the foundation for all statistical
+inference in linear
+models.这些已知的分布是线性模型中所有统计推断的基础。</p>
+<h3 id="deeper-dive-into-concepts-and-processes">## Deeper Dive into
+Concepts and Processes</h3>
+<h4 id="the-model-assumptions-the-foundation-模型假设基础">1. The Model
+Assumptions (The Foundation) 模型假设（基础）</h4>
+<p>The first slide states the two assumptions that are critical for
+everything that follows. Without them, we can’t make claims about the
+statistical properties of our estimates.
+第一张幻灯片阐述了对后续所有内容都至关重要的两个假设。没有它们，我们就无法断言估计值的统计特性。</p>
+<ul>
+<li><strong>Assumption 1: <span class="math inline">\(\epsilon_i \sim
+N(0, \sigma^2)\)</span></strong>
+<ul>
+<li><strong>Concept:</strong> This assumes that the error terms (the
+part of <code>y</code> that the model can’t explain) are drawn from a
+normal (bell-curve) distribution with a mean of zero and a constant
+variance <span class="math inline">\(\sigma^2\)</span>.
+**假设误差项（模型无法解释的 y
+值部分）服从正态（钟形曲线）分布，该分布的均值为零，方差为常数 <span
+class="math inline">\(\sigma^2\)</span>。</li>
+<li><strong>Meaning in Plain English:</strong>
+<ul>
+<li><strong>Mean of 0:</strong> The model is “correct on average.” The
+errors are not systematically positive or negative.
+**模型“平均正确”。误差并非系统地为正或负。</li>
+<li><strong>Normal Distribution:</strong> Small errors are more likely
+than large errors. This is a common assumption for random noise.
+**小误差比大误差更有可能出现。这是随机噪声的常见假设。</li>
+<li><strong>Constant Variance (<span
+class="math inline">\(\sigma^2\)</span>):</strong> The amount of random
+scatter around the regression line is the same at all levels of the
+predictor variables. This is called <strong>homoscedasticity</strong>.
+回归线周围的随机散度在预测变量的各个水平上都是相同的。这被称为<strong>同方差性</strong>。</li>
 </ul></li>
+</ul></li>
+<li><strong>Assumption 2: Observations are independent</strong>
+观测值是独立的**
+<ul>
+<li><strong>Concept:</strong> Each data point <span
+class="math inline">\((x_i, y_i)\)</span> is an independent piece of
+information. The value of the error for one observation gives no
+information about the error for another observation. 每个数据点 <span
+class="math inline">\((x_i, y_i)\)</span>
+都是一条独立的信息。一个观测值的误差值并不能反映另一个观测值的误差。</li>
+<li><strong>Meaning:</strong> This is often true for cross-sectional
+data (e.g., a random sample of people) but can be violated in
+time-series data where today’s error might be correlated with
+yesterday’s.
+这通常适用于横截面数据（例如，随机抽样的人群），但在时间序列数据中可能不成立，因为今天的误差可能与昨天的误差相关。</li>
+</ul></li>
+</ul>
+<h4
+id="the-distribution-of-the-coefficients-theorem-of-lse-系数分布最小二乘法定理">2.
+The Distribution of the Coefficients (Theorem of LSE)
+系数分布（最小二乘法定理）</h4>
+<p>This is the most important result for understanding the accuracy of
+our individual predictors.</p>
+<ul>
+<li><strong>Concept 1: The Sampling Distribution of <span
+class="math inline">\(\hat{\boldsymbol{\beta}}\)</span></strong>
+<ul>
+<li><p><strong>Formula:</strong> <span
+class="math inline">\(\hat{\boldsymbol{\beta}} \sim
+N(\boldsymbol{\beta},
+\sigma^2(\mathbf{X}^T\mathbf{X})^{-1})\)</span></p></li>
+<li><p><strong>Meaning:</strong> If you were to take many different
+random samples from the population and calculate the coefficients <span
+class="math inline">\(\hat{\boldsymbol{\beta}}\)</span> for each sample,
+the distribution of those coefficients would be a multivariate normal
+distribution. **如果从总体中随机抽取许多不同的样本，并计算每个样本的系数
+<span
+class="math inline">\(\hat{\boldsymbol{\beta}}\)</span>，则这些系数的分布将服从多元正态分布。</p>
+<ul>
+<li>The center of this distribution is the <strong>true population
+coefficient vector <span
+class="math inline">\(\boldsymbol{\beta}\)</span></strong>. This means
+our estimator is <strong>unbiased</strong>—on average, it finds the
+right answer. 该分布的中心是<strong>真实的总体系数向量 <span
+class="math inline">\(\boldsymbol{\beta}\)</span></strong>。这意味着我们的估计器是<strong>无偏的</strong>——平均而言，它能够找到正确的答案。</li>
+<li>The “spread” of this distribution is its variance-covariance matrix,
+<span
+class="math inline">\(\sigma^2(\mathbf{X}^T\mathbf{X})^{-1}\)</span>.
+This tells us the uncertainty in our estimates.
+该分布的“散度”是其方差-协方差矩阵</li>
+</ul></li>
+</ul></li>
+<li><strong>Concept 2: The t-statistic</strong> t 统计量
+<ul>
+<li><strong>Formula:</strong> The standardized coefficient, <span
+class="math inline">\(\frac{\hat{\beta}_j -
+\beta_j}{\text{s.e.}(\hat{\beta}_j)}\)</span>, follows a
+<strong>t-distribution</strong> with <strong><span
+class="math inline">\(n-p-1\)</span> degrees of freedom</strong>.</li>
+<li><strong>Process &amp; Meaning:</strong> In the real world, we don’t
+know the true error variance <span
+class="math inline">\(\sigma^2\)</span>. We have to estimate it using
+our sample data, which gives us <span
+class="math inline">\(s^2\)</span>. Because we are using an
+<em>estimate</em> of the variance, we introduce extra uncertainty. The
+t-distribution is like a normal distribution but with slightly “fatter”
+tails to account for this additional uncertainty. The degrees of
+freedom, <span class="math inline">\(n-p-1\)</span>, reflect the number
+of data points (<code>n</code>) minus the number of parameters we had to
+estimate (<code>p</code> slopes + 1 intercept). This is the basis for
+t-tests and confidence intervals for each coefficient.
+在现实世界中，我们不知道真实的误差方差 <span
+class="math inline">\(\sigma^2\)</span>。我们必须使用样本数据来估计它，从而得到
+<span
+class="math inline">\(s^2\)</span>。由于我们使用的是方差的<em>估计值</em>，因此引入了额外的不确定性。
+t 分布类似于正态分布，但尾部略微“丰满”，以解释这种额外的不确定性。自由度
+<span class="math inline">\(n-p-1\)</span>
+表示数据点的数量（<code>n</code>）减去我们需要估计的参数数量（<code>p</code>
+个斜率 + 1 个截距）。这是 t 检验和每个系数置信区间的基础。</li>
+</ul></li>
+</ul>
+<h4
+id="the-distribution-of-the-error-theorem-of-residual-误差分布残差定理">3.
+The Distribution of the Error (Theorem of Residual)
+误差分布（残差定理）</h4>
+<p>This theorem helps us understand the properties of our model’s
+overall error.</p>
+<ul>
+<li><p><strong>Concept:</strong> The <strong>Residual Sum of Squares
+(RSS)</strong>, when scaled by the true variance, follows a
+<strong>Chi-squared (<span class="math inline">\(\chi^2\)</span>)
+distribution</strong> with <span class="math inline">\(n-p-1\)</span>
+degrees of freedom. <strong>残差平方和 (RSS)</strong>
+经真实方差缩放后，服从自由度为 <span
+class="math inline">\(n-p-1\)</span> 的<strong>卡方 (<span
+class="math inline">\(\chi^2\)</span>) 分布</strong>。</p></li>
+<li><p><strong>Process &amp; Meaning:</strong> The Chi-squared
+distribution often arises when dealing with sums of squared normal
+variables. This theorem provides a formal probability distribution for
+our total model error. Its most important consequence is that it allows
+us to prove that:
+**卡方分布通常用于处理正态变量的平方和。该定理为我们模型的总体误差提供了一个正式的概率分布。它最重要的推论是，它使我们能够证明：</p>
+<p><span class="math display">\[s^2 = \text{RSS}/(n - p - 1)\]</span> is
+an <strong>unbiased estimate</strong> of the true error variance <span
+class="math inline">\(\sigma^2\)</span>. This <span
+class="math inline">\(s^2\)</span> is a critical ingredient for
+calculating the standard errors of our coefficients. <span
+class="math display">\[s^2 = \text{RSS}/(n - p - 1)\]</span>
+是真实误差方差 <span class="math inline">\(\sigma^2\)</span>
+的<strong>无偏估计</strong>。这个 <span
+class="math inline">\(s^2\)</span>
+是计算系数标准误差的关键因素。</p></li>
+</ul>
+<h4 id="the-f-distribution-and-the-overall-model-test">4. The
+F-Distribution and the Overall Model Test</h4>
+<p>This final theorem combines our findings about the coefficients and
+the residuals.</p>
+<ul>
+<li><p><strong>Concept:</strong> The F-statistic, which is essentially a
+ratio of the variance explained by the model to the variance left
+unexplained, follows an <strong>F-distribution</strong>. F
+统计量本质上是模型解释的方差与未解释方差的比率，服从 F 分布。</p></li>
+<li><p><strong>Process &amp; Meaning:</strong> This result relies on the
+fact that our coefficient estimates (<span
+class="math inline">\(\hat{\boldsymbol{\beta}}\)</span>) are independent
+of our total error (RSS). The F-distribution is used for the
+<strong>F-test of overall significance</strong>. This test checks the
+null hypothesis that <em>all</em> of your slope coefficients are
+simultaneously zero (<span class="math inline">\(\beta_1 = \beta_2 =
+\dots = \beta_p = 0\)</span>). If the F-test gives a small p-value, you
+can conclude that your model, as a whole, is statistically significant
+and provides a better fit than a model with no predictors. 如果 F
+检验得出的 p
+值较小，则可以得出结论，您的模型整体上具有统计显著性，并且比没有预测因子的模型拟合效果更好。</p></li>
 </ul>
 
     </div>
@@ -1606,11 +1868,20 @@ Explained Spatially空间概念解释</span></a><ol class="nav-child"><li class=
 The Predictor Hyperplane (The Yellow
 Surface)预测变量超平面（黄色表面）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#the-fitted-value-vector-%C5%B7%E6%8B%9F%E5%90%88%E5%80%BC%E5%90%91%E9%87%8F-%C5%B7"><span class="nav-number">8.0.2.3.</span> <span class="nav-text">4. The Fitted Value
 Vector (ŷ)拟合值向量 (ŷ)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#the-residual-vector-the-dashed-line%E6%AE%8B%E5%B7%AE%E5%90%91%E9%87%8F%E8%99%9A%E7%BA%BF"><span class="nav-number">8.0.2.4.</span> <span class="nav-text">5. The Residual
-Vector (The Dashed Line)残差向量（虚线）</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#singular-value-decomposition-svd"><span class="nav-number">9.</span> <span class="nav-text">8.Singular Value Decomposition
-(SVD)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#summary-2"><span class="nav-number">9.0.1.</span> <span class="nav-text">## Summary</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#concepts-and-process-explained-in-detail-1"><span class="nav-number">9.0.2.</span> <span class="nav-text">## Concepts and
-Process Explained in Detail</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#singular-value-decomposition-svd-1"><span class="nav-number">9.0.2.1.</span> <span class="nav-text">1. Singular Value
-Decomposition (SVD)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#the-properties-of-the-projection-matrix-h"><span class="nav-number">9.0.2.2.</span> <span class="nav-text">2. The Properties of
-the Projection Matrix (H)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#eigenvalues-and-eigenspaces"><span class="nav-number">9.0.2.3.</span> <span class="nav-text">3. Eigenvalues and Eigenspaces</span></a></li></ol></li></ol></li></ol></li></ol></div>
+Vector (The Dashed Line)残差向量（虚线）</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#singular-value-decomposition-svd-%E5%A5%87%E5%BC%82%E5%80%BC%E5%88%86%E8%A7%A3-svd"><span class="nav-number">9.</span> <span class="nav-text">8.Singular
+Value Decomposition (SVD) 奇异值分解 (SVD)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#summary-2"><span class="nav-number">9.0.1.</span> <span class="nav-text">## Summary</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#concepts-and-process-explained-in-detail-1"><span class="nav-number">9.0.2.</span> <span class="nav-text">## Concepts and
+Process Explained in Detail</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#singular-value-decomposition-svd"><span class="nav-number">9.0.2.1.</span> <span class="nav-text">1. Singular Value
+Decomposition (SVD)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#the-properties-of-the-projection-matrix-h-%E6%8A%95%E5%BD%B1%E7%9F%A9%E9%98%B5-h-%E7%9A%84%E6%80%A7%E8%B4%A8"><span class="nav-number">9.0.2.2.</span> <span class="nav-text">2.
+The Properties of the Projection Matrix (H) 投影矩阵 (H) 的性质</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#eigenvalues-and-eigenspaces-%E7%89%B9%E5%BE%81%E5%80%BC%E5%92%8C%E7%89%B9%E5%BE%81%E7%A9%BA%E9%97%B4"><span class="nav-number">9.0.2.3.</span> <span class="nav-text">3. Eigenvalues and
+Eigenspaces 特征值和特征空间</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#singular-value-decomposition-svd-%E5%A5%87%E5%BC%82%E5%80%BC%E5%88%86%E8%A7%A3-svd-1"><span class="nav-number">10.</span> <span class="nav-text">8.Singular
+Value Decomposition (SVD) 奇异值分解 (SVD)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#summary-3"><span class="nav-number">10.0.1.</span> <span class="nav-text">## Summary</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#deeper-dive-into-concepts-and-processes"><span class="nav-number">10.0.2.</span> <span class="nav-text">## Deeper Dive into
+Concepts and Processes</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#the-model-assumptions-the-foundation-%E6%A8%A1%E5%9E%8B%E5%81%87%E8%AE%BE%E5%9F%BA%E7%A1%80"><span class="nav-number">10.0.2.1.</span> <span class="nav-text">1. The Model
+Assumptions (The Foundation) 模型假设（基础）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#the-distribution-of-the-coefficients-theorem-of-lse-%E7%B3%BB%E6%95%B0%E5%88%86%E5%B8%83%E6%9C%80%E5%B0%8F%E4%BA%8C%E4%B9%98%E6%B3%95%E5%AE%9A%E7%90%86"><span class="nav-number">10.0.2.2.</span> <span class="nav-text">2.
+The Distribution of the Coefficients (Theorem of LSE)
+系数分布（最小二乘法定理）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#the-distribution-of-the-error-theorem-of-residual-%E8%AF%AF%E5%B7%AE%E5%88%86%E5%B8%83%E6%AE%8B%E5%B7%AE%E5%AE%9A%E7%90%86"><span class="nav-number">10.0.2.3.</span> <span class="nav-text">3.
+The Distribution of the Error (Theorem of Residual)
+误差分布（残差定理）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#the-f-distribution-and-the-overall-model-test"><span class="nav-number">10.0.2.4.</span> <span class="nav-text">4. The
+F-Distribution and the Overall Model Test</span></a></li></ol></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
