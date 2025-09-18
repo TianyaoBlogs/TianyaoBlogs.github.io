@@ -204,8 +204,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>用于无监督视觉表示学习的动量对比 <a
-target="_blank" rel="noopener" href="https://arxiv.org/abs/1911.05722v3">Momentum Contrast for
+        <p>用于无监督视觉表示学习的动量对比 <a target="_blank" rel="noopener" href="https://arxiv.org/abs/1911.05722v3">Momentum Contrast for
 Unsupervised Visual Representation Learning</a></p>
 <h1 id="momentum-contrast">1. Momentum Contrast</h1>
 <h2 id="定义">1.1 定义</h2>
@@ -240,8 +239,7 @@ Dictionary）:</h2>
 <li><strong>内容</strong>:当前批次的数据经过键编码器编码后，其特征被入队添加到字典队列尾部。</li>
 <li><strong>内容</strong>:同时，队列中最老的批次特征被出<strong>队dequeue</strong>
 移除。</li>
-<li><strong>内容</strong>:队列可以将字典大小 <span
-class="math inline">\(K\)</span>
+<li><strong>内容</strong>:队列可以将字典大小 <span class="math inline">\(K\)</span>
 设计得远大于单个批次的大小，从而提供海量且一致的负样本来源（一致性由下面的动量更新保证）。队列解耦了字典大小与批次大小的限制。</li>
 </ul>
 <h2 id="动量更新编码器momentum-update-of-key-encoder">2.2
@@ -251,23 +249,16 @@ class="math inline">\(K\)</span>
 查询编码器使用标准的梯度下降更新（<strong>SGD</strong>）</li>
 <li><strong>内容</strong>:
 键编码器<strong>不通过反向传播更新</strong>。</li>
-<li><strong>内容</strong>: 键编码器的参数 <span
-class="math inline">\(θ_k\)</span> 通过动量更新<strong>Momentum
-Update</strong>从查询编码器的参数 <span
-class="math inline">\(θ_q\)</span> 获得：<span class="math display">\[
+<li><strong>内容</strong>: 键编码器的参数 <span class="math inline">\(θ_k\)</span> 通过动量更新<strong>Momentum
+Update</strong>从查询编码器的参数 <span class="math inline">\(θ_q\)</span> 获得：<span class="math display">\[
 \theta_k \gets m \cdot \theta_k + (1 - m) \cdot \theta_q \]</span>其中
-<span class="math inline">\(m\)</span> 是一个动量系数（如 <span
-class="math inline">\(m\)</span> = <span
-class="math inline">\(0.999\)</span>），非常接近<span
-class="math inline">\(1\)</span>。 ## 2.3 优势:</li>
-<li><strong>内容</strong>:动量更新使得键编码器 <span
-class="math inline">\(f_k\)</span> 的参数变化非常缓慢和平滑。</li>
+<span class="math inline">\(m\)</span> 是一个动量系数（如 <span class="math inline">\(m\)</span> = <span class="math inline">\(0.999\)</span>），非常接近<span class="math inline">\(1\)</span>。 ## 2.3 优势:</li>
+<li><strong>内容</strong>:动量更新使得键编码器 <span class="math inline">\(f_k\)</span> 的参数变化非常缓慢和平滑。</li>
 </ul>
 <h1 id="对比损失函数infonce-loss">3. 对比损失函数（InfoNCE Loss:</h1>
 <h2 id="infonce-loss-noise-contrastive-estimation-loss">3.1 InfoNCE Loss
 (Noise-Contrastive Estimation Loss)：</h2>
-<p>对比损失函数（InfoNCE/NT-Xent Loss）定义为： <span
-class="math inline">\(\mathcal{L}_{\text{q}} = -\log \underbrace{\left(
+<p>对比损失函数（InfoNCE/NT-Xent Loss）定义为： <span class="math inline">\(\mathcal{L}_{\text{q}} = -\log \underbrace{\left(
 \frac{\exp\left( \mathbf{q} \cdot \mathbf{k}^{+} / \tau
 \right)}{\exp\left( \mathbf{q} \cdot \mathbf{k}^{+} / \tau \right) +
 \sum\limits_{i=1}^{N} \exp\left( \mathbf{q} \cdot \mathbf{k}_{i}^{-} /
@@ -275,8 +266,8 @@ class="math inline">\(\mathcal{L}_{\text{q}} = -\log \underbrace{\left(
 <h2 id="其中">3.2其中：</h2>
 <table>
 <colgroup>
-<col style="width: 23%" />
-<col style="width: 76%" />
+<col style="width: 23%">
+<col style="width: 76%">
 </colgroup>
 <thead>
 <tr>
@@ -287,31 +278,25 @@ class="math inline">\(\mathcal{L}_{\text{q}} = -\log \underbrace{\left(
 <tbody>
 <tr>
 <td><span class="math inline">\(\mathbf{q}\)</span></td>
-<td>查询向量（Query Vector）：由查询编码器 <span
-class="math inline">\(f_q\)</span> 输出（如 <span
-class="math inline">\(2048\)</span> 维）。</td>
+<td>查询向量（Query Vector）：由查询编码器 <span class="math inline">\(f_q\)</span> 输出（如 <span class="math inline">\(2048\)</span> 维）。</td>
 </tr>
 <tr>
 <td><span class="math inline">\(\mathbf{k}^{+}\)</span></td>
-<td>正样本键向量（Positive Key）：由键编码器 <span
-class="math inline">\(f_k\)</span>
+<td>正样本键向量（Positive Key）：由键编码器 <span class="math inline">\(f_k\)</span>
 输出（来自同一数据的不同增强视图）。</td>
 </tr>
 <tr>
 <td><span class="math inline">\(\mathbf{k}_{i}^{-}\)</span></td>
 <td>负样本键向量（Negative Keys）：来自字典队列的其他数据样本（数量为
-<span class="math inline">\(N\)</span>，如 <span
-class="math inline">\(65536\)</span>）。</td>
+<span class="math inline">\(N\)</span>，如 <span class="math inline">\(65536\)</span>）。</td>
 </tr>
 <tr>
 <td><span class="math inline">\(\tau\)</span></td>
-<td>温度参数（Temperature）：控制相似度分布的尖锐程度（典型值 <span
-class="math inline">\(0.05 \sim 0.2\)</span>）。</td>
+<td>温度参数（Temperature）：控制相似度分布的尖锐程度（典型值 <span class="math inline">\(0.05 \sim 0.2\)</span>）。</td>
 </tr>
 <tr>
 <td><span class="math inline">\(\cdot\)</span></td>
-<td>向量点积（L2归一化后等价于余弦相似度，即 <span
-class="math inline">\(\mathbf{q} \cdot \mathbf{k} =
+<td>向量点积（L2归一化后等价于余弦相似度，即 <span class="math inline">\(\mathbf{q} \cdot \mathbf{k} =
 \cos\theta\)</span>）。</td>
 </tr>
 </tbody>
@@ -336,30 +321,21 @@ class="math inline">\(\mathbf{q} \cdot \mathbf{k} =
 <li><strong>Step4</strong>: 一个线性投影层将特征维度映射到
 <strong>D</strong>。</li>
 <li><strong>结果</strong>:一个 <span class="math inline">\(D\)</span>
-维（如 <span class="math inline">\(M\)</span> 维）的归一化向量 <span
-class="math inline">\(q\)</span>。这个 <span
-class="math inline">\(q\)</span>
+维（如 <span class="math inline">\(M\)</span> 维）的归一化向量 <span class="math inline">\(q\)</span>。这个 <span class="math inline">\(q\)</span>
 代表了经过裁剪、颜色扰动后的猫头像的抽象特征。例如， <strong>[0.12,
--0.05, 0.87, …, 0.03]</strong> (<span
-class="math inline">\(M\)</span>个数值)。</li>
+-0.05, 0.87, …, 0.03]</strong> (<span class="math inline">\(M\)</span>个数值)。</li>
 <li><strong>键编码器 <span class="math inline">\(f_k\)</span>
 处理</strong>:</li>
 <li><strong>Step1</strong>: 输入：<strong>[3, 224, 224]</strong>
 张量。(对 <strong>P.jpg</strong> 应用另一组随机预处理得到的另一个
 <strong>[3, 224, 224]</strong> 张量。)</li>
-<li><strong>Step2</strong>: 经过结构相同但参数由动量更新的 <span
-class="math inline">\(f_k\)</span>。</li>
+<li><strong>Step2</strong>: 经过结构相同但参数由动量更新的 <span class="math inline">\(f_k\)</span>。</li>
 <li><strong>Step3</strong>: 一个 <span class="math inline">\(D\)</span>
-维（如 <span class="math inline">\(M\)</span> 维）的归一化向量 <span
-class="math inline">\(k\)</span>。例如 <strong>[0.15, -0.08, 0.84, …,
+维（如 <span class="math inline">\(M\)</span> 维）的归一化向量 <span class="math inline">\(k\)</span>。例如 <strong>[0.15, -0.08, 0.84, …,
 0.02]</strong>。这个 <span class="math inline">\(k\)</span>
 代表了同一数据但不同视角/颜色下的抽象特征。</li>
 <li><strong>动态字典</strong>:</li>
-<li><strong>Step1</strong>:包含之前通过 <span
-class="math inline">\(f_k\)</span> 计算出的 <span
-class="math inline">\(k\)</span> 向量。例如，队列大小是 <span
-class="math inline">\(L\)</span>，里面存储了 <span
-class="math inline">\(L\)</span> 个不同的 <strong>D=128</strong>
+<li><strong>Step1</strong>:包含之前通过 <span class="math inline">\(f_k\)</span> 计算出的 <span class="math inline">\(k\)</span> 向量。例如，队列大小是 <span class="math inline">\(L\)</span>，里面存储了 <span class="math inline">\(L\)</span> 个不同的 <strong>D=128</strong>
 维向量，每个代表处理过的一张数据的特征。</li>
 </ul>
 
