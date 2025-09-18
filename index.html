@@ -176,7 +176,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2025-09-18 11:31:14" itemprop="dateModified" datetime="2025-09-18T11:31:14+08:00">2025-09-18</time>
+                <time title="修改时间：2025-09-18 11:41:38" itemprop="dateModified" datetime="2025-09-18T11:41:38+08:00">2025-09-18</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -873,6 +873,180 @@ what allows us to easily derive and compute the <strong>Normal
 Equation</strong> solution: <span
 class="math inline">\(\hat{\boldsymbol{\beta}} =
 (\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\mathbf{y}\)</span>.这种紧凑形式使我们能够轻松推导和计算<strong>正态方程</strong>的解</p>
+<h1
+id="the-core-mathematical-conclusion-of-ordinary-least-squares-ols">5.
+the core mathematical conclusion of Ordinary Least Squares (OLS)</h1>
+<p>&lt;img src=“/imgs/5054C3/OLS1.png&gt; &lt;img
+src=”/imgs/5054C3/OLS2.png&gt;</p>
+<ul>
+<li><strong>内容</strong>: Of course. These slides present the core
+mathematical conclusion of Ordinary Least Squares (OLS) and a key
+geometric property that explains <em>why</em> this solution works.
+展示了普通最小二乘法 (OLS)
+的核心数学结论，以及一个关键的几何性质，解释了该解决方案<em>为何</em>有效。
+Let’s break down the concepts and the calculation processes in
+detail.</li>
+</ul>
+<hr />
+<h3 id="part-1-the-objective-and-the-solution-slide-1-最小化几何距离">##
+Part 1: The Objective and the Solution (Slide 1) 最小化几何距离</h3>
+<p>This slide summarizes the entire OLS problem and its solution in the
+language of matrix algebra.</p>
+<h4 id="the-concept-minimizing-geometric-distance"><strong>The Concept:
+Minimizing Geometric Distance</strong></h4>
+<p>“最小二乘准则”是我们模型的目标。 The “least squares criterion” is the
+objective of our model. The slide shows it in two equivalent forms:</p>
+<ol type="1">
+<li><strong>Summation Form:</strong> <span
+class="math inline">\(\sum_{i=1}^{n} (y_i - \beta_0 - \beta_1x_{i1} -
+\dots - \beta_px_{ip})^2\)</span> This is the sum of the squared
+differences between the actual values (<span
+class="math inline">\(y_i\)</span>) and the predicted values. 这是实际值
+(<span class="math inline">\(y_i\)</span>) 与预测值之差的平方和。</li>
+<li><strong>Matrix Form:</strong> <span
+class="math inline">\(||\mathbf{y} - \mathbf{X}\boldsymbol{\beta}||^2 =
+(\mathbf{y} - \mathbf{X}\boldsymbol{\beta})^T(\mathbf{y} -
+\mathbf{X}\boldsymbol{\beta})\)</span> This is the more powerful way to
+view the problem. Think of <span
+class="math inline">\(\mathbf{y}\)</span> (the vector of all actual
+outcomes) and <span
+class="math inline">\(\mathbf{X}\boldsymbol{\beta}\)</span> (the vector
+of all predicted outcomes) as two points in an n-dimensional space. The
+expression <span class="math inline">\(||\mathbf{y} -
+\mathbf{X}\boldsymbol{\beta}||^2\)</span> represents the <strong>squared
+Euclidean distance</strong> between these two points. 将 <span
+class="math inline">\(\mathbf{y}\)</span>（所有实际结果的向量）和 <span
+class="math inline">\(\mathbf{X}\boldsymbol{\beta}\)</span>（所有预测结果的向量）视为
+n 维空间中的两个点。表达式 <span class="math inline">\(||\mathbf{y} -
+\mathbf{X}\boldsymbol{\beta}||^2\)</span>
+表示这两点之间的<strong>平方欧氏距离</strong>。 Therefore, the OLS
+problem is a geometric one: <strong>Find the coefficient vector <span
+class="math inline">\(\boldsymbol{\beta}\)</span> that makes the
+predicted values vector <span
+class="math inline">\(\mathbf{X}\boldsymbol{\beta}\)</span> as close as
+possible to the actual values vector <span
+class="math inline">\(\mathbf{y}\)</span>.</strong> 因此，OLS
+问题是一个几何问题：<strong>找到一个系数向量 <span
+class="math inline">\(\boldsymbol{\beta}\)</span>，使预测值向量 <span
+class="math inline">\(\mathbf{X}\boldsymbol{\beta}\)</span>
+尽可能接近实际值向量 <span
+class="math inline">\(\mathbf{y}\)</span>。</strong></li>
+</ol>
+<h4
+id="the-solution-the-least-squares-estimator-lse最小二乘估计器-lse"><strong>The
+Solution: The Least Squares Estimator (LSE)</strong>最小二乘估计器
+(LSE)</h4>
+<p>The slide provides the direct solution to this minimization problem,
+which is the <strong>Normal
+Equation</strong>:此最小化问题的直接解，即<strong>正态方程</strong>：</p>
+<p><span class="math display">\[\hat{\boldsymbol{\beta}} =
+(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\mathbf{y}\]</span></p>
+<p>This formula gives you the exact vector of coefficients <span
+class="math inline">\(\hat{\boldsymbol{\beta}}\)</span> that minimizes
+the squared distance. We get this formula by taking the gradient (the
+multidimensional version of a derivative) of the distance function with
+respect to <span class="math inline">\(\boldsymbol{\beta}\)</span>,
+setting it to zero, and solving, as hinted at in your previous slides.
+给出了使平方距离最小化的精确系数向量 通过取距离函数关于 <span
+class="math inline">\(\boldsymbol{\beta}\)</span>
+的梯度（导数的多维版本），将其设为零，然后求解，即可得到此公式。
+Finally, the slide defines: * <strong>Fitted values:</strong> <span
+class="math inline">\(\hat{\mathbf{y}} =
+\mathbf{X}\hat{\boldsymbol{\beta}}\)</span> (The vector of predictions
+using our optimal coefficients). 拟合值 * <strong>Residuals:</strong>
+<span class="math inline">\(\hat{\boldsymbol{\epsilon}} = \mathbf{y} -
+\hat{\mathbf{y}}\)</span> (The vector of errors, representing the
+difference between actuals and
+predictions).误差向量，表示实际值与预测值之间的差异</p>
+<h3
+id="part-2-the-geometric-property-and-proofs-slide-2几何性质及证明">##
+Part 2: The Geometric Property and Proofs (Slide 2)几何性质及证明</h3>
+<p>This slide explains a beautiful and fundamental property of the least
+squares solution:
+<strong>orthogonality</strong>.解释了最小二乘解的一个美妙而基本的性质：<strong>正交性</strong>。</p>
+<h4 id="the-concept-orthogonality-of-residuals残差的正交性"><strong>The
+Concept: Orthogonality of Residuals</strong>残差的正交性</h4>
+<p>The main idea is that the residual vector <span
+class="math inline">\(\hat{\boldsymbol{\epsilon}}\)</span> is
+<strong>orthogonal</strong> (perpendicular) to every predictor variable
+in your model. 主要思想是残差向量 <span
+class="math inline">\(\hat{\boldsymbol{\epsilon}}\)</span>
+与模型中的每个预测变量<strong>正交</strong>（垂直）。</p>
+<ul>
+<li><p><strong>Geometric Intuition:</strong> Think of the columns of
+your matrix <span class="math inline">\(\mathbf{X}\)</span> (i.e., your
+predictors and the intercept) as defining a flat surface, or a
+“hyperplane,” in a high-dimensional space. Your actual data vector <span
+class="math inline">\(\mathbf{y}\)</span> exists somewhere in this
+space, likely not on the hyperplane. The OLS process finds the point on
+that hyperplane, <span class="math inline">\(\hat{\mathbf{y}}\)</span>,
+that is closest to <span class="math inline">\(\mathbf{y}\)</span>. The
+shortest line from a point to a plane is always one that is
+<strong>perpendicular</strong> to the plane. The residual vector, <span
+class="math inline">\(\hat{\boldsymbol{\epsilon}} = \mathbf{y} -
+\hat{\mathbf{y}}\)</span>, <em>is</em> that line. 将矩阵 <span
+class="math inline">\(\mathbf{X}\)</span>
+的列（即预测变量和截距）想象成在高维空间中定义一个平面或“超平面”。实际数据向量
+<span class="math inline">\(\mathbf{y}\)</span>
+存在于该空间的某个位置，可能不在超平面上。OLS 过程会在该超平面 <span
+class="math inline">\(\hat{\mathbf{y}}\)</span> 上找到与 <span
+class="math inline">\(\mathbf{y}\)</span>
+最接近的点。从一个点到一个平面的最短线始终是与该平面<strong>垂直</strong>的线。残差向量
+<span class="math inline">\(\hat{\boldsymbol{\epsilon}} = \mathbf{y} -
+\hat{\mathbf{y}}\)</span> 就是这条直线。</p></li>
+<li><p><strong>Mathematical Statement:</strong> This geometric property
+is stated as <span class="math inline">\(\mathbf{X}^T
+\hat{\boldsymbol{\epsilon}} = \mathbf{0}\)</span>. This equation means
+that the dot product of the residual vector with every column of <span
+class="math inline">\(\mathbf{X}\)</span> is zero, which is the
+mathematical definition of orthogonality. 该等式意味着残差向量与 <span
+class="math inline">\(\mathbf{X}\)</span>
+每一列的点积都为零，这正是正交性的数学定义。</p></li>
+</ul>
+<h4 id="the-calculation-process-the-proofs"><strong>The Calculation
+Process (The Proofs)</strong></h4>
+<p><strong>1. Proof of Orthogonality:</strong> The slide shows a
+step-by-step calculation to prove that <span
+class="math inline">\(\mathbf{X}^T \hat{\boldsymbol{\epsilon}}\)</span>
+is indeed zero. * <strong>Step 1:</strong> Start with the expression to
+be proven: <span class="math inline">\(\mathbf{X}^T
+\hat{\boldsymbol{\epsilon}}\)</span> 从待证明的表达式开始： *
+<strong>Step 2:</strong> Substitute the definition of the residual,
+<span class="math inline">\(\hat{\boldsymbol{\epsilon}} = \mathbf{y} -
+\mathbf{X}\hat{\boldsymbol{\beta}}\)</span>: <span
+class="math display">\[\mathbf{X}^T (\mathbf{y} -
+\mathbf{X}\hat{\boldsymbol{\beta}})\]</span> 代入残差的定义 *
+<strong>Step 3:</strong> Distribute the <span
+class="math inline">\(\mathbf{X}^T\)</span>: <span
+class="math display">\[\mathbf{X}^T \mathbf{y} -
+\mathbf{X}^T\mathbf{X}\hat{\boldsymbol{\beta}}\]</span><em>分配 </em>
+<strong>Step 4:</strong> Substitute the Normal Equation for <span
+class="math inline">\(\hat{\boldsymbol{\beta}}\)</span>: <span
+class="math display">\[\mathbf{X}^T \mathbf{y} - \mathbf{X}^T\mathbf{X}
+[(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\mathbf{y}]\]</span> *
+<strong>Step 5:</strong> The key step is the cancellation. A matrix
+<span class="math inline">\((\mathbf{X}^T\mathbf{X})\)</span> multiplied
+by its inverse <span
+class="math inline">\((\mathbf{X}^T\mathbf{X})^{-1}\)</span> equals the
+identity matrix <span class="math inline">\(\mathbf{I}\)</span>, which
+acts like the number 1 in multiplication. <span
+class="math display">\[\mathbf{X}^T \mathbf{y} - \mathbf{I}
+\mathbf{X}^T\mathbf{y} = \mathbf{X}^T \mathbf{y} -
+\mathbf{X}^T\mathbf{y} = \mathbf{0}\]</span> 关键步骤是消去。 This
+completes the proof, showing that the orthogonality property is a direct
+consequence of the Normal Equation solution.</p>
+<p><strong>2. Proof of LSE:</strong> This is a more abstract proof
+showing that our <span
+class="math inline">\(\hat{\boldsymbol{\beta}}\)</span> truly gives the
+minimum possible error. It uses the orthogonality property and the
+Pythagorean theorem for vectors. It essentially shows that for any other
+possible coefficient vector <span
+class="math inline">\(\boldsymbol{v}\)</span>, the error <span
+class="math inline">\(||\mathbf{y} -
+\mathbf{X}\boldsymbol{v}||^2\)</span> will always be greater than or
+equal to the error from our LSE, <span
+class="math inline">\(||\mathbf{y} -
+\mathbf{X}\hat{\boldsymbol{\beta}}||^2\)</span>.</p>
 
       
     </div>
