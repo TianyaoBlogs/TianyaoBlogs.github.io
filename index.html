@@ -176,7 +176,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2025-09-18 11:24:14" itemprop="dateModified" datetime="2025-09-18T11:24:14+08:00">2025-09-18</time>
+                <time title="修改时间：2025-09-18 11:31:14" itemprop="dateModified" datetime="2025-09-18T11:31:14+08:00">2025-09-18</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -770,7 +770,7 @@ calculates for you under the hood.
 无论有多少个预测变量，这个简单的方程都是<strong>任何</strong>线性回归模型中
 OLS 系数的通解。</p>
 <h1 id="matrix-notatio">5. matrix notatio</h1>
-<h2 id="section">5.1:</h2>
+<p><img src="/imgs/5054C3/matrix_notatio.png"></p>
 <ul>
 <li><strong>内容</strong>: This slide introduces the <strong>matrix
 notation</strong> for multiple linear regression, which is a powerful
@@ -778,7 +778,8 @@ way to represent the entire system of equations in a compact form. This
 notation isn’t just for tidiness—it’s the foundation for how the
 solutions are derived and calculated in software.</li>
 </ul>
-<p>Here is a more detailed breakdown.</p>
+<p>多元线性回归的<strong>矩阵符号</strong>，这是一种以紧凑形式表示整个方程组的有效方法。这种符号不仅仅是为了简洁，它还是软件中推导和计算解的基础。
+Here is a more detailed breakdown.</p>
 <h3 id="why-use-matrix-notation">## Why Use Matrix Notation?</h3>
 <p>Imagine you have 10,000 observations (<span
 class="math inline">\(n=10,000\)</span>) and 5 predictor variables
@@ -788,44 +789,61 @@ class="math inline">\(y_1 = \beta_0 + \beta_1x_{11} + \dots +
 \beta_5x_{15} + \epsilon_1\)</span> <span class="math inline">\(y_2 =
 \beta_0 + \beta_1x_{21} + \dots + \beta_5x_{25} + \epsilon_2\)</span>
 …and so on for 10,000 lines.</p>
-<p>Matrix notation allows us to consolidate this entire system into a
-single, elegant equation: <span class="math display">\[\mathbf{y} =
-\mathbf{X}\boldsymbol{\beta} + \boldsymbol{\epsilon}\]</span> Let’s
-break down each component shown on your slide.</p>
+<p>假设你有 10,000 个观测值（n=10,000）和 5
+个预测变量（p=5）。为每个观测值写出模型方程是不可能的： <span
+class="math inline">\(y_1 = \beta_0 + \beta_1x_{11} + \dots +
+\beta_5x_{15} + \epsilon_1\)</span> <span class="math inline">\(y_2 =
+\beta_0 + \beta_1x_{21} + \dots + \beta_5x_{25} + \epsilon_2\)</span>
+……以此类推，直到 10,000 行。 Matrix notation allows us to consolidate
+this entire system into a single, elegant
+equation:矩阵符号使我们能够将整个系统合并成一个简洁的方程： <span
+class="math display">\[\mathbf{y} = \mathbf{X}\boldsymbol{\beta} +
+\boldsymbol{\epsilon}\]</span> Let’s break down each component shown on
+your slide.</p>
 <h3 id="the-components-explained">## The Components Explained</h3>
-<h4 id="the-design-matrix-mathbfx">1. The Design Matrix: <span
-class="math inline">\(\mathbf{X}\)</span></h4>
+<h4 id="the-design-matrix-mathbfx-设计矩阵">1. The Design Matrix: <span
+class="math inline">\(\mathbf{X}\)</span> 设计矩阵</h4>
 <p><span class="math display">\[\mathbf{X} = \begin{pmatrix} 1 &amp;
 x_{11} &amp; x_{12} &amp; \cdots &amp; x_{1p} \\ 1 &amp; x_{21} &amp;
 x_{22} &amp; \cdots &amp; x_{2p} \\ \vdots &amp; \vdots &amp; \vdots
 &amp; \ddots &amp; \vdots \\ 1 &amp; x_{n1} &amp; x_{n2} &amp; \cdots
 &amp; x_{np} \end{pmatrix}\]</span> This is the most important matrix.
-It contains all of your predictor variable data. *
-<strong>Rows:</strong> Each row represents a single observation (e.g., a
-person, a company, a day). There are <strong>n</strong> rows. *
-<strong>Columns:</strong> Each column represents a predictor variable.
-There are <strong>p</strong> predictor columns, plus one special column.
-* <strong>The Column of Ones:</strong> This is a crucial detail. This
-first column of all ones is a placeholder for the <strong>intercept term
-(<span class="math inline">\(\beta_0\)</span>)</strong>. When you
-perform matrix multiplication, this <code>1</code> gets multiplied by
-<span class="math inline">\(\beta_0\)</span>, ensuring the intercept is
-included in the model for every single observation.</p>
-<h4 id="the-coefficient-vector-boldsymbolbeta">2. The Coefficient
-Vector: <span class="math inline">\(\boldsymbol{\beta}\)</span></h4>
+It contains all of your predictor variable
+data.这是最重要的矩阵。它包含所有预测变量数据。 * <strong>Rows:</strong>
+Each row represents a single observation (e.g., a person, a company, a
+day). There are <strong>n</strong>
+rows.每一行代表一个观察值（例如，一个人、一家公司、一天）。共有
+<strong>n</strong> 行。 * <strong>Columns:</strong> Each column
+represents a predictor variable. There are <strong>p</strong> predictor
+columns, plus one special column.每列代表一个预测变量。共有
+<strong>p</strong> 个预测列，外加一个特殊列。 * <strong>The Column of
+Ones:</strong> This is a crucial detail. This first column of all ones
+is a placeholder for the <strong>intercept term (<span
+class="math inline">\(\beta_0\)</span>)</strong>. When you perform
+matrix multiplication, this <code>1</code> gets multiplied by <span
+class="math inline">\(\beta_0\)</span>, ensuring the intercept is
+included in the model for every single observation.
+这是一个至关重要的细节。第一列（全 1）是<strong>截距项 (<span
+class="math inline">\(\beta_0\)</span>)</strong>
+的占位符。执行矩阵乘法时，这个 <code>1</code> 会乘以 <span
+class="math inline">\(\beta_0\)</span>，以确保截距包含在模型中，适用于每个观测值。</p>
+<h4 id="the-coefficient-vector-boldsymbolbeta-系数向量">2. The
+Coefficient Vector: <span
+class="math inline">\(\boldsymbol{\beta}\)</span> 系数向量</h4>
 <p><span class="math display">\[\boldsymbol{\beta} = \begin{pmatrix}
 \beta_0 \\ \beta_1 \\ \vdots \\ \beta_p \end{pmatrix}\]</span> This is a
 column vector that contains all the model parameters—the unknown values
 we want to estimate. The goal of linear regression is to find the
 numerical values for this vector.</p>
-<h4 id="the-response-vector-mathbfy">3. The Response Vector: <span
-class="math inline">\(\mathbf{y}\)</span></h4>
+<h4 id="the-response-vector-mathbfy-响应向量">3. The Response Vector:
+<span class="math inline">\(\mathbf{y}\)</span> 响应向量</h4>
 <p><span class="math display">\[\mathbf{y} = \begin{pmatrix} y_1 \\
 \vdots \\ y_n \end{pmatrix}\]</span> This is a column vector containing
 all the observed outcomes you are trying to predict (e.g., sales, test
 scores, stock prices).</p>
-<h4 id="the-error-vector-boldsymbolepsilon">4. The Error Vector: <span
-class="math inline">\(\boldsymbol{\epsilon}\)</span></h4>
+<h4 id="the-error-vector-boldsymbolepsilon-误差向量">4. The Error
+Vector: <span class="math inline">\(\boldsymbol{\epsilon}\)</span>
+误差向量</h4>
 <p><span class="math display">\[\boldsymbol{\epsilon} = \begin{pmatrix}
 \epsilon_1 \\ \vdots \\ \epsilon_n \end{pmatrix}\]</span> This column
 vector bundles together all the individual, unobserved random errors. It
@@ -846,15 +864,15 @@ x_{1p} \\ 1 &amp; x_{21} &amp; \dots &amp; x_{2p} \\ \vdots &amp; \vdots
 + x_{2p}\cdot\beta_p \\ \vdots \\ 1\cdot\beta_0 + x_{n1}\cdot\beta_1 +
 \dots + x_{np}\cdot\beta_p \end{pmatrix}\]</span> As you can see, the
 result of this multiplication is a single column vector where each row
-is the “predictor” part of the regression equation for that
-observation.</p>
+is the “predictor” part of the regression equation for that observation.
+此乘法的结果是一个单列向量，其中每一行都是该观测值的回归方程的“预测变量”部分。</p>
 <p>By setting this equal to <span class="math inline">\(\mathbf{y} -
 \boldsymbol{\epsilon}\)</span>, you perfectly recreate the entire set of
 <code>n</code> equations in one clean statement. This compact form is
 what allows us to easily derive and compute the <strong>Normal
 Equation</strong> solution: <span
 class="math inline">\(\hat{\boldsymbol{\beta}} =
-(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\mathbf{y}\)</span>.</p>
+(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\mathbf{y}\)</span>.这种紧凑形式使我们能够轻松推导和计算<strong>正态方程</strong>的解</p>
 
       
     </div>
