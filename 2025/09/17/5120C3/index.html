@@ -28,7 +28,7 @@
 <meta property="og:description" content="PHYS 5120 - 计算能源材料和电子结构模拟 Lecture-3 Lecturer: Prof.PAN DING 1 radial distribution function:  内容:  This whiteboard explains the process of calculating the radial distribution function, often d">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2025-09-17T13:00:00.000Z">
-<meta property="article:modified_time" content="2025-09-19T11:24:02.380Z">
+<meta property="article:modified_time" content="2025-09-19T11:48:40.935Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="PHYS-5120">
 <meta name="twitter:card" content="summary">
@@ -181,7 +181,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2025-09-19 19:24:02" itemprop="dateModified" datetime="2025-09-19T19:24:02+08:00">2025-09-19</time>
+                <time title="修改时间：2025-09-19 19:48:40" itemprop="dateModified" datetime="2025-09-19T19:48:40+08:00">2025-09-19</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -502,12 +502,147 @@ class="math display">\[D = \frac{1}{3} \int_0^\infty \langle \vec{v}(0)
 这个令人难以置信的结果表明，扩散的<strong>宏观</strong>特性（<span
 class="math inline">\(D\)</span>）由<strong>微观</strong>速度关联的积分决定。在模拟中，这通常是计算<span
 class="math inline">\(D\)</span>比计算MSD的长期极限更有效的方法。</p>
-<p>This whiteboard provides a mathematical description of
-<strong>diffusion</strong>, which is the net movement of particles from
-a region of higher concentration to one of lower concentration due to
-their random, chaotic motion. This random walk is often called Brownian
-motion.
-这块白板提供了<strong>扩散</strong>的数学描述，即粒子由于随机、混沌的运动，从浓度较高的区域向浓度较低的区域的净运动。这种随机游走通常被称为布朗运动。</p>
+<h3 id="the-grand-narrative-from-micro-to-macro-宏大叙事从微观到宏观">##
+6. The Grand Narrative: From Micro to Macro 宏大叙事：从微观到宏观</h3>
+<p>The previous whiteboards gave us two ways to calculate the
+<strong>diffusion constant, D</strong>, from the microscopic random walk
+of individual atoms:
+之前的白板提供了两种从单个原子的微观随机游动计算<strong>扩散常数
+D</strong>的方法： 1. <strong>Einstein Relation:</strong> From the
+long-term slope of the Mean Squared Displacement (MSD). 根据均方位移
+(MSD) 的长期斜率。 2. <strong>Green-Kubo Relation:</strong> From the
+integral of the Velocity Autocorrelation Function (VACF).
+根据速度自相关函数 (VACF) 的积分。</p>
+<p>This new whiteboard shows how that single microscopic parameter,
+<code>D</code>, governs the large-scale, observable process of diffusion
+described by <strong>Fick’s Laws</strong> and the <strong>Diffusion
+Equation</strong>. 这块新的白板展示了单个微观参数 <code>D</code>
+如何控制<strong>菲克定律</strong>和<strong>扩散方程</strong>所描述的大规模可观测扩散过程。</p>
+<h3 id="the-starting-point-a-liquids-structure-起点液体的结构">## 1. The
+Starting Point: A Liquid’s Structure 起点：液体的结构</h3>
+<p>The plot on the top left is the <strong>Radial Distribution Function,
+<span class="math inline">\(g(r)\)</span></strong>, which we discussed
+in detail from the first whiteboard. 左上角的图是<strong>径向分布函数
+<span
+class="math inline">\(g(r)\)</span></strong>，我们在第一个白板上详细讨论过它。</p>
+<ul>
+<li><strong>The Plot:</strong> It shows the characteristic structure of
+a liquid. The peaks are labeled “1st”, “2nd”, and “3rd”, corresponding
+to the first, second, and third <strong>solvation shells</strong>
+(layers of neighboring atoms).
+它显示了液体的特征结构。峰分别标记为“第一”、“第二”和“第三”，分别对应于第一、第二和第三<strong>溶剂化壳层</strong>（相邻原子层）。</li>
+<li><strong>The Limit:</strong> The note <code>lim r→∞ g(r) = 1</code>
+confirms that at large distances, the liquid has no long-range order, as
+expected.注释“lim r→∞ g(r) =
+1”证实了在远距离下，液体没有长程有序，这与预期一致。</li>
+<li><strong>System Parameters:</strong> The values <code>T = 0.71</code>
+and <code>ρ = 0.844</code> are the temperature and density of the
+simulated system (likely in reduced or “Lennard-Jones” units) for which
+this <span class="math inline">\(g(r)\)</span> was calculated. 值“T =
+0.71”和“ρ =
+0.844”分别是模拟系统的温度和密度（可能采用约化或“Lennard-Jones”单位），用于计算此
+<span class="math inline">\(g(r)\)</span>。</li>
+</ul>
+<p>This section sets the stage: we are looking at the dynamics within a
+system that has this specific liquid-like structure.
+本节奠定了基础：我们将研究具有特定类液体结构的系统内的动力学。</p>
+<h3 id="the-macroscopic-laws-of-diffusion-宏观扩散定律">## 2. The
+Macroscopic Laws of Diffusion 宏观扩散定律</h3>
+<p>The bottom-left and top-right sections introduce the continuum
+equations that describe how concentration changes in space and time.
+左下角和右上角部分介绍了描述浓度随空间和时间变化的连续方程。左下角和右上角部分介绍了描述浓度随空间和时间变化的连续方程。</p>
+<h4 id="ficks-first-law-菲克第一定律">### <strong>Fick’s First Law
+菲克第一定律</strong></h4>
+<p><span class="math display">\[\vec{J} = -D \nabla C\]</span> This is
+Fick’s first law of diffusion. It states that there is a
+<strong>flux</strong> of particles (<span
+class="math inline">\(\vec{J}\)</span>), meaning a net flow. This flow
+is directed from high concentration to low concentration (hence the
+minus sign) and its magnitude is proportional to the
+<strong>concentration gradient</strong> (<span
+class="math inline">\(\nabla C\)</span>).
+这是菲克第一扩散定律。它指出存在粒子的<strong>通量</strong> (<span
+class="math inline">\(\vec{J}\)</span>)，即净流量。该流量从高浓度流向低浓度（因此带有负号），其大小与<strong>浓度梯度</strong>
+(<span class="math inline">\(\nabla C\)</span>) 成正比。</p>
+<p><strong>The Crucial Link:</strong> The proportionality constant is
+<strong>D</strong>, the very same <strong>diffusion constant</strong> we
+calculated from the microscopic random walk (MSD/VACF). This is the key
+connection: the collective result of countless individual random walks
+is a predictable net flow of particles.
+比例常数是<strong>D</strong>，与我们根据微观随机游走 (MSD/VACF)
+计算出的<strong>扩散常数</strong>完全相同。这是关键的联系：无数个体随机游动的集合结果是可预测的粒子净流。</p>
+<h4
+id="the-diffusion-equation-ficks-second-law-扩散方程菲克第二定律">###
+<strong>The Diffusion Equation (Fick’s Second Law)
+扩散方程（菲克第二定律）</strong></h4>
+<p><span class="math display">\[\frac{\partial C(\vec{r},t)}{\partial t}
+= D \nabla^2 C(\vec{r},t)\]</span> This is the <strong>diffusion
+equation</strong>, one of the most important equations in physics and
+chemistry (also called the heat equation, as noted). It’s derived from
+Fick’s first law and the principle of mass conservation (<span
+class="math inline">\(\frac{\partial C}{\partial t} + \nabla \cdot
+\vec{J} = 0\)</span>). It’s a differential equation that tells you
+exactly how the concentration at any point, <span
+class="math inline">\(C(\vec{r},t)\)</span>, will change over time.
+这就是<strong>扩散方程</strong>，它是物理学和化学中最重要的方程之一（也称为热方程）。它源于菲克第一定律和质量守恒定律（<span
+class="math inline">\(\frac{\partial C}{\partial t} + \nabla \cdot
+\vec{J} = 0\)</span>）。它是一个微分方程，可以精确地告诉你任意一点的浓度
+<span class="math inline">\(C(\vec{r},t)\)</span> 随时间的变化。</p>
+<h3
+id="the-solution-connecting-back-to-the-random-walk-与随机游动联系起来">##
+3. The Solution: Connecting Back to the Random Walk
+与随机游动联系起来</h3>
+<p>This is the most beautiful part. The board shows the solution to the
+diffusion equation for a very specific scenario, linking the macroscopic
+equation directly back to the microscopic random walk.
+黑板上展示了一个非常具体场景下扩散方程的解，将宏观方程直接与微观随机游动联系起来。</p>
+<h4 id="the-initial-condition-初始条件">### <strong>The Initial
+Condition 初始条件</strong></h4>
+<p>The problem is set up by assuming all particles start at a single
+point at time zero: <span class="math display">\[C(\vec{r}, 0) =
+\delta(\vec{r})\]</span> This is a <strong>Dirac delta
+function</strong>, representing an infinitely concentrated point source
+at the origin. 问题假设所有粒子在时间零点处从一个点开始： <span
+class="math display">\[C(\vec{r}, 0) = \delta(\vec{r})\]</span>
+这是一个<strong>狄拉克函数</strong>，表示一个在原点处无限集中的点源。</p>
+<h4 id="the-fundamental-solution-greens-function-基本解格林函数">###
+<strong>The Fundamental Solution (Green’s Function)
+基本解（格林函数）</strong></h4>
+<p>The solution to the diffusion equation with this starting condition
+is called the <strong>fundamental solution</strong> or <strong>Green’s
+function</strong>. For one dimension, it is: <span
+class="math display">\[C(x,t) = \frac{1}{\sqrt{4\pi Dt}}
+\exp\left(-\frac{x^2}{4Dt}\right)\]</span></p>
+<p><strong>The “Aha!” Moment:</strong> This is a <strong>Gaussian
+distribution</strong>. Let’s compare it to the formula from the second
+whiteboard: * The mean is <span class="math inline">\(\mu=0\)</span>.
+均值为 <span class="math inline">\(\mu=0\)</span>。 * The variance is
+<span class="math inline">\(\sigma^2 = 2Dt\)</span>. 方差为 <span
+class="math inline">\(\sigma^2 = 2Dt\)</span>。</p>
+<p>This is an incredible result. The macroscopic diffusion equation
+predicts that a concentration pulse will spread out over time, and the
+shape of the concentration profile will be a Gaussian curve. The width
+of this curve, measured by its variance <span
+class="math inline">\(\sigma^2\)</span>, is <strong>exactly the Mean
+Squared Displacement, <span class="math inline">\(\langle x^2(t)
+\rangle\)</span>, of the individual random-walking particles.</strong>
+宏观扩散方程预测浓度脉冲会随时间扩散，浓度分布的形状将是高斯曲线。这条曲线的宽度，用其方差
+<span class="math inline">\(\sigma^2\)</span>
+来衡量，<strong>恰好是单个随机游动粒子的均方位移 <span
+class="math inline">\(\langle x^2(t) \rangle\)</span>。</strong></p>
+<p>This perfectly unites the two perspectives: * <strong>Microscopic微观
+(Board 2):</strong> Particles undergo a random walk, and their average
+squared displacement from the origin grows as <span
+class="math inline">\(\langle x^2(t) \rangle = 2Dt\)</span>.
+粒子进行随机游动，它们相对于原点的平均平方位移随着 <span
+class="math inline">\(\langle x^2(t) \rangle = 2Dt\)</span>
+的增长而增长。 * <strong>Macroscopic宏观 (This Board):</strong> A
+collection of these particles, described by a continuum concentration
+<code>C</code>, spreads out in a Gaussian profile whose variance is
+<span class="math inline">\(\sigma^2 = 2Dt\)</span>.
+这些粒子的集合，用连续浓度“C”来描述，呈方差为 <span
+class="math inline">\(\sigma^2 = 2Dt\)</span> 的高斯分布。</p>
+<p>The two pictures are mathematically identical.</p>
 
     </div>
 
@@ -605,7 +740,18 @@ Velocity Autocorrelation Function (VACF) 速度自相关函数
 (VACF)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#connecting-msd-and-vacf"><span class="nav-number">1.7.2.</span> <span class="nav-text">### Connecting MSD and
 VACF</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#the-green-kubo-formula-for-diffusion-%E6%89%A9%E6%95%A3%E7%9A%84%E6%A0%BC%E6%9E%97-%E4%B9%85%E4%BF%9D%E5%85%AC%E5%BC%8F"><span class="nav-number">1.7.3.</span> <span class="nav-text">###
 The Green-Kubo Formula for Diffusion
-扩散的格林-久保公式</span></a></li></ol></li></ol></li></ol></div>
+扩散的格林-久保公式</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#the-grand-narrative-from-micro-to-macro-%E5%AE%8F%E5%A4%A7%E5%8F%99%E4%BA%8B%E4%BB%8E%E5%BE%AE%E8%A7%82%E5%88%B0%E5%AE%8F%E8%A7%82"><span class="nav-number">1.8.</span> <span class="nav-text">##
+6. The Grand Narrative: From Micro to Macro 宏大叙事：从微观到宏观</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#the-starting-point-a-liquids-structure-%E8%B5%B7%E7%82%B9%E6%B6%B2%E4%BD%93%E7%9A%84%E7%BB%93%E6%9E%84"><span class="nav-number">1.9.</span> <span class="nav-text">## 1. The
+Starting Point: A Liquid’s Structure 起点：液体的结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#the-macroscopic-laws-of-diffusion-%E5%AE%8F%E8%A7%82%E6%89%A9%E6%95%A3%E5%AE%9A%E5%BE%8B"><span class="nav-number">1.10.</span> <span class="nav-text">## 2. The
+Macroscopic Laws of Diffusion 宏观扩散定律</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#ficks-first-law-%E8%8F%B2%E5%85%8B%E7%AC%AC%E4%B8%80%E5%AE%9A%E5%BE%8B"><span class="nav-number">1.10.1.</span> <span class="nav-text">### Fick’s First Law
+菲克第一定律</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#the-diffusion-equation-ficks-second-law-%E6%89%A9%E6%95%A3%E6%96%B9%E7%A8%8B%E8%8F%B2%E5%85%8B%E7%AC%AC%E4%BA%8C%E5%AE%9A%E5%BE%8B"><span class="nav-number">1.10.2.</span> <span class="nav-text">###
+The Diffusion Equation (Fick’s Second Law)
+扩散方程（菲克第二定律）</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#the-solution-connecting-back-to-the-random-walk-%E4%B8%8E%E9%9A%8F%E6%9C%BA%E6%B8%B8%E5%8A%A8%E8%81%94%E7%B3%BB%E8%B5%B7%E6%9D%A5"><span class="nav-number">1.11.</span> <span class="nav-text">##
+3. The Solution: Connecting Back to the Random Walk
+与随机游动联系起来</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#the-initial-condition-%E5%88%9D%E5%A7%8B%E6%9D%A1%E4%BB%B6"><span class="nav-number">1.11.1.</span> <span class="nav-text">### The Initial
+Condition 初始条件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#the-fundamental-solution-greens-function-%E5%9F%BA%E6%9C%AC%E8%A7%A3%E6%A0%BC%E6%9E%97%E5%87%BD%E6%95%B0"><span class="nav-number">1.11.2.</span> <span class="nav-text">###
+The Fundamental Solution (Green’s Function)
+基本解（格林函数）</span></a></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
