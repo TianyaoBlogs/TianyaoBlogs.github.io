@@ -771,7 +771,7 @@ class="math inline">\(\sigma^2 = 2Dt\)</span> 的高斯分布。</p>
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2025-09-19 20:52:55" itemprop="dateModified" datetime="2025-09-19T20:52:55+08:00">2025-09-19</time>
+                <time title="修改时间：2025-09-21 05:21:00" itemprop="dateModified" datetime="2025-09-21T05:21:00+08:00">2025-09-21</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -805,7 +805,7 @@ summary, pulling together all the key concepts we’ve discussed into a
 single, cohesive picture. Let’s connect everything on this slide to our
 detailed conversation.</li>
 </ul>
-<h3 id="rdf-the-static-structure-rdf静态结构">## 1. RDF: The Static
+<h3 id="rdf-the-static-structure-rdf静态结构">1. RDF: The Static
 Structure RDF静态结构</h3>
 <p>On the top left, you see <strong>RDF (Radial Distribution
 Function)</strong>.</p>
@@ -831,9 +831,9 @@ atoms move.
 本节总结了我们的第一个讨论。这是我们分析的起点——在我们考虑原子如何运动之前，它是材料平均原子排列的静态快照。</li>
 </ul>
 <h3
-id="msd-and-the-einstein-relation-the-displacement-picture-均方位移-msd-和爱因斯坦关系位移图像">##
-2. MSD and The Einstein Relation: The Displacement Picture 均方位移
-(MSD) 和爱因斯坦关系：位移图像</h3>
+id="msd-and-the-einstein-relation-the-displacement-picture-均方位移-msd-和爱因斯坦关系位移图像">2.
+MSD and The Einstein Relation: The Displacement Picture 均方位移 (MSD)
+和爱因斯坦关系：位移图像</h3>
 <p>The board then moves to dynamics, presenting two methods to calculate
 the <strong>diffusion constant, D</strong>. The first is the
 <strong>Einstein relation</strong>. 两种计算<strong>扩散常数
@@ -871,8 +871,8 @@ out over
 time.这完美地总结了我们在第二个白板上分析的“位移图”。这是思考扩散最直观的方式：粒子随时间扩散的距离。</li>
 </ul>
 <h3
-id="the-green-kubo-relation-the-fluctuation-picture-格林-久保关系涨落图">##
-3. The Green-Kubo Relation: The Fluctuation Picture
+id="the-green-kubo-relation-the-fluctuation-picture-格林-久保关系涨落图">3.
+The Green-Kubo Relation: The Fluctuation Picture
 格林-久保关系：涨落图</h3>
 <p>Finally, the board presents the more advanced but often more
 practical method: the <strong>Green-Kubo relation</strong>.</p>
@@ -918,48 +918,52 @@ Green-Kubo relation, showing the final formulas and how they are used in
 practice. It provides the punchline to the mathematical story we’ve been
 following.</p>
 <p>Let’s break down the details.</p>
-<table style="width:6%;">
-<colgroup>
-<col style="width: 5%" />
-</colgroup>
-<thead>
-<tr>
-<th>### ## 1. Finalizing the Derivation</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>### ## 2. The Velocity Autocorrelation Function (VACF)</td>
-</tr>
-<tr>
-<td>The board explicitly names the key quantity here:</td>
-</tr>
-<tr>
-<td><span class="math display">\[\Phi(\tau) = \langle V_x(0) V_x(\tau)
-\rangle\]</span></td>
-</tr>
-<tr>
-<td>This is the <strong>“Velocity autocorrelation function”</strong>
+<h3 id="finalizing-the-derivation">4. Finalizing the Derivation</h3>
+<p>The top lines of the board show the final step in connecting the Mean
+Squared Displacement (MSD) to the Velocity Autocorrelation Function
+(VACF).</p>
+<p><span class="math display">\[\lim_{t\to\infty} \frac{d\langle x^2
+\rangle}{dt} = 2 \int_0^\infty d\tau \langle V_x(0) V_x(\tau)
+\rangle\]</span></p>
+<ul>
+<li><strong>The Left Side:</strong> As we know from the <strong>Einstein
+relation</strong>, the long-time limit of the derivative of the 1D MSD,
+<span class="math inline">\(\lim_{t\to\infty} \frac{d\langle x^2
+\rangle}{dt}\)</span>, is simply equal to <strong><span
+class="math inline">\(2D\)</span></strong>.</li>
+<li><strong>The Right Side:</strong> This is the result of the
+mathematical derivation from the previous slide. It shows that this same
+quantity is also equal to twice the total integral of the VACF.</li>
+</ul>
+<p>By equating these two, we can solve for the diffusion coefficient,
+<code>D</code>.</p>
+<h3 id="the-velocity-autocorrelation-function-vacf">5. The Velocity
+Autocorrelation Function (VACF)</h3>
+<p>The board explicitly names the key quantity here:</p>
+<p><span class="math display">\[\Phi(\tau) = \langle V_x(0) V_x(\tau)
+\rangle\]</span></p>
+<p>This is the <strong>“Velocity autocorrelation function”</strong>
 (abbreviated as VAF on the board), which we’ve denoted as VACF. The
 variable has been changed from <code>t</code> to <code>τ</code> (tau) to
-represent a “time lag” or interval, which is common notation.</td>
-</tr>
-<tr>
-<td>* <strong>The Plot:</strong> The graph on the board shows a typical
+represent a “time lag” or interval, which is common notation.</p>
+<ul>
+<li><strong>The Plot:</strong> The graph on the board shows a typical
 plot of the VACF, <span class="math inline">\(\Phi(\tau)\)</span>,
-versus the time lag <span class="math inline">\(\tau\)</span>. * It
-starts at a maximum positive value at <span
+versus the time lag <span class="math inline">\(\tau\)</span>.
+<ul>
+<li>It starts at a maximum positive value at <span
 class="math inline">\(\tau=0\)</span> (when the velocity is perfectly
-correlated with itself). * It rapidly decays towards zero as the
-particle undergoes collisions that randomize its velocity. * <strong>The
-Integral:</strong> The shaded area under this curve represents the value
-of the integral <span class="math inline">\(\int_0^\infty \Phi(\tau)
-d\tau\)</span>. The Green-Kubo formula states that the diffusion
-coefficient is directly proportional to this area.</td>
-</tr>
-</tbody>
-</table>
-<h3 id="the-green-kubo-formulas-for-the-diffusion-coefficient">## 3. The
+correlated with itself).</li>
+<li>It rapidly decays towards zero as the particle undergoes collisions
+that randomize its velocity.</li>
+</ul></li>
+<li><strong>The Integral:</strong> The shaded area under this curve
+represents the value of the integral <span
+class="math inline">\(\int_0^\infty \Phi(\tau) d\tau\)</span>. The
+Green-Kubo formula states that the diffusion coefficient is directly
+proportional to this area.</li>
+</ul>
+<h3 id="the-green-kubo-formulas-for-the-diffusion-coefficient">6. The
 Green-Kubo Formulas for the Diffusion Coefficient</h3>
 <p>After canceling the factor of 2, the board presents the final,
 practical formulas for <code>D</code>.</p>
@@ -978,9 +982,8 @@ product, <span class="math inline">\(\vec{v}(0) \cdot
 diffusion in any one direction (x, y, or z).</li>
 </ol></li>
 </ul>
-<hr />
-<h3 id="practical-calculation-in-a-simulation">## 4. Practical
-Calculation in a Simulation</h3>
+<h3 id="practical-calculation-in-a-simulation">7. Practical Calculation
+in a Simulation</h3>
 <p>The last formula on the board shows how this is implemented in a
 computer simulation with a finite number of atoms.</p>
 <p><span class="math display">\[D = \frac{1}{3N} \int_0^\infty d\tau
