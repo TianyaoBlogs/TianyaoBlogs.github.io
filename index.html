@@ -170,7 +170,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2025-09-26 21:00:00 / 修改时间：20:08:44" itemprop="dateCreated datePublished" datetime="2025-09-26T21:00:00+08:00">2025-09-26</time>
+              <time title="创建时间：2025-09-26 21:00:00 / 修改时间：20:11:07" itemprop="dateCreated datePublished" datetime="2025-09-26T21:00:00+08:00">2025-09-26</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -286,10 +286,10 @@ class="math inline">\(f(\vec{v})\)</span>, is the
 <strong>Maxwell-Boltzmann distribution</strong>, which is written out
 further down the board. 该概率分布的完整公式 <span
 class="math inline">\(f(\vec{v})\)</span>
-是<strong>麦克斯韦-玻尔兹曼分布</strong>。 <strong>Step 2: Molecular
-Dynamics (MD) Integration</strong> The board notes this as
-<code>t=0 \to h \text&#123; or &#125; mh</code> <code>MD</code> and mentions the
-<code>Verlet</code> algorithm.</p>
+是<strong>麦克斯韦-玻尔兹曼分布</strong>。</p>
+<p><strong>Step 2: Molecular Dynamics (MD) Integration</strong> The
+board notes this as <code>t=0 \to h \text&#123; or &#125; mh</code>
+<code>MD</code> and mentions the <code>Verlet</code> algorithm.</p>
 <ul>
 <li>This is the “Hamiltonian dynamics” part of the algorithm. Starting
 from the current positions and the newly randomized velocities, the
@@ -304,12 +304,13 @@ algorithm, a numerical method used to solve Newton’s equations of
 motion. It is popular in MD simulations because it is time-reversible
 and conserves energy well over long simulations. 指的是 Verlet
 积分算法，这是一种用于求解牛顿运动方程的数值方法。它在 MD
-模拟中很受欢迎，因为它具有时间可逆性，并且在长时间模拟中能量守恒效果良好。
-<strong>Step 3: Calculate Total Energy</strong> The third step is to
+模拟中很受欢迎，因为它具有时间可逆性，并且在长时间模拟中能量守恒效果良好。</li>
+</ul>
+<p><strong>Step 3: Calculate Total Energy</strong> The third step is to
 <code>calculate total energy</code>: <span class="math inline">\(E_n =
 K_n + V_n\)</span>. 第三步是“计算总能量”：<span
-class="math inline">\(E_n = K_n + V_n\)</span>。</li>
-<li>After the MD trajectory, the system is in a new state <span
+class="math inline">\(E_n = K_n + V_n\)</span>。 * After the MD
+trajectory, the system is in a new state <span
 class="math inline">\(n\)</span>. The total energy of this new state,
 <span class="math inline">\(E_n\)</span>, is calculated as the sum of
 its kinetic energy (<span class="math inline">\(K_n\)</span>, from the
@@ -319,31 +320,28 @@ class="math inline">\(V_n\)</span>, from the positions). MD
 class="math inline">\(n\)</span>。新状态的总能量 <span
 class="math inline">\(E_n\)</span> 等于其动能 (<span
 class="math inline">\(K_n\)</span>，由速度计算得出）和势能 (<span
-class="math inline">\(V_n\)</span>，由位置计算得出）之和。 <strong>Step
-4: Acceptance Test</strong> The final step is the acceptance criterion:
-<span class="math inline">\(\text{acc}(o \to n) = \min(1, e^{-\beta(E_n
-- E_o)})\)</span>. 最后一步是验收标准：<span
+class="math inline">\(V_n\)</span>，由位置计算得出)之和。</p>
+<p><strong>Step 4: Acceptance Test</strong> The final step is the
+acceptance criterion: <span class="math inline">\(\text{acc}(o \to n) =
+\min(1, e^{-\beta(E_n - E_o)})\)</span>. 最后一步是验收标准：<span
 class="math inline">\(\text{acc}(o \to n) = \min(1, e^{-\beta(E_n -
-E_o)})\)</span>。</li>
-<li>This is the Metropolis acceptance criterion. The algorithm decides
-whether to accept the new state <span class="math inline">\(n\)</span>
-or reject it and stay in the old state <span
-class="math inline">\(o\)</span>. 这是 Metropolis
+E_o)})\)</span>。 * This is the Metropolis acceptance criterion. The
+algorithm decides whether to accept the new state <span
+class="math inline">\(n\)</span> or reject it and stay in the old state
+<span class="math inline">\(o\)</span>. 这是 Metropolis
 验收标准。算法决定是接受新状态 <span class="math inline">\(n\)</span>
-还是拒绝它并保持旧状态 <span class="math inline">\(o\)</span>。</li>
-<li>The probability of acceptance depends on the change in total energy
-(<span class="math inline">\(E_n - E_o\)</span>). If the new energy is
-lower, the move is always accepted. If the new energy is higher, it
-might still be accepted with a probability <span
-class="math inline">\(e^{-\beta(E_n - E_o)}\)</span>, where <span
-class="math inline">\(\beta = 1/(k_B T)\)</span>. This allows the system
-to escape from local energy minima. 验收概率取决于总能量的变化 (<span
-class="math inline">\(E_n -
+还是拒绝它并保持旧状态 <span class="math inline">\(o\)</span>。 * The
+probability of acceptance depends on the change in total energy (<span
+class="math inline">\(E_n - E_o\)</span>). If the new energy is lower,
+the move is always accepted. If the new energy is higher, it might still
+be accepted with a probability <span class="math inline">\(e^{-\beta(E_n
+- E_o)}\)</span>, where <span class="math inline">\(\beta = 1/(k_B
+T)\)</span>. This allows the system to escape from local energy minima.
+验收概率取决于总能量的变化 (<span class="math inline">\(E_n -
 E_o\)</span>)。如果新能量较低，则始终接受该移动。如果新的能量更高，它仍然可能以概率
 <span class="math inline">\(e^{-\beta(E_n - E_o)}\)</span> 被接受，其中
 <span class="math inline">\(\beta = 1/(k_B
-T)\)</span>。这使得系统能够摆脱局部能量最小值。</li>
-</ul>
+T)\)</span>。这使得系统能够摆脱局部能量最小值。</p>
 <h3 id="key-formulas-and-notations">Key Formulas and Notations</h3>
 <ul>
 <li><p><strong>Maxwell-Boltzmann
