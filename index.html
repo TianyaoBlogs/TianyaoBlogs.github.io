@@ -170,7 +170,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2025-09-26 21:00:00 / 修改时间：20:11:07" itemprop="dateCreated datePublished" datetime="2025-09-26T21:00:00+08:00">2025-09-26</time>
+              <time title="创建时间：2025-09-26 21:00:00 / 修改时间：20:21:50" itemprop="dateCreated datePublished" datetime="2025-09-26T21:00:00+08:00">2025-09-26</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -423,15 +423,17 @@ note “Δ Adiabatic process” likely connects to the context of the
 Born-Oppenheimer approximation, where the electronic Schrödinger
 equation is solved for fixed nuclear positions, assuming the electrons
 adjust adiabatically (instantaneously) to the motion of the nuclei.
-该方程表明，量子态的时间演化由系统的总能量算符——哈密顿算符决定。注释“Δ绝热过程”与玻恩-奥本海默近似相关，在该近似中，电子薛定谔方程是针对固定原子核位置求解的，假设电子以绝热方式（瞬时）调整以适应原子核的运动。
-### 4. The Full Molecular Hamiltonian (<span
-class="math inline">\(\hat{\mathcal{H}}\)</span>)</p>
+该方程表明，量子态的时间演化由系统的总能量算符——哈密顿算符决定。注释“Δ绝热过程”与玻恩-奥本海默近似相关，在该近似中，电子薛定谔方程是针对固定原子核位置求解的，假设电子以绝热方式（瞬时）调整以适应原子核的运动。</p>
+<h3 id="the-full-molecular-hamiltonian-hatmathcalh">4. The Full
+Molecular Hamiltonian (<span
+class="math inline">\(\hat{\mathcal{H}}\)</span>)</h3>
 <p>The main part of the whiteboard is the detailed expression for the
 non-relativistic, time-independent molecular Hamiltonian. It is the sum
 of the kinetic and potential energies of all the nuclei and electrons in
 the system. The equation can be broken down into five distinct terms:
-白板的主要部分是非相对论性、时间无关的分子哈密顿量的详细表达式。它是系统中所有原子核和电子的动能和势能之和。该方程可以分解为五个不同的项：
-<span class="math inline">\(\hat{\mathcal{H}} = -\sum_{I=1}^{P}
+白板的主要部分是非相对论性、时间无关的分子哈密顿量的详细表达式。它是系统中所有原子核和电子的动能和势能之和。</p>
+<p>该方程可以分解为五个不同的项：</p>
+<p><span class="math inline">\(\hat{\mathcal{H}} = -\sum_{I=1}^{P}
 \frac{\hbar^2}{2M_I}\nabla_I^2 - \sum_{i=1}^{N}
 \frac{\hbar^2}{2m}\nabla_i^2 + \frac{e^2}{2}\sum_{I=1}^{P}\sum_{J \neq
 I}^{P} \frac{Z_I Z_J}{|\vec{R}_I - \vec{R}_J|} +
@@ -555,6 +557,189 @@ are designed to approximate these interactions. 符号 <span
 class="math inline">\(\{i, j\}\)</span>、<span
 class="math inline">\(\{i, j, k\}\)</span>
 等指的是“多体”问题。哈密顿量包含二体项（粒子对之间的相互作用），而精确求解薛定谔方程极其困难，因为每个粒子的运动都与其他粒子相关。计算方法旨在近似这些相互作用。</li>
+</ul>
+<p>This whiteboard presents the mathematical foundation for
+<strong>non-adiabatic molecular dynamics</strong>, a sophisticated
+method in theoretical chemistry and physics used to simulate processes
+where the Born-Oppenheimer approximation breaks down. This typically
+occurs in photochemistry, electron transfer reactions, and when
+molecules interact with intense laser fields.
+这块白板展示了<strong>非绝热分子动力学</strong>的数学基础，这是理论化学和物理学中一种复杂的方法，用于模拟玻恩-奥本海默近似失效的过程。这通常发生在光化学、电子转移反应以及分子与强激光场相互作用时。</p>
+<h3
+id="topic-non-adiabatic-molecular-dynamics-md-非绝热分子动力学-md">6.
+Topic: Non-Adiabatic Molecular Dynamics (MD) 非绝热分子动力学 (MD)</h3>
+<p>The title “Δ non-adiabatic MD” indicates that the topic moves beyond
+the standard Born-Oppenheimer approximation. In this approximation, it
+is assumed that the light electrons adjust instantaneously to the motion
+of the heavy nuclei, allowing the system to be described by a single
+potential energy surface. Non-adiabatic methods, by contrast, account
+for the quantum mechanical coupling between multiple electronic
+states.</p>
+<p>标题“Δ 非绝热
+MD”表明该主题超越了标准的玻恩-奥本海默近似。在该近似中，假设轻电子会根据重原子核的运动进行瞬时调整，从而使系统可以用单个势能面来描述。相比之下，非绝热方法则考虑了多个电子态之间的量子力学耦合。</p>
+<h3 id="the-born-huang-ansatz-玻恩-黄拟设">7. The Born-Huang Ansatz
+玻恩-黄拟设</h3>
+<p>The starting point for this method is the “ansatz” (an educated guess
+for the form of the solution). This is the Born-Huang expansion for the
+total molecular wave function, <span
+class="math inline">\(\Psi\)</span>.
+该方法的起点是“拟设”（对解形式的合理猜测）。这是分子总波函数 <span
+class="math inline">\(\Psi\)</span> 的玻恩-黄展开式。</p>
+<p><span class="math inline">\(\Psi(\vec{R}, \vec{r}, t) = \sum_{n}
+\Theta_n(\vec{R}, t) \Phi_n(\vec{R}, \vec{r})\)</span></p>
+<ul>
+<li><p><strong><span class="math inline">\(\Psi(\vec{R}, \vec{r},
+t)\)</span></strong> is the total wave function for the entire molecule.
+It depends on the coordinates of all nuclei (<span
+class="math inline">\(\vec{R}\)</span>), all electrons (<span
+class="math inline">\(\vec{r}\)</span>), and time (<span
+class="math inline">\(t\)</span>).
+是整个分子的总波函数。它取决于所有原子核 (<span
+class="math inline">\(\vec{R}\)</span>)、所有电子 (<span
+class="math inline">\(\vec{r}\)</span>) 和时间 (<span
+class="math inline">\(t\)</span>) 的坐标。</p></li>
+<li><p><strong><span class="math inline">\(\Phi_n(\vec{R},
+\vec{r})\)</span></strong> are the <strong>electronic wave
+functions</strong>. They are the solutions to the electronic Schrödinger
+equation for a fixed nuclear geometry <span
+class="math inline">\(\vec{R}\)</span> and form a complete basis set.
+The index <span class="math inline">\(n\)</span> labels the electronic
+state (e.g., ground state, first excited state, etc.).
+它们是给定原子核几何构型 <span class="math inline">\(\vec{R}\)</span>
+的电子薛定谔方程的解，并构成一个完整的基组。下标 <span
+class="math inline">\(n\)</span>
+标记电子态（例如，基态、第一激发态等）。</p></li>
+<li><p><strong><span class="math inline">\(\Theta_n(\vec{R},
+t)\)</span></strong> are the <strong>nuclear wave functions</strong>.
+Each <span class="math inline">\(\Theta_n\)</span> describes the motion
+of the nuclei on the potential energy surface of the corresponding
+electronic state, <span class="math inline">\(\Phi_n\)</span>.
+Crucially, they depend on time. 是<strong>核波函数</strong>。每个 <span
+class="math inline">\(\Theta_n\)</span> 描述原子核在相应电子态 <span
+class="math inline">\(\Phi_n\)</span>
+势能面上的运动。至关重要的是，它们依赖于时间。</p></li>
+</ul>
+<p>This ansatz expresses the total molecular state as a superposition of
+electronic states, where the coefficients of the superposition are the
+nuclear wave functions.
+该拟设将总分子态表示为电子态的叠加，其中叠加的系数是核波函数。</p>
+<h3 id="the-partitioned-molecular-hamiltonian-分割分子哈密顿量">8. The
+Partitioned Molecular Hamiltonian 分割分子哈密顿量</h3>
+<p>The total molecular Hamiltonian, <span
+class="math inline">\(\hat{\mathcal{H}}\)</span>, is partitioned into
+terms that act on the nuclei and electrons separately. 总分子哈密顿量
+<span class="math inline">\(\hat{\mathcal{H}}\)</span>
+被分割成分别作用于原子核和电子的项。</p>
+<p><span class="math inline">\(\hat{\mathcal{H}} = -\sum_{I}
+\frac{\hbar^2}{2M_I}\nabla_I^2 + \hat{\mathcal{H}}_e +
+\hat{V}_{nn}\)</span></p>
+<ul>
+<li><p><strong><span class="math inline">\(-\sum_{I}
+\frac{\hbar^2}{2M_I}\nabla_I^2\)</span></strong>: This is the kinetic
+energy operator for the nuclei, often denoted as <span
+class="math inline">\(\hat{T}_n\)</span>.这是原子核的动能算符，通常表示为
+<span class="math inline">\(\hat{T}_n\)</span>。</p></li>
+<li><p><strong><span
+class="math inline">\(\hat{\mathcal{H}}_e\)</span></strong>: This is the
+<strong>electronic Hamiltonian</strong>, which includes the kinetic
+energy of the electrons and the potential energy of electron-electron
+and electron-nuclear interactions.
+这是<strong>电子哈密顿量</strong>，包含电子的动能以及电子-电子和电子-核相互作用的势能。</p></li>
+<li><p><strong><span
+class="math inline">\(\hat{V}_{nn}\)</span></strong>: This is the
+potential energy operator for <strong>nuclear-nuclear
+repulsion</strong>.这是<strong>核-核排斥</strong>的势能算符。</p></li>
+</ul>
+<h3 id="the-electronic-schrödinger-equation-电子薛定谔方程">9. The
+Electronic Schrödinger Equation 电子薛定谔方程</h3>
+<p>The electronic basis functions, <span
+class="math inline">\(\Phi_n\)</span>, are defined as the eigenfunctions
+of the electronic Hamiltonian (plus the nuclear repulsion term) for a
+fixed nuclear configuration <span
+class="math inline">\(\vec{R}\)</span>. 电子基函数 <span
+class="math inline">\(\Phi_n\)</span> 定义为对于固定的核构型 <span
+class="math inline">\(\vec{R}\)</span>，电子哈密顿量（加上核排斥项）的本征函数。</p>
+<p><span class="math inline">\((\hat{\mathcal{H}}_e + \hat{V}_{nn})
+\Phi_n(\vec{R}, \vec{r}) = E_n(\vec{R}) \Phi_n(\vec{R},
+\vec{r})\)</span></p>
+<ul>
+<li><strong><span class="math inline">\(E_n(\vec{R})\)</span></strong>
+are the eigenvalues, which are the <strong>potential energy surfaces
+(PES)</strong>. Each electronic state <span
+class="math inline">\(n\)</span> has its own PES, which dictates the
+forces acting on the nuclei when the molecule is in that electronic
+state. 是特征值，即<strong>势能面 (PES)</strong>。每个电子态 <span
+class="math inline">\(n\)</span>
+都有其自身的势能面，它决定了分子处于该电子态时作用于原子核的力。</li>
+</ul>
+<h3
+id="deriving-the-equations-of-motion-for-the-nuclei-推导原子核运动方程">10.
+Deriving the Equations of Motion for the Nuclei 推导原子核运动方程</h3>
+<p>The final part of the whiteboard begins the derivation of the
+time-dependent Schrödinger equation for the nuclear wave functions,
+<span class="math inline">\(\Theta_k\)</span>. The process starts with
+the full time-dependent Schrödinger equation, <span
+class="math inline">\(i\hbar \frac{\partial \Psi}{\partial t} =
+\hat{\mathcal{H}} \Psi\)</span>. To find the equation for a specific
+nuclear wave function <span class="math inline">\(\Theta_k\)</span>,
+this main equation is projected onto the corresponding electronic basis
+state <span class="math inline">\(\Phi_k\)</span>.
+白板的最后一部分开始推导原子核波函数 <span
+class="math inline">\(\Theta_k\)</span>
+的含时薛定谔方程。该过程从完整的含时薛定谔方程 <span
+class="math inline">\(i\hbar \frac{\partial \Psi}{\partial t} =
+\hat{\mathcal{H}} \Psi\)</span> 开始。为了找到特定原子核波函数 <span
+class="math inline">\(\Theta_k\)</span>
+的方程，需要将这个主方程投影到相应的电子基态 <span
+class="math inline">\(\Phi_k\)</span> 上。</p>
+<p>This is done by multiplying from the left by the complex conjugate of
+the electronic wave function, <span
+class="math inline">\(\Phi_k^*\)</span>, and integrating over all
+electronic coordinates, <span class="math inline">\(d\vec{r}\)</span>.
+可以通过从左边乘以电子波函数 <span
+class="math inline">\(\Phi_k^*\)</span> 的复共轭，然后在所有电子坐标
+<span class="math inline">\(d\vec{r}\)</span> 上积分来实现。</p>
+<p><span class="math inline">\(\int \Phi_k^* i\hbar
+\frac{\partial}{\partial t} \Psi \,d\vec{r} = \int \Phi_k^*
+\hat{\mathcal{H}} \Psi \,d\vec{r}\)</span></p>
+<p>The board then shows the result of substituting the Born-Huang ansatz
+for <span class="math inline">\(\Psi\)</span> and the partitioned
+Hamiltonian for <span class="math inline">\(\hat{\mathcal{H}}\)</span>
+into this projected equation: 然后，黑板显示将 Born-Huang 拟设式代入
+<span
+class="math inline">\(\Psi\)</span>，将分块哈密顿量代入以下投影方程的结果：</p>
+<p><span class="math inline">\(i\hbar \frac{\partial}{\partial t}
+\Theta_k(\vec{R}, t) = \int \Phi_k^* \left( -\sum_{I}
+\frac{\hbar^2}{2M_I}\nabla_I^2 + \hat{\mathcal{H}}_e + \hat{V}_{nn}
+\right) \sum_n \Theta_n \Phi_n \,d\vec{r}\)</span></p>
+<ul>
+<li><p><strong>Left Hand Side</strong>: The left side of the projection
+has been simplified. Because the electronic basis functions <span
+class="math inline">\(\Phi_n\)</span> form an orthonormal set (<span
+class="math inline">\(\int \Phi_k^* \Phi_n d\vec{r} =
+\delta_{kn}\)</span>), the sum collapses to a single term for <span
+class="math inline">\(n=k\)</span>. 投影左侧已简化。由于电子基函数 <span
+class="math inline">\(\Phi_n\)</span> 构成一个正交集 (<span
+class="math inline">\(\int \Phi_k^* \Phi_n d\vec{r} =
+\delta_{kn}\)</span>，因此当 <span class="math inline">\(n=k\)</span>
+时，和将折叠为一个项。</p></li>
+<li><p><strong>Right Hand Side</strong>: This complex integral is the
+core of non-adiabatic dynamics. When the nuclear kinetic energy
+operator, <span class="math inline">\(\nabla_I^2\)</span>, acts on the
+product <span class="math inline">\(\Theta_n \Phi_n\)</span>, it acts on
+both functions (via the product rule). The terms that arise from <span
+class="math inline">\(\nabla_I\)</span> acting on the electronic wave
+functions <span class="math inline">\(\Phi_n\)</span> are known as
+<strong>non-adiabatic coupling terms</strong>. These terms are
+responsible for enabling transitions between different electronic
+potential energy surfaces, which is the essence of non-adiabatic
+dynamics. 这个复积分是非绝热动力学的核心。当核动能算符 <span
+class="math inline">\(\nabla_I^2\)</span> 作用于乘积 <span
+class="math inline">\(\Theta_n \Phi_n\)</span>
+时，它会作用于这两个函数（通过乘积规则）。由 <span
+class="math inline">\(\nabla_I\)</span> 作用于电子波函数 <span
+class="math inline">\(\Phi_n\)</span>
+而产生的项称为<strong>非绝热耦合项</strong>。这些术语负责实现不同电子势能面之间的转变，这是非绝热动力学的本质。</p></li>
 </ul>
 
       
