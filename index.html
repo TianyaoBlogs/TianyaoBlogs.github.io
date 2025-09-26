@@ -145,6 +145,212 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://tianyaoblogs.github.io/2025/09/26/5120C4-2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="TianyaoBlogs">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2025/09/26/5120C4-2/" class="post-title-link" itemprop="url">PHYS 5120 - Computational Energy Materials and Electronic Structure Simulations-W3-2</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2025-09-26 21:00:00 / 修改时间：19:17:02" itemprop="dateCreated datePublished" datetime="2025-09-26T21:00:00+08:00">2025-09-26</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/PHYS-5120/" itemprop="url" rel="index"><span itemprop="name">PHYS-5120</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>PHYS 5120 - 计算能源材料和电子结构模拟 Lecture-4</p>
+<p><a target="_blank" rel="noopener" href="https://chem.hkust.edu.hk/people/ding-pan-panding">Lecturer:
+Prof.PAN DING</a></p>
+<h2 id="monte-carlo-mc-method">1 Monte Carlo (MC) Method:</h2>
+<ul>
+<li><strong>内容</strong>:</li>
+</ul>
+<p>This whiteboard provides a concise but detailed overview of two
+important and related simulation techniques in computational physics and
+chemistry: the Metropolis Monte Carlo (MC) method and Hamiltonian (or
+Hybrid) Monte Carlo (HMC). Here is a detailed breakdown of the concepts
+presented.</p>
+<h3 id="metropolis-monte-carlo-mc-method">1. Metropolis Monte Carlo (MC)
+Method</h3>
+<p>The heading “Metropolis MC method” introduces a foundational
+algorithm in statistical mechanics. Metropolis Monte Carlo is a method
+used to generate a sequence of states for a system, allowing for the
+calculation of average properties.</p>
+<ul>
+<li><strong>Conceptual Diagram:</strong> The small box with numbered
+sites (0-5) and an arrow showing a move from state 0 to 2, and then to
+3, illustrates a “random walk.” In Metropolis MC, the system transitions
+from one state to another by making small, random changes.</li>
+<li><strong>Random Number Generation:</strong> The notation
+<code>rand t \in (0,1)</code> indicates the use of a random number <span
+class="math inline">\(t\)</span> drawn from a uniform distribution
+between 0 and 1. This is a core component of the algorithm, used to
+decide whether to accept or reject a proposed new state.</li>
+<li><strong>Detailed Balance Condition:</strong> The equation <span
+class="math inline">\(P_o T(o \to n) = P_n T(n \to o)\)</span> is the
+principle of detailed balance. It states that in a system at
+equilibrium, the probability of being in an old state (<span
+class="math inline">\(o\)</span>) and transitioning to a new state
+(<span class="math inline">\(n\)</span>) is equal to the probability of
+being in the new state and transitioning back to the old one. This
+condition is crucial because it ensures that the simulation will
+eventually sample states according to their correct thermodynamic
+probabilities (the Boltzmann distribution).</li>
+<li><strong>Acceptance Rate:</strong> The note <code>\sim 30\%?</code>
+likely refers to the target <strong>acceptance rate</strong> for an
+efficient Metropolis MC simulation. If new states are accepted too often
+or too rarely, the exploration of the system’s possible configurations
+is inefficient. While the famous optimal acceptance rate for certain
+high-dimensional problems is around 23.4%, a range of 20-50% is often
+considered effective.</li>
+</ul>
+<h3 id="hamiltonian-hybrid-monte-carlo-hmc">2. Hamiltonian / Hybrid
+Monte Carlo (HMC)</h3>
+<p>The second topic, “Hamiltonian/Hybrid MC (HMC),” is a more advanced
+Monte Carlo method that uses principles from classical mechanics to
+propose new states more intelligently than the simple random-walk
+approach of the standard Metropolis method. This often leads to a much
+higher acceptance rate and more efficient exploration of the state
+space.</p>
+<p>The whiteboard outlines a four-step HMC algorithm:</p>
+<p><strong>Step 1: Randomize Velocities</strong> The first step is to
+randomize the velocities: <span class="math inline">\(\vec{v}_i \sim
+\mathcal{N}(0, k_B T)\)</span>.</p>
+<ul>
+<li>This step introduces momentum into the system. For each particle
+<span class="math inline">\(i\)</span>, a velocity vector <span
+class="math inline">\(\vec{v}_i\)</span> is randomly drawn from a normal
+(Gaussian) distribution with a mean of 0 and a variance related to the
+temperature <span class="math inline">\(T\)</span> and the Boltzmann
+constant <span class="math inline">\(k_B\)</span>.</li>
+<li>The full formula for this probability distribution, <span
+class="math inline">\(f(\vec{v})\)</span>, is the
+<strong>Maxwell-Boltzmann distribution</strong>, which is written out
+further down the board.</li>
+</ul>
+<p><strong>Step 2: Molecular Dynamics (MD) Integration</strong> The
+board notes this as <code>t=0 \to h \text&#123; or &#125; mh</code>
+<code>MD</code> and mentions the <code>Verlet</code> algorithm.</p>
+<ul>
+<li>This is the “Hamiltonian dynamics” part of the algorithm. Starting
+from the current positions and the newly randomized velocities, the
+system’s trajectory is calculated for a short period of time (<span
+class="math inline">\(h\)</span> or <span
+class="math inline">\(mh\)</span>) using Molecular Dynamics (MD).</li>
+<li>The name <strong>Verlet</strong> refers to the Verlet integration
+algorithm, a numerical method used to solve Newton’s equations of
+motion. It is popular in MD simulations because it is time-reversible
+and conserves energy well over long simulations.</li>
+</ul>
+<p><strong>Step 3: Calculate Total Energy</strong> The third step is to
+<code>calculate total energy</code>: <span class="math inline">\(E_n =
+K_n + V_n\)</span>.</p>
+<ul>
+<li>After the MD trajectory, the system is in a new state <span
+class="math inline">\(n\)</span>. The total energy of this new state,
+<span class="math inline">\(E_n\)</span>, is calculated as the sum of
+its kinetic energy (<span class="math inline">\(K_n\)</span>, from the
+velocities) and its potential energy (<span
+class="math inline">\(V_n\)</span>, from the positions).</li>
+</ul>
+<p><strong>Step 4: Acceptance Test</strong> The final step is the
+acceptance criterion: <span class="math inline">\(\text{acc}(o \to n) =
+\min(1, e^{-\beta(E_n - E_o)})\)</span>.</p>
+<ul>
+<li>This is the Metropolis acceptance criterion. The algorithm decides
+whether to accept the new state <span class="math inline">\(n\)</span>
+or reject it and stay in the old state <span
+class="math inline">\(o\)</span>.</li>
+<li>The probability of acceptance depends on the change in total energy
+(<span class="math inline">\(E_n - E_o\)</span>). If the new energy is
+lower, the move is always accepted. If the new energy is higher, it
+might still be accepted with a probability <span
+class="math inline">\(e^{-\beta(E_n - E_o)}\)</span>, where <span
+class="math inline">\(\beta = 1/(k_B T)\)</span>. This allows the system
+to escape from local energy minima.</li>
+</ul>
+<h3 id="key-formulas-and-notations">Key Formulas and Notations</h3>
+<ul>
+<li><p><strong>Maxwell-Boltzmann Distribution:</strong> The formula for
+the velocity distribution is given as: <span
+class="math inline">\(f(\vec{v}) = \left(\frac{m}{2\pi k_B
+T}\right)^{3/2} \exp\left(-\frac{m v^2}{2 k_B T}\right)\)</span> This
+gives the probability density for a particle of mass <span
+class="math inline">\(m\)</span> to have a velocity <span
+class="math inline">\(\vec{v}\)</span> at a given temperature <span
+class="math inline">\(T\)</span>.</p></li>
+<li><p><strong>Energy Conservation and Acceptance Rate:</strong> The
+notes <span class="math inline">\(E_n \approx E_o\)</span> and <span
+class="math inline">\(75\%\)</span> highlight a key advantage of HMC.
+Because the Verlet integrator approximately conserves energy, the final
+energy <span class="math inline">\(E_n\)</span> after the MD trajectory
+is usually very close to the initial energy <span
+class="math inline">\(E_o\)</span>. This means the term <span
+class="math inline">\((E_n - E_o)\)</span> is small, and the acceptance
+probability is high. The <span class="math inline">\(75\%\)</span>
+indicates a typical or target acceptance rate for HMC, which is
+significantly higher than for standard Metropolis MC.</p></li>
+<li><p><strong>Hamiltonian Operator:</strong> The symbol <span
+class="math inline">\(\hat{H}\)</span> written on the adjacent board
+represents the Hamiltonian operator, which gives the total energy of the
+system. The note <code>Δ Adiabatic</code> suggests that the MD evolution
+is ideally an adiabatic process (no heat exchange), during which the
+total energy (the Hamiltonian) is conserved.</p></li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://tianyaoblogs.github.io/2025/09/18/img_assert/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -4123,7 +4329,7 @@ configuration</h3>
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">9</span>
+          <span class="site-state-item-count">10</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
