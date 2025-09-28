@@ -176,7 +176,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2025-09-29 03:53:31" itemprop="dateModified" datetime="2025-09-29T03:53:31+08:00">2025-09-29</time>
+                <time title="修改时间：2025-09-29 03:57:13" itemprop="dateModified" datetime="2025-09-29T03:57:13+08:00">2025-09-29</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -330,7 +330,7 @@ line”），这是标准XYZ格式所要求的。</li>
 对象已经是通过标准、干净的数据成功创建的了。</li>
 </ul></li>
 </ol>
-<p><img src="/imgs/QM9/C702H10/C702H10.png" alt="C702H10"></p>
+<p><img src="/imgs/QM9/C7O2H10/C7O2H10.png" alt="C7O2H10"></p>
 
       
     </div>
@@ -381,7 +381,7 @@ line”），这是标准XYZ格式所要求的。</li>
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2025-09-29 03:51:14" itemprop="dateModified" datetime="2025-09-29T03:51:14+08:00">2025-09-29</time>
+                <time title="修改时间：2025-09-29 03:56:14" itemprop="dateModified" datetime="2025-09-29T03:56:14+08:00">2025-09-29</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -505,13 +505,13 @@ ProteinBERT、ESM-2仅基于序列</p></li>
 <ul>
 <li><strong>信息流程</strong>：
 <ol type="1">
-<li>➡️ <strong>从序列到结构</strong>：模型从序列表示 <code>x</code>
+<li><strong>从序列到结构</strong>：模型从序列表示 <code>x</code>
 中提取出“3D
 令牌”的最新向量。这个向量此时已经吸收了前面几层序列模型的上下文信息。然后，通过（<code>seq_linears</code>）将其转换后，更新到结构模型的输入中。</li>
-<li>⚙️ <strong>结构信息处理</strong>：运行一层结构模型（GNN）。GNN
+<li><strong>结构信息处理</strong>：运行一层结构模型（GNN）。GNN
 根据图的连接关系更新所有节点的表示，当然也包括“3D
 令牌”这个特殊节点。</li>
-<li>⬅️ <strong>从结构到序列</strong>：从 GNN 的输出中，再次提取出“3D
+<li><strong>从结构到序列</strong>：从 GNN 的输出中，再次提取出“3D
 令牌”的向量。这个向量包含更新后的结构信息。再通过（<code>structure_linears</code>）转换后，把它<strong>插回</strong>到序列表示
 <code>x</code> 中，替换掉旧的版本。</li>
 </ol></li>
