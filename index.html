@@ -145,6 +145,175 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://tianyaoblogs.github.io/2025/10/01/5054C4/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="TianyaoBlogs">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2025/10/01/5054C4/" class="post-title-link" itemprop="url">MSDM 5054 - Statistical Machine Learning-L4</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2025-10-01 21:00:00" itemprop="dateCreated datePublished" datetime="2025-10-01T21:00:00+08:00">2025-10-01</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2025-10-18 22:06:21" itemprop="dateModified" datetime="2025-10-18T22:06:21+08:00">2025-10-18</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Machine-Learning/" itemprop="url" rel="index"><span itemprop="name">Machine Learning</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>统计机器学习Lecture-4</p>
+<p><a target="_blank" rel="noopener" href="https://www.math.hkust.edu.hk/~madxia/">Lecturer: Prof.XIA
+DONG</a></p>
+<h1 id="what-is-classification">1. What is Classification?</h1>
+<p>Classification is a type of <strong>supervised machine
+learning</strong> where the goal is to predict a
+<strong>categorical</strong> or qualitative response. Unlike regression
+where you predict a continuous numerical value (like a price or
+temperature), classification assigns an input to a specific category or
+class.</p>
+<p><strong>Key characteristics:</strong></p>
+<ul>
+<li><strong>Goal:</strong> Predict the class of a subject based on input
+features.</li>
+<li><strong>Output (Response):</strong> The output is a category, such
+as ‘Yes’/‘No’, ‘Spam’/‘Not Spam’, or ‘High’/‘Medium’/‘Low’.</li>
+<li><strong>Applications:</strong> Common examples include email spam
+detectors, medical diagnosis (e.g., virus carrier vs. non-carrier), and
+fraud detection.</li>
+</ul>
+<p>The example used in the slides is a credit card <strong>Default
+dataset</strong>. The goal is to predict whether a customer will
+<strong>default</strong> (‘Yes’ or ‘No’) on their payments based on
+their monthly <strong>income</strong> and account
+<strong>balance</strong>.</p>
+<h3 id="why-not-use-linear-regression">## Why Not Use Linear
+Regression?</h3>
+<p>At first, it might seem possible to use linear regression for
+classification. For a binary (two-class) problem like the default
+dataset, you could code the outcomes as numbers, for example:</p>
+<ul>
+<li>Default = ‘No’ =&gt; <span class="math inline">\(y = 0\)</span></li>
+<li>Default = ‘Yes’ =&gt; <span class="math inline">\(y =
+1\)</span></li>
+</ul>
+<p>You could then fit a standard linear regression model: <span
+class="math inline">\(Y \approx \beta_0 + \beta_1 X\)</span>. In this
+context, we would interpret the prediction <span
+class="math inline">\(\hat{y}\)</span> as the <em>probability</em> of
+default, so we’d be modeling <span class="math inline">\(P(Y=1|X) =
+\beta_0 + \beta_1 X\)</span>.</p>
+<p>However, this approach has two major problems:</p>
+<p><strong>1. The Output Is Not a Probability</strong> A linear model
+can produce outputs that are less than 0 or greater than 1. This doesn’t
+make sense for a probability, which must always be between 0 and 1.</p>
+<p>The image below is the most important one for understanding this
+issue. The left plot shows a linear regression line fit to the 0/1
+default data. You can see the line goes below 0 and would eventually go
+above 1 for higher balances. The right plot shows a logistic regression
+curve, which always stays between 0 and 1.</p>
+<ul>
+<li><strong>Left (Linear Regression):</strong> The straight blue line
+predicts probabilities &lt; 0 for low balances.</li>
+<li><strong>Right (Logistic Regression):</strong> The S-shaped blue
+curve correctly constrains the probability output between 0 and 1.</li>
+</ul>
+<p><strong>2. It Doesn’t Work for Multi-Class Problems</strong> If you
+have more than two categories (e.g., ‘mild’, ‘moderate’, ‘severe’), you
+might code them as 0, 1, and 2. A linear regression model would
+incorrectly assume that the “distance” between ‘mild’ and ‘moderate’ is
+the same as the distance between ‘moderate’ and ‘severe’, which is
+usually not a valid assumption.</p>
+<h3 id="the-solution-logistic-regression">## The Solution: Logistic
+Regression</h3>
+<p>Instead of modeling the response <span
+class="math inline">\(y\)</span> directly, logistic regression models
+the <strong>probability</strong> that <span
+class="math inline">\(y\)</span> belongs to a particular class. To solve
+the issue of the output not being a probability, it uses the
+<strong>logistic function</strong> (also known as the sigmoid
+function).</p>
+<p>This function takes any real-valued input and squeezes it into an
+output between 0 and 1.</p>
+<p>The formula for the probability in a logistic regression model is:
+<span class="math display">\[P(Y=1|X) = \frac{e^{\beta_0 + \beta_1 X}}{1
++ e^{\beta_0 + \beta_1 X}}\]</span> This S-shaped function, shown in the
+right-hand plot above, ensures that the output is always a valid
+probability. We can then set a threshold (e.g., 0.5) to make the final
+class prediction. If <span class="math inline">\(P(Y=1|X) &gt;
+0.5\)</span>, we predict ‘Yes’; otherwise, we predict ‘No’.</p>
+<h3 id="data-visualization-code-in-python">## Data Visualization &amp;
+Code in Python</h3>
+<p>The slides use R to visualize the data. The boxplots are particularly
+important because they show which variable is a better predictor.</p>
+<ul>
+<li><strong>Balance vs. Default:</strong> The boxplots for balance show
+a clear difference. The median balance for those who default (‘Yes’) is
+much higher than for those who do not (‘No’). This suggests
+<strong>balance is a strong predictor</strong>.</li>
+<li><strong>Income vs. Default:</strong> The boxplots for income show a
+lot of overlap. The median incomes for both groups are very similar.
+This suggests <strong>income is a weak predictor</strong>.</li>
+</ul>
+<p>Here’s how you could perform similar analysis and modeling in Python
+using <code>seaborn</code> and <code>scikit-learn</code>.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"><span class="keyword">import</span> seaborn <span class="keyword">as</span> sns</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">from</span> sklearn.linear_model <span class="keyword">import</span> LogisticRegression</span><br><span class="line"><span class="keyword">from</span> sklearn.model_selection <span class="keyword">import</span> train_test_split</span><br><span class="line"><span class="keyword">from</span> sklearn.metrics <span class="keyword">import</span> accuracy_score</span><br><span class="line"></span><br><span class="line"><span class="comment"># Assume &#x27;default_data.csv&#x27; has columns: &#x27;default&#x27; (Yes/No), &#x27;balance&#x27;, &#x27;income&#x27;</span></span><br><span class="line"><span class="comment"># You would load your data like this:</span></span><br><span class="line"><span class="comment"># df = pd.read_csv(&#x27;default_data.csv&#x27;)</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># For demonstration, let&#x27;s create some sample data</span></span><br><span class="line">data = &#123;</span><br><span class="line">    <span class="string">&#x27;balance&#x27;</span>: [<span class="number">1200</span>, <span class="number">2100</span>, <span class="number">800</span>, <span class="number">1800</span>, <span class="number">500</span>, <span class="number">1600</span>, <span class="number">2200</span>, <span class="number">1900</span>],</span><br><span class="line">    <span class="string">&#x27;income&#x27;</span>: [<span class="number">45000</span>, <span class="number">60000</span>, <span class="number">30000</span>, <span class="number">55000</span>, <span class="number">25000</span>, <span class="number">48000</span>, <span class="number">70000</span>, <span class="number">65000</span>],</span><br><span class="line">    <span class="string">&#x27;default&#x27;</span>: [<span class="string">&#x27;No&#x27;</span>, <span class="string">&#x27;Yes&#x27;</span>, <span class="string">&#x27;No&#x27;</span>, <span class="string">&#x27;Yes&#x27;</span>, <span class="string">&#x27;No&#x27;</span>, <span class="string">&#x27;No&#x27;</span>, <span class="string">&#x27;Yes&#x27;</span>, <span class="string">&#x27;Yes&#x27;</span>]</span><br><span class="line">&#125;</span><br><span class="line">df = pd.DataFrame(data)</span><br><span class="line"></span><br><span class="line"><span class="comment"># --- 1. Data Visualization (like the slides) ---</span></span><br><span class="line">fig, axes = plt.subplots(<span class="number">1</span>, <span class="number">2</span>, figsize=(<span class="number">14</span>, <span class="number">5</span>))</span><br><span class="line">fig.suptitle(<span class="string">&#x27;Predictor Analysis for Default&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Boxplot for Balance</span></span><br><span class="line">sns.boxplot(ax=axes[<span class="number">0</span>], x=<span class="string">&#x27;default&#x27;</span>, y=<span class="string">&#x27;balance&#x27;</span>, data=df)</span><br><span class="line">axes[<span class="number">0</span>].set_title(<span class="string">&#x27;Balance vs. Default Status&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Boxplot for Income</span></span><br><span class="line">sns.boxplot(ax=axes[<span class="number">1</span>], x=<span class="string">&#x27;default&#x27;</span>, y=<span class="string">&#x27;income&#x27;</span>, data=df)</span><br><span class="line">axes[<span class="number">1</span>].set_title(<span class="string">&#x27;Income vs. Default Status&#x27;</span>)</span><br><span class="line"></span><br><span class="line">plt.show()</span><br><span class="line"></span><br><span class="line"><span class="comment"># --- 2. Logistic Regression Modeling ---</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Convert categorical &#x27;default&#x27; column to 0s and 1s</span></span><br><span class="line">df[<span class="string">&#x27;default_encoded&#x27;</span>] = df[<span class="string">&#x27;default&#x27;</span>].apply(<span class="keyword">lambda</span> x: <span class="number">1</span> <span class="keyword">if</span> x == <span class="string">&#x27;Yes&#x27;</span> <span class="keyword">else</span> <span class="number">0</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Define features (X) and target (y)</span></span><br><span class="line">X = df[[<span class="string">&#x27;balance&#x27;</span>, <span class="string">&#x27;income&#x27;</span>]]</span><br><span class="line">y = df[<span class="string">&#x27;default_encoded&#x27;</span>]</span><br><span class="line"></span><br><span class="line"><span class="comment"># Split data into training and testing sets</span></span><br><span class="line">X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=<span class="number">0.3</span>, random_state=<span class="number">42</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Create and train the logistic regression model</span></span><br><span class="line">model = LogisticRegression()</span><br><span class="line">model.fit(X_train, y_train)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Make predictions on new data</span></span><br><span class="line"><span class="comment"># For example, a person with a $2000 balance and $50,000 income</span></span><br><span class="line">new_customer = [[<span class="number">2000</span>, <span class="number">50000</span>]]</span><br><span class="line">predicted_prob = model.predict_proba(new_customer)</span><br><span class="line">prediction = model.predict(new_customer)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;Customer data: Balance=2000, Income=50000&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;Probability of No Default vs. Default: <span class="subst">&#123;predicted_prob&#125;</span>&quot;</span>) <span class="comment"># [[P(No), P(Yes)]]</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;Final Prediction (0=No, 1=Yes): <span class="subst">&#123;prediction&#125;</span>&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://tianyaoblogs.github.io/2025/09/27/QM9/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -4845,237 +5014,6 @@ class="math inline">\(\mathcal{L}_{\text{q}} = -\log \underbrace{\left(
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://tianyaoblogs.github.io/2025/09/14/contrastive_learning/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="John Doe">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="TianyaoBlogs">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2025/09/14/contrastive_learning/" class="post-title-link" itemprop="url">PAPER READING - Contrastive Learning</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2025-09-14 21:00:00" itemprop="dateCreated datePublished" datetime="2025-09-14T21:00:00+08:00">2025-09-14</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2025-09-19 19:24:40" itemprop="dateModified" datetime="2025-09-19T19:24:40+08:00">2025-09-19</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Deep-Learning/" itemprop="url" rel="index"><span itemprop="name">Deep Learning</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>用于无监督视觉表示学习的动量对比 <a
-target="_blank" rel="noopener" href="https://arxiv.org/abs/1911.05722v3">Momentum Contrast for
-Unsupervised Visual Representation Learning</a></p>
-<h1 id="momentum-contrast">1. Momentum Contrast</h1>
-<h2 id="定义">1.1 定义</h2>
-<ul>
-<li><strong>内容</strong>: 对比学习（Contrastive Learning）
-通过让模型学习区分相似<strong>正样本</strong>与不相似<strong>负样本</strong>的数据点来学习有用的特征。</li>
-</ul>
-<h2 id="正样本对positive-pairs">1.2 正样本对（Positive Pairs）:</h2>
-<ul>
-<li><strong>内容</strong>:
-通常来自同一数据点的不同数据增强视图（例如，同一张图片的两次随机裁剪、颜色抖动等）。它们应该具有相似的语义信息。</li>
-</ul>
-<h2 id="负样本negatives">1.3 负样本（Negatives）:</h2>
-<ul>
-<li><strong>内容</strong>:
-来自与<strong>查询样本</strong>不同的其他数据点。它们代表不同的语义内容。</li>
-</ul>
-<h2 id="目标-模型的目标是学习一个编码器encoder">1.4 目标:
-模型的目标是学习一个编码器（Encoder）</h2>
-<ul>
-<li><strong>内容</strong>:
-查询样本与其对应的正样本在特征空间中的距离<strong>很近</strong>（相似度高）。</li>
-<li><strong>内容</strong>:
-查询样本与大量负样本在特征空间中的距离<strong>很远</strong>（相似度低）。</li>
-</ul>
-<h1 id="创新">2. 创新</h1>
-<h2 id="动态字典dynamic-dictionary">2.1 动态字典（Dynamic
-Dictionary）:</h2>
-<ul>
-<li><strong>内容</strong>: MoCo
-维护一个<strong>先进先出FIFO</strong>的队列来存储编码后的特征<strong>Keys</strong>。</li>
-<li><strong>内容</strong>:当前批次的数据经过键编码器编码后，其特征被入队添加到字典队列尾部。</li>
-<li><strong>内容</strong>:同时，队列中最老的批次特征被出<strong>队dequeue</strong>
-移除。</li>
-<li><strong>内容</strong>:队列可以将字典大小 <span
-class="math inline">\(K\)</span>
-设计得远大于单个批次的大小，从而提供海量且一致的负样本来源（一致性由下面的动量更新保证）。队列解耦了字典大小与批次大小的限制。</li>
-</ul>
-<h2 id="动量更新编码器momentum-update-of-key-encoder">2.2
-动量更新编码器（Momentum Update of Key Encoder）:</h2>
-<ul>
-<li><strong>内容</strong>:
-查询编码器使用标准的梯度下降更新（<strong>SGD</strong>）</li>
-<li><strong>内容</strong>:
-键编码器<strong>不通过反向传播更新</strong>。</li>
-<li><strong>内容</strong>: 键编码器的参数 <span
-class="math inline">\(θ_k\)</span> 通过动量更新<strong>Momentum
-Update</strong>从查询编码器的参数 <span
-class="math inline">\(θ_q\)</span> 获得：<span class="math display">\[
-\theta_k \gets m \cdot \theta_k + (1 - m) \cdot \theta_q \]</span>其中
-<span class="math inline">\(m\)</span> 是一个动量系数（如 <span
-class="math inline">\(m\)</span> = <span
-class="math inline">\(0.999\)</span>），非常接近<span
-class="math inline">\(1\)</span>。 ## 2.3 优势:</li>
-<li><strong>内容</strong>:动量更新使得键编码器 <span
-class="math inline">\(f_k\)</span> 的参数变化非常缓慢和平滑。</li>
-</ul>
-<h1 id="对比损失函数infonce-loss">3. 对比损失函数（InfoNCE Loss:</h1>
-<h2 id="infonce-loss-noise-contrastive-estimation-loss">3.1 InfoNCE Loss
-(Noise-Contrastive Estimation Loss)：</h2>
-<p>对比损失函数（InfoNCE/NT-Xent Loss）定义为： <span
-class="math inline">\(\mathcal{L}_{\text{q}} = -\log \underbrace{\left(
-\frac{\exp\left( \mathbf{q} \cdot \mathbf{k}^{+} / \tau
-\right)}{\exp\left( \mathbf{q} \cdot \mathbf{k}^{+} / \tau \right) +
-\sum\limits_{i=1}^{N} \exp\left( \mathbf{q} \cdot \mathbf{k}_{i}^{-} /
-\tau \right)} \right)}_{\text{Softmax 概率}}\)</span></p>
-<h2 id="其中">3.2其中：</h2>
-<table>
-<colgroup>
-<col style="width: 23%" />
-<col style="width: 76%" />
-</colgroup>
-<thead>
-<tr>
-<th>参数</th>
-<th>含义</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><span class="math inline">\(\mathbf{q}\)</span></td>
-<td>查询向量（Query Vector）：由查询编码器 <span
-class="math inline">\(f_q\)</span> 输出（如 <span
-class="math inline">\(2048\)</span> 维）。</td>
-</tr>
-<tr>
-<td><span class="math inline">\(\mathbf{k}^{+}\)</span></td>
-<td>正样本键向量（Positive Key）：由键编码器 <span
-class="math inline">\(f_k\)</span>
-输出（来自同一数据的不同增强视图）。</td>
-</tr>
-<tr>
-<td><span class="math inline">\(\mathbf{k}_{i}^{-}\)</span></td>
-<td>负样本键向量（Negative Keys）：来自字典队列的其他数据样本（数量为
-<span class="math inline">\(N\)</span>，如 <span
-class="math inline">\(65536\)</span>）。</td>
-</tr>
-<tr>
-<td><span class="math inline">\(\tau\)</span></td>
-<td>温度参数（Temperature）：控制相似度分布的尖锐程度（典型值 <span
-class="math inline">\(0.05 \sim 0.2\)</span>）。</td>
-</tr>
-<tr>
-<td><span class="math inline">\(\cdot\)</span></td>
-<td>向量点积（L2归一化后等价于余弦相似度，即 <span
-class="math inline">\(\mathbf{q} \cdot \mathbf{k} =
-\cos\theta\)</span>）。</td>
-</tr>
-</tbody>
-</table>
-<h2 id="数据流">3.2 数据流：</h2>
-<ul>
-<li><strong>原始输入</strong>: 一张图片 <strong>P.jpg</strong>
-(<strong>256x256</strong> 原始尺寸)</li>
-<li><strong>预处理Step1</strong>: 随机裁剪出 <strong>224x224</strong>
-的区域</li>
-<li><strong>预处理Step2</strong>: 随机轻微改变颜色和亮度。</li>
-<li><strong>预处理Step3</strong>: 归一化像素值。</li>
-<li><strong>结果</strong>: <strong>[3, 224, 224]</strong> (一个
-<strong>3x224x224</strong> 的张量)。输入到编码器的形式。</li>
-<li><strong>查询编码器 <span class="math inline">\(f_q\)</span>
-处理</strong>:</li>
-<li><strong>Step1</strong>: 输入：<strong>[3, 224, 224]</strong>
-张量。</li>
-<li><strong>Step2</strong>: 经过<strong>Model</strong></li>
-<li><strong>Step3</strong>: 全局平均池化层 (Global Average Pooling)
-将空间维度压缩掉。</li>
-<li><strong>Step4</strong>: 一个线性投影层将特征维度映射到
-<strong>D</strong>。</li>
-<li><strong>结果</strong>:一个 <span class="math inline">\(D\)</span>
-维（如 <span class="math inline">\(M\)</span> 维）的归一化向量 <span
-class="math inline">\(q\)</span>。这个 <span
-class="math inline">\(q\)</span>
-代表了经过裁剪、颜色扰动后的猫头像的抽象特征。例如， <strong>[0.12,
--0.05, 0.87, …, 0.03]</strong> (<span
-class="math inline">\(M\)</span>个数值)。</li>
-<li><strong>键编码器 <span class="math inline">\(f_k\)</span>
-处理</strong>:</li>
-<li><strong>Step1</strong>: 输入：<strong>[3, 224, 224]</strong>
-张量。(对 <strong>P.jpg</strong> 应用另一组随机预处理得到的另一个
-<strong>[3, 224, 224]</strong> 张量。)</li>
-<li><strong>Step2</strong>: 经过结构相同但参数由动量更新的 <span
-class="math inline">\(f_k\)</span>。</li>
-<li><strong>Step3</strong>: 一个 <span class="math inline">\(D\)</span>
-维（如 <span class="math inline">\(M\)</span> 维）的归一化向量 <span
-class="math inline">\(k\)</span>。例如 <strong>[0.15, -0.08, 0.84, …,
-0.02]</strong>。这个 <span class="math inline">\(k\)</span>
-代表了同一数据但不同视角/颜色下的抽象特征。</li>
-<li><strong>动态字典</strong>:</li>
-<li><strong>Step1</strong>:包含之前通过 <span
-class="math inline">\(f_k\)</span> 计算出的 <span
-class="math inline">\(k\)</span> 向量。例如，队列大小是 <span
-class="math inline">\(L\)</span>，里面存储了 <span
-class="math inline">\(L\)</span> 个不同的 <strong>D=128</strong>
-维向量，每个代表处理过的一张数据的特征。</li>
-</ul>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -5145,7 +5083,7 @@ class="math inline">\(L\)</span> 个不同的 <strong>D=128</strong>
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">12</span>
+          <span class="site-state-item-count">13</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
