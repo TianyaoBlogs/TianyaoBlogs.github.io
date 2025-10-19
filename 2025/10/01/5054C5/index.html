@@ -1,0 +1,2264 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"tianyaoblogs.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="统计机器学习Lecture-4 Lecturer: Prof.XIA DONG 1. Resampling Resampling as a statistical tool to assess the accuracy of models whose main goal is to estimate the test error (a model’s performance on ne">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MSDM 5054 - Statistical Machine Learning-L4">
+<meta property="og:url" content="https://tianyaoblogs.github.io/2025/10/01/5054C5/index.html">
+<meta property="og:site_name" content="TianyaoBlogs">
+<meta property="og:description" content="统计机器学习Lecture-4 Lecturer: Prof.XIA DONG 1. Resampling Resampling as a statistical tool to assess the accuracy of models whose main goal is to estimate the test error (a model’s performance on ne">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2025-10-01T13:00:00.000Z">
+<meta property="article:modified_time" content="2025-10-19T12:36:41.838Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="Machine Learning">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://tianyaoblogs.github.io/2025/10/01/5054C5/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>MSDM 5054 - Statistical Machine Learning-L4 | TianyaoBlogs</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">TianyaoBlogs</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://tianyaoblogs.github.io/2025/10/01/5054C5/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="TianyaoBlogs">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          MSDM 5054 - Statistical Machine Learning-L4
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2025-10-01 21:00:00" itemprop="dateCreated datePublished" datetime="2025-10-01T21:00:00+08:00">2025-10-01</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2025-10-19 20:36:41" itemprop="dateModified" datetime="2025-10-19T20:36:41+08:00">2025-10-19</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Machine-Learning/" itemprop="url" rel="index"><span itemprop="name">Machine Learning</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>统计机器学习Lecture-4</p>
+<p><a target="_blank" rel="noopener" href="https://www.math.hkust.edu.hk/~madxia/">Lecturer: Prof.XIA
+DONG</a></p>
+<h1 id="resampling">1. Resampling</h1>
+<p><strong>Resampling</strong> as a statistical tool to assess the
+accuracy of models whose main goal is to estimate the <em>test
+error</em> (a model’s performance on new, unseen data) because the
+<em>training error</em> is overly optimistic due to overfitting.</p>
+<h2 id="key-concepts">Key Concepts</h2>
+<ul>
+<li><strong>Resampling:</strong> The process of repeatedly drawing
+samples from a dataset. The two main types mentioned are
+<strong>Cross-validation</strong> (to estimate model test error) and
+<strong>Bootstrap</strong> (to quantify the uncertainty of
+estimates).</li>
+<li><strong>Data Splitting (Ideal Scenario):</strong> In a “data-rich”
+situation, you split your data into three parts:
+<ol type="1">
+<li><strong>Training Data:</strong> Used to fit and train the parameters
+of various models.</li>
+<li><strong>Validation Data:</strong> Used to assess the trained models,
+tune hyperparameters (e.g., choose the polynomial degree), and select
+the <em>best</em> model. This helps prevent overfitting.</li>
+<li><strong>Test Data:</strong> Used <em>only once</em> on the final,
+selected model to get an unbiased estimate of its real-world
+performance.</li>
+</ol></li>
+<li><strong>Validation vs. Test Data:</strong> The slides emphasize this
+difference (Slide 7). The <strong>validation set</strong> is part of the
+model-building and selection process. The <strong>test set</strong> is
+kept separate and is only used for the final report card after all
+decisions are made.</li>
+</ul>
+<h2 id="the-validation-set-approach">The Validation Set Approach</h2>
+<p>This is the simplest cross-validation method.</p>
+<ol type="1">
+<li><strong>Split:</strong> The total dataset is randomly divided into
+two parts: a <strong>training set</strong> and a <strong>validation
+set</strong> (often a 50/50 or 70/30 split).</li>
+<li><strong>Train:</strong> Various models are fit <em>only</em> on the
+<strong>training set</strong>.</li>
+<li><strong>Validate:</strong> The performance of each trained model is
+evaluated using the <strong>validation set</strong>.</li>
+<li><strong>Select:</strong> The model with the best performance (e.g.,
+the lowest error) on the validation set is chosen as the final
+model.</li>
+</ol>
+<h3 id="important-image-schematic-slide-10">Important Image: Schematic
+(Slide 10)</h3>
+<p>This diagram clearly shows a set of <span
+class="math inline">\(n\)</span> observations being randomly split into
+a training set (blue, with observations 7, 22, 13) and a validation set
+(beige, with observation 91). The model learns from the blue set and is
+tested on the beige set.</p>
+<h2 id="example-auto-data-formulas-code">Example: Auto Data (Formulas
+&amp; Code)</h2>
+<p>The slides use the <code>Auto</code> dataset to decide the best
+polynomial degree to predict <code>mpg</code> from
+<code>horsepower</code>.</p>
+<h3 id="mathematical-models">Mathematical Models</h3>
+<p>The models being compared are polynomials of different degrees. For
+example:</p>
+<ul>
+<li><strong>Linear:</strong> <span class="math inline">\(mpg = \beta_0 +
+\beta_1(horsepower)\)</span></li>
+<li><strong>Quadratic:</strong> <span class="math inline">\(mpg =
+\beta_0 + \beta_1(horsepower) + \beta_2(horsepower)^2\)</span></li>
+<li><strong>Cubic:</strong> <span class="math inline">\(mpg = \beta_0 +
+\beta_1(horsepower) + \beta_2(horsepower)^2 +
+\beta_3(horsepower)^3\)</span></li>
+</ul>
+<p>The performance metric used is the <strong>Mean Squared Error
+(MSE)</strong> on the validation set: <span
+class="math display">\[MSE_{val} = \frac{1}{n_{val}} \sum_{i \in val}
+(y_i - \hat{f}(x_i))^2\]</span> where <span
+class="math inline">\(n_{val}\)</span> is the number of observations in
+the validation set, <span class="math inline">\(y_i\)</span> is the true
+<code>mpg</code> value, and <span
+class="math inline">\(\hat{f}(x_i)\)</span> is the model’s prediction
+for the <span class="math inline">\(i\)</span>-th observation in the
+validation set.</p>
+<h3 id="important-image-polynomial-fits-slide-8">Important Image:
+Polynomial Fits (Slide 8)</h3>
+<p>This plot is crucial. It shows the <code>Auto</code> data with linear
+(red), quadratic (green), and cubic (blue) regression lines. * The
+<strong>linear fit</strong> is clearly poor. * The <strong>quadratic and
+cubic fits</strong> follow the data’s curve much better. * The inset box
+shows the MSE calculated on the <em>full dataset</em> (this is training
+MSE): * Linear MSE: ~26.42 * Quadratic MSE: ~21.60 * Cubic MSE: ~21.51
+This suggests a non-linear fit is necessary, but it doesn’t tell us
+which one will generalize better.</p>
+<h3 id="code-analysis">Code Analysis</h3>
+<p>The slides show two different approaches in code:</p>
+<p><strong>1. Python Code (Slide 9): Model Selection
+Criteria</strong></p>
+<ul>
+<li><strong>What it does:</strong> This Python code (using
+<code>pandas</code> and <code>statsmodels</code>) does <em>not</em>
+implement the validation set approach. Instead, it fits polynomial
+models (degrees 1 through 5) to the <em>entire</em> dataset.</li>
+<li><strong>How it works:</strong> It calculates statistical criteria
+like <strong>BIC</strong>, <strong>Mallow’s <span
+class="math inline">\(C_p\)</span></strong>, and <strong>Adjusted <span
+class="math inline">\(R^2\)</span></strong>. These are mathematical
+adjustments to the training error that <em>estimate</em> the test error
+without needing a validation set.</li>
+<li><strong>Key line (logic):</strong> <code>sm.OLS(y, X).fit()</code>
+is used to fit the model, and then metrics like <code>model.bic</code>
+and <code>model.rsquared_adj</code> are extracted.</li>
+<li><strong>Result:</strong> The table shows that the model with
+<code>[horsepower, horsepower2]</code> (quadratic) has the lowest BIC
+and <span class="math inline">\(C_p\)</span> values, suggesting it’s the
+best model according to these criteria.</li>
+</ul>
+<p><strong>2. R Code (Slides 14 &amp; 15): The Validation Set
+Approach</strong></p>
+<ul>
+<li><strong>What it does:</strong> This R code <em>directly
+implements</em> the validation set approach described on Slide 13.</li>
+<li><strong>How it works:</strong>
+<ol type="1">
+<li><code>set.seed(...)</code>: Sets a random seed to make the split
+reproducible.</li>
+<li><code>train=sample(392, 196)</code>: Randomly selects 196 indices
+(out of 392) to be the <strong>training set</strong>.</li>
+<li><code>lm.fit=lm(mpg~poly(horsepower, 2), ..., subset=train)</code>:
+Fits a quadratic model <em>only</em> using the <code>train</code>
+data.</li>
+<li><code>mean((mpg-predict(lm.fit,Auto))[-train]^2)</code>: This is the
+key calculation.
+<ul>
+<li><code>predict(lm.fit, Auto)</code>: Predicts <code>mpg</code> for
+<em>all</em> data.</li>
+<li><code>[-train]</code>: Selects only the predictions for the
+<strong>validation set</strong> (the data <em>not</em> in
+<code>train</code>).</li>
+<li><code>mean(...)</code>: Calculates the <strong>MSE on the validation
+set</strong>.</li>
+</ul></li>
+</ol></li>
+<li><strong>Result:</strong> The code is run three times with different
+seeds (1, 2022, 1997).
+<ul>
+<li><strong>Seed 1:</strong> Quadratic MSE (18.71) is lowest.</li>
+<li><strong>Seed 2022:</strong> Quadratic MSE (19.70) is lowest.</li>
+<li><strong>Seed 1997:</strong> Quadratic MSE (19.08) is lowest.</li>
+</ul></li>
+<li><strong>Main Takeaway:</strong> In all random splits, the
+<strong>quadratic model gives the lowest validation set MSE</strong>.
+This provides evidence that the quadratic model is the best choice for
+generalizing to new data. The fact that the MSE values change with each
+seed also highlights a key <em>disadvantage</em> of this simple method:
+the results can be variable depending on the random split.</li>
+</ul>
+<h1 id="the-validation-set-approach-1">2. The Validation Set
+Approach</h1>
+<p>This method is a simple way to estimate a model’s performance on new,
+unseen data (the “test error”).</p>
+<p>The core idea is to <strong>randomly split</strong> your available
+data into two parts: 1. <strong>Training Set:</strong> Used to fit (or
+“train”) your model. 2. <strong>Validation Set (or Test Set):</strong>
+Used to evaluate the trained model’s performance. You calculate the
+error (like Mean Squared Error) on this set.</p>
+<h3 id="python-code-explained-slide-1">Python Code Explained (Slide
+1)</h3>
+<p>The first slide shows a Python example using the <code>Auto</code>
+dataset to predict <code>mpg</code> from <code>horsepower</code>.</p>
+<ol type="1">
+<li><strong>Setup &amp; Data Loading:</strong>
+<ul>
+<li><code>import</code> statements load libraries like
+<code>pandas</code> (for data),
+<code>sklearn.model_selection.train_test_split</code> (the key function
+for this method), and
+<code>sklearn.linear_model.LinearRegression</code>.</li>
+<li><code>Auto = pd.read_csv(...)</code> loads the data.</li>
+<li><code>X = Auto['horsepower'].values</code> and
+<code>y = Auto['mpg'].values</code> select the variables of
+interest.</li>
+</ul></li>
+<li><strong>The Split:</strong>
+<ul>
+<li><code>X_train, X_test, y_train, y_test = train_test_split(X, y, train_size=0.5, random_state=007)</code></li>
+<li>This is the <strong>most important line</strong> for this method. It
+splits the data <code>X</code> and <code>y</code> into training and
+testing (validation) sets.</li>
+<li><code>train_size=0.5</code> means 50% of the data is for training
+and 50% is for validation.</li>
+<li><code>random_state=007</code> ensures the split is “random” but
+“reproducible” (using the same seed <code>007</code> will always produce
+the same split).</li>
+</ul></li>
+<li><strong>Model Fitting &amp; Evaluation:</strong>
+<ul>
+<li>The code fits three different polynomial models, but it <strong>only
+uses the training data</strong> (<code>X_train</code>,
+<code>y_train</code>) to do so.</li>
+<li><strong>Linear (Degree 1):</strong> A simple
+<code>LinearRegression</code>.</li>
+<li><strong>Quadratic (Degree 2):</strong> Uses
+<code>PolynomialFeatures(2)</code> to create <span
+class="math inline">\(x\)</span> and <span
+class="math inline">\(x^2\)</span> terms, then fits a linear model to
+them.</li>
+<li><strong>Cubic (Degree 3):</strong> Uses
+<code>PolynomialFeatures(3)</code> to create <span
+class="math inline">\(x\)</span>, <span
+class="math inline">\(x^2\)</span>, and <span
+class="math inline">\(x^3\)</span> terms.</li>
+<li>It then calculates the <strong>Mean Squared Error (MSE)</strong> for
+all three models using the <strong>test data</strong>
+(<code>X_test</code>, <code>y_test</code>).</li>
+</ul></li>
+<li><strong>Results (from the text on the slide):</strong>
+<ul>
+<li><strong>Linear MSE:</strong> <span class="math inline">\(\approx
+23.3\)</span></li>
+<li><strong>Quadratic MSE:</strong> <span class="math inline">\(\approx
+19.4\)</span></li>
+<li><strong>Cubic MSE:</strong> <span class="math inline">\(\approx
+19.4\)</span></li>
+<li><strong>Conclusion:</strong> The quadratic model gives a
+significantly lower error than the linear model. The cubic model does
+not offer any real improvement over the quadratic one.</li>
+</ul></li>
+</ol>
+<h3 id="key-images-the-problem-with-a-single-split">Key Images: The
+Problem with a Single Split</h3>
+<p>The most important images are on <strong>slide 9</strong> (labeled
+“Figure” and “Page 20”).</p>
+<ul>
+<li><p><strong>Plot on the Left (Single Split):</strong> This graph
+shows the validation MSE for polynomial degrees 1 through 10, based on
+the <em>single random split</em> from the R code (slide 2). Just like
+the Python example, it shows that the MSE drops sharply from degree 1 to
+2, and then stays relatively low. Based on this <em>one</em> chart, you
+might pick degree 2 (quadratic) as the best model.</p></li>
+<li><p><strong>Plot on the Right (Ten Splits):</strong> This is the
+<strong>most critical plot</strong>. It shows the results of
+<em>repeating the entire process 10 times</em>, each with a new random
+split (from R code on slide 3).</p>
+<ul>
+<li>You can see 10 different error curves.</li>
+<li>While they all agree that degree 1 (linear) is bad, they <strong>do
+not agree on the best model</strong>. Some curves suggest degree 2 is
+best, others suggest 3, 4, or even 6.</li>
+</ul></li>
+</ul>
+<h3 id="summary-of-drawbacks-slides-7-8-9-23-25">Summary of Drawbacks
+(Slides 7, 8, 9, 23, 25)</h3>
+<p>The slides repeatedly emphasize the two main drawbacks of this simple
+validation set approach:</p>
+<ol type="1">
+<li><strong>High Variability:</strong> The estimated test MSE can be
+<strong>highly variable</strong>, depending on which observations happen
+to land in the training set versus the validation set. The plot with 10
+curves (slide 9, right) proves this perfectly.</li>
+<li><strong>Overestimation of Test Error:</strong>
+<ul>
+<li>The model is <strong>only trained on a subset</strong> (e.g., 50%)
+of the available data. The validation data is “wasted” and not used for
+model building.</li>
+<li>Statistical methods tend to perform worse when trained on fewer
+observations.</li>
+<li>Therefore, the model trained on just the training set is likely
+<em>worse</em> than a model trained on the <em>entire</em> dataset.</li>
+<li>This “worse” model will have a <em>higher</em> error rate on the
+validation set. This means the validation set MSE <strong>tends to
+overestimate</strong> the true test error you would get from a model
+trained on all your data.</li>
+</ul></li>
+</ol>
+<h2 id="cross-validation-the-solution">5.3 Cross-Validation: The
+Solution</h2>
+<p>The slides introduce <strong>Cross-Validation (CV)</strong> as the
+method to overcome these drawbacks. The core idea is to use <em>all</em>
+data points for both training and validation, just at different
+times.</p>
+<h3 id="leave-one-out-cross-validation-loocv">Leave-One-Out
+Cross-Validation (LOOCV)</h3>
+<p>This is the first type of CV introduced (slide 10, page 26). For a
+dataset with <span class="math inline">\(n\)</span> data points:</p>
+<ol type="1">
+<li><strong>Hold out</strong> the 1st data point (this is your
+validation set).</li>
+<li><strong>Train</strong> the model on the <em>other <span
+class="math inline">\(n-1\)</span> data points</em>.</li>
+<li><strong>Calculate</strong> the error (e.g., <span
+class="math inline">\(\text{MSE}_1\)</span>) using only that 1st
+held-out point.</li>
+<li><strong>Repeat</strong> this <span class="math inline">\(n\)</span>
+times, holding out the 2nd point, then the 3rd, and so on, until every
+point has been used as the validation set exactly once.</li>
+<li>Your final test error estimate is the <strong>average of all <span
+class="math inline">\(n\)</span> errors</strong>.</li>
+</ol>
+<h3 id="key-formula-from-slide-10">Key Formula (from Slide 10)</h3>
+<p>The formula for the <span class="math inline">\(n\)</span>-fold LOOCV
+error estimate is:</p>
+<p><span class="math display">\[\text{CV}_{(n)} = \frac{1}{n}
+\sum_{i=1}^{n} \text{MSE}_i\]</span></p>
+<p>Where: * <span class="math inline">\(n\)</span> is the total number
+of data points. * <span class="math inline">\(\text{MSE}_i\)</span> is
+the Mean Squared Error calculated on the <span
+class="math inline">\(i\)</span>-th data point when it was held out.</p>
+<h1 id="what-is-loocv-leave-one-out-cross-validation">3.What is LOOCV
+(Leave-One-Out Cross Validation)</h1>
+<p>Leave-One-Out Cross Validation (LOOCV) is a method for estimating the
+test error of a model. For a dataset with <span
+class="math inline">\(n\)</span> observations, you:</p>
+<ol type="1">
+<li><strong>Fit the model <span class="math inline">\(n\)</span>
+times.</strong></li>
+<li>For each fit <span class="math inline">\(i\)</span> (from <span
+class="math inline">\(1\)</span> to <span
+class="math inline">\(n\)</span>), you train the model on all data
+points <em>except</em> for observation <span
+class="math inline">\(i\)</span>.</li>
+<li>You then use this trained model to make a prediction for the single
+observation <span class="math inline">\(i\)</span> that was left
+out.</li>
+<li>The final LOOCV error is the average of the <span
+class="math inline">\(n\)</span> prediction errors (typically the Mean
+Squared Error, or MSE).</li>
+</ol>
+<p>This process is shown visually in the slide titled “LOOCV” (slide
+27), which is a key image for understanding the concept. <strong>Pros
+&amp; Cons (from slide 28):</strong> * <strong>Pro:</strong> It has low
+bias because the training set (<span class="math inline">\(n-1\)</span>
+samples) is almost identical to the full dataset. *
+<strong>Pro:</strong> It produces a stable, non-random error estimate
+(unlike <span class="math inline">\(k\)</span>-fold CV, which depends on
+the random fold assignments). * <strong>Con:</strong> It can be
+extremely <strong>computationally expensive</strong>, as the model must
+be refit <span class="math inline">\(n\)</span> times. *
+<strong>Con:</strong> The <span class="math inline">\(n\)</span> error
+estimates can be highly correlated, which can sometimes lead to high
+variance in the final <span class="math inline">\(CV\)</span>
+estimate.</p>
+<h2 id="key-mathematical-formulas">Key Mathematical Formulas</h2>
+<p>The main challenge of LOOCV (being computationally expensive) has a
+very efficient solution for linear models.</p>
+<h3 id="the-standard-slow-formula">1. The Standard (Slow) Formula</h3>
+<p>As defined on slide 33, the LOOCV estimate of the MSE is:</p>
+<p><span class="math display">\[CV_{(n)} = \frac{1}{n} \sum_{i=1}^{n}
+(y_i - \hat{y}_i^{(i)})^2\]</span></p>
+<ul>
+<li><span class="math inline">\(y_i\)</span> is the true value of the
+<span class="math inline">\(i\)</span>-th observation.</li>
+<li><span class="math inline">\(\hat{y}_i^{(i)}\)</span> is the
+predicted value for <span class="math inline">\(y_i\)</span> from a
+model trained on all data <em>except</em> observation <span
+class="math inline">\(i\)</span>.</li>
+</ul>
+<p>Calculating <span class="math inline">\(\hat{y}_i^{(i)}\)</span>
+requires refitting the model <span class="math inline">\(n\)</span>
+times.</p>
+<h3 id="the-shortcut-fast-formula">2. The Shortcut (Fast) Formula</h3>
+<p>Slide 34 provides a much simpler formula that <strong>only requires
+fitting the model once</strong> on the <em>entire</em> dataset:</p>
+<p><span class="math display">\[CV_{(n)} = \frac{1}{n} \sum_{i=1}^{n}
+\left( \frac{y_i - \hat{y}_i}{1 - h_i} \right)^2\]</span></p>
+<ul>
+<li><span class="math inline">\(\hat{y}_i\)</span> is the prediction for
+<span class="math inline">\(y_i\)</span> from the model trained on
+<strong>all <span class="math inline">\(n\)</span> data
+points</strong>.</li>
+<li><span class="math inline">\(h_i\)</span> is the
+<strong>leverage</strong> of the <span
+class="math inline">\(i\)</span>-th observation.</li>
+</ul>
+<h3 id="what-is-leverage-h_i">3. What is Leverage (<span
+class="math inline">\(h_i\)</span>)?</h3>
+<p>Slide 35 defines leverage:</p>
+<ul>
+<li><strong>Hat Matrix (<span
+class="math inline">\(\mathbf{H}\)</span>):</strong> In a linear model,
+the fitted values <span class="math inline">\(\hat{\mathbf{y}}\)</span>
+are related to the true values <span
+class="math inline">\(\mathbf{y}\)</span> by the hat matrix: <span
+class="math inline">\(\hat{\mathbf{y}} =
+\mathbf{H}\mathbf{y}\)</span>.</li>
+<li><strong>Formula:</strong> The hat matrix is defined as <span
+class="math inline">\(\mathbf{H} =
+\mathbf{X}(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\)</span>.</li>
+<li><strong>Leverage (<span
+class="math inline">\(h_i\)</span>):</strong> The leverage for the <span
+class="math inline">\(i\)</span>-th observation is simply the <span
+class="math inline">\(i\)</span>-th diagonal element of the hat matrix,
+<span class="math inline">\(h_{ii}\)</span> (often just written as <span
+class="math inline">\(h_i\)</span>).
+<ul>
+<li><span class="math inline">\(h_i = \mathbf{x}_i^T
+(\mathbf{X}^T\mathbf{X})^{-1} \mathbf{x}_i\)</span></li>
+</ul></li>
+<li><strong>Meaning:</strong> Leverage measures how “influential” an
+observation’s <span class="math inline">\(x_i\)</span> value is in
+determining its own predicted value <span
+class="math inline">\(\hat{y}_i\)</span>. A high leverage score means
+that point has a lot of influence on the model’s fit.</li>
+</ul>
+<p>This shortcut formula is extremely important because it makes LOOCV
+as fast to compute as a single model fit.</p>
+<h2 id="python-code-explained-slide-29">Python Code Explained (Slide
+29)</h2>
+<p>This slide shows how to use LOOCV to select the best polynomial
+degree for predicting <code>mpg</code> from <code>horsepower</code>.</p>
+<ol type="1">
+<li><strong>Imports:</strong> It imports standard libraries
+(<code>pandas</code>, <code>matplotlib</code>) and key modules from
+<code>sklearn</code>:
+<ul>
+<li><code>LinearRegression</code>: The model to be fit.</li>
+<li><code>PolynomialFeatures</code>: A tool to create polynomial terms
+(e.g., <span class="math inline">\(x, x^2, x^3\)</span>).</li>
+<li><code>LeaveOneOut</code>: The LOOCV cross-validation strategy
+object.</li>
+<li><code>cross_val_score</code>: A function that automatically runs a
+cross-validation test.</li>
+</ul></li>
+<li><strong>Setup:</strong>
+<ul>
+<li>It loads the <code>Auto.csv</code> data.</li>
+<li>It defines <span class="math inline">\(X\)</span>
+(<code>horsepower</code>) and <span class="math inline">\(y\)</span>
+(<code>mpg</code>).</li>
+<li>It creates a <code>LeaveOneOut</code> object:
+<code>loo = LeaveOneOut()</code>.</li>
+</ul></li>
+<li><strong>Looping through Degrees:</strong>
+<ul>
+<li>The code loops <code>degree</code> from 1 to 10.</li>
+<li><strong><code>make_pipeline</code>:</strong> For each degree, it
+creates a <code>model</code> using <code>make_pipeline</code>. This
+pipeline is a crucial concept:
+<ul>
+<li>It first runs <code>PolynomialFeatures(degree)</code> to transform
+<span class="math inline">\(X\)</span> into <span
+class="math inline">\([X, X^2, ..., X^{\text{degree}}]\)</span>.</li>
+<li>It then feeds those features into <code>LinearRegression()</code> to
+fit the model.</li>
+</ul></li>
+<li><strong><code>cross_val_score</code>:</strong> This is the most
+important line.
+<ul>
+<li><code>scores = cross_val_score(model, X, y, cv=loo, scoring='neg_mean_squared_error')</code></li>
+<li>This function automatically does the <em>entire</em> LOOCV process.
+It takes the <code>model</code> (the pipeline), the data <span
+class="math inline">\(X\)</span> and <span
+class="math inline">\(y\)</span>, and the CV strategy
+(<code>cv=loo</code>).</li>
+<li><code>sklearn</code>’s <code>cross_val_score</code> uses the “fast”
+leverage method internally for linear models, so it doesn’t actually fit
+the model <span class="math inline">\(n\)</span> times.</li>
+<li>It uses <code>scoring='neg_mean_squared_error'</code> because the
+<code>scoring</code> function assumes “higher is better.” By calculating
+the <em>negative</em> MSE, the best model will have the highest score
+(i.e., closest to 0).</li>
+</ul></li>
+<li><strong>Storing Results:</strong> It calculates the mean of the
+scores (which is the <span class="math inline">\(CV_{(n)}\)</span>) and
+stores it.</li>
+</ul></li>
+<li><strong>Visualization:</strong>
+<ul>
+<li>The code then plots the final <code>cv_errors</code> (after flipping
+the sign back to positive) against the <code>degree</code>.</li>
+<li>The resulting plot (also on slide 32) shows the test MSE, allowing
+you to visually pick the best degree (where the error is
+minimized).</li>
+</ul></li>
+</ol>
+<hr />
+<h2 id="important-images">Important Images</h2>
+<ul>
+<li><strong>Slide 27 (<code>.../103628.png</code>):</strong> This is the
+<strong>best conceptual image</strong>. It visually demonstrates how
+LOOCV splits the data <span class="math inline">\(n\)</span> times, with
+each observation getting one turn as the validation set.</li>
+<li><strong>Slide 34 (<code>.../103711.png</code>):</strong> This slide
+presents the <strong>most important formula</strong>: the “Easy formula”
+or shortcut, <span class="math inline">\(CV_{(n)} = \frac{1}{n} \sum
+(\frac{y_i - \hat{y}_i}{1 - h_i})^2\)</span>. This is the key takeaway
+for <em>computing</em> LOOCV efficiently in linear models.</li>
+<li><strong>Slide 32 (<code>.../103701.jpg</code>):</strong> This is the
+<strong>key results image</strong>. It contrasts the LOOCV error curve
+(left) with the 10-fold CV error curves (right). It clearly shows that
+LOOCV produces a single, stable error curve, while 10-fold CV results
+vary slightly each time it’s run due to the random data splits.</li>
+</ul>
+<h1 id="cross-validation-overview">4. Cross-Validation Overview</h1>
+<p>These slides explain <strong>Cross-Validation (CV)</strong>, a method
+used to estimate the test error of a model, helping to select the best
+level of flexibility (e.g., the best polynomial degree). It’s an
+improvement over a single validation set because it uses all the data
+for both training and validation at different times.</p>
+<p>The two main types discussed are <strong>K-fold CV</strong> and
+<strong>Leave-One-Out CV (LOOCV)</strong>.</p>
+<h2 id="k-fold-cross-validation">K-Fold Cross-Validation</h2>
+<p>This is the most common method.</p>
+<h3 id="the-process">The Process</h3>
+<p>As shown in the slides, the K-fold CV process is: 1.
+<strong>Divide</strong> the dataset randomly into <span
+class="math inline">\(K\)</span> non-overlapping groups (or “folds”),
+usually of equal size. Common choices are <span
+class="math inline">\(K=5\)</span> or <span
+class="math inline">\(K=10\)</span>. 2. <strong>Iterate <span
+class="math inline">\(K\)</span> times</strong>: In each iteration <span
+class="math inline">\(i\)</span>, use the <span
+class="math inline">\(i\)</span>-th fold as the <strong>validation
+set</strong> and all other <span class="math inline">\(K-1\)</span>
+folds combined as the <strong>training set</strong>. 3.
+<strong>Calculate</strong> the Mean Squared Error (<span
+class="math inline">\(MSE_i\)</span>) on the validation fold. 4.
+<strong>Average</strong> all <span class="math inline">\(K\)</span>
+error estimates to get the final CV score.</p>
+<h3 id="key-formula">Key Formula</h3>
+<p>The final K-fold CV error estimate is the average of the errors from
+each fold: <span class="math display">\[CV_{(K)} = \frac{1}{K}
+\sum_{i=1}^{K} MSE_i\]</span></p>
+<h3 id="important-image-the-concept">Important Image: The Concept</h3>
+<p>The diagram in slide <code>104145.png</code> is the most important
+for understanding the <em>concept</em> of K-fold CV. It shows a dataset
+split into 5 folds (<span class="math inline">\(K=5\)</span>). The
+process is repeated 5 times, with a different fold (in beige) held out
+as the validation set in each run, while the rest (in blue) is used for
+training.</p>
+<h2 id="leave-one-out-cross-validation-loocv-1">Leave-One-Out
+Cross-Validation (LOOCV)</h2>
+<p>LOOCV is just a special case of K-fold CV where <strong><span
+class="math inline">\(K = n\)</span></strong> (the total number of
+observations). * You create <span class="math inline">\(n\)</span>
+“folds,” each containing just one data point. * You train the model
+<span class="math inline">\(n\)</span> times, each time leaving out a
+<em>single</em> different observation and then calculating the error for
+that one point.</p>
+<h3 id="key-formulas">Key Formulas</h3>
+<ol type="1">
+<li><p><strong>Standard Definition:</strong> The LOOCV error is the
+average of the <span class="math inline">\(n\)</span> squared errors:
+<span class="math display">\[CV = \frac{1}{N} \sum_{i=1}^{N}
+e_{[i]}^2\]</span> where <span class="math inline">\(e_{[i]} = y_i -
+\hat{y}_{[i]}\)</span> is the prediction error for the <span
+class="math inline">\(i\)</span>-th observation, calculated from a model
+that was trained on <em>all data except</em> the <span
+class="math inline">\(i\)</span>-th observation. This looks
+computationally expensive.</p></li>
+<li><p><strong>Fast Computation (for Linear Regression):</strong> A key
+point from the slides is that for linear regression, you don’t need to
+re-fit the model <span class="math inline">\(N\)</span> times. You can
+fit the model <em>once</em> on all <span
+class="math inline">\(N\)</span> data points and use the following
+shortcut: <span class="math display">\[CV = \frac{1}{N} \sum_{i=1}^{N}
+\left( \frac{e_i}{1 - h_i} \right)^2\]</span></p>
+<ul>
+<li><span class="math inline">\(e_i = y_i - \hat{y}_i\)</span> is the
+standard residual (from the model fit on <em>all</em> data).</li>
+<li><span class="math inline">\(h_i\)</span> is the <em>leverage
+statistic</em> for the <span class="math inline">\(i\)</span>-th
+observation (the <span class="math inline">\(i\)</span>-th diagonal
+entry of the “hat matrix” <span class="math inline">\(H\)</span>). This
+makes LOOCV as fast to compute as a single model fit.</li>
+</ul></li>
+</ol>
+<h2 id="python-code-results">Python Code &amp; Results</h2>
+<p>The Python code in slide <code>104156.jpg</code> shows how to use
+10-fold CV to find the best polynomial degree for a model.</p>
+<h3 id="code-understanding-slide-104156.jpg">Code Understanding (Slide
+<code>104156.jpg</code>)</h3>
+<p>Here’s a breakdown of the key <code>sklearn</code> parts:</p>
+<ol type="1">
+<li><strong><code>from sklearn.pipeline import make_pipeline</code></strong>:
+This is used to chain steps. The pipeline
+<code>make_pipeline(PolynomialFeatures(degree), LinearRegression())</code>
+first creates polynomial features (like <span
+class="math inline">\(x\)</span>, <span
+class="math inline">\(x^2\)</span>, <span
+class="math inline">\(x^3\)</span>) and then fits a linear model to
+them.</li>
+<li><strong><code>from sklearn.model_selection import KFold</code></strong>:
+This object is used to define the <span
+class="math inline">\(K\)</span>-fold split strategy.
+<code>kf = KFold(n_splits=10, shuffle=True, random_state=1)</code>
+creates a 10-fold splitter that shuffles the data first.</li>
+<li><strong><code>from sklearn.model_selection import cross_val_score</code></strong>:
+This is the most important function.
+<ul>
+<li><code>scores = cross_val_score(model, X, y, cv=kf, scoring='neg_mean_squared_error')</code></li>
+<li>This one function does all the work: it takes the <code>model</code>
+(the pipeline), the data <code>X</code> and <code>y</code>, and the CV
+splitter <code>kf</code>. It automatically trains and evaluates the
+model 10 times and returns an array of 10 scores (one for each
+fold).</li>
+<li><code>scoring='neg_mean_squared_error'</code> is used because
+<code>cross_val_score</code> expects a <em>higher</em> score to be
+<em>better</em>. Since we want to <em>minimize</em> MSE, we use
+<em>negative</em> MSE.</li>
+</ul></li>
+<li><strong><code>avg_mse = -scores.mean()</code></strong>: The code
+averages the 10 scores and flips the sign back to positive to get the
+final CV (MSE) estimate for that polynomial degree.</li>
+</ol>
+<h3 id="important-image-the-results">Important Image: The Results</h3>
+<p>The plots in slides <code>104156.jpg</code> (Python) and
+<code>104224.png</code> (R) show the key result.</p>
+<ul>
+<li><strong>X-axis:</strong> Degree of Polynomial (model
+complexity).</li>
+<li><strong>Y-axis:</strong> Estimated Test Error (CV Error / MSE).</li>
+<li><strong>Interpretation:</strong> The plot shows a clear “U” shape.
+The error is high for degree 1 (a simple line), drops to its minimum at
+<strong>degree 2</strong> (a quadratic <span class="math inline">\(ax^2
++ bx + c\)</span>), and then starts to rise again for higher degrees.
+This rise indicates <strong>overfitting</strong>—the more complex models
+are fitting the training data’s noise, leading to worse performance on
+unseen validation data.</li>
+<li><strong>Conclusion:</strong> The 10-fold CV analysis suggests that a
+<strong>quadratic model (degree 2)</strong> is the best choice, as it
+provides the lowest estimated test error.</li>
+</ul>
+<p>Let’s dive into the details of that proof.</p>
+<h2 id="detailed-summary-the-fast-computation-of-loocv-proof">Detailed
+Summary: The “Fast Computation of LOOCV” Proof</h2>
+<p>The most mathematically dense and important part of your slides is
+the proof (spanning slides <code>104126.jpg</code>,
+<code>104132.png</code>, and <code>104136.png</code>) that LOOCV, which
+seems computationally very expensive, can be calculated quickly for
+linear regression.</p>
+<h3 id="the-goal">The Goal</h3>
+<p>The goal is to prove that the LOOCV statistic, which is defined as:
+<span class="math display">\[CV = \frac{1}{N} \sum_{i=1}^{N} e_{[i]}^2
+\quad \text{where } e_{[i]} = y_i - \hat{y}_{[i]}\]</span> (Here, <span
+class="math inline">\(\hat{y}_{[i]}\)</span> is the prediction for <span
+class="math inline">\(y_i\)</span> from a model trained on all data
+<em>except</em> point <span class="math inline">\(i\)</span>).</p>
+<p>…can be computed <em>without</em> re-fitting the model <span
+class="math inline">\(N\)</span> times, using this “fast” formula: <span
+class="math display">\[CV = \frac{1}{N} \sum_{i=1}^{N} \left(
+\frac{e_i}{1 - h_i} \right)^2\]</span> (Here, <span
+class="math inline">\(e_i\)</span> is the <em>standard</em> residual and
+<span class="math inline">\(h_i\)</span> is the <em>leverage</em>, both
+from a single model fit on <em>all</em> data).</p>
+<p>The entire proof boils down to showing one identity: <strong><span
+class="math inline">\(e_{[i]} = e_i / (1 - h_i)\)</span></strong>.</p>
+<h3 id="key-definitions-the-matrix-algebra-setup">Key Definitions (The
+Matrix Algebra Setup)</h3>
+<ul>
+<li><strong>Model:</strong> <span class="math inline">\(\mathbf{Y} =
+\mathbf{X}\beta + \mathbf{e}\)</span></li>
+<li><strong>Full Data Estimate (<span
+class="math inline">\(\hat{\beta}\)</span>):</strong> <span
+class="math inline">\(\hat{\beta} =
+(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\mathbf{Y}\)</span></li>
+<li><strong>Hat Matrix (<span
+class="math inline">\(\mathbf{H}\)</span>):</strong> <span
+class="math inline">\(\mathbf{H} =
+\mathbf{X}(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\)</span></li>
+<li><strong>Full Data Residual (<span
+class="math inline">\(e_i\)</span>):</strong> <span
+class="math inline">\(e_i = y_i - \hat{y}_i = y_i -
+\mathbf{x}_i^T\hat{\beta}\)</span></li>
+<li><strong>Leverage (<span
+class="math inline">\(h_i\)</span>):</strong> The <span
+class="math inline">\(i\)</span>-th diagonal element of <span
+class="math inline">\(\mathbf{H}\)</span>. <span
+class="math inline">\(h_i =
+\mathbf{x}_i^T(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{x}_i\)</span></li>
+<li><strong>Leave-One-Out Estimate (<span
+class="math inline">\(\hat{\beta}_{[i]}\)</span>):</strong> <span
+class="math inline">\(\hat{\beta}_{[i]} =
+(\mathbf{X}_{[i]}^T\mathbf{X}_{[i]})^{-1}\mathbf{X}_{[i]}^T\mathbf{Y}_{[i]}\)</span>
+<ul>
+<li><span class="math inline">\(\mathbf{X}_{[i]}\)</span> and <span
+class="math inline">\(\mathbf{Y}_{[i]}\)</span> are the data with the
+<span class="math inline">\(i\)</span>-th row removed.</li>
+</ul></li>
+<li><strong>LOOCV Residual (<span
+class="math inline">\(e_{[i]}\)</span>):</strong> <span
+class="math inline">\(e_{[i]} = y_i -
+\mathbf{x}_i^T\hat{\beta}_{[i]}\)</span></li>
+</ul>
+<h3 id="the-proof-step-by-step">The Proof Step-by-Step</h3>
+<p>Here is the logic from your slides, broken down:</p>
+<h4 id="step-1-relating-the-matrices-slide-104132.png">Step 1: Relating
+the Matrices (Slide <code>104132.png</code>)</h4>
+<p>The proof’s “trick” is to relate the “full data” matrix <span
+class="math inline">\((\mathbf{X}^T\mathbf{X})\)</span> to the
+“leave-one-out” matrix <span
+class="math inline">\((\mathbf{X}_{[i]}^T\mathbf{X}_{[i]})\)</span>.</p>
+<ul>
+<li>The full sum-of-squares matrix is just the leave-one-out matrix
+<em>plus</em> the one observation’s contribution: <span
+class="math display">\[\mathbf{X}^T\mathbf{X} =
+\mathbf{X}_{[i]}^T\mathbf{X}_{[i]} +
+\mathbf{x}_i\mathbf{x}_i^T\]</span></li>
+<li>This means: <span
+class="math inline">\(\mathbf{X}_{[i]}^T\mathbf{X}_{[i]} =
+\mathbf{X}^T\mathbf{X} - \mathbf{x}_i\mathbf{x}_i^T\)</span></li>
+</ul>
+<h4 id="step-2-the-key-matrix-trick-slide-104132.png">Step 2: The Key
+Matrix Trick (Slide <code>104132.png</code>)</h4>
+<p>We need the inverse <span
+class="math inline">\((\mathbf{X}_{[i]}^T\mathbf{X}_{[i]})^{-1}\)</span>
+to calculate <span class="math inline">\(\hat{\beta}_{[i]}\)</span>.
+Finding this inverse directly is hard. Instead, we use the
+<strong>Sherman-Morrison-Woodbury formula</strong>, which tells us how
+to find the inverse of a matrix that’s been “updated” (in this case, by
+subtracting <span
+class="math inline">\(\mathbf{x}_i\mathbf{x}_i^T\)</span>).</p>
+<p>The slide applies this formula to get: <span
+class="math display">\[(\mathbf{X}_{[i]}^T\mathbf{X}_{[i]})^{-1} =
+(\mathbf{X}^T\mathbf{X})^{-1} +
+\frac{(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{x}_i\mathbf{x}_i^T(\mathbf{X}^T\mathbf{X})^{-1}}{1
+- h_i}\]</span> * This is the most complex step, but it’s a standard
+matrix identity. It’s crucial because it expresses the “leave-one-out”
+inverse in terms of the “full data” inverse <span
+class="math inline">\((\mathbf{X}^T\mathbf{X})^{-1}\)</span>, which we
+already have.</p>
+<h4 id="step-3-finding-hatbeta_i-slide-104136.png">Step 3: Finding <span
+class="math inline">\(\hat{\beta}_{[i]}\)</span> (Slide
+<code>104136.png</code>)</h4>
+<p>Now we can write a new formula for <span
+class="math inline">\(\hat{\beta}_{[i]}\)</span> by substituting the
+result from Step 2. We also note that <span
+class="math inline">\(\mathbf{X}_{[i]}^T\mathbf{Y}_{[i]} =
+\mathbf{X}^T\mathbf{Y} - \mathbf{x}_i y_i\)</span>.</p>
+<p><span class="math display">\[\hat{\beta}_{[i]} =
+(\mathbf{X}_{[i]}^T\mathbf{X}_{[i]})^{-1}
+(\mathbf{X}_{[i]}^T\mathbf{Y}_{[i]})\]</span> <span
+class="math display">\[\hat{\beta}_{[i]} = \left[
+(\mathbf{X}^T\mathbf{X})^{-1} +
+\frac{(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{x}_i\mathbf{x}_i^T(\mathbf{X}^T\mathbf{X})^{-1}}{1
+- h_i} \right] (\mathbf{X}^T\mathbf{Y} - \mathbf{x}_i y_i)\]</span></p>
+<p>The slide then shows the algebra to simplify this big expression.
+When you expand and simplify everything, you get a much cleaner
+result:</p>
+<p><span class="math display">\[\hat{\beta}_{[i]} = \hat{\beta} -
+(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{x}_i \frac{e_i}{1 - h_i}\]</span> *
+This is a beautiful result! It says the LOOCV coefficient vector is just
+the <em>full</em> coefficient vector minus a small adjustment term
+related to the <span class="math inline">\(i\)</span>-th observation’s
+residual (<span class="math inline">\(e_i\)</span>) and leverage (<span
+class="math inline">\(h_i\)</span>).</p>
+<h4 id="step-4-finding-e_i-slide-104136.png">Step 4: Finding <span
+class="math inline">\(e_{[i]}\)</span> (Slide
+<code>104136.png</code>)</h4>
+<p>This is the final step. We use the definition of <span
+class="math inline">\(e_{[i]}\)</span> and the result from Step 3.</p>
+<ul>
+<li><strong>Start with the definition:</strong> <span
+class="math inline">\(e_{[i]} = y_i -
+\mathbf{x}_i^T\hat{\beta}_{[i]}\)</span></li>
+<li><strong>Substitute <span
+class="math inline">\(\hat{\beta}_{[i]}\)</span>:</strong> <span
+class="math inline">\(e_{[i]} = y_i - \mathbf{x}_i^T \left[ \hat{\beta}
+- (\mathbf{X}^T\mathbf{X})^{-1}\mathbf{x}_i \frac{e_i}{1 - h_i}
+\right]\)</span></li>
+<li><strong>Distribute <span
+class="math inline">\(\mathbf{x}_i^T\)</span>:</strong> <span
+class="math inline">\(e_{[i]} = (y_i - \mathbf{x}_i^T\hat{\beta}) +
+\left( \mathbf{x}_i^T(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{x}_i \right)
+\frac{e_i}{1 - h_i}\)</span></li>
+<li><strong>Recognize the terms!</strong>
+<ul>
+<li>The first term is just the standard residual: <span
+class="math inline">\((y_i - \mathbf{x}_i^T\hat{\beta}) =
+e_i\)</span></li>
+<li>The second term in parentheses is the definition of leverage: <span
+class="math inline">\((\mathbf{x}_i^T(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{x}_i)
+= h_i\)</span></li>
+</ul></li>
+<li><strong>Substitute back:</strong> <span
+class="math inline">\(e_{[i]} = e_i + h_i \left( \frac{e_i}{1 - h_i}
+\right)\)</span></li>
+<li><strong>Get a common denominator:</strong> <span
+class="math inline">\(e_{[i]} = \frac{e_i(1 - h_i) + h_i e_i}{1 -
+h_i}\)</span></li>
+<li><strong>Simplify the numerator:</strong> <span
+class="math inline">\(e_{[i]} = \frac{e_i - e_ih_i + e_ih_i}{1 -
+h_i}\)</span></li>
+</ul>
+<p>This gives the final, simple relationship: <span
+class="math display">\[e_{[i]} = \frac{e_i}{1 - h_i}\]</span></p>
+<h3 id="conclusion">Conclusion</h3>
+<p>By proving this identity, the slides show that to get all <span
+class="math inline">\(N\)</span> of the “leave-one-out” errors, you only
+need to: 1. Fit <strong>one</strong> linear regression model on
+<strong>all</strong> the data. 2. Calculate the standard residuals <span
+class="math inline">\(e_i\)</span> and the leverage values <span
+class="math inline">\(h_i\)</span> for all <span
+class="math inline">\(N\)</span> points. 3. Apply the formula <span
+class="math inline">\(e_i / (1 - h_i)\)</span> for each point.</p>
+<p>This turns a procedure that looked like it would take <span
+class="math inline">\(N\)</span> times the work into a procedure that
+takes only <strong>1</strong> model fit. This is why LOOCV is a
+practical and efficient method for linear regression.</p>
+<h1 id="main-goal-of-cross-validation">5. Main Goal of
+Cross-Validation</h1>
+<p>The central purpose of cross-validation is to <strong>estimate the
+true test error</strong> of a machine learning model. This is crucial
+for:</p>
+<ol type="1">
+<li><strong>Model Assessment:</strong> Evaluating how well a model will
+perform on new, unseen data.</li>
+<li><strong>Model Selection:</strong> Choosing the best level of model
+flexibility (e.g., the degree of a polynomial or the value of <span
+class="math inline">\(K\)</span> in KNN) to avoid
+<strong>overfitting</strong>.</li>
+</ol>
+<p>As the slides show, <strong>training error</strong> (the error on the
+data the model was trained on) consistently decreases as model
+complexity increases. However, the <strong>test error</strong> follows a
+U-shape: it first decreases (as the model learns the true signal) and
+then increases (as the model starts fitting the noise, or
+“overfitting”). CV helps find the minimum point of this U-shaped test
+error curve.</p>
+<h2 id="important-images-1">Important Images 🖼️</h2>
+<p>The most important image is on <strong>Slide 61</strong>.</p>
+<p>These two plots perfectly illustrate the concept:</p>
+<ul>
+<li><strong>Blue Line (Training Error):</strong> Always goes down.</li>
+<li><strong>Brown Line (True Test Error):</strong> Forms a “U” shape.
+This is what we <em>want</em> to find the minimum of, but it’s unknown
+in practice.</li>
+<li><strong>Black Line (10-fold CV Error):</strong> This is our
+<em>estimate</em> of the test error. Notice how closely it tracks the
+brown line. The minimum of the CV curve (marked with an ‘x’) is very
+close to the minimum of the true test error.</li>
+</ul>
+<p>This shows <em>why</em> CV works: it provides a reliable estimate to
+guide our choice of model (e.g., polynomial degree 3-4 for logistic
+regression, or <span class="math inline">\(K \approx 10\)</span> for
+KNN).</p>
+<h2 id="key-formulas-for-classification">Key Formulas for
+Classification</h2>
+<p>For regression, we often use Mean Squared Error (MSE). For
+classification, the slides introduce the <strong>classification error
+rate</strong>.</p>
+<p>For Leave-One-Out Cross-Validation (LOOCV), the error for a single
+observation <span class="math inline">\(i\)</span> is: <span
+class="math display">\[Err_i = I(y_i \neq \hat{y}_i^{(i)})\]</span> *
+<span class="math inline">\(y_i\)</span> is the true label for
+observation <span class="math inline">\(i\)</span>. * <span
+class="math inline">\(\hat{y}_i^{(i)}\)</span> is the model’s prediction
+for observation <span class="math inline">\(i\)</span> when the model
+was trained on all <em>other</em> observations <em>except</em> <span
+class="math inline">\(i\)</span>. * <span
+class="math inline">\(I(\dots)\)</span> is an <strong>indicator
+function</strong>: it’s <span class="math inline">\(1\)</span> if the
+condition is true (prediction is wrong) and <span
+class="math inline">\(0\)</span> if false (prediction is correct).</p>
+<p>The total <strong>CV error</strong> is simply the average of these
+individual errors, which is the overall fraction of incorrect
+classifications: <span class="math display">\[CV_{(n)} = \frac{1}{n}
+\sum_{i=1}^{n} Err_i\]</span> The slides also show examples using
+<strong>Log Loss</strong> (Slide 64), which is another common and
+sensitive metric for classification. The logistic regression model
+itself is defined by: <span class="math display">\[P(Y=1 | X) =
+\frac{1}{1 + \exp(-\beta_0 - \beta_1 X_1 - \beta_2 X_2 -
+\dots)}\]</span></p>
+<h2 id="python-code-explained">Python Code Explained 🐍</h2>
+<p>The slides provide two key Python examples. Both manually implement
+K-fold cross-validation to show how it works.</p>
+<h3 id="knn-regression-slide-52">1. KNN Regression (Slide 52)</h3>
+<ul>
+<li><strong>Goal:</strong> Find the best <code>n_neighbors</code> (K)
+for a <code>KNeighborsRegressor</code>.</li>
+<li><strong>Logic:</strong>
+<ol type="1">
+<li>It creates a <code>KFold</code> object to split the data into 10
+folds (<code>n_splits=10</code>).</li>
+<li>It has an <strong>outer loop</strong> that iterates through
+different values of <span class="math inline">\(K\)</span> (from 1 to
+10).</li>
+<li>It has an <strong>inner loop</strong> that iterates through the 10
+folds (<code>for train_index, test_index in kfold.split(X)</code>).</li>
+<li><strong>Inside the inner loop:</strong>
+<ul>
+<li>It trains a <code>KNeighborsRegressor</code> on the 9 training folds
+(<code>X_train</code>, <code>y_train</code>).</li>
+<li>It makes predictions on the 1 held-out test fold
+(<code>X_test</code>).</li>
+<li>It calculates the mean squared error for that fold and stores
+it.</li>
+</ul></li>
+<li><strong>After the inner loop:</strong> It averages the 10 error
+scores (one from each fold) to get the final CV error for that specific
+<span class="math inline">\(K\)</span>.</li>
+<li>The final plot shows this CV error vs. <span
+class="math inline">\(K\)</span>, allowing us to pick the <span
+class="math inline">\(K\)</span> with the lowest error.</li>
+</ol></li>
+</ul>
+<h3 id="logistic-regression-with-polynomials-slide-64">2. Logistic
+Regression with Polynomials (Slide 64)</h3>
+<ul>
+<li><strong>Goal:</strong> Find the best <code>degree</code> for
+<code>PolynomialFeatures</code> used with
+<code>LogisticRegression</code>.</li>
+<li><strong>Logic:</strong> This is very similar to the KNN example but
+uses a different model and error metric.
+<ol type="1">
+<li>It sets up a 10-fold split (<code>kf = KFold(...)</code>).</li>
+<li>An <strong>outer loop</strong> iterates through the
+<code>degree</code> <span class="math inline">\(d\)</span> (from 1 to
+10).</li>
+<li>An <strong>inner loop</strong> iterates through the 10 folds.</li>
+<li><strong>Inside the inner loop:</strong>
+<ul>
+<li>It creates <code>PolynomialFeatures</code> of degree <span
+class="math inline">\(d\)</span>.</li>
+<li>It transforms the 9 training folds (<code>X_train</code>) into
+polynomial features (<code>X_train_poly</code>).</li>
+<li>It trains a <code>LogisticRegression</code> model on
+<code>X_train_poly</code>.</li>
+<li>It transforms the 1 held-out test fold (<code>X_test</code>) using
+the <em>same</em> polynomial transformer.</li>
+<li>It calculates the <code>log_loss</code> on the test fold.</li>
+</ul></li>
+<li><strong>After the inner loop:</strong> It averages the 10
+<code>log_loss</code> scores to get the final CV error for that
+<code>degree</code>.</li>
+<li>The plot shows CV error vs. degree, and the minimum is clearly at
+<code>degree=3</code>.</li>
+</ol></li>
+</ul>
+<h2 id="the-bias-variance-trade-off-in-cv">The Bias-Variance Trade-off
+in CV</h2>
+<p>This is a key theoretical point from <strong>Slide 54</strong> that
+answers the questions on Slide 65. It compares LOOCV (<span
+class="math inline">\(K=n\)</span>) with K-fold CV (<span
+class="math inline">\(K=5\)</span> or <span
+class="math inline">\(10\)</span>).</p>
+<ul>
+<li><strong>LOOCV (K=n):</strong>
+<ul>
+<li><strong>Bias:</strong> Very <strong>low</strong>. The model is
+trained on <span class="math inline">\(n-1\)</span> samples, which is
+almost the full dataset. The resulting error estimate is nearly unbiased
+for the true test error.</li>
+<li><strong>Variance:</strong> Very <strong>high</strong>. You are
+training <span class="math inline">\(n\)</span> models that are
+<em>almost identical</em> to each other (they only differ by one data
+point). Averaging these highly correlated error estimates doesn’t reduce
+the variance much, making the CV estimate unstable.</li>
+</ul></li>
+<li><strong>K-Fold CV (K=5 or 10):</strong>
+<ul>
+<li><strong>Bias:</strong> Slightly <strong>higher</strong> than LOOCV.
+The models are trained on, for example, 90% of the data. Since they are
+trained on less data, they <em>might</em> perform slightly worse. This
+means K-fold CV <strong>tends to slightly overestimate the true test
+error</strong> (Slide 66).</li>
+<li><strong>Variance:</strong> Much <strong>lower</strong> than LOOCV.
+The 10 models are trained on more different “chunks” of data (they
+overlap less), so their error estimates are less correlated. Averaging
+less-correlated estimates significantly reduces the overall
+variance.</li>
+</ul></li>
+</ul>
+<p><strong>Conclusion:</strong> We generally prefer <strong>10-fold
+CV</strong> over LOOCV. It gives a much more stable (low-variance)
+estimate of the test error, even if it’s slightly more biased
+(overestimating the error, which is a safe/conservative estimate).</p>
+<h2 id="the-core-problem-scenarios-slides-47-51">The Core Problem &amp;
+Scenarios (Slides 47-51)</h2>
+<p>These slides use three scenarios to show <em>why</em> we need
+cross-validation (CV). The goal is to pick the right level of
+<strong>model flexibility</strong> (e.g., the degree of a polynomial or
+the complexity of a spline) to minimize the <strong>Test MSE</strong>
+(Mean Squared Error), which we can’t see in real life.</p>
+<ul>
+<li><p><strong>The Curves (Slide 47):</strong> This slide is
+central.</p>
+<ul>
+<li><strong>True Test MSE (Blue):</strong> This is the <em>real</em>
+error on new data. It has a <strong>U-shape</strong>. Error is high for
+simple models (high bias), drops as the model fits the data, and rises
+again for overly complex models (high variance, or overfitting).</li>
+<li><strong>LOOCV (Black Dashed) &amp; 10-Fold CV (Orange):</strong>
+These are our <em>estimates</em> of the true test MSE. Notice how
+closely they track the blue curve. The ‘x’ marks the minimum of the CV
+curve, which is our <em>best guess</em> for the model with the minimum
+test MSE.</li>
+</ul></li>
+<li><p><strong>Scenario 1 (Slide 48):</strong> The true relationship is
+non-linear. The right-hand plot shows that the test MSE (red curve) is
+high for the simple linear model (blue square), but lower for the more
+flexible smoothing splines (teal squares). CV helps us find the “sweet
+spot.”</p></li>
+<li><p><strong>Scenario 2 (Slide 49):</strong> The true relationship is
+<strong>linear</strong>. Here, the test MSE (red curve) is
+<em>lowest</em> for the simplest model (the linear one, blue square). CV
+correctly identifies this, and its error estimate (blue square) is
+lowest for that model.</p></li>
+<li><p><strong>Scenario 3 (Slide 50):</strong> The true relationship is
+<strong>highly non-linear</strong>. The linear model (orange) is a very
+poor fit. The test MSE (red curve) is minimized by the most flexible
+model (teal square). CV again finds this.</p></li>
+<li><p><strong>Key Takeaway (Slide 51):</strong> We use CV to find the
+<strong>tuning parameter</strong> (like polynomial degree) that
+minimizes the test error. We care less about the <em>actual value</em>
+of the CV error and more about <em>where its minimum is</em>.</p></li>
+</ul>
+<h2 id="cv-for-classification-slides-55-61">CV for Classification
+(Slides 55-61)</h2>
+<p>This section shifts from regression (predicting a number, using MSE)
+to classification (predicting a category, like “blue” or “orange”).</p>
+<ul>
+<li><strong>New Error Metric (Slide 55):</strong> We can’t use MSE. A
+natural choice is the <strong>classification error rate</strong>.
+<ul>
+<li><span class="math inline">\(Err_i = I(y_i \neq
+\hat{y}_i^{(i)})\)</span></li>
+<li>This is an <strong>indicator function</strong>: it is
+<strong>1</strong> if the prediction for the <span
+class="math inline">\(i\)</span>-th data point (when trained
+<em>without</em> it) is wrong, and <strong>0</strong> if it’s
+correct.</li>
+<li>The final CV error is just the average of these 0s and 1s, giving
+the total fraction of misclassified points: <span
+class="math inline">\(CV_{(n)} = \frac{1}{n} \sum_{i=1}^{n}
+Err_i\)</span></li>
+</ul></li>
+<li><strong>The Example (Slides 56-61):</strong>
+<ul>
+<li><strong>Slides 56-58:</strong> We are shown a “true” (but unknown)
+non-linear boundary (purple dashed line) separating two classes. We then
+try to <em>estimate</em> this boundary using logistic regression with
+different polynomial degrees (degree 1, 2, 3, 4).</li>
+<li><strong>Slides 59-60:</strong> This is a crucial point. In this
+<em>simulated</em> example, we <em>do</em> know the true test error
+rates. The true errors are [0.201, 0.197, <strong>0.160</strong>,
+0.162]. The lowest error is for the 3rd-degree polynomial. But in a
+real-world problem, <strong>we can never know these true
+errors</strong>.</li>
+<li><strong>Slide 61 (The Solution):</strong> This is the most important
+image. It shows how CV <em>solves</em> the problem from slide 60.
+<ul>
+<li><strong>Brown Curve (Test Error):</strong> This is the <em>true</em>
+test error (from slide 59). We can’t see this in practice. Its minimum
+is at degree 3.</li>
+<li><strong>Black Curve (10-fold CV Error):</strong> This is what we
+<em>can</em> calculate. It’s our estimate of the test error.
+<strong>Crucially, its minimum is also at degree 3.</strong></li>
+<li>This proves that CV successfully found the best model (degree 3)
+without ever seeing the <em>true</em> test error. The same logic is
+shown for the KNN classifier on the right.</li>
+</ul></li>
+</ul></li>
+</ul>
+<h2 id="python-code-explained-slides-52-63-64">Python Code Explained
+(Slides 52, 63, 64)</h2>
+<p>The slides show how to <em>manually</em> implement K-fold CV. This is
+great for understanding, even though libraries like
+<code>GridSearchCV</code> can do this automatically.</p>
+<ul>
+<li><strong>KNN Regression (Slide 52):</strong>
+<ol type="1">
+<li><code>kfold = KFold(n_splits=10, ...)</code>: Creates an object that
+knows how to split the data into 10 folds.</li>
+<li><code>for n_k in neighbors:</code>: This is the <strong>outer
+loop</strong> to test different <span class="math inline">\(K\)</span>
+values (e.g., <span class="math inline">\(K\)</span>=1, 2, 3…).</li>
+<li><code>for train_index, test_index in kfold.split(X):</code>: This is
+the <strong>inner loop</strong>. For a <em>single</em> <span
+class="math inline">\(K\)</span>, it loops 10 times.</li>
+<li>Inside the inner loop:
+<ul>
+<li>It splits the data into a 9-fold training set (<code>X_train</code>)
+and a 1-fold test set (<code>X_test</code>).</li>
+<li>It trains a <code>KNeighborsRegressor</code> on
+<code>X_train</code>.</li>
+<li>It makes predictions on <code>X_test</code> and calculates the error
+(<code>mean_squared_error</code>).</li>
+</ul></li>
+<li><code>cv_errors.append(np.mean(mse_errors_k))</code>: After the
+inner loop finishes 10 runs, it averages the 10 error scores for that
+<span class="math inline">\(K\)</span> and stores it.</li>
+<li>The final plot shows <code>cv_errors</code>
+vs. <code>neighbors</code>, letting you pick the <span
+class="math inline">\(K\)</span> with the lowest average error.</li>
+</ol></li>
+<li><strong>Logistic Regression Classification (Slides 63-64):</strong>
+<ul>
+<li>This code is almost identical, but with three key differences:
+<ol type="1">
+<li>The model is <code>LogisticRegression</code>.</li>
+<li>It uses <code>PolynomialFeatures</code> to create new features
+(<span class="math inline">\(X^2, X^3,\)</span> etc.) <em>inside</em>
+the loop.</li>
+<li>The error metric is <code>log_loss</code> (a common, more sensitive
+metric than the simple 0/1 error rate).</li>
+</ol></li>
+<li>The plot on slide 64 shows the 10-fold CV error (using Log Loss)
+vs. the Degree of the Polynomial. The minimum is clearly at
+<strong>Degree = 3</strong>, matching the finding from slide 61.</li>
+</ul></li>
+</ul>
+<h2 id="answering-the-key-questions-slides-54-65">Answering the Key
+Questions (Slides 54 &amp; 65)</h2>
+<p>Slide 65 asks two critical questions, which are answered directly by
+the concepts on <strong>Slide 54 (Bias and variance
+trade-off)</strong>.</p>
+<h3 id="q1-how-does-k-affect-the-bias-and-variance-of-the-cv-error">Q1:
+How does K affect the bias and variance of the CV error?</h3>
+<p>This refers to <span class="math inline">\(K\)</span> in K-fold CV
+(not to be confused with <span class="math inline">\(K\)</span> in
+KNN).</p>
+<ul>
+<li><strong>Bias:</strong>
+<ul>
+<li><strong>LOOCV (K = n):</strong> This has <strong>very low
+bias</strong>. The model is trained on <span
+class="math inline">\(n-1\)</span> samples, which is <em>almost</em> the
+full dataset. So, the error estimate <span
+class="math inline">\(CV_{(n)}\)</span> is an almost-unbiased estimate
+of the true test error.</li>
+<li><strong>K-Fold (K &lt; n, e.g., K=10):</strong> This has
+<strong>slightly higher bias</strong>. The models are trained on, for
+example, 90% of the data. Because they are trained on less data, they
+<em>might</em> perform slightly worse than a model trained on 100% of
+the data. This “pessimism” is the source of the bias.</li>
+</ul></li>
+<li><strong>Variance:</strong>
+<ul>
+<li><strong>LOOCV (K = n):</strong> This has <strong>very high
+variance</strong>. You are training <span
+class="math inline">\(n\)</span> models that are <em>almost
+identical</em> (they only differ by one data point). Averaging <span
+class="math inline">\(n\)</span> highly-correlated error estimates
+doesn’t reduce the variance much. This makes the final <span
+class="math inline">\(CV_{(n)}\)</span> estimate unstable.</li>
+<li><strong>K-Fold (K &lt; n, e.g., K=10):</strong> This has
+<strong>much lower variance</strong>. The 10 models are trained on more
+different “chunks” of data (they overlap less). Their error estimates
+are less correlated, and averaging 10 less-correlated numbers gives a
+much more stable (low-variance) final estimate.</li>
+</ul></li>
+</ul>
+<p><strong>Conclusion (The Trade-off):</strong> We prefer <strong>K-fold
+CV (K=5 or 10)</strong> over LOOCV. It gives a much more stable
+(low-variance) estimate, and we are willing to accept a tiny increase in
+bias to get it.</p>
+<h3
+id="q2-does-cross-validation-over-estimate-or-under-estimate-the-true-test-error">Q2:
+Does Cross Validation over-estimate or under-estimate the true test
+error?</h3>
+<p>Based on the bias discussion above:</p>
+<p>Cross-validation (especially K-fold) generally <strong>over-estimates
+the true test error</strong>.</p>
+<p><strong>Reasoning:</strong> 1. The “true test error” is the error of
+a model trained on the <em>entire dataset</em> (<span
+class="math inline">\(n\)</span> samples). 2. K-fold CV trains its
+models on <em>subsets</em> of the data (e.g., <span
+class="math inline">\(n \times (K-1)/K\)</span> samples). 3. Since these
+models are trained on <em>less</em> data, they are (on average) slightly
+worse than the final model trained on all the data. 4. Because the CV
+models are slightly worse, their error rates will be slightly
+<em>higher</em>. 5. Therefore, the final CV error score is a slightly
+“pessimistic” or high estimate. This is considered a good thing, as it’s
+a <em>conservative</em> estimate of how our model will perform.</p>
+<h1 id="summary-of-bootstrap">6. Summary of Bootstrap</h1>
+<p>Bootstrap is a <strong>resampling technique</strong> used to estimate
+the <strong>uncertainty</strong> (like standard error or confidence
+intervals) of a statistic. Its key idea is to <strong>treat your
+original data sample as a proxy for the true population</strong>. It
+then simulates the process of drawing new samples by instead
+<strong>sampling <em>with replacement</em></strong> from your original
+sample.</p>
+<h2 id="summary-of-bootstrap-1">Summary of Bootstrap</h2>
+<h3 id="the-problem">The Problem</h3>
+<p>You have a single data sample (e.g., <span
+class="math inline">\(n=100\)</span> people) and you calculate a
+statistic, like the sample mean (<span
+class="math inline">\(\bar{x}\)</span>) or a regression coefficient
+(<span class="math inline">\(\hat{\beta}\)</span>). You want to know how
+<em>accurate</em> this statistic is. How much would it vary if you could
+repeat your experiment many times? This variation is measured by the
+<strong>standard error (SE)</strong>.</p>
+<h3 id="the-bootstrap-solution">The Bootstrap Solution</h3>
+<p>Since you can’t re-run the whole experiment, you <em>simulate</em> it
+using the one sample you have.</p>
+<p><strong>The Process:</strong> 1. <strong>Original Sample (<span
+class="math inline">\(Z\)</span>):</strong> You have your one dataset
+with <span class="math inline">\(n\)</span> observations. 2.
+<strong>Bootstrap Sample (<span
+class="math inline">\(Z^{*1}\)</span>):</strong> Create a <em>new</em>
+dataset of size <span class="math inline">\(n\)</span> by randomly
+pulling observations from your original sample <em>with
+replacement</em>. (This means some original observations will be picked
+multiple times, and some not at all). 3. <strong>Calculate Statistic
+(<span class="math inline">\(\hat{\theta}^{*1}\)</span>):</strong>
+Calculate your statistic of interest (e.g., the mean, <span
+class="math inline">\(\hat{\alpha}\)</span>, regression coefficients) on
+this new bootstrap sample. 4. <strong>Repeat:</strong> Repeat steps 2
+and 3 a large number of times (<span class="math inline">\(B\)</span>,
+e.g., <span class="math inline">\(B=1000\)</span>). This gives you <span
+class="math inline">\(B\)</span> bootstrap statistics: <span
+class="math inline">\(\hat{\theta}^{*1}, \hat{\theta}^{*2}, ...,
+\hat{\theta}^{*B}\)</span>. 5. <strong>Analyze the Bootstrap
+Distribution:</strong> This collection of <span
+class="math inline">\(B\)</span> statistics is your “bootstrap
+distribution.” * <strong>Standard Error:</strong> The <strong>standard
+deviation</strong> of this bootstrap distribution is your estimate of
+the <strong>standard error</strong> of your original statistic. *
+<strong>Confidence Interval:</strong> A 95% confidence interval can be
+found by taking the <strong>2.5th and 97.5th percentiles</strong> of
+this bootstrap distribution.</p>
+<p><strong>Why use it?</strong> It’s powerful because it doesn’t rely on
+strong theoretical assumptions (like data being normally distributed).
+It can be applied to almost <em>any</em> statistic, even very complex
+ones (like the prediction from a KNN model), for which a simple
+mathematical formula for standard error doesn’t exist.</p>
+<h2 id="mathematical-understanding">Mathematical Understanding</h2>
+<p>The core idea is to use the <strong>empirical distribution</strong>
+(your sample) as an estimate for the true <strong>population
+distribution</strong>.</p>
+<h3 id="example-estimating-alpha">Example: Estimating <span
+class="math inline">\(\alpha\)</span></h3>
+<p>Your slides provide an example of finding the <span
+class="math inline">\(\alpha\)</span> that minimizes the variance of a
+portfolio, <span class="math inline">\(var(\alpha X +
+(1-\alpha)Y)\)</span>.</p>
+<ol type="1">
+<li><p><strong>True Population Parameter (<span
+class="math inline">\(\alpha\)</span>):</strong> The <em>true</em> <span
+class="math inline">\(\alpha\)</span> is a function of the
+<em>population</em> variances and covariance: <span
+class="math display">\[\alpha = \frac{\sigma_Y^2 -
+\sigma_{XY}}{\sigma_X^2 + \sigma_Y^2 - 2\sigma_{XY}}\]</span> We can
+never know this value exactly unless we know the entire
+population.</p></li>
+<li><p><strong>Sample Statistic (<span
+class="math inline">\(\hat{\alpha}\)</span>):</strong> We
+<em>estimate</em> <span class="math inline">\(\alpha\)</span> using our
+sample, creating the statistic <span
+class="math inline">\(\hat{\alpha}\)</span> by plugging in our
+<em>sample</em> variances and covariance: <span
+class="math display">\[\hat{\alpha} = \frac{\hat{\sigma}_Y^2 -
+\hat{\sigma}_{XY}}{\hat{\sigma}_X^2 + \hat{\sigma}_Y^2 -
+2\hat{\sigma}_{XY}}\]</span> This <span
+class="math inline">\(\hat{\alpha}\)</span> is just <em>one number</em>
+from our single sample. How confident are we in it? We need its standard
+error, <span class="math inline">\(SE(\hat{\alpha})\)</span>.</p></li>
+<li><p><strong>Bootstrap Statistic (<span
+class="math inline">\(\hat{\alpha}^*\)</span>):</strong> We apply the
+bootstrap process:</p>
+<ul>
+<li>Create a bootstrap sample (by resampling with replacement).</li>
+<li>Calculate <span class="math inline">\(\hat{\alpha}^*\)</span> using
+the sample (co)variances of this <em>new bootstrap sample</em>.</li>
+<li>Repeat <span class="math inline">\(B\)</span> times to get <span
+class="math inline">\(B\)</span> values: <span
+class="math inline">\(\hat{\alpha}^{*1}, \hat{\alpha}^{*2}, ...,
+\hat{\alpha}^{*B}\)</span>.</li>
+</ul></li>
+<li><p><strong>Estimating the Standard Error:</strong> The standard
+error of our original estimate <span
+class="math inline">\(\hat{\alpha}\)</span> is <em>estimated</em> by the
+standard deviation of all our bootstrap estimates: <span
+class="math display">\[SE_{boot}(\hat{\alpha}) = \sqrt{\frac{1}{B-1}
+\sum_{j=1}^{B} (\hat{\alpha}^{*j} - \bar{\alpha}^*)^2}\]</span> where
+<span class="math inline">\(\bar{\alpha}^*\)</span> is the average of
+all <span class="math inline">\(B\)</span> bootstrap estimates.</p></li>
+</ol>
+<p>The slides (p. 73, 77-78) show this visually. The “sampling from
+population” histogram (left) is the <em>true</em> sampling distribution,
+which we can only create in a simulation. The “Bootstrap” histogram
+(right) is the bootstrap distribution created from <em>one</em> sample.
+They look very similar, which shows the method works.</p>
+<h2 id="code-analysis-1">Code Analysis</h2>
+<h3 id="r-alpha-example-slides-75-77">R: <span
+class="math inline">\(\alpha\)</span> Example (Slides 75 &amp; 77)</h3>
+<ul>
+<li><strong>Slide 75 (<code>The R code</code>): This is a SIMULATION,
+not Bootstrap.</strong>
+<ul>
+<li><code>for(i in 1:m)&#123;...&#125;</code>: This loop runs <code>m=1000</code>
+times.</li>
+<li><code>returns &lt;- rmvnorm(...)</code>: <strong>Inside the
+loop,</strong> it draws a <em>brand new sample</em> from the <em>true
+population</em> every time.</li>
+<li><code>alpha[i] &lt;- ...</code>: It calculates <span
+class="math inline">\(\hat{\alpha}\)</span> for each new sample.</li>
+<li><strong>Purpose:</strong> This code shows the <em>true sampling
+distribution</em> of <span class="math inline">\(\hat{\alpha}\)</span>
+(the “Histogram of alpha”). You can only do this if you know the true
+population, as in a simulation.</li>
+</ul></li>
+<li><strong>Slide 77 (<code>The R code</code>): This IS
+Bootstrap.</strong>
+<ul>
+<li><code>returns &lt;- rmvnorm(...)</code>: <strong>Outside the
+loop,</strong> this is done <em>only once</em> to get <em>one</em>
+original sample.</li>
+<li><code>for(i in 1:B)&#123;...&#125;</code>: This is the bootstrap loop.</li>
+<li><code>sample(1:nrow(returns), n, replace = T)</code>: <strong>This
+is the key line.</strong> It randomly selects row numbers <em>with
+replacement</em> from the <em>single</em> <code>returns</code>
+dataset.</li>
+<li><code>returns_boot &lt;- returns[sample(...), ]</code>: This creates
+the bootstrap sample.</li>
+<li><code>alpha_bootstrap[i] &lt;- ...</code>: It calculates <span
+class="math inline">\(\hat{\alpha}^*\)</span> on the
+<code>returns_boot</code> sample.</li>
+<li><strong>Purpose:</strong> This code generates the <em>bootstrap
+distribution</em> (the “Bootstrap” histogram on slide 78) to
+<em>estimate</em> the true sampling distribution.</li>
+</ul></li>
+</ul>
+<h3 id="r-linear-regression-example-slides-79-81">R: Linear Regression
+Example (Slides 79 &amp; 81)</h3>
+<ul>
+<li><strong>Slide 79:</strong>
+<ul>
+<li><code>boot.fn &lt;- function(data, index)&#123; ... &#125;</code>: Defines a
+function that the <code>boot</code> package needs. It takes data and an
+<code>index</code> vector.</li>
+<li><code>lm(mpg~horsepower, data=data, subset=index)</code>: This is
+the core. It fits a linear model <em>only</em> on the data points
+specified by the <code>index</code>. The <code>boot</code> function will
+automatically supply this <code>index</code> as a
+resampled-with-replacement vector.</li>
+<li><code>boot(Auto, boot.fn, R=1000)</code>: This runs the bootstrap.
+It calls <code>boot.fn</code> 1000 times, each time with a new resampled
+<code>index</code>, and collects the coefficients.</li>
+</ul></li>
+<li><strong>Slide 81:</strong>
+<ul>
+<li><code>summary(lm(...))</code>: Shows the standard output. The “Std.
+Error” column (e.g., 0.860, 0.006) is calculated using <em>mathematical
+theory</em>.</li>
+<li><code>boot.res</code>: Shows the bootstrap output. The “std. error”
+column (e.g., 0.841, 0.007) is the <strong>standard deviation of the
+1000 bootstrap estimates</strong>.</li>
+<li><strong>Main Point:</strong> The standard errors from the bootstrap
+are very close to the theoretical ones. This confirms the uncertainty.
+If the model assumptions were violated, the bootstrap SE would be more
+trustworthy.</li>
+<li>The histograms show the bootstrap distributions for the intercept
+(<code>t1*</code>) and the slope (<code>t2*</code>). The arrows show the
+95% percentile confidence interval.</li>
+</ul></li>
+</ul>
+<h3 id="python-knn-regression-example-slide-80">Python: KNN Regression
+Example (Slide 80)</h3>
+<p>This shows how to get a confidence interval for a <em>single
+prediction</em>.</p>
+<ul>
+<li><code>for i in range(n_bootstraps):</code>: The bootstrap loop.</li>
+<li><code>indices = np.random.choice(train_samples.shape[0], train_samples.shape[0], replace=True)</code>:
+<strong>This is the key line</strong> in Python (like
+<code>sample</code> in R). It gets a new set of indices with
+replacement.</li>
+<li><code>X_boot, y_boot = ...</code>: Creates the bootstrap
+sample.</li>
+<li><code>model.fit(X_boot, y_boot)</code>: A <em>new</em> KNN model is
+trained on this bootstrap sample.</li>
+<li><code>bootstrap_preds.append(model.predict(predict_point))</code>:
+The model (trained on <span class="math inline">\(Z^{*i}\)</span>) makes
+a prediction for the <em>same</em> fixed point. This is repeated 1000
+times.</li>
+<li><strong>Result:</strong> You get a <em>distribution of
+predictions</em> for that one point. The 2.5th and 97.5th percentiles of
+this distribution give you a 95% confidence interval <em>for that
+specific prediction</em>.</li>
+</ul>
+<h3 id="python-knn-on-auto-data-slide-82">Python: KNN on Auto data
+(Slide 82)</h3>
+<ul>
+<li><strong>BE CAREFUL:</strong> This slide <strong>does NOT show
+Bootstrap</strong>. It shows <strong>K-Fold Cross-Validation
+(CV)</strong>.</li>
+<li><strong>Purpose:</strong> The goal here is <em>not</em> to find
+uncertainty. The goal is to find the <strong>best
+hyperparameter</strong> (the best value for <span
+class="math inline">\(k\)</span>, the number of neighbors).</li>
+<li><strong>Method:</strong>
+<ul>
+<li><code>kf = KFold(n_splits=10)</code>: Splits the data into 10 chunks
+(“folds”).</li>
+<li><code>for train_index, test_index in kf.split(X):</code>: It loops
+10 times. Each time, it trains on 9 chunks and tests on 1 chunk.</li>
+</ul></li>
+<li><strong>Key Difference for Exam:</strong>
+<ul>
+<li><strong>Bootstrap:</strong> Samples <em>with replacement</em> to
+estimate <strong>uncertainty/standard error</strong>.</li>
+<li><strong>Cross-Validation:</strong> Splits data <em>without
+replacement</em> into <span class="math inline">\(K\)</span> folds to
+estimate model <strong>performance/prediction error</strong> and tune
+hyperparameters.</li>
+</ul></li>
+</ul>
+<h1
+id="the-mathematical-theory-of-bootstrap-and-the-extension-to-cross-validation-cv.">7.
+The mathematical theory of Bootstrap and the extension to
+Cross-Validation (CV).</h1>
+<h2 id="code-analysis-bootstrap-for-a-knn-prediction-slide-85">1. Code
+Analysis: Bootstrap for a KNN Prediction (Slide 85)</h2>
+<p>This Python code shows a different use of bootstrap: <strong>finding
+the confidence interval for a single prediction</strong>, not for a
+model coefficient.</p>
+<ul>
+<li><strong>Goal:</strong> To estimate the uncertainty of a KNN model’s
+prediction for a <em>specific</em> new data point
+(<code>predict_point</code>).</li>
+<li><strong>Process:</strong>
+<ol type="1">
+<li><strong>Train Full Model:</strong> A KNN model (<code>knn</code>) is
+first trained on the <em>entire</em> dataset. It makes one prediction
+(<code>knpred</code>) for <code>predict_point</code>. This is our <span
+class="math inline">\(\hat{f}(x_0)\)</span>.</li>
+<li><strong>Bootstrap Loop
+(<code>for i in range(n_bootstraps)</code>):</strong>
+<ul>
+<li><code>indices = np.random.choice(...)</code>: <strong>This is the
+core bootstrap step.</strong> It creates a new list of indices by
+sampling <em>with replacement</em> from the original data.</li>
+<li><code>X_boot, y_boot = ...</code>: This creates the new bootstrap
+dataset (<span class="math inline">\(Z^{*i}\)</span>).</li>
+<li><code>km.fit(X_boot, y_boot)</code>: A <em>new</em> KNN model
+(<code>km</code>) is trained <em>only</em> on this bootstrap
+sample.</li>
+<li><code>bootstrap_preds.append(km.predict(predict_point))</code>: This
+newly trained model makes a prediction for the <em>same</em>
+<code>predict_point</code>. This value is <span
+class="math inline">\(\hat{f}^{*i}(x_0)\)</span>.</li>
+</ul></li>
+<li><strong>Analyze Distribution:</strong> After 1000 loops,
+<code>bootstrap_preds</code> contains 1000 different predictions for the
+same point.</li>
+<li><strong>Confidence Interval:</strong>
+<ul>
+<li><code>np.percentile(bootstrap_preds, [2.5, 97.5])</code>: This finds
+the 2.5th and 97.5th percentiles of the 1000 bootstrap predictions.</li>
+<li>The resulting <code>[lower_bound, upper_bound]</code> (e.g.,
+<code>[13.70, 15.70]</code>) forms the 95% confidence interval for the
+prediction.</li>
+</ul></li>
+</ol></li>
+<li><strong>Histogram Plot:</strong> The plot on the right visually
+confirms this. It shows the distribution of the 1000 bootstrap
+predictions, with the 95% confidence interval marked by the red dashed
+lines.</li>
+</ul>
+<h2
+id="mathematical-understanding-why-does-bootstrap-work-slides-87-88">2.
+Mathematical Understanding: Why Does Bootstrap Work? (Slides 87-88)</h2>
+<p>This is the theoretical justification for the entire method. It’s
+based on an analogy.</p>
+<h3 id="the-true-world-slide-87-top">The “True” World (Slide 87,
+Top)</h3>
+<ul>
+<li><strong>Population:</strong> There is a true, unknown population
+distribution <span class="math inline">\(F\)</span>.</li>
+<li><strong>Parameter:</strong> We want to know a true parameter, <span
+class="math inline">\(\theta\)</span>, which is a function of <span
+class="math inline">\(F\)</span> (e.g., the true population mean).</li>
+<li><strong>Sample:</strong> We get <em>one</em> sample <span
+class="math inline">\(X_1, ..., X_n\)</span> from <span
+class="math inline">\(F\)</span>.</li>
+<li><strong>Statistic:</strong> We calculate our best estimate <span
+class="math inline">\(\hat{\theta}\)</span> from our sample. (e.g., the
+sample mean <span class="math inline">\(\bar{x}\)</span>). <span
+class="math inline">\(\hat{\theta}\)</span> is our proxy for <span
+class="math inline">\(\theta\)</span>.</li>
+<li><strong>The Problem:</strong> We want to know the accuracy of <span
+class="math inline">\(\hat{\theta}\)</span>. How much would <span
+class="math inline">\(\hat{\theta}\)</span> vary if we could draw many
+samples? We want the <em>sampling distribution</em> of <span
+class="math inline">\(\hat{\theta}\)</span> around <span
+class="math inline">\(\theta\)</span>, specifically the distribution of
+the error: <span class="math inline">\((\hat{\theta} -
+\theta)\)</span>.</li>
+<li><strong>CLT:</strong> The Central Limit Theorem states that <span
+class="math inline">\(\sqrt{n}(\hat{\theta} - \theta)
+\xrightarrow{\text{dist}} N(0, Var_F(\theta))\)</span>.</li>
+<li><strong>The Catch:</strong> This is <strong>UNKNOWN</strong> because
+we don’t know <span class="math inline">\(F\)</span>.</li>
+</ul>
+<h3 id="the-bootstrap-world-slide-87-bottom">The “Bootstrap” World
+(Slide 87, Bottom)</h3>
+<ul>
+<li><strong>Population:</strong> We <em>pretend</em> our original sample
+<em>is</em> the population. We call its distribution the “empirical
+distribution,” <span class="math inline">\(\hat{F}_n\)</span>.</li>
+<li><strong>Parameter:</strong> In this new world, the “true” parameter
+is our original statistic, <span
+class="math inline">\(\hat{\theta}\)</span> (which is a function of
+<span class="math inline">\(\hat{F}_n\)</span>).</li>
+<li><strong>Sample:</strong> We draw <em>many</em> bootstrap samples
+<span class="math inline">\(X_1^*, ..., X_n^*\)</span> <em>from <span
+class="math inline">\(\hat{F}_n\)</span></em> (i.e., sampling <em>with
+replacement</em> from our original sample).</li>
+<li><strong>Statistic:</strong> From each bootstrap sample, we calculate
+a <em>bootstrap statistic</em>, <span
+class="math inline">\(\hat{\theta}^*\)</span>.</li>
+<li><strong>The Solution:</strong> We can now <em>empirically</em> find
+the distribution of <span class="math inline">\(\hat{\theta}^*\)</span>
+around <span class="math inline">\(\hat{\theta}\)</span>. We look at the
+distribution of the bootstrap error: <span
+class="math inline">\((\hat{\theta}^* - \hat{\theta})\)</span>.</li>
+<li><strong>CLT:</strong> The CLT also states that <span
+class="math inline">\(\sqrt{n}(\hat{\theta}^* - \hat{\theta})
+\xrightarrow{\text{dist}} N(0, Var_{\hat{F}_n}(\theta))\)</span>.</li>
+<li><strong>The Power:</strong> This distribution is
+<strong>ESTIMABLE!</strong> We just run the bootstrap <span
+class="math inline">\(B\)</span> times and we get <span
+class="math inline">\(B\)</span> values of <span
+class="math inline">\(\hat{\theta}^*\)</span>. We can then calculate
+their variance, standard deviation, and percentiles directly.</li>
+</ul>
+<h3 id="the-core-approximation-slide-88">The Core Approximation (Slide
+88)</h3>
+<p>The entire method relies on the assumption that <strong>the
+(knowable) bootstrap distribution is a good approximation of the
+(unknown) true sampling distribution.</strong></p>
+<p>The distribution of the <em>bootstrap error</em> approximates the
+distribution of the <em>true error</em>.</p>
+<p><span class="math display">\[\text{distribution of }
+\sqrt{n}(\hat{\theta}^* - \hat{\theta}) \approx \text{distribution of }
+\sqrt{n}(\hat{\theta} - \theta)\]</span></p>
+<p>This is why: * The <strong>standard deviation</strong> of the <span
+class="math inline">\(\hat{\theta}^*\)</span> values is our estimate for
+the <strong>standard error</strong> of <span
+class="math inline">\(\hat{\theta}\)</span>. * The
+<strong>percentiles</strong> of the <span
+class="math inline">\(\hat{\theta}^*\)</span> distribution (e.g., 2.5th
+and 97.5th) can be used to build a <strong>confidence interval</strong>
+for the true parameter <span class="math inline">\(\theta\)</span>.</p>
+<h2 id="extension-cross-validation-cv-analysis">3. Extension:
+Cross-Validation (CV) Analysis</h2>
+<h3 id="cv-for-hyperparameter-tuning-slide-84">CV for Hyperparameter
+Tuning (Slide 84)</h3>
+<p>This plot is the <em>result</em> of the 10-fold CV code shown in the
+previous set of slides (slide 82). * <strong>Purpose:</strong> To find
+the optimal hyperparameter <span class="math inline">\(k\)</span>
+(number of neighbors) for the KNN model. * <strong>X-axis:</strong>
+Number of Neighbors (<span class="math inline">\(k\)</span>). *
+<strong>Y-axis:</strong> CV Error (Mean Squared Error). *
+<strong>Analysis:</strong> * <strong>Low <span
+class="math inline">\(k\)</span> (e.g., <span class="math inline">\(k=1,
+2\)</span>):</strong> High error. The model is too complex and
+<strong>overfitting</strong> to the training data. * <strong>High <span
+class="math inline">\(k\)</span> (e.g., <span
+class="math inline">\(k&gt;40\)</span>):</strong> Error slowly
+increases. The model is too simple and <strong>underfitting</strong>
+(e.g., averaging too many neighbors). * <strong>Optimal <span
+class="math inline">\(k\)</span>:</strong> The “sweet spot” is at the
+bottom of the “U” shape, around <strong><span class="math inline">\(k
+\approx 20-30\)</span></strong>, which gives the lowest CV error.</p>
+<h3 id="why-cv-over-estimates-test-error-slide-89">Why CV Over-Estimates
+Test Error (Slide 89)</h3>
+<p>This is a subtle but important theoretical point. * <strong>Our
+Goal:</strong> We want to know the test error of our <em>final
+model</em> (<span class="math inline">\(\hat{f}^{\text{full}}\)</span>),
+which we will train on the <strong>full dataset</strong> (all <span
+class="math inline">\(n\)</span> observations). * <strong>What CV
+Measures:</strong> <span class="math inline">\(k\)</span>-fold CV does
+<em>not</em> test the final model. It tests <span
+class="math inline">\(k\)</span> different models (<span
+class="math inline">\(\hat{f}^{(k)}\)</span>), each trained on a
+<em>smaller</em> dataset (of size <span
+class="math inline">\(\frac{k-1}{k} \times n\)</span>). * <strong>The
+Logic:</strong> 1. Models trained on <em>less data</em> generally
+perform <em>worse</em> than models trained on <em>more data</em>. 2. The
+CV error is the average error of models trained on <span
+class="math inline">\(\frac{k-1}{k} n\)</span> observations. 3. The
+“true test error” is the error of the model trained on <span
+class="math inline">\(n\)</span> observations. *
+<strong>Conclusion:</strong> Since the CV models are trained on smaller
+datasets, they will, on average, have a slightly higher error than the
+final model. Therefore, <strong>the CV error score is a slightly
+<em>pessimistic</em> estimate (it over-estimates) the true test error of
+the final model.</strong></p>
+<h3 id="correction-of-cv-error-slides-90-91">Correction of CV Error
+(Slides 90-91)</h3>
+<ul>
+<li><strong>Theory (Slide 91):</strong> Advanced theory suggests the
+expected test error <span class="math inline">\(R(n)\)</span> behaves
+like <span class="math inline">\(R(n) = R^* + c/n\)</span>, where <span
+class="math inline">\(R^*\)</span> is the irreducible error and <span
+class="math inline">\(n\)</span> is the sample size. This formula
+mathematically confirms that error <em>decreases</em> as sample size
+<span class="math inline">\(n\)</span> <em>increases</em>.</li>
+<li><strong>R Code (Slide 90):</strong> The <code>cv.glm</code> function
+from the <code>boot</code> library automatically provides this.
+<ul>
+<li><code>cv.err$delta</code>: This output vector contains two
+values.</li>
+<li><code>[1] 24.23151</code> (Raw CV Error): This is the standard
+Leave-One-Out CV (LOOCV) error.</li>
+<li><code>[2] 24.23114</code> (Adjusted CV Error): This is a
+bias-corrected estimate that accounts for the overestimation problem.
+It’s slightly lower, representing a more accurate guess for the error of
+the <em>final model</em> trained on all <span
+class="math inline">\(n\)</span> data points.</li>
+</ul></li>
+</ul>
+<p># The “Correction of CV Error” extension.</p>
+<h3 id="summary">Summary</h3>
+<p>This section provides a deeper mathematical look at <em>why</em>
+k-fold cross-validation (CV) slightly <strong>over-estimates</strong>
+the true test error.</p>
+<ol type="1">
+<li><p><strong>The Overestimation:</strong> CV trains on <span
+class="math inline">\(\frac{k-1}{k}\)</span> of the data, which is
+<em>less</em> than the full dataset (size <span
+class="math inline">\(n\)</span>). Models trained on less data are
+generally <em>worse</em>. Therefore, the average error from CV (<span
+class="math inline">\(CV_k\)</span>) is slightly <em>higher</em> (more
+pessimistic) than the true error of the final model trained on all <span
+class="math inline">\(n\)</span> data (<span
+class="math inline">\(R(n)\)</span>).</p></li>
+<li><p><strong>A Simple Correction:</strong> A mathematical formula,
+<span class="math inline">\(\tilde{CV_k} = \frac{k-1}{k} \cdot
+CV_k\)</span>, is proposed to “correct” this overestimation.</p></li>
+<li><p><strong>The Critical Flaw:</strong> This correction is derived
+<em>assuming</em> the <strong>irreducible error (<span
+class="math inline">\(R^*\)</span>) is zero</strong>.</p></li>
+<li><p><strong>The Takeaway (Code Analysis):</strong> The Python code
+demonstrates a real-world scenario where there is noise
+(<code>noise_std = 0.5</code>), meaning <span class="math inline">\(R^*
+&gt; 0\)</span>. In this case, the <strong>simple correction
+fails</strong>—it produces an error (0.217) that is <em>less
+accurate</em> and further from the true error (0.272) than the
+<strong>original raw CV error</strong> (0.271).</p></li>
+</ol>
+<p><strong>Exam Conclusion:</strong> For most real-world problems (which
+have noise), the <strong>raw <span class="math inline">\(k\)</span>-fold
+CV error is a better and more reliable estimate</strong> of the true
+test error than the simple (and flawed) correction.</p>
+<h3 id="mathematical-understanding-1">Mathematical Understanding</h3>
+<p>This section explains the theory of <em>why</em> <span
+class="math inline">\(CV_k &gt; R(n)\)</span> and derives the simple
+correction.</p>
+<ol type="1">
+<li><p><strong>Assumed Error Behavior:</strong> We assume the test error
+<span class="math inline">\(R(n)\)</span> for a model trained on <span
+class="math inline">\(n\)</span> data points behaves like: <span
+class="math display">\[R(n) = R^* + \frac{c}{n}\]</span></p>
+<ul>
+<li><span class="math inline">\(R^*\)</span>: The <strong>irreducible
+error</strong> (the “noise floor” you can never beat).</li>
+<li><span class="math inline">\(c/n\)</span>: The model variance, which
+<em>decreases</em> as sample size <span class="math inline">\(n\)</span>
+<em>increases</em>.</li>
+</ul></li>
+<li><p><strong>Test Error vs. CV Error:</strong></p>
+<ul>
+<li><strong>Test Error of Interest:</strong> This is the error of our
+<em>final model</em> trained on all <span
+class="math inline">\(n\)</span> points: <span
+class="math display">\[R(n) = R^* + \frac{c}{n}\]</span></li>
+<li><strong>k-fold CV Error:</strong> This is the average error of <span
+class="math inline">\(k\)</span> models, each trained on a smaller
+sample of size <span class="math inline">\(n&#39; =
+(\frac{k-1}{k})n\)</span>. <span class="math display">\[CV_k \approx
+R(n&#39;) = R\left(\frac{k-1}{k}n\right) = R^* +
+\frac{c}{\left(\frac{k-1}{k}\right)n} = R^* +
+\frac{ck}{(k-1)n}\]</span></li>
+</ul></li>
+<li><p><strong>The Overestimation:</strong> Let’s compare <span
+class="math inline">\(CV_k\)</span> and <span
+class="math inline">\(R(n)\)</span>: <span class="math display">\[CV_k
+\approx R^* + \left(\frac{k}{k-1}\right) \frac{c}{n}\]</span> <span
+class="math display">\[R(n) = R^* + \left(\frac{k-1}{k-1}\right)
+\frac{c}{n}\]</span> Since <span class="math inline">\(k &gt;
+(k-1)\)</span>, the factor <span
+class="math inline">\(\left(\frac{k}{k-1}\right)\)</span> is
+<strong>greater than 1</strong>. This means the <span
+class="math inline">\(CV_k\)</span> error term is larger than the <span
+class="math inline">\(R(n)\)</span> error term. Thus: <strong><span
+class="math inline">\(CV_k &gt; \text{Test error of interest }
+R(n)\)</span></strong></p></li>
+<li><p><strong>Deriving the (Flawed) Correction:</strong> This
+correction makes a <strong>strong assumption: <span
+class="math inline">\(R^* \approx 0\)</span></strong> (the model is
+perfectly specified, and there is no noise).</p>
+<ul>
+<li>If <span class="math inline">\(R^* = 0\)</span>, then <span
+class="math inline">\(R(n) \approx \frac{c}{n}\)</span></li>
+<li>If <span class="math inline">\(R^* = 0\)</span>, then <span
+class="math inline">\(CV_k \approx \frac{ck}{(k-1)n}\)</span></li>
+</ul>
+<p>Now, look at the ratio between them: <span
+class="math display">\[\frac{R(n)}{CV_k} \approx \frac{c/n}{ck/((k-1)n)}
+= \frac{c}{n} \cdot \frac{(k-1)n}{ck} = \frac{k-1}{k}\]</span></p>
+<p>This gives us the correction formula by isolating <span
+class="math inline">\(R(n)\)</span>: <span class="math display">\[R(n)
+\approx \left(\frac{k-1}{k}\right) \cdot CV_k\]</span> This corrected
+version is denoted <span
+class="math inline">\(\tilde{CV_k}\)</span>.</p></li>
+</ol>
+<h3 id="code-analysis-slides-92-93">Code Analysis (Slides 92-93)</h3>
+<p>The Python code is an experiment designed to <strong>test the
+correction formula</strong>.</p>
+<ul>
+<li><p><strong>Goal:</strong> Compare the “Raw CV Error” (<span
+class="math inline">\(CV_k\)</span>), the “Corrected CV Error” (<span
+class="math inline">\(\tilde{CV_k}\)</span>), and the “True Test Error”
+(<span class="math inline">\(R(n)\)</span>) in a realistic
+setting.</p></li>
+<li><p><strong>Key Setup:</strong></p>
+<ol type="1">
+<li><code>def f(x)</code>: Defines the true, underlying function <span
+class="math inline">\(y = x^2 + 15\sin(x)\)</span>.</li>
+<li><code>noise_std = 0.5</code>: <strong>This is the most important
+line.</strong> It adds significant random noise to the data. This
+ensures that the <strong>irreducible error <span
+class="math inline">\(R^*\)</span> is large and <span
+class="math inline">\(R^* &gt; 0\)</span></strong>.</li>
+<li><code>y = f(...) + np.random.normal(...)</code>: Creates the noisy
+training data (the blue dots).</li>
+</ol></li>
+<li><p><strong>CV Calculation (Standard K-Fold):</strong></p>
+<ul>
+<li><code>kf = KFold(...)</code>: Sets up 5-fold CV (<span
+class="math inline">\(k=5\)</span>).</li>
+<li><code>for train_index, val_index in kf.split(x):</code>: This is the
+standard loop. It trains on 4 folds and validates on 1 fold.</li>
+<li><code>cv_error = np.mean(cv_mse_list)</code>: Calculates the
+<strong>raw <span class="math inline">\(CV_5\)</span> error</strong>.
+This is the first result (e.g., <strong>0.2715</strong>).</li>
+</ul></li>
+<li><p><strong>Correction Calculation:</strong></p>
+<ul>
+<li><code>correction_factor = (k_splits - 1) / k_splits</code>: This is
+<span class="math inline">\(\frac{k-1}{k}\)</span>, which is <span
+class="math inline">\(4/5 = 0.8\)</span>.</li>
+<li><code>corrected_cv_error = correction_factor * cv_error</code>: This
+applies the flawed formula from the math section (<span
+class="math inline">\(0.2715 \times 0.8\)</span>). This is the second
+result (e.g., <strong>0.2172</strong>).</li>
+</ul></li>
+<li><p><strong>“True” Test Error Calculation:</strong></p>
+<ul>
+<li><code>knn.fit(x, y)</code>: Trains the <em>final model</em> on the
+<em>entire</em> noisy dataset.</li>
+<li><code>n_test = 1000</code>: Creates a <em>new, large</em> test set
+to estimate the true error.</li>
+<li><code>true_test_error = mean_squared_error(...)</code>: Calculates
+the error of the final model on this new test set. This is our best
+estimate of <span class="math inline">\(R(n)\)</span> (e.g.,
+<strong>0.2725</strong>).</li>
+</ul></li>
+<li><p><strong>Analysis of Results (Slide 93):</strong></p>
+<ul>
+<li><strong>Raw 5-Fold CV MSE:</strong> 0.2715</li>
+<li><strong>True test error:</strong> 0.2725</li>
+<li><strong>Corrected 5-Fold CV MSE:</strong> 0.2172</li>
+</ul>
+<p>The <strong>Raw CV Error (0.2715) is an excellent estimate</strong>
+of the True Test Error (0.2725). The <strong>Corrected Error (0.2172) is
+much worse</strong>. This experiment <em>proves</em> that when noise
+(<span class="math inline">\(R^*\)</span>) is present, the simple
+correction formula should not be used.</p></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Machine-Learning/" rel="tag"># Machine Learning</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2025/09/27/QM9/" rel="prev" title="QM9 Dataset">
+      <i class="fa fa-chevron-left"></i> QM9 Dataset
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2025/10/01/5054C4/" rel="next" title="MSDM 5054 - Statistical Machine Learning-L4">
+      MSDM 5054 - Statistical Machine Learning-L4 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#resampling"><span class="nav-number">1.</span> <span class="nav-text">1. Resampling</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#key-concepts"><span class="nav-number">1.1.</span> <span class="nav-text">Key Concepts</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#the-validation-set-approach"><span class="nav-number">1.2.</span> <span class="nav-text">The Validation Set Approach</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#important-image-schematic-slide-10"><span class="nav-number">1.2.1.</span> <span class="nav-text">Important Image: Schematic
+(Slide 10)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#example-auto-data-formulas-code"><span class="nav-number">1.3.</span> <span class="nav-text">Example: Auto Data (Formulas
+&amp; Code)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#mathematical-models"><span class="nav-number">1.3.1.</span> <span class="nav-text">Mathematical Models</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#important-image-polynomial-fits-slide-8"><span class="nav-number">1.3.2.</span> <span class="nav-text">Important Image:
+Polynomial Fits (Slide 8)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#code-analysis"><span class="nav-number">1.3.3.</span> <span class="nav-text">Code Analysis</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#the-validation-set-approach-1"><span class="nav-number">2.</span> <span class="nav-text">2. The Validation Set
+Approach</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#python-code-explained-slide-1"><span class="nav-number">2.0.1.</span> <span class="nav-text">Python Code Explained (Slide
+1)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#key-images-the-problem-with-a-single-split"><span class="nav-number">2.0.2.</span> <span class="nav-text">Key Images: The
+Problem with a Single Split</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#summary-of-drawbacks-slides-7-8-9-23-25"><span class="nav-number">2.0.3.</span> <span class="nav-text">Summary of Drawbacks
+(Slides 7, 8, 9, 23, 25)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#cross-validation-the-solution"><span class="nav-number">2.1.</span> <span class="nav-text">5.3 Cross-Validation: The
+Solution</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#leave-one-out-cross-validation-loocv"><span class="nav-number">2.1.1.</span> <span class="nav-text">Leave-One-Out
+Cross-Validation (LOOCV)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#key-formula-from-slide-10"><span class="nav-number">2.1.2.</span> <span class="nav-text">Key Formula (from Slide 10)</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#what-is-loocv-leave-one-out-cross-validation"><span class="nav-number">3.</span> <span class="nav-text">3.What is LOOCV
+(Leave-One-Out Cross Validation)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#key-mathematical-formulas"><span class="nav-number">3.1.</span> <span class="nav-text">Key Mathematical Formulas</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#the-standard-slow-formula"><span class="nav-number">3.1.1.</span> <span class="nav-text">1. The Standard (Slow) Formula</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#the-shortcut-fast-formula"><span class="nav-number">3.1.2.</span> <span class="nav-text">2. The Shortcut (Fast) Formula</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#what-is-leverage-h_i"><span class="nav-number">3.1.3.</span> <span class="nav-text">3. What is Leverage (\(h_i\))?</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#python-code-explained-slide-29"><span class="nav-number">3.2.</span> <span class="nav-text">Python Code Explained (Slide
+29)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#important-images"><span class="nav-number">3.3.</span> <span class="nav-text">Important Images</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#cross-validation-overview"><span class="nav-number">4.</span> <span class="nav-text">4. Cross-Validation Overview</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#k-fold-cross-validation"><span class="nav-number">4.1.</span> <span class="nav-text">K-Fold Cross-Validation</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#the-process"><span class="nav-number">4.1.1.</span> <span class="nav-text">The Process</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#key-formula"><span class="nav-number">4.1.2.</span> <span class="nav-text">Key Formula</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#important-image-the-concept"><span class="nav-number">4.1.3.</span> <span class="nav-text">Important Image: The Concept</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#leave-one-out-cross-validation-loocv-1"><span class="nav-number">4.2.</span> <span class="nav-text">Leave-One-Out
+Cross-Validation (LOOCV)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#key-formulas"><span class="nav-number">4.2.1.</span> <span class="nav-text">Key Formulas</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#python-code-results"><span class="nav-number">4.3.</span> <span class="nav-text">Python Code &amp; Results</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#code-understanding-slide-104156.jpg"><span class="nav-number">4.3.1.</span> <span class="nav-text">Code Understanding (Slide
+104156.jpg)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#important-image-the-results"><span class="nav-number">4.3.2.</span> <span class="nav-text">Important Image: The Results</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#detailed-summary-the-fast-computation-of-loocv-proof"><span class="nav-number">4.4.</span> <span class="nav-text">Detailed
+Summary: The “Fast Computation of LOOCV” Proof</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#the-goal"><span class="nav-number">4.4.1.</span> <span class="nav-text">The Goal</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#key-definitions-the-matrix-algebra-setup"><span class="nav-number">4.4.2.</span> <span class="nav-text">Key Definitions (The
+Matrix Algebra Setup)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#the-proof-step-by-step"><span class="nav-number">4.4.3.</span> <span class="nav-text">The Proof Step-by-Step</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#step-1-relating-the-matrices-slide-104132.png"><span class="nav-number">4.4.3.1.</span> <span class="nav-text">Step 1: Relating
+the Matrices (Slide 104132.png)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#step-2-the-key-matrix-trick-slide-104132.png"><span class="nav-number">4.4.3.2.</span> <span class="nav-text">Step 2: The Key
+Matrix Trick (Slide 104132.png)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#step-3-finding-hatbeta_i-slide-104136.png"><span class="nav-number">4.4.3.3.</span> <span class="nav-text">Step 3: Finding \(\hat{\beta}_{[i]}\) (Slide
+104136.png)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#step-4-finding-e_i-slide-104136.png"><span class="nav-number">4.4.3.4.</span> <span class="nav-text">Step 4: Finding \(e_{[i]}\) (Slide
+104136.png)</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#conclusion"><span class="nav-number">4.4.4.</span> <span class="nav-text">Conclusion</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#main-goal-of-cross-validation"><span class="nav-number">5.</span> <span class="nav-text">5. Main Goal of
+Cross-Validation</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#important-images-1"><span class="nav-number">5.1.</span> <span class="nav-text">Important Images 🖼️</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#key-formulas-for-classification"><span class="nav-number">5.2.</span> <span class="nav-text">Key Formulas for
+Classification</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#python-code-explained"><span class="nav-number">5.3.</span> <span class="nav-text">Python Code Explained 🐍</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#knn-regression-slide-52"><span class="nav-number">5.3.1.</span> <span class="nav-text">1. KNN Regression (Slide 52)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#logistic-regression-with-polynomials-slide-64"><span class="nav-number">5.3.2.</span> <span class="nav-text">2. Logistic
+Regression with Polynomials (Slide 64)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#the-bias-variance-trade-off-in-cv"><span class="nav-number">5.4.</span> <span class="nav-text">The Bias-Variance Trade-off
+in CV</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#the-core-problem-scenarios-slides-47-51"><span class="nav-number">5.5.</span> <span class="nav-text">The Core Problem &amp;
+Scenarios (Slides 47-51)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#cv-for-classification-slides-55-61"><span class="nav-number">5.6.</span> <span class="nav-text">CV for Classification
+(Slides 55-61)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#python-code-explained-slides-52-63-64"><span class="nav-number">5.7.</span> <span class="nav-text">Python Code Explained
+(Slides 52, 63, 64)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#answering-the-key-questions-slides-54-65"><span class="nav-number">5.8.</span> <span class="nav-text">Answering the Key
+Questions (Slides 54 &amp; 65)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#q1-how-does-k-affect-the-bias-and-variance-of-the-cv-error"><span class="nav-number">5.8.1.</span> <span class="nav-text">Q1:
+How does K affect the bias and variance of the CV error?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#q2-does-cross-validation-over-estimate-or-under-estimate-the-true-test-error"><span class="nav-number">5.8.2.</span> <span class="nav-text">Q2:
+Does Cross Validation over-estimate or under-estimate the true test
+error?</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#summary-of-bootstrap"><span class="nav-number">6.</span> <span class="nav-text">6. Summary of Bootstrap</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#summary-of-bootstrap-1"><span class="nav-number">6.1.</span> <span class="nav-text">Summary of Bootstrap</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#the-problem"><span class="nav-number">6.1.1.</span> <span class="nav-text">The Problem</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#the-bootstrap-solution"><span class="nav-number">6.1.2.</span> <span class="nav-text">The Bootstrap Solution</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mathematical-understanding"><span class="nav-number">6.2.</span> <span class="nav-text">Mathematical Understanding</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#example-estimating-alpha"><span class="nav-number">6.2.1.</span> <span class="nav-text">Example: Estimating \(\alpha\)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#code-analysis-1"><span class="nav-number">6.3.</span> <span class="nav-text">Code Analysis</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#r-alpha-example-slides-75-77"><span class="nav-number">6.3.1.</span> <span class="nav-text">R: \(\alpha\) Example (Slides 75 &amp; 77)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#r-linear-regression-example-slides-79-81"><span class="nav-number">6.3.2.</span> <span class="nav-text">R: Linear Regression
+Example (Slides 79 &amp; 81)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#python-knn-regression-example-slide-80"><span class="nav-number">6.3.3.</span> <span class="nav-text">Python: KNN Regression
+Example (Slide 80)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#python-knn-on-auto-data-slide-82"><span class="nav-number">6.3.4.</span> <span class="nav-text">Python: KNN on Auto data
+(Slide 82)</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#the-mathematical-theory-of-bootstrap-and-the-extension-to-cross-validation-cv."><span class="nav-number">7.</span> <span class="nav-text">7.
+The mathematical theory of Bootstrap and the extension to
+Cross-Validation (CV).</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#code-analysis-bootstrap-for-a-knn-prediction-slide-85"><span class="nav-number">7.1.</span> <span class="nav-text">1. Code
+Analysis: Bootstrap for a KNN Prediction (Slide 85)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mathematical-understanding-why-does-bootstrap-work-slides-87-88"><span class="nav-number">7.2.</span> <span class="nav-text">2.
+Mathematical Understanding: Why Does Bootstrap Work? (Slides 87-88)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#the-true-world-slide-87-top"><span class="nav-number">7.2.1.</span> <span class="nav-text">The “True” World (Slide 87,
+Top)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#the-bootstrap-world-slide-87-bottom"><span class="nav-number">7.2.2.</span> <span class="nav-text">The “Bootstrap” World
+(Slide 87, Bottom)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#the-core-approximation-slide-88"><span class="nav-number">7.2.3.</span> <span class="nav-text">The Core Approximation (Slide
+88)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#extension-cross-validation-cv-analysis"><span class="nav-number">7.3.</span> <span class="nav-text">3. Extension:
+Cross-Validation (CV) Analysis</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#cv-for-hyperparameter-tuning-slide-84"><span class="nav-number">7.3.1.</span> <span class="nav-text">CV for Hyperparameter
+Tuning (Slide 84)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#why-cv-over-estimates-test-error-slide-89"><span class="nav-number">7.3.2.</span> <span class="nav-text">Why CV Over-Estimates
+Test Error (Slide 89)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#correction-of-cv-error-slides-90-91"><span class="nav-number">7.3.3.</span> <span class="nav-text">Correction of CV Error
+(Slides 90-91)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#summary"><span class="nav-number">7.3.4.</span> <span class="nav-text">Summary</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#mathematical-understanding-1"><span class="nav-number">7.3.5.</span> <span class="nav-text">Mathematical Understanding</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#code-analysis-slides-92-93"><span class="nav-number">7.3.6.</span> <span class="nav-text">Code Analysis (Slides 92-93)</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">John Doe</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">14</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+          load: ['[tex]/mhchem'],
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+          packages: {'[+]': ['mhchem']},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+</body>
+</html>
