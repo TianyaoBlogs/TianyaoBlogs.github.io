@@ -145,6 +145,332 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://tianyaoblogs.github.io/2025/09/16/2025_9_15%E4%BC%9A%E8%AE%AE%E7%BA%AA%E8%A6%81/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="TianyaoBlogs">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2025/09/16/2025_9_15%E4%BC%9A%E8%AE%AE%E7%BA%AA%E8%A6%81/" class="post-title-link" itemprop="url">MEETING - AI4Chemistry conference notes</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2025-09-16 01:00:00" itemprop="dateCreated datePublished" datetime="2025-09-16T01:00:00+08:00">2025-09-16</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2025-09-21 06:46:20" itemprop="dateModified" datetime="2025-09-21T06:46:20+08:00">2025-09-21</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/meeting-notes/" itemprop="url" rel="index"><span itemprop="name">meeting notes</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>Meeting Notes</p>
+<h1 id="九月份规划">1. 九月份规划：</h1>
+<ul>
+<li><strong>内容</strong>:</li>
+</ul>
+<h2 id="经典论文模型复现">1.1 经典论文模型复现：</h2>
+<ul>
+<li><strong>1.1.1</strong> <a
+target="_blank" rel="noopener" href="https://www.biorxiv.org/content/10.1101/2025.08.06.668973v2">MetaAI-3D蛋白质结构对比学习</a>
+<a target="_blank" rel="noopener" href="https://github.com/kalifadan/FusionProt">github</a></li>
+<li><strong>1.1.2</strong> <a
+target="_blank" rel="noopener" href="https://bmcbiol.biomedcentral.com/articles/10.1186/s12915-024-02030-9">DrugDAGT</a>
+<a target="_blank" rel="noopener" href="https://github.com/codejiajia/DrugDAGT">github</a> <a
+target="_blank" rel="noopener" href="https://zenodo.org/records/6568518#.YrtTKHbMK38">!!! orbnet
+qm9的graph based的feature</a> <a
+target="_blank" rel="noopener" href="https://zenodo.org/records/6568518#.YrtTKHbMK38">github</a></li>
+<li><strong>1.1.3 GCL &amp; GCFORMER</strong> <a
+target="_blank" rel="noopener" href="https://arxiv.org/abs/2010.13902">经典对比学习论文</a> <a
+target="_blank" rel="noopener" href="https://openreview.net/forum?id=u6FuiKzT1K">!! Graph contrastive
+learning former - NIPS2024</a> <a
+target="_blank" rel="noopener" href="https://github.com/JHL-HUST/GCFormer">github</a></li>
+<li><strong>GCL</strong> <a
+target="_blank" rel="noopener" href="https://arxiv.org/abs/2010.13902">Graph Contrastive Learning with
+Augmentations - NIPS</a> <a
+target="_blank" rel="noopener" href="https://github.com/Shen-Lab/GraphCL">github</a></li>
+</ul>
+<h2 id="数据集">1.2 数据集：</h2>
+<p><a
+target="_blank" rel="noopener" href="https://quantum-machine.org/datasets/">quantum-machine-QM9</a> <a
+target="_blank" rel="noopener" href="https://github.com/bigdata-ustc/QM9nano4USTC">中科大实验课做了个QM9数据集的demo</a></p>
+<ul>
+<li><p><strong>闭壳层分子数据集</strong></p></li>
+<li><p><strong>分子规模</strong>：含 13.4
+万个稳定的小分子有机物</p></li>
+<li><p><strong>元素组成</strong>：仅包含
+H（氢）、C（碳）、N（氮）、O（氧）、F（氟）5 种元素</p></li>
+<li><p><strong>计算理论水平</strong>：所有分子属性基于DFT（密度泛函理论）/B3LYP
+泛函 / 6-31G (2df,p) 基组计算</p></li>
+<li><p><strong>包含属性</strong>：偶极矩、HOMO（最高占据分子轨道）能量、LUMO（最低未占据分子轨道）能量、0K
+内能、298.15K 内能等，是闭壳层分子性质预测的基准数据集</p></li>
+<li><p><strong>训练输入</strong>：闭壳层下的量子化学矩阵，即 Fock
+矩阵（F）、密度矩阵（P）、哈密顿矩阵（H）、重叠矩阵（S），构成向量 T
+的闭壳层形式（因闭壳层自旋对称，无需区分 α、β 自旋，故
+T=[F,P,H,S]）</p></li>
+<li><p><strong>特征本质</strong>：这些矩阵编码了分子的电子结构信息（如轨道间相互作用、电子密度分布），是
+OrbNet-Equi 学习 “分子结构 - 能量” 映射的核心依据</p></li>
+<li><p><strong>训练输出</strong>：QM9 中的0K
+内能作为核心训练目标输出，0K
+内能是分子势能面（PES）计算的核心属性，直接关联分子稳定性与反应能垒预测，相比其他属性（如偶极矩），能量是闭壳层与开壳层系统共有的关键指标，便于后续扩展到开壳层能量预测。</p></li>
+</ul>
+<h2 id="复现方式">1.3 复现方式：</h2>
+<p>数据小型化复现： setp1: 5k bonds and edges</p>
+<p>setp2: 10k bonds and edges</p>
+<p>setp3: 20k bonds and edges</p>
+<h2 id="两种数据空间一个待理解的概念open-shell">1.4
+两种数据空间一个待理解的概念Open-shell：</h2>
+<ul>
+<li><strong>AO (Atomic
+Orbital)</strong>：<strong>原子轨道</strong>。</li>
+<li><strong>MO (Molecular
+Orbital)</strong>：<strong>分子轨道</strong>。</li>
+<li><strong>Open-shell</strong>：<strong>开壳层组态</strong>。</li>
+</ul>
+<h4 id="ao-atomic-orbital---原子轨道层面-以原子为中心的模型">1. AO
+(Atomic Orbital) - 原子轨道层面 / 以原子为中心的模型</h4>
+<p>将分子看作是原子（节点）和化学键（边）构成的图。模型学习每个原子以及其周围局部环境的representation，预测整个分子的性质。</p>
+<ul>
+<li><p><strong>key</strong>:
+分子的性质是由其组成原子以及原子间的相互作用决定的。</p></li>
+<li><p><strong>输入</strong>:
+原子的坐标、原子类型、以及原子间的距离或键合关系。</p></li>
+<li><p><strong>方式</strong>: <strong>消息传递图神经网络 (Message
+Passing Neural Network, MPNN)</strong>
+。每个原子（节点）从其邻居原子那里接收“消息”（信息），更新自己的状态（特征向量）。过程会重复多次（对应图神经网络的多个GCL层），信息可以在整个分子中传播。</p>
+<ul>
+<li><strong>EGNN (E(n) Equivariant Graph Neural Network)</strong>:
+典型的以原子为中心的模型。<strong>等变性
+(Equivariance)</strong>，旋转或移动整个分子时，模型内部学习到的原子表示也会相应地旋转或移动，最终预测的能量等标量属性保持不变。符合物理规律，性能出色。它直接在原子的3D坐标上进行操作。</li>
+<li><strong>OrbNet</strong>:
+<strong>数据来源</strong>采用半经验方法（GFN1-xTB）生成量子化学矩阵，显著降低了计算成本，同时保留了关键物理信息,支持数千原子规模的分子模拟。
+闭壳层（Closed-shell）与开壳层（Open-shell）系统的区别：闭壳层电子自旋全配对（仅需考虑空间自由度），开壳层含未配对电子（需同时考虑空间和自旋自由度），开壳层在自由基、反应中间体等场景的关键意义。
+<ul>
+<li><strong>key</strong>:
+基于原子轨道（AO）特征（自洽场（SCF）收敛过程中的量子化学矩阵）预测分子能量。</li>
+<li><strong>特征表示</strong>: 采用对称适配原子轨道（SAAO）基组，将 AO
+特征编码为图结构数据。</li>
+<li><strong>模型架构</strong>:
+基于图神经网络（GNN），解码输出张量并求和得到分子能量。</li>
+</ul></li>
+</ul></li>
+</ul>
+<h4 id="mo-molecular-orbital---分子轨道层面-以分子为整体的模型">2. MO
+(Molecular Orbital) - 分子轨道层面 / 以分子为整体的模型</h4>
+<p>直接学习或预测整个分子的全局属性，分子整体电子结构相关的属性。分子轨道本身就是由所有原子轨道线性组合而成的，描述了电子在整个分子中的运动状态。</p>
+<ul>
+<li><strong>key</strong>:
+直接对分子的全局特征或其电子结构的宏观表现（如轨道能级）进行建模。</li>
+<li><strong>典型输入</strong>: 整个分子的描述符（例如分子指纹
+fingerprint），或者直接将分子结构作为输入来预测分子轨道的性质。</li>
+<li><strong>工作方式</strong>:
+这类模型可能不完全依赖于原子间的消息传递，而是旨在直接构建一个从分子到其全局属性的映射。例如，预测分子的最高占据分子轨道
+(HOMO) 和最低未占据分子轨道 (LUMO) 的能量。</li>
+</ul>
+<h4 id="open-shell---开壳层组态">3. Open-shell - 开壳层组态</h4>
+<p><a
+target="_blank" rel="noopener" href="https://www.zhihu.com/question/620638044?write">Open-shell</a></p>
+<p>随便看看的一篇ICML-2024 <a
+target="_blank" rel="noopener" href="https://openreview.net/forum?id=XC9IoAsyEN">ICML-WORKSHOP-2024</a></p>
+<p><a
+target="_blank" rel="noopener" href="https://www.nature.com/articles/s41524-022-00863-y">NPJ-2022</a></p>
+<p><a
+target="_blank" rel="noopener" href="https://www.pnas.org/doi/abs/10.1073/pnas.2205221119">PNAS-2022
+OrbNet-Equi</a> <a
+target="_blank" rel="noopener" href="https://zenodo.org/records/6568518#.YrtTKHbMK38">!!! orbnet
+qm9的graph based的feature</a></p>
+<h1 id="十月份规划">2. 十月份规划：</h1>
+<h2 id="what-we-need-to-do">2.1 What we need to do?</h2>
+<h2 id="我们需要分析ao-和-mo-的表现">我们需要分析AO 和 MO 的表现。</h2>
+<p>我们不确定MO和AO的variability的差异，是由EGNN还是GPR带来的
+他们的information不一样。</p>
+<p>Learning curve - learnability图</p>
+<p>我们需要通过对比学习找到 AO 和 MO 的 similarity。</p>
+<p>理想化结果：
+我们希望AO通过对比学习达到MO的程度，我们希望对比学习对AO更有用。</p>
+<p>我们希望达到GCL + AO</p>
+<p>AO从物理意义上更本质，MO的性质更好。</p>
+<p>Final goal Inverse design 需要生成 AO</p>
+<h2 id="linear-combination-of-atomic-orbitals">2.2 (Linear Combination
+of Atomic Orbitals)</h2>
+<p><strong>LCAO</strong> <strong>原子轨道线性组合 (Linear Combination of
+Atomic Orbitals)</strong>。</p>
+<ul>
+<li><p><strong>key</strong>:
+分子的复杂行为（由分子轨道MO描述）可以近似地通过其组成原子的更简单的行为（由原子轨道AO描述）来构建。一个<strong>分子轨道
+(MO)</strong> 可以表示为多个<strong>原子轨道 (AO)</strong>
+的加权和。</p></li>
+<li><p><strong>数学形式</strong>: 一个分子轨道 <span
+class="math inline">\(\Psi_{MO}\)</span>，它可以表示为： <span
+class="math display">\[\Psi_{MO} = c_1\phi_1 + c_2\phi_2 + \dots +
+c_n\phi_n = \sum_{i=1}^{n} c_i\phi_i\]</span> 其中：</p>
+<ul>
+<li><span class="math inline">\(\Psi_{MO}\)</span>
+是一个分子轨道波函数。</li>
+<li><span class="math inline">\(\phi_i\)</span> 是第 <span
+class="math inline">\(i\)</span> 个原子的原子轨道波函数。</li>
+<li><span class="math inline">\(c_i\)</span>
+是每个原子轨道的<strong>组合系数
+(coefficient)</strong>，它是一个权重值，表示该原子轨道对这个分子轨道的贡献大小。系数通过求解薛定谔方程（通常使用Hartree-Fock等近似方法）得到的。</li>
+</ul></li>
+<li><p><strong>ex</strong>:
+氢分子（H₂）。有两个氢原子，每个氢原子有一个1s原子轨道（<span
+class="math inline">\(\phi_A\)</span> 和 <span
+class="math inline">\(\phi_B\)</span>）。这两个原子轨道可以通过两种方式线性组合，形成两个分子轨道：</p>
+<ol type="1">
+<li><strong>成键轨道 (Bonding MO)</strong>: <span
+class="math inline">\(\Psi_{\sigma} = c_A\phi_A +
+c_B\phi_B\)</span>。电子处于这个轨道时，会主要分布在两个原子核之间，形成稳定的化学键。能量比原来的AO更低。</li>
+<li><strong>反键轨道 (Antibonding MO)</strong>: <span
+class="math inline">\(\Psi_{\sigma^*} = c&#39;_A\phi_A -
+c&#39;_B\phi_B\)</span>。电子处于这个轨道时，会主要分布在原子核的外侧，排斥两个原子核，不利于成键。能量比原来的AO更高。</li>
+</ol></li>
+</ul>
+<h3 id="localization-分子轨道局域化">2.3 Localization
+(分子轨道局域化)</h3>
+<p>分子轨道（MOs），尤其是通过标准计算方法（如Hartree-Fock）直接求解出来的，通常是<strong>离域的
+(delocalized)</strong>。这意味着每个MO都可能扩展到整个分子，由分子中几乎所有原子的AOs贡献构成。例如，在苯环中，计算出的π电子MO会均匀地分布在六个碳原子上。</p>
+<p><strong>分子轨道局域化 (Localization of Molecular Orbitals)</strong>
+就是一个数学变换过程，它将这些离域的MOs转化为一组新的<strong>局域化分子轨道
+(Localized Molecular Orbitals, LMOs)</strong>。</p>
+<ul>
+<li><strong>核心目标</strong>:
+在不改变分子整体波函数和总能量的前提下，将分子轨道尽可能地限制在空间中的一小块区域内。</li>
+<li><strong>变换结果</strong>:
+<ul>
+<li>离域的成键轨道 <span class="math inline">\(\rightarrow\)</span>
+对应于特定 <strong>化学键</strong>
+的局域轨道（例如C-H键，C=C双键）。</li>
+<li>离域的非键轨道 <span class="math inline">\(\rightarrow\)</span>
+对应于特定原子上的 <strong>孤对电子 (lone pair)</strong> 或
+<strong>内层电子</strong>。</li>
+</ul></li>
+<li><strong>局域化</strong>:
+<ol type="1">
+<li><strong>化学直观性</strong>:
+LMOs提供了清晰的化学图像，便于理解和分析化学成键情况。</li>
+</ol></li>
+</ul>
+<h3 id="lcao-和-mo-的关系">3. LCAO 和 MO 的关系</h3>
+<ol type="1">
+<li><strong>LCAO是构建MO的方法</strong>:
+LCAO是用于近似计算和表示分子轨道（MO）的数学框架。我们假设MO可以由一组已知的基函数（即原子轨道AO）线性组合而成。</li>
+<li><strong>MO是LCAO方法的结果</strong>:
+通过LCAO方法，结合量子力学变分原理求解薛定谔方程，我们最终得到了一系列分子轨道（MOs）的具体形式（即每个AO的贡献系数<span
+class="math inline">\(c_i\)</span>）以及它们的能量。</li>
+</ol>
+<p><strong>原子轨道 (AO) [输入]</strong> <span
+class="math inline">\(\xrightarrow{\text{LCAO方法 [过程/框架]}}\)</span>
+<strong>分子轨道 (MO) [输出/结果]</strong></p>
+<h3 id="高斯过程回归-gaussian-process-regression-gpr">4. 高斯过程回归
+(Gaussian Process Regression, GPR)</h3>
+<p><strong>高斯过程回归 (GPR)</strong>
+是一种基于贝叶斯思想的非参数回归方法。它在处理小样本、高维度、需要不确定性估计的复杂回归问题时特别有效。</p>
+<h4 id="key">key</h4>
+<p><strong>GPR的核心是直接对函数本身进行建模</strong>。它假设我们想要建模的目标函数
+<span class="math inline">\(f(x)\)</span> 是一个服从<strong>高斯过程
+(Gaussian Process, GP)</strong> 的随机函数。</p>
+<ul>
+<li><strong>高斯过程 (GP)</strong>
+一个高斯过程是无穷多个随机变量的集合，其中任意有限个随机变量的组合都服从一个联合高斯分布。
+一个GP定义了一个关于<strong>函数的分布 (a distribution over
+functions)</strong>。当我们从这个GP中“采样”时，我们得到的不是一个数值，而是一整个函数。</li>
+</ul>
+<p>一个高斯过程完全由两部分定义： 1. <strong>均值函数 (Mean Function)
+<span class="math inline">\(m(x)\)</span></strong>:
+定义了函数分布的“期望”或“中心趋势”。通常为了简化，会假设均值为零。 2.
+<strong>协方差函数 (Covariance Function) 或 核函数 (Kernel) <span
+class="math inline">\(k(x, x&#39;)\)</span></strong>:
+定义了函数在不同输入点 <span class="math inline">\(x\)</span> 和 <span
+class="math inline">\(x&#39;\)</span>
+处的值之间的“相关性”或“相似性”。如果 <span
+class="math inline">\(x\)</span> 和 <span
+class="math inline">\(x&#39;\)</span> 很接近，核函数的值就很大，意味着
+<span class="math inline">\(f(x)\)</span> 和 <span
+class="math inline">\(f(x&#39;)\)</span>
+的值会很相似。这编码了我们对函数平滑性的先验信念。</p>
+<h4 id="gpr-工作">GPR 工作</h4>
+<p>GPR的工作流程：</p>
+<p><strong>第一步：定义先验分布 (Prior Distribution)</strong>
+在看到任何训练数据之前，我们首先根据先验知识选择一个均值函数（通常为0）和一个核函数（例如常用的<strong>径向基函数核/RBF核</strong>）。这个GP定义了一个函数的先验分布，包含了我们能想到的所有“可能”的函数。</p>
+<p><strong>第二步：计算后验分布 (Posterior Distribution)</strong>
+当我们得到一组训练数据 <span class="math inline">\((X_{train},
+Y_{train})\)</span>
+后，我们利用贝叶斯定理来更新我们的函数分布。我们从先验分布中“筛选”掉那些与训练数据不符的函数，得到一个<strong>后验分布
+(Posterior Distribution)</strong>。</p>
+<p>这个后验分布仍然是一个高斯过程，其均值和协方差有解析解（可以直接计算出来），不需要复杂的迭代优化。</p>
+<h4 id="进行预测">进行预测</h4>
+<p>对于一个新的测试点 <span
+class="math inline">\(x_{test}\)</span>，我们想预测对应的 <span
+class="math inline">\(y_{test}\)</span>。在后验分布下，<span
+class="math inline">\(y_{test}\)</span>
+的预测值服从一个一维高斯分布，这个分布有： 1. <strong>预测均值
+(Predicted Mean)</strong>: 这就是我们对 <span
+class="math inline">\(y_{test}\)</span>
+的最佳点估计。它是由训练数据点的加权平均计算得出的，权重由核函数决定。
+2. <strong>预测方差 (Predicted Variance)</strong>:
+这衡量了我们对预测结果的<strong>不确定性</strong>。在靠近训练数据点的地方，方差会很小（预测很自信）；在远离训练数据点的未知区域，方差会很大（预测很不确定）。</p>
+<h1 id="后续规划">3. 后续规划：</h1>
+<p>IF AO 的学习表现比 MO 要好 我们将会聚焦于 AO （Atomic representation
+vs atomic orbital）</p>
+<ol type="1">
+<li><strong>AO one body decomposition</strong></li>
+<li><strong>MO two body decomposition</strong></li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://tianyaoblogs.github.io/2025/09/15/Pandoc_Deployment/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -839,7 +1165,7 @@ configuration</h3>
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">14</span>
+          <span class="site-state-item-count">15</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
