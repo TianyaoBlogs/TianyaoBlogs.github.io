@@ -20,20 +20,20 @@
     var CONFIG = {"hostname":"tianyaoblogs.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="统计机器学习Lecture-4 Lecturer: Prof.XIA DONG 1. Resampling Resampling as a statistical tool to assess the accuracy of models whose main goal is to estimate the test error (a model’s performance on ne">
+  <meta name="description" content="统计机器学习Lecture-5 Lecturer: Prof.XIA DONG 1. Resampling Resampling as a statistical tool to assess the accuracy of models whose main goal is to estimate the test error (a model’s performance on ne">
 <meta property="og:type" content="article">
-<meta property="og:title" content="MSDM 5054 - Statistical Machine Learning-L4">
-<meta property="og:url" content="https://tianyaoblogs.github.io/2025/10/01/5054C5/index.html">
+<meta property="og:title" content="MSDM 5054 - Statistical Machine Learning-L5">
+<meta property="og:url" content="https://tianyaoblogs.github.io/2025/10/06/5054C5/index.html">
 <meta property="og:site_name" content="TianyaoBlogs">
-<meta property="og:description" content="统计机器学习Lecture-4 Lecturer: Prof.XIA DONG 1. Resampling Resampling as a statistical tool to assess the accuracy of models whose main goal is to estimate the test error (a model’s performance on ne">
+<meta property="og:description" content="统计机器学习Lecture-5 Lecturer: Prof.XIA DONG 1. Resampling Resampling as a statistical tool to assess the accuracy of models whose main goal is to estimate the test error (a model’s performance on ne">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2025-10-01T13:00:00.000Z">
-<meta property="article:modified_time" content="2025-10-19T12:36:41.838Z">
+<meta property="article:published_time" content="2025-10-06T13:00:00.000Z">
+<meta property="article:modified_time" content="2025-10-19T12:37:53.333Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="Machine Learning">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="https://tianyaoblogs.github.io/2025/10/01/5054C5/">
+<link rel="canonical" href="https://tianyaoblogs.github.io/2025/10/06/5054C5/">
 
 
 <script id="page-configurations">
@@ -46,7 +46,7 @@
   };
 </script>
 
-  <title>MSDM 5054 - Statistical Machine Learning-L4 | TianyaoBlogs</title>
+  <title>MSDM 5054 - Statistical Machine Learning-L5 | TianyaoBlogs</title>
   
 
 
@@ -151,7 +151,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://tianyaoblogs.github.io/2025/10/01/5054C5/">
+    <link itemprop="mainEntityOfPage" href="https://tianyaoblogs.github.io/2025/10/06/5054C5/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -164,7 +164,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          MSDM 5054 - Statistical Machine Learning-L4
+          MSDM 5054 - Statistical Machine Learning-L5
         </h1>
 
         <div class="post-meta">
@@ -174,14 +174,14 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2025-10-01 21:00:00" itemprop="dateCreated datePublished" datetime="2025-10-01T21:00:00+08:00">2025-10-01</time>
+              <time title="创建时间：2025-10-06 21:00:00" itemprop="dateCreated datePublished" datetime="2025-10-06T21:00:00+08:00">2025-10-06</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2025-10-19 20:36:41" itemprop="dateModified" datetime="2025-10-19T20:36:41+08:00">2025-10-19</time>
+                <time title="修改时间：2025-10-19 20:37:53" itemprop="dateModified" datetime="2025-10-19T20:37:53+08:00">2025-10-19</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -204,7 +204,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>统计机器学习Lecture-4</p>
+        <p>统计机器学习Lecture-5</p>
 <p><a target="_blank" rel="noopener" href="https://www.math.hkust.edu.hk/~madxia/">Lecturer: Prof.XIA
 DONG</a></p>
 <h1 id="resampling">1. Resampling</h1>
@@ -1982,13 +1982,10 @@ correction formula should not be used.</p></li>
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2025/09/27/QM9/" rel="prev" title="QM9 Dataset">
-      <i class="fa fa-chevron-left"></i> QM9 Dataset
+    <a href="/2025/10/01/5054C4/" rel="prev" title="MSDM 5054 - Statistical Machine Learning-L4">
+      <i class="fa fa-chevron-left"></i> MSDM 5054 - Statistical Machine Learning-L4
     </a></div>
-      <div class="post-nav-item">
-    <a href="/2025/10/01/5054C4/" rel="next" title="MSDM 5054 - Statistical Machine Learning-L4">
-      MSDM 5054 - Statistical Machine Learning-L4 <i class="fa fa-chevron-right"></i>
-    </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
