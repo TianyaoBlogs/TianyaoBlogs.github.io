@@ -176,7 +176,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2025-10-20 03:21:23" itemprop="dateModified" datetime="2025-10-20T03:21:23+08:00">2025-10-20</time>
+                <time title="修改时间：2025-10-20 03:30:26" itemprop="dateModified" datetime="2025-10-20T03:30:26+08:00">2025-10-20</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -1218,10 +1218,972 @@ class="math inline">\(n\)</span> and <span
 class="math inline">\(\hat{\sigma}^2_{full}\)</span> are constants,
 minimizing <span class="math inline">\(C_p\)</span> is mathematically
 identical to minimizing <span class="math inline">\(RSS +
-2d\hat{\sigma}^2_{full}\)</span>, which is the same logic as AIC. #
-3.</p>
-<h1 id="section">4.</h1>
-<h1 id="section-1">5.</h1>
+2d\hat{\sigma}^2_{full}\)</span>, which is the same logic as AIC.</p>
+<p>Here is a detailed breakdown of the mathematical formulas and
+concepts from your slides.</p>
+<h2 id="the-core-problem-training-error-vs.-test-error">The Core
+Problem: Training Error vs. Test Error</h2>
+<p>The central theme of these slides is finding the “best” model. The
+problem is that a model with more predictors (more complex) will
+<em>always</em> fit the data it was trained on better. This is a
+trap.</p>
+<ul>
+<li><strong>Training Error:</strong> How well the model fits the data we
+used to build it. <strong><span class="math inline">\(R^2\)</span> and
+<span class="math inline">\(RSS\)</span> measure this.</strong></li>
+<li><strong>Test Error:</strong> How well the model predicts new, unseen
+data. This is what we <em>actually</em> care about. A model that is too
+complex (e.g., has 10 predictors when only 3 are useful) will have low
+training error but very high test error. This is called
+<strong>overfitting</strong>.</li>
+</ul>
+<p>The goal is to choose a model that has the lowest <em>test
+error</em>. The metrics below (Adjusted <span
+class="math inline">\(R^2\)</span>, AIC, BIC) are all attempts to
+<em>estimate</em> this test error without having to actually collect new
+data. They do this by adding a <strong>penalty</strong> for
+complexity.</p>
+<h2 id="basic-metrics-measures-of-fit-1">Basic Metrics (Measures of
+Fit)</h2>
+<p>These formulas from slide 13 describe how well a model fits the
+<em>training data</em>.</p>
+<h3 id="residue-error">Residue (Error)</h3>
+<ul>
+<li><strong>Formula:</strong> <span
+class="math inline">\(\hat{\epsilon}_i = y_i - \hat{y}_i = y_i -
+\hat{\beta}_0 - \sum_{j=1}^{p} \hat{\beta}_j x_{ij}\)</span></li>
+<li><strong>Concept:</strong> This is the most basic building block.
+It’s the difference between the <em>actual</em> observed value (<span
+class="math inline">\(y_i\)</span>) and the value your model
+<em>predicted</em> (<span class="math inline">\(\hat{y}_i\)</span>). It
+is the “error” for a single data point.</li>
+</ul>
+<h3 id="residual-sum-of-squares-rss">Residual Sum of Squares (RSS)</h3>
+<ul>
+<li><strong>Formula:</strong> <span class="math inline">\(RSS =
+\sum_{i=1}^{n} \hat{\epsilon}_i^2\)</span></li>
+<li><strong>Concept:</strong> This is the overall measure of model
+error. You square all the individual errors (residues) to make them
+positive and then add them all up.</li>
+<li><strong>Goal:</strong> The entire process of linear regression
+(called “Ordinary Least Squares”) is designed to find the <span
+class="math inline">\(\hat{\beta}\)</span> coefficients that make this
+<strong>RSS value as small as possible</strong>.</li>
+<li><strong>The Flaw:</strong> <span class="math inline">\(RSS\)</span>
+will <em>always</em> decrease (or stay the same) as you add more
+predictors (<span class="math inline">\(p\)</span>). A model with all 10
+predictors will have a lower <span class="math inline">\(RSS\)</span>
+than a model with 9, even if that 10th predictor is useless. Therefore,
+<span class="math inline">\(RSS\)</span> is useless for choosing
+<em>between</em> models of different sizes.</li>
+</ul>
+<h3 id="r-squared-r2-1">R-squared (<span
+class="math inline">\(R^2\)</span>)</h3>
+<ul>
+<li><strong>Formula:</strong> <span class="math inline">\(R^2 = 1 -
+\frac{SS_{error}}{SS_{total}} = 1 - \frac{RSS}{\sum_{i=1}^{n} (y_i -
+\bar{y})^2}\)</span></li>
+<li><strong>Concept:</strong> This metric reframes <span
+class="math inline">\(RSS\)</span> into a more interpretable percentage.
+<ul>
+<li><span class="math inline">\(SS_{total}\)</span> (the denominator)
+represents the <em>total variance</em> of the data. It’s the error you
+would get if your “model” was just guessing the average value (<span
+class="math inline">\(\bar{y}\)</span>) for every single
+observation.</li>
+<li><span class="math inline">\(SS_{error}\)</span> (the <span
+class="math inline">\(RSS\)</span>) is the error <em>after</em> using
+your model.</li>
+<li><span class="math inline">\(R^2\)</span> is the “proportion of total
+variance explained by the model.” An <span
+class="math inline">\(R^2\)</span> of 0.75 means your model can explain
+75% of the variation in the response variable.</li>
+</ul></li>
+<li><strong>The Flaw:</strong> Just like <span
+class="math inline">\(RSS\)</span>, <span
+class="math inline">\(R^2\)</span> will <em>always</em> increase (or
+stay the same) as you add more predictors. This is visually confirmed in
+Figure 6.1, where the red line for <span
+class="math inline">\(R^2\)</span> only goes up. It will always pick the
+most complex model.</li>
+</ul>
+<h2 id="advanced-metrics-for-model-selection">Advanced Metrics (For
+Model Selection)</h2>
+<p>These metrics “fix” the flaw of <span
+class="math inline">\(R^2\)</span> by including a penalty for the number
+of predictors.</p>
+<h3 id="adjusted-r2-1">Adjusted <span
+class="math inline">\(R^2\)</span></h3>
+<ul>
+<li><strong>Formula:</strong> <span class="math display">\[
+  \text{Adjusted } R^2 = 1 - \frac{RSS / (n - p - 1)}{SS_{total} / (n -
+1)}
+  \]</span></li>
+<li><strong>Mathematical Concept:</strong> This formula replaces the
+“Sum of Squares” (<span class="math inline">\(SS\)</span>) with “Mean
+Squares” (<span class="math inline">\(MS\)</span>).
+<ul>
+<li><span class="math inline">\(MS_{error} =
+\frac{RSS}{n-p-1}\)</span></li>
+<li><span class="math inline">\(MS_{total} =
+\frac{SS_{total}}{n-1}\)</span></li>
+</ul></li>
+<li><strong>The “Penalty” Explained:</strong> The penalty is
+<strong>degrees of freedom</strong>.
+<ul>
+<li><span class="math inline">\(n\)</span> = number of data points.</li>
+<li><span class="math inline">\(p\)</span> = number of predictors.</li>
+<li>The term <span class="math inline">\(n-p-1\)</span> is the degrees
+of freedom for the residuals. You start with <span
+class="math inline">\(n\)</span> data points, but you “use up” one
+degree of freedom to estimate the intercept (<span
+class="math inline">\(\hat{\beta}_0\)</span>) and <span
+class="math inline">\(p\)</span> more to estimate the <span
+class="math inline">\(p\)</span> slopes.</li>
+</ul></li>
+<li><strong>How it Works:</strong>
+<ol type="1">
+<li>When you add a new predictor (increase <span
+class="math inline">\(p\)</span>), <span
+class="math inline">\(RSS\)</span> goes down, which makes the numerator
+(<span class="math inline">\(MS_{error}\)</span>) smaller.</li>
+<li>…But, increasing <span class="math inline">\(p\)</span>
+<em>also</em> decreases the denominator (<span
+class="math inline">\(n-p-1\)</span>), which makes the numerator (<span
+class="math inline">\(MS_{error}\)</span>) <em>larger</em>.</li>
+</ol>
+<ul>
+<li>This creates a “tug-of-war.” If the new predictor is
+<strong>useful</strong>, it will drop <span
+class="math inline">\(RSS\)</span> a lot, and Adjusted <span
+class="math inline">\(R^2\)</span> will <strong>increase</strong>. If
+the new predictor is <strong>useless</strong>, <span
+class="math inline">\(RSS\)</span> will barely change, and the penalty
+from decreasing the denominator will win, causing Adjusted <span
+class="math inline">\(R^2\)</span> to <strong>decrease</strong>.</li>
+</ul></li>
+<li><strong>Goal:</strong> You select the model with the
+<strong>highest</strong> Adjusted <span
+class="math inline">\(R^2\)</span>.</li>
+</ul>
+<h3 id="akaike-information-criterion-aic-1">Akaike Information Criterion
+(AIC)</h3>
+<ul>
+<li><strong>General Formula:</strong> <span class="math inline">\(AIC =
+-2 \log \ell(\hat{\theta}) + 2d\)</span></li>
+<li><strong>Concept Breakdown:</strong>
+<ul>
+<li><span class="math inline">\(\ell(\hat{\theta})\)</span>: This is the
+<strong>Maximized Likelihood Function</strong>.
+<ul>
+<li>The <strong>Likelihood Function</strong> <span
+class="math inline">\(\ell(\theta)\)</span> asks: “Given a set of model
+parameters <span class="math inline">\(\theta\)</span>, how probable is
+the data we observed?”</li>
+<li>The <strong>Maximum Likelihood Estimate (MLE)</strong> <span
+class="math inline">\(\hat{\theta}\)</span> is the specific set of
+parameters (the <span class="math inline">\(\hat{\beta}\)</span>’s) that
+<em>maximizes</em> this probability.</li>
+</ul></li>
+<li><span class="math inline">\(\log \ell(\hat{\theta})\)</span>: The
+<strong>log-likelihood</strong>. This is just a number that represents
+the <em>best possible fit</em> the model can achieve for the data. A
+higher number is a better fit.</li>
+<li><span class="math inline">\(-2 \log \ell(\hat{\theta})\)</span>:
+This is the <strong>Deviance</strong>. Since a higher log-likelihood is
+better, a <em>lower</em> deviance is better. This term measures
+<strong>poorness-of-fit</strong>.</li>
+<li><span class="math inline">\(d\)</span>: The number of parameters
+estimated by the model. (e.g., <span class="math inline">\(p\)</span>
+predictors + 1 intercept).</li>
+<li><span class="math inline">\(2d\)</span>: This is the <strong>Penalty
+Term</strong>.</li>
+</ul></li>
+<li><strong>How it Works:</strong> <span class="math inline">\(AIC =
+(\text{Poorness-of-Fit}) + (\text{Complexity Penalty})\)</span>. As you
+add predictors, the fit gets better (the deviance term goes down), but
+the penalty term (<span class="math inline">\(2d\)</span>) goes up.</li>
+<li><strong>Goal:</strong> You select the model with the
+<strong>lowest</strong> AIC.</li>
+</ul>
+<h3 id="bayesian-information-criterion-bic-1">Bayesian Information
+Criterion (BIC)</h3>
+<ul>
+<li><strong>General Formula:</strong> <span class="math inline">\(BIC =
+-2 \log \ell(\hat{\theta}) + \log(n)d\)</span></li>
+<li><strong>Concept:</strong> This is mathematically identical to AIC,
+but the penalty term is different.
+<ul>
+<li><strong>AIC Penalty:</strong> <span
+class="math inline">\(2d\)</span></li>
+<li><strong>BIC Penalty:</strong> <span
+class="math inline">\(\log(n)d\)</span></li>
+</ul></li>
+<li><strong>Comparison:</strong>
+<ul>
+<li><span class="math inline">\(n\)</span> is the number of observations
+in your dataset.</li>
+<li>As long as your dataset has 8 or more observations (<span
+class="math inline">\(n \ge 8\)</span>), <span
+class="math inline">\(\log(n)\)</span> will be greater than 2.</li>
+<li>This means <strong>BIC applies a much harsher penalty for
+complexity</strong> than AIC.</li>
+</ul></li>
+<li><strong>Consequence:</strong> BIC will tend to choose
+<em>simpler</em> models (fewer predictors) than AIC.</li>
+<li><strong>Goal:</strong> You select the model with the
+<strong>lowest</strong> BIC.</li>
+</ul>
+<h2 id="the-deeper-theory-why-aic-works-1">The Deeper Theory: Why AIC
+Works</h2>
+<p>Slide 27 (“Understanding AIC”) gives the deep mathematical
+justification.</p>
+<ul>
+<li><strong>Goal:</strong> We have a <em>true</em>, unknown process
+<span class="math inline">\(p\)</span> that generates our data. We are
+creating a model <span class="math inline">\(\hat{p}_j\)</span>. We want
+our model to be as “close” to the truth as possible.</li>
+<li><strong>Kullback-Leibler (K-L) Distance:</strong> This is a function
+<span class="math inline">\(K(p, \hat{p}_j)\)</span> that measures the
+“information lost” when you use your model <span
+class="math inline">\(\hat{p}_j\)</span> to approximate the truth <span
+class="math inline">\(p\)</span>. You want to <em>minimize</em> this
+distance.</li>
+<li><strong>The Math:</strong>
+<ol type="1">
+<li><span class="math inline">\(K(p, \hat{p}_j) = \int p(y) \log \left(
+\frac{p(y)}{\hat{p}_j(y)} \right) dy\)</span></li>
+<li>This splits into: <span class="math inline">\(K(p, \hat{p}_j) =
+\underbrace{\int p(y) \log(p(y)) dy}_{\text{Constant}} -
+\underbrace{\int p(y) \log(\hat{p}_j(y)) dy}_{\text{This is what we need
+to maximize}}\)</span></li>
+</ol></li>
+<li><strong>The Problem:</strong> We can’t calculate that second term
+because it requires knowing the <em>true</em> function <span
+class="math inline">\(p\)</span>.</li>
+<li><strong>Akaike’s Insight:</strong> Akaike proved that the
+log-likelihood we <em>can</em> calculate, <span
+class="math inline">\(\log \ell(\hat{\theta})\)</span>, is a
+<em>biased</em> estimator of that target. He also proved that the bias
+is approximately <span class="math inline">\(-d\)</span>.</li>
+<li><strong>The Solution:</strong> An <em>unbiased</em> estimate of the
+target is <span class="math inline">\(\log \ell(\hat{\theta}) -
+d\)</span>.</li>
+<li><strong>Final Step:</strong> For historical and statistical reasons,
+he multiplied this by <span class="math inline">\(-2\)</span> to create
+the final AIC formula.</li>
+<li><strong>Conclusion:</strong> AIC is not just a random formula. It is
+a carefully derived estimate of how much information your model loses
+compared to the “truth” (i.e., its expected performance on new
+data).</li>
+</ul>
+<h2 id="aicbic-for-linear-regression-1">AIC/BIC for Linear
+Regression</h2>
+<p>Slide 26 shows how these general formulas simplify for linear
+regression (assuming normal, Gaussian errors).</p>
+<ul>
+<li><strong>General Formula:</strong> <span class="math inline">\(AIC =
+-2 \log \ell(\hat{\theta}) + 2d\)</span></li>
+<li><strong>Linear Regression Formula:</strong> <span
+class="math inline">\(AIC = \frac{1}{n\hat{\sigma}^2}(RSS +
+2d\hat{\sigma}^2)\)</span></li>
+</ul>
+<p><strong>Key Insight:</strong> For linear regression, the
+“poorness-of-fit” term (<span class="math inline">\(-2 \log
+\ell(\hat{\theta})\)</span>) is <em>directly proportional to</em> the
+<span class="math inline">\(RSS\)</span>.</p>
+<p>This makes it much easier to understand. You can just think of the
+formulas as: * <strong>AIC <span class="math inline">\(\approx\)</span>
+<span class="math inline">\(RSS + 2d\hat{\sigma}^2\)</span></strong> *
+<strong>BIC <span class="math inline">\(\approx\)</span> <span
+class="math inline">\(RSS + \log(n)d\hat{\sigma}^2\)</span></strong></p>
+<p>(Here <span class="math inline">\(\hat{\sigma}^2\)</span> is an
+estimate of the error variance, which can often be treated as a
+constant).</p>
+<p>This clearly shows the trade-off: We want a model with a low
+<strong><span class="math inline">\(RSS\)</span></strong> (good fit) and
+a low <strong><span class="math inline">\(d\)</span></strong> (low
+complexity). These two goals are in direct competition.</p>
+<p><strong>Mallow’s <span class="math inline">\(C_p\)</span>:</strong>
+The slide notes that <span class="math inline">\(C_p\)</span> is
+equivalent to AIC for linear regression. The <span
+class="math inline">\(C_p\)</span> formula is <span
+class="math inline">\(C_p = \frac{1}{n}(RSS +
+2d\hat{\sigma}^2_{full})\)</span>, where <span
+class="math inline">\(\hat{\sigma}^2_{full}\)</span> is the error
+variance estimated from the <em>full</em> model. Since <span
+class="math inline">\(n\)</span> and <span
+class="math inline">\(\hat{\sigma}^2_{full}\)</span> are constants,
+minimizing <span class="math inline">\(C_p\)</span> is mathematically
+identical to minimizing <span class="math inline">\(RSS +
+2d\hat{\sigma}^2_{full}\)</span>, which is the same logic as AIC.</p>
+<h1 id="variable-selection">3. Variable Selection</h1>
+<h2 id="core-concept-the-problem-of-variable-selection">Core Concept:
+The Problem of Variable Selection</h2>
+<p>In regression, we want to model a response variable <span
+class="math inline">\(Y\)</span> using a set of <span
+class="math inline">\(p\)</span> predictor variables <span
+class="math inline">\(X_1, X_2, ..., X_p\)</span>.</p>
+<ul>
+<li><p><strong>The “Kitchen Sink” Problem:</strong> A common temptation
+is to include all available predictors in the model: <span
+class="math display">\[Y = \beta_0 + \beta_1X_1 + \beta_2X_2 + ... +
+\beta_pX_p + \epsilon\]</span> This often leads to
+<strong>overfitting</strong>. The model may fit the training data well
+but will perform poorly on new, unseen data. It’s also hard to interpret
+a model with dozens of predictors.</p></li>
+<li><p><strong>The Solution: Subset Selection.</strong> The goal is to
+find a smaller subset of the predictors that builds a model that is:</p>
+<ol type="1">
+<li><strong>Accurate:</strong> Has low prediction error.</li>
+<li><strong>Parsimonious:</strong> Uses the fewest predictors
+necessary.</li>
+<li><strong>Interpretable:</strong> Is simple enough for a human to
+understand.</li>
+</ol></li>
+</ul>
+<p>Your slides present two main methods to achieve this: <strong>Best
+Subset Selection</strong> and <strong>Forward Stepwise
+Selection</strong>.</p>
+<h2 id="method-1-best-subset-selection-bss">Method 1: Best Subset
+Selection (BSS)</h2>
+<p>This is the “brute force” approach. It considers <em>every single
+possible model</em>.</p>
+<h3 id="conceptual-algorithm">Conceptual Algorithm</h3>
+<ol type="1">
+<li>Fit all models with <span class="math inline">\(k=1\)</span>
+predictor (there are <span class="math inline">\(p\)</span> of these).
+Find the best one (lowest RSS) and call it <span
+class="math inline">\(M_1\)</span>.</li>
+<li>Fit all models with <span class="math inline">\(k=2\)</span>
+predictors (there are <span class="math inline">\(\binom{p}{2}\)</span>
+of these). Find the best one and call it <span
+class="math inline">\(M_2\)</span>.</li>
+<li>…</li>
+<li>Fit the one model with <span class="math inline">\(k=p\)</span>
+predictors (the full model), <span
+class="math inline">\(M_p\)</span>.</li>
+<li>You now have a list of <span class="math inline">\(p\)</span> “best”
+models: <span class="math inline">\(M_1, M_2, ..., M_p\)</span>.</li>
+<li>Use a selection criterion (like <strong>Adjusted <span
+class="math inline">\(R^2\)</span></strong>, <strong>BIC</strong>,
+<strong>AIC</strong>, or <strong><span
+class="math inline">\(C_p\)</span></strong>) to choose the single best
+model from this list.</li>
+</ol>
+<h3
+id="mathematical-computational-cost-from-slide-225641.png">Mathematical
+&amp; Computational Cost (from slide <code>225641.png</code>)</h3>
+<ul>
+<li>For each predictor, there are two possibilities: it’s either
+<strong>IN</strong> the model or <strong>OUT</strong>.</li>
+<li>With <span class="math inline">\(p\)</span> predictors, the total
+number of models to test is <span class="math inline">\(2 \times 2
+\times ... \times 2\)</span> (<span class="math inline">\(p\)</span>
+times).</li>
+<li><strong>Total Models = <span
+class="math inline">\(2^p\)</span></strong></li>
+<li>This is a “combinatorial explosion.” As the slide notes, if <span
+class="math inline">\(p=20\)</span>, <span class="math inline">\(2^{20}
+= 1,048,576\)</span> models. This is computationally infeasible for
+large <span class="math inline">\(p\)</span>.</li>
+</ul>
+<h2 id="method-2-forward-stepwise-selection-fss">Method 2: Forward
+Stepwise Selection (FSS)</h2>
+<p>This is a “greedy” algorithm. It’s an efficient alternative to BSS
+that does <em>not</em> test every model.</p>
+<h3
+id="conceptual-algorithm-from-slides-225645.png-225648.png">Conceptual
+Algorithm (from slides <code>225645.png</code> &amp;
+<code>225648.png</code>)</h3>
+<ul>
+<li><p><strong>Step 1:</strong> Start with the <strong>null
+model</strong>, <span class="math inline">\(M_0\)</span>, which has no
+predictors. <span class="math display">\[M_0: Y = \beta_0 +
+\epsilon\]</span> The prediction is just the sample mean of <span
+class="math inline">\(Y\)</span>.</p></li>
+<li><p><strong>Step 2 (Iterative):</strong></p>
+<ul>
+<li><strong>For <span class="math inline">\(k=0\)</span> (to get <span
+class="math inline">\(M_1\)</span>):</strong> Fit all <span
+class="math inline">\(p\)</span> models that add <em>one</em> predictor
+to <span class="math inline">\(M_0\)</span>. Choose the best one (lowest
+<strong>RSS</strong> or highest <strong><span
+class="math inline">\(R^2\)</span></strong>). This is <span
+class="math inline">\(M_1\)</span>. Let’s say it contains <span
+class="math inline">\(X_1\)</span>.</li>
+<li><strong>For <span class="math inline">\(k=1\)</span> (to get <span
+class="math inline">\(M_2\)</span>):</strong> <em>Keep</em> <span
+class="math inline">\(X_1\)</span> in the model. Fit all <span
+class="math inline">\(p-1\)</span> models that add <em>one more</em>
+predictor to <span class="math inline">\(M_1\)</span> (e.g., <span
+class="math inline">\(M_1+X_2\)</span>, <span
+class="math inline">\(M_1+X_3\)</span>, …). Choose the best of these.
+This is <span class="math inline">\(M_2\)</span>.</li>
+<li><strong>Repeat:</strong> Continue this process, adding one variable
+at a time, until all <span class="math inline">\(p\)</span> predictors
+are in the model <span class="math inline">\(M_p\)</span>.</li>
+</ul></li>
+<li><p><strong>Step 3:</strong> You now have a sequence of <span
+class="math inline">\(p+1\)</span> models: <span
+class="math inline">\(M_0, M_1, ..., M_p\)</span>. Choose the single
+best model from this sequence using <strong>Adjusted <span
+class="math inline">\(R^2\)</span></strong>, <strong>AIC</strong>,
+<strong>BIC</strong>, or <strong><span
+class="math inline">\(C_p\)</span></strong>.</p></li>
+</ul>
+<h3
+id="mathematical-computational-cost-from-slide-225651.png">Mathematical
+&amp; Computational Cost (from slide <code>225651.png</code>)</h3>
+<ul>
+<li>To find <span class="math inline">\(M_1\)</span>, you fit <span
+class="math inline">\(p\)</span> models.</li>
+<li>To find <span class="math inline">\(M_2\)</span>, you fit <span
+class="math inline">\(p-1\)</span> models.</li>
+<li>To find <span class="math inline">\(M_p\)</span>, you fit <span
+class="math inline">\(1\)</span> model.</li>
+<li>The null model <span class="math inline">\(M_0\)</span> is 1
+model.</li>
+<li><strong>Total Models = <span class="math inline">\(1 +
+\sum_{k=0}^{p-1} (p-k) = 1 + p + (p-1) + ... + 1 = 1 +
+\frac{p(p+1)}{2}\)</span></strong></li>
+<li>As the slide notes, if <span class="math inline">\(p=20\)</span>,
+this is only <span class="math inline">\(1 + 20(21)/2 = 211\)</span>
+models. This is vastly more efficient than BSS.</li>
+<li><strong>Key weakness:</strong> The method is “greedy.” If it adds
+<span class="math inline">\(X_1\)</span> in Step 1, it can
+<em>never</em> be removed. It’s possible the true best 2-variable model
+is <span class="math inline">\((X_2, X_3)\)</span>, but if FSS chose
+<span class="math inline">\(X_1\)</span> as the best 1-variable model,
+it will never find <span class="math inline">\((X_2, X_3)\)</span>.</li>
+</ul>
+<h2 id="how-to-choose-the-best-model-the-criteria">4. How to Choose the
+“Best” Model: The Criteria</h2>
+<p>You can’t use <strong>RSS</strong> or <strong><span
+class="math inline">\(R^2\)</span></strong> to compare models with
+<em>different numbers of predictors</em> (<span
+class="math inline">\(k\)</span>). This is because RSS always decreases
+(and <span class="math inline">\(R^2\)</span> always increases) as you
+add more variables. You <em>must</em> use a criterion that penalizes
+complexity.</p>
+<ul>
+<li><p><strong>RSS (Residual Sum of Squares):</strong> Goal is to
+<strong>minimize</strong>. <span class="math display">\[RSS =
+\sum_{i=1}^{n} (y_i - \hat{y}_i)^2\]</span> Good for comparing models
+<em>of the same size <span
+class="math inline">\(k\)</span></em>.</p></li>
+<li><p><strong>Adjusted R-squared (<span class="math inline">\(Adj.
+R^2\)</span>):</strong> Goal is to <strong>maximize</strong>. <span
+class="math display">\[Adj. R^2 = 1 -
+\frac{(1-R^2)(n-1)}{n-p-1}\]</span> This “adjusts” <span
+class="math inline">\(R^2\)</span> by adding a penalty for having more
+predictors (<span class="math inline">\(p\)</span>). Adding a useless
+predictor will make <span class="math inline">\(Adj. R^2\)</span> go
+down.</p></li>
+<li><p><strong>Mallow’s <span
+class="math inline">\(C_p\)</span>:</strong> Goal is to
+<strong>minimize</strong>. <span class="math display">\[C_p \approx
+\frac{1}{n}(RSS + 2p\hat{\sigma}^2)\]</span> Here, <span
+class="math inline">\(\hat{\sigma}^2\)</span> is an estimate of the
+error variance from the <em>full model</em> (with all <span
+class="math inline">\(p\)</span> predictors). A good model will have
+<span class="math inline">\(C_p \approx p\)</span>.</p></li>
+<li><p><strong>AIC (Akaike Information Criterion) &amp; BIC (Bayesian
+Information Criterion):</strong> Goal is to <strong>minimize</strong>.
+<span class="math display">\[AIC = 2p - 2\ln(\hat{L})\]</span> <span
+class="math display">\[BIC = p\ln(n) - 2\ln(\hat{L})\]</span> Here,
+<span class="math inline">\(\hat{L}\)</span> is the maximized likelihood
+of the model. You don’t need to calculate this by hand; software
+provides it.</p>
+<ul>
+<li><strong>Key difference:</strong> BIC’s penalty for <span
+class="math inline">\(p\)</span> is <span
+class="math inline">\(p\ln(n)\)</span>, while AIC’s is <span
+class="math inline">\(2p\)</span>. Since <span
+class="math inline">\(\ln(n)\)</span> is almost always <span
+class="math inline">\(&gt; 2\)</span> (for <span
+class="math inline">\(n&gt;7\)</span>), <strong>BIC applies a much
+heavier penalty for complexity</strong>.</li>
+<li>This means <strong>BIC tends to choose smaller, more parsimonious
+models</strong> than AIC or <span class="math inline">\(Adj.
+R^2\)</span>.</li>
+</ul></li>
+</ul>
+<h2 id="python-code-analysis-slide-225546.jpg">5. Python Code Analysis
+(Slide <code>225546.jpg</code>)</h2>
+<p>This slide shows the Python code for <strong>Best Subset
+Selection</strong> (BSS).</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Import necessary libraries</span></span><br><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"><span class="keyword">import</span> seaborn <span class="keyword">as</span> sns</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">import</span> statsmodels.api <span class="keyword">as</span> sm</span><br><span class="line"><span class="keyword">from</span> itertools <span class="keyword">import</span> combinations <span class="comment"># &lt;-- This is the BSS engine</span></span><br></pre></td></tr></table></figure>
+<h3 id="block-1-load-the-credit-dataset">Block 1: Load the Credit
+dataset</h3>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 1. Load the Credit dataset</span></span><br><span class="line">Credit = pd.read_csv(<span class="string">&#x27;Credit.csv&#x27;</span>)</span><br><span class="line">Credit[<span class="string">&#x27;ID&#x27;</span>] = Credit[<span class="string">&#x27;ID&#x27;</span>].astype(<span class="built_in">str</span>)</span><br><span class="line">(num_samples, num_predictors) = Credit.shape</span><br><span class="line"></span><br><span class="line"><span class="comment"># Convert categorical text data to numerical (dummy variables)</span></span><br><span class="line">Credit[<span class="string">&#x27;Gender&#x27;</span>] = Credit[<span class="string">&#x27;Gender&#x27;</span>].<span class="built_in">map</span>(&#123;<span class="string">&#x27;Male&#x27;</span>: <span class="number">1</span>, <span class="string">&#x27;Female&#x27;</span>: <span class="number">0</span>&#125;)</span><br><span class="line">Credit[<span class="string">&#x27;Student&#x27;</span>] = Credit[<span class="string">&#x27;Student&#x27;</span>].<span class="built_in">map</span>(&#123;<span class="string">&#x27;Yes&#x27;</span>: <span class="number">1</span>, <span class="string">&#x27;No&#x27;</span>: <span class="number">0</span>&#125;)</span><br><span class="line">Credit[<span class="string">&#x27;Married&#x27;</span>] = Credit[<span class="string">&#x27;Married&#x27;</span>].<span class="built_in">map</span>(&#123;<span class="string">&#x27;Yes&#x27;</span>: <span class="number">1</span>, <span class="string">&#x27;No&#x27;</span>: <span class="number">0</span>&#125;)</span><br><span class="line">Credit[<span class="string">&#x27;Ethnicity&#x27;</span>] = Credit[<span class="string">&#x27;Ethnicity&#x27;</span>].<span class="built_in">map</span>(&#123;<span class="string">&#x27;Asian&#x27;</span>: <span class="number">1</span>, <span class="string">&#x27;Caucasian&#x27;</span>: <span class="number">1</span>, <span class="string">&#x27;African American&#x27;</span>: <span class="number">0</span>&#125;)</span><br></pre></td></tr></table></figure>
+<ul>
+<li><strong><code>pd.read_csv</code></strong>: Reads the data into a
+<code>pandas</code> DataFrame.</li>
+<li><strong><code>.map()</code></strong>: This is a crucial
+preprocessing step. Regression models require numbers, not text like
+‘Yes’ or ‘Male’. This line converts those strings into <code>1</code>s
+and <code>0</code>s.</li>
+</ul>
+<h3 id="block-2-plot-scatterplot-matrix">Block 2: Plot scatterplot
+matrix</h3>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 2. Plot scatterplot matrix</span></span><br><span class="line">selected_columns = [<span class="string">&#x27;Balance&#x27;</span>, <span class="string">&#x27;Education&#x27;</span>, <span class="string">&#x27;Age&#x27;</span>, <span class="string">&#x27;Cards&#x27;</span>, <span class="string">&#x27;Rating&#x27;</span>, <span class="string">&#x27;Limit&#x27;</span>, <span class="string">&#x27;Income&#x27;</span>]</span><br><span class="line">sns.<span class="built_in">set</span>(style=<span class="string">&quot;ticks&quot;</span>)</span><br><span class="line">sns.pairplot(Credit[selected_columns], diag_kind=<span class="string">&#x27;kde&#x27;</span>)</span><br><span class="line">plt.suptitle(<span class="string">&#x27;Scatterplot Matrix&#x27;</span>, y=<span class="number">1.02</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<ul>
+<li><strong><code>sns.pairplot</code></strong>: A powerful visualization
+from the <code>seaborn</code> library. The resulting plot (right side of
+the slide) is a grid.
+<ul>
+<li><strong>Diagonal plots (kde)</strong>: Show the distribution (Kernel
+Density Estimate) of a single variable (e.g., ‘Balance’ is skewed
+right).</li>
+<li><strong>Off-diagonal plots (scatter)</strong>: Show the relationship
+between two variables (e.g., ‘Limit’ and ‘Rating’ are almost perfectly
+linear). This helps you visually spot potentially strong
+predictors.</li>
+</ul></li>
+</ul>
+<h3 id="block-3-best-subset-selection">Block 3: Best Subset
+Selection</h3>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 3. Best Subset Selection</span></span><br><span class="line"><span class="comment"># (This code is incomplete on the slide, I&#x27;ll fill in the logic)</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Define target and predictors</span></span><br><span class="line">target = <span class="string">&#x27;Balance&#x27;</span></span><br><span class="line">predictors = [col <span class="keyword">for</span> col <span class="keyword">in</span> Credit.columns <span class="keyword">if</span> col != target] </span><br><span class="line">nvmax = <span class="number">10</span> <span class="comment"># Max number of predictors to test (up to 10)</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Initialize lists to store model statistics</span></span><br><span class="line">model_stats = []</span><br><span class="line"></span><br><span class="line"><span class="comment"># Iterate over number of predictors from 1 to nvmax</span></span><br><span class="line"><span class="keyword">for</span> k <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, nvmax + <span class="number">1</span>):</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># Generate all possible combinations of predictors of size k</span></span><br><span class="line">    <span class="comment"># This is the core of BSS</span></span><br><span class="line">    <span class="keyword">for</span> subset <span class="keyword">in</span> <span class="built_in">list</span>(combinations(predictors, k)):</span><br><span class="line">        </span><br><span class="line">        <span class="comment"># Get the design matrix (X)</span></span><br><span class="line">        X_subset = Credit[<span class="built_in">list</span>(subset)]</span><br><span class="line">        </span><br><span class="line">        <span class="comment"># Add a constant (intercept) term to the model</span></span><br><span class="line">        <span class="comment"># Y = B0 + B1*X1 -&gt; statsmodels needs B0 to be added manually</span></span><br><span class="line">        X_subset_const = sm.add_constant(X_subset)</span><br><span class="line">        </span><br><span class="line">        <span class="comment"># Get the target variable (y)</span></span><br><span class="line">        y_target = Credit[target]</span><br><span class="line">        </span><br><span class="line">        <span class="comment"># Fit the Ordinary Least Squares (OLS) model</span></span><br><span class="line">        model = sm.OLS(y_target, X_subset_const).fit()</span><br><span class="line">        </span><br><span class="line">        <span class="comment"># Calculate RSS</span></span><br><span class="line">        RSS = ((model.resid) ** <span class="number">2</span>).<span class="built_in">sum</span>()</span><br><span class="line">        </span><br><span class="line">        <span class="comment"># (The full code would also calculate R-squared, Adj. R-sq, BIC, etc. here)</span></span><br><span class="line">        <span class="comment"># model_stats.append(&#123;&#x27;k&#x27;: k, &#x27;subset&#x27;: subset, &#x27;RSS&#x27;: RSS, ...&#125;)</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><strong><code>for k in range(1, nvmax + 1)</code></strong>: This is
+the <em>outer</em> loop that iterates from <span
+class="math inline">\(k=1\)</span> (1 predictor) to <span
+class="math inline">\(k=10\)</span> (10 predictors).</li>
+<li><strong><code>list(combinations(predictors, k))</code></strong>:
+This is the <em>inner</em> loop and the <strong>most important
+line</strong>. The <code>itertools.combinations</code> function is a
+highly efficient way to generate all unique subsets.
+<ul>
+<li>When <span class="math inline">\(k=1\)</span>, it returns
+<code>[('Income',), ('Limit',), ('Rating',), ...]</code>.</li>
+<li>When <span class="math inline">\(k=2\)</span>, it returns
+<code>[('Income', 'Limit'), ('Income', 'Rating'), ('Limit', 'Rating'), ...]</code>.</li>
+<li>This is what generates the <span class="math inline">\(2^p\)</span>
+(or in this case, <span class="math inline">\(\sum_{k=1}^{10}
+\binom{p}{k}\)</span>) models to test.</li>
+</ul></li>
+<li><strong><code>sm.add_constant(X_subset)</code></strong>: Your
+regression equation is <span class="math inline">\(Y = \beta_0 +
+\beta_1X_1\)</span>. The <span class="math inline">\(X_1\)</span> is
+your <code>X_subset</code>. The <code>sm.add_constant</code> function
+adds a column of <code>1</code>s to your data, which allows the
+<code>statsmodels</code> library to estimate the <span
+class="math inline">\(\beta_0\)</span> (intercept) term.</li>
+<li><strong><code>sm.OLS(y_target, X_subset_const).fit()</code></strong>:
+This fits the Ordinary Least Squares (OLS) model, which finds the <span
+class="math inline">\(\beta\)</span> coefficients that <strong>minimize
+the RSS</strong>.</li>
+<li><strong><code>model.resid</code></strong>: This attribute of the
+fitted model contains the residuals (<span class="math inline">\(e_i =
+y_i - \hat{y}_i\)</span>) for each data point.</li>
+<li><strong><code>((model.resid) ** 2).sum()</code></strong>: This line
+is the direct code implementation of the formula <span
+class="math inline">\(RSS = \sum e_i^2\)</span>.</li>
+</ul>
+<h2 id="synthesizing-the-results-the-plots">Synthesizing the Results
+(The Plots)</h2>
+<p>After running the BSS code, you get the data used in the plots and
+the table.</p>
+<ul>
+<li><p><strong>Image <code>225550.png</code> (Adjusted
+R-squared)</strong></p>
+<ul>
+<li><strong>Goal:</strong> Maximize.</li>
+<li><strong>What it shows:</strong> The gray dots are <em>all</em> the
+models tested for each <span class="math inline">\(k\)</span>. The red
+line connects the single <em>best</em> model for each <span
+class="math inline">\(k\)</span>.</li>
+<li><strong>Conclusion:</strong> The plot shows a sharp “elbow.” The
+<span class="math inline">\(Adj. R^2\)</span> increases dramatically up
+to <span class="math inline">\(k=4\)</span>, then increases very slowly.
+The maximum is around <span class="math inline">\(k=6\)</span> or <span
+class="math inline">\(k=7\)</span>, but the gain after <span
+class="math inline">\(k=4\)</span> is minimal.</li>
+</ul></li>
+<li><p><strong>Image <code>225554.png</code> (BIC)</strong></p>
+<ul>
+<li><strong>Goal:</strong> Minimize.</li>
+<li><strong>What it shows:</strong> BIC heavily penalizes
+complexity.</li>
+<li><strong>Conclusion:</strong> The plot shows a very clear minimum.
+The BIC value plummets from <span class="math inline">\(k=2\)</span> to
+<span class="math inline">\(k=3\)</span> and hits its lowest point at
+<strong><span class="math inline">\(k=4\)</span></strong>. After <span
+class="math inline">\(k=4\)</span>, the penalty for adding more
+variables is <em>larger</em> than the benefit in model fit, so the BIC
+score starts to rise. This is a very strong vote for the 4-predictor
+model.</li>
+</ul></li>
+<li><p><strong>Image <code>225635.png</code> (Mallow’s <span
+class="math inline">\(C_p\)</span>)</strong></p>
+<ul>
+<li><strong>Goal:</strong> Minimize.</li>
+<li><strong>What it shows:</strong> A very similar story to BIC.</li>
+<li><strong>Conclusion:</strong> The <span
+class="math inline">\(C_p\)</span> value drops significantly and hits
+its minimum at <strong><span
+class="math inline">\(k=4\)</span></strong>.</li>
+</ul></li>
+<li><p><strong>Image <code>225638.png</code> (Summary
+Table)</strong></p>
+<ul>
+<li>This is the <strong>most important image</strong> for the final
+conclusion. It summarizes the red line from all the plots.</li>
+<li>Look at the row for <code>Num_Predictors = 4</code>. The predictors
+are <strong>(Income, Limit, Cards, Student)</strong>.</li>
+<li>Now look at the columns for <code>BIC</code> and <code>Cp</code>.
+<ul>
+<li><strong>BIC:</strong> <code>4841.615607</code>. This is the lowest
+value in the entire <code>BIC</code> column (the value at <span
+class="math inline">\(k=3\)</span> is <code>4865.352851</code>).</li>
+<li><strong>Cp:</strong> <code>7.122228</code>. This is also the lowest
+value in the <code>Cp</code> column.</li>
+</ul></li>
+<li>The <code>Adj_R_squared</code> at <span
+class="math inline">\(k=4\)</span> is <code>0.953580</code>, which is
+very close to its maximum of <code>~0.954</code> at <span
+class="math inline">\(k=7-10\)</span>.</li>
+</ul></li>
+</ul>
+<p><strong>Final Conclusion:</strong> All three “penalized” criteria
+(Adjusted <span class="math inline">\(R^2\)</span>, BIC, and <span
+class="math inline">\(C_p\)</span>) point to the same conclusion. While
+<span class="math inline">\(Adj. R^2\)</span> is a bit ambiguous,
+<strong>BIC and <span class="math inline">\(C_p\)</span> provide a clear
+signal that the best, most parsimonious model is the 4-predictor model
+using <code>Income</code>, <code>Limit</code>, <code>Cards</code>, and
+<code>Student</code></strong>.</p>
+<h1 id="subset-selection">4. Subset Selection</h1>
+<h2 id="summary-of-subset-selection">Summary of Subset Selection</h2>
+<p>These slides introduce <strong>subset selection</strong>, a process
+in statistical learning used to identify the best subset of predictors
+(variables) for a regression model. The goal is to find a model that has
+low prediction error and avoids overfitting by excluding irrelevant
+variables.</p>
+<p>The slides cover two main “greedy” (stepwise) algorithms and the
+criteria used to select the final best model.</p>
+<h2 id="stepwise-selection-algorithms">Stepwise Selection
+Algorithms</h2>
+<p>Instead of testing all <span class="math inline">\(2^p\)</span>
+possible models (which is “best subset selection” and computationally
+unfeasible), stepwise methods build a single path of models.</p>
+<h3 id="forward-stepwise-selection">Forward Stepwise Selection</h3>
+<p>This is an <strong>additive</strong> (bottom-up) approach:</p>
+<ol type="1">
+<li><strong>Start</strong> with the null model (no predictors).</li>
+<li><strong>Find</strong> the best 1-variable model (the one that gives
+the lowest Residual Sum of Squares, or RSS).</li>
+<li><strong>Add</strong> the single variable that, when added to the
+current model, results in the <em>new</em> best model (lowest RSS).</li>
+<li><strong>Repeat</strong> this process until all <span
+class="math inline">\(p\)</span> predictors are in the model.</li>
+<li>This generates a sequence of <span
+class="math inline">\(p+1\)</span> models, from <span
+class="math inline">\(\mathcal{M}_0\)</span> to <span
+class="math inline">\(\mathcal{M}_p\)</span>.</li>
+</ol>
+<h3 id="backward-stepwise-selection">Backward Stepwise Selection</h3>
+<p>This is a <strong>subtractive</strong> (top-down) approach:</p>
+<ol type="1">
+<li><strong>Start</strong> with the full model containing all <span
+class="math inline">\(p\)</span> predictors.</li>
+<li><strong>Find</strong> the best <span
+class="math inline">\((p-1)\)</span>-variable model by <em>removing</em>
+the single variable that results in the <em>lowest RSS</em> (or highest
+<span class="math inline">\(R^2\)</span>). This variable is considered
+the least significant.</li>
+<li><strong>Remove</strong> the next variable that, when removed from
+the current best model, gives the new best model.</li>
+<li><strong>Repeat</strong> until only the null model remains.</li>
+<li>This also generates a sequence of <span
+class="math inline">\(p+1\)</span> models.</li>
+</ol>
+<h4 id="pros-and-cons-backward-selection">Pros and Cons (Backward
+Selection)</h4>
+<ul>
+<li><strong>Pro:</strong> Computationally efficient compared to best
+subset. It fits <span class="math inline">\(1 + \sum_{k=0}^{p-1}(p-k) =
+\mathbf{1 + p(p+1)/2}\)</span> models, which is much less than <span
+class="math inline">\(2^p\)</span>. (e.g., for <span
+class="math inline">\(p=20\)</span>, it’s 211 models vs. &gt;1
+million).</li>
+<li><strong>Con:</strong> <strong>Cannot be used if <span
+class="math inline">\(p &gt; n\)</span></strong> (more predictors than
+observations), because the initial full model cannot be fit.</li>
+<li><strong>Con (for both):</strong> These methods are
+<strong>greedy</strong>. A variable added in forward selection is
+<em>never removed</em>, and a variable removed in backward selection is
+<em>never added back</em>. This means they are not guaranteed to find
+the true best model.</li>
+</ul>
+<h2 id="choosing-the-final-best-model">Choosing the Final Best
+Model</h2>
+<p>Both forward and backward selection give you a set of candidate
+models (e.g., the best 1-variable model, best 2-variable model, etc.).
+You must then choose the <em>single best</em> one. The slides show two
+main approaches:</p>
+<h3 id="a.-direct-error-estimation">A. Direct Error Estimation</h3>
+<p>Use a validation set or cross-validation (CV) to estimate the test
+error for each model (e.g., the 1-variable, 2-variable… models).
+<strong>Choose the model with the lowest estimated test
+error.</strong></p>
+<h3 id="b.-adjusted-metrics-penalizing-for-complexity">B. Adjusted
+Metrics (Penalizing for Complexity)</h3>
+<p>Standard RSS and <span class="math inline">\(R^2\)</span> will always
+improve as you add variables, leading to overfitting. Instead, use
+metrics that <em>penalize</em> the model for having too many
+predictors.</p>
+<ul>
+<li><p><strong>Mallows’ <span
+class="math inline">\(C_p\)</span>:</strong> An estimate of test Mean
+Squared Error (MSE). <span class="math display">\[C_p = \frac{1}{n} (RSS
++ 2d\hat{\sigma}^2)\]</span> (where <span
+class="math inline">\(d\)</span> is the number of predictors, and <span
+class="math inline">\(\hat{\sigma}^2\)</span> is an estimate of the
+error variance). <strong>You want to find the model with the
+<em>minimum</em> <span
+class="math inline">\(C_p\)</span>.</strong></p></li>
+<li><p><strong>BIC (Bayesian Information Criterion):</strong> <span
+class="math display">\[BIC = \frac{1}{n} (RSS +
+\log(n)d\hat{\sigma}^2)\]</span> BIC’s penalty <span
+class="math inline">\(\log(n)\)</span> is stronger than <span
+class="math inline">\(C_p\)</span>’s (or AIC’s) penalty of <span
+class="math inline">\(2\)</span>, so it tends to select <em>smaller</em>
+(more parsimonious) models. <strong>You want to find the model with the
+<em>minimum</em> BIC.</strong></p></li>
+<li><p><strong>Adjusted <span
+class="math inline">\(R^2\)</span>:</strong> <span
+class="math display">\[R^2_{adj} = 1 -
+\frac{RSS/(n-d-1)}{TSS/(n-1)}\]</span> (where <span
+class="math inline">\(TSS\)</span> is the Total Sum of Squares). Unlike
+<span class="math inline">\(R^2\)</span>, this metric can decrease if
+adding a variable doesn’t help enough. <strong>You want to find the
+model with the <em>maximum</em> Adjusted <span
+class="math inline">\(R^2\)</span>.</strong></p></li>
+</ul>
+<h2 id="python-code-understanding">Python Code Understanding</h2>
+<p>The slides use the <code>regsubsets()</code> function from the
+<code>leaps</code> package in <strong>R</strong>.</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># R Code from slides</span></span><br><span class="line">library<span class="punctuation">(</span>leaps<span class="punctuation">)</span></span><br><span class="line"><span class="comment"># Forward Selection</span></span><br><span class="line">regfit.fwd <span class="operator">&lt;-</span> regsubsets<span class="punctuation">(</span>Balance<span class="operator">~</span>.<span class="punctuation">,</span> data<span class="operator">=</span>Credit<span class="punctuation">,</span> method<span class="operator">=</span><span class="string">&quot;forward&quot;</span><span class="punctuation">,</span> nvmax<span class="operator">=</span><span class="number">11</span><span class="punctuation">)</span></span><br><span class="line"><span class="comment"># Backward Selection</span></span><br><span class="line">regfit.bwd <span class="operator">&lt;-</span> regsubsets<span class="punctuation">(</span>Balance<span class="operator">~</span>.<span class="punctuation">,</span> data<span class="operator">=</span>Credit<span class="punctuation">,</span> method<span class="operator">=</span><span class="string">&quot;backward&quot;</span><span class="punctuation">,</span> nvmax<span class="operator">=</span><span class="number">11</span><span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+<p>In <strong>Python</strong>, the standard tool for this is
+<code>SequentialFeatureSelector</code> from
+<strong><code>scikit-learn</code></strong>.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"><span class="keyword">from</span> sklearn.linear_model <span class="keyword">import</span> LinearRegression</span><br><span class="line"><span class="keyword">from</span> sklearn.feature_selection <span class="keyword">import</span> SequentialFeatureSelector</span><br><span class="line"><span class="keyword">from</span> sklearn.model_selection <span class="keyword">import</span> train_test_split</span><br><span class="line"></span><br><span class="line"><span class="comment"># Assume &#x27;Credit&#x27; is a pandas DataFrame with &#x27;Balance&#x27; as the target</span></span><br><span class="line">X = Credit.drop(<span class="string">&#x27;Balance&#x27;</span>, axis=<span class="number">1</span>)</span><br><span class="line">y = Credit[<span class="string">&#x27;Balance&#x27;</span>]</span><br><span class="line"></span><br><span class="line"><span class="comment"># Initialize the linear regression estimator</span></span><br><span class="line">model = LinearRegression()</span><br><span class="line"></span><br><span class="line"><span class="comment"># --- Forward Selection ---</span></span><br><span class="line"><span class="comment"># direction=&#x27;forward&#x27; starts with 0 features and adds them</span></span><br><span class="line"><span class="comment"># To get the best 4-variable model, for example:</span></span><br><span class="line">sfs_forward = SequentialFeatureSelector(</span><br><span class="line">    model,</span><br><span class="line">    n_features_to_select=<span class="number">4</span>,</span><br><span class="line">    direction=<span class="string">&#x27;forward&#x27;</span>,</span><br><span class="line">    cv=<span class="literal">None</span> <span class="comment"># Or use cross-validation, e.g., cv=10</span></span><br><span class="line">)</span><br><span class="line">sfs_forward.fit(X, y)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Forward selection best 4 features:&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(sfs_forward.get_feature_names_out())</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># --- Backward Selection ---</span></span><br><span class="line"><span class="comment"># direction=&#x27;backward&#x27; starts with all features and removes them</span></span><br><span class="line">sfs_backward = SequentialFeatureSelector(</span><br><span class="line">    model,</span><br><span class="line">    n_features_to_select=<span class="number">4</span>,</span><br><span class="line">    direction=<span class="string">&#x27;backward&#x27;</span>,</span><br><span class="line">    cv=<span class="literal">None</span></span><br><span class="line">)</span><br><span class="line">sfs_backward.fit(X, y)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;\nBackward selection best 4 features:&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(sfs_backward.get_feature_names_out())</span><br><span class="line"></span><br><span class="line"><span class="comment"># Note: To replicate the plots, you would loop this process,</span></span><br><span class="line"><span class="comment"># changing &#x27;n_features_to_select&#x27; from 1 to p,</span></span><br><span class="line"><span class="comment"># record the model scores (e.g., RSS, AIC, BIC) at each step,</span></span><br><span class="line"><span class="comment"># and then plot the results.</span></span><br></pre></td></tr></table></figure>
+<h2 id="important-images">Important Images</h2>
+<ol type="1">
+<li><p><strong>Slide <code>...230014.png</code> (Forward Selection
+Plots) &amp; <code>...230036.png</code> (Backward Selection
+Plots):</strong></p>
+<ul>
+<li><strong>What they are:</strong> These <span class="math inline">\(2
+\times 2\)</span> plot grids are the most important visuals. They show
+<strong>Residual Sum of Squares (RSS)</strong>, <strong>Adjusted <span
+class="math inline">\(R^2\)</span></strong>, <strong>BIC</strong>, and
+<strong>Mallows’ <span class="math inline">\(C_p\)</span></strong>
+plotted against the <em>Number of Variables</em>.</li>
+<li><strong>Why they’re important:</strong> They are the
+<strong>decision-making tool</strong>. You use these plots to choose the
+best model.
+<ul>
+<li>You look for the “elbow” or <strong>minimum</strong> value for BIC
+and <span class="math inline">\(C_p\)</span>.</li>
+<li>You look for the “peak” or <strong>maximum</strong> value for
+Adjusted <span class="math inline">\(R^2\)</span>.</li>
+<li>(RSS is not used for selection as it always decreases).</li>
+</ul></li>
+</ul></li>
+<li><p><strong>Slide <code>...230040.png</code> (Find the best
+model):</strong></p>
+<ul>
+<li><strong>What it is:</strong> This slide shows a close-up of the
+<span class="math inline">\(C_p\)</span>, BIC, and Adjusted <span
+class="math inline">\(R^2\)</span> plots, with the “best” model (the
+min/max) marked with a blue ‘x’.</li>
+<li><strong>Why it’s important:</strong> It explicitly states the
+selection criteria. The text highlights that BIC suggests a 4-variable
+model, while the other two are “rather flat” after 4, making the choice
+less obvious but pointing to a simple model.</li>
+</ul></li>
+<li><p><strong>Slide <code>...230045.png</code> (BIC vs. Validation
+vs. CV):</strong></p>
+<ul>
+<li><strong>What it is:</strong> This shows three plots for selecting
+the best model using different criteria: BIC, Validation Set Error, and
+Cross-Validation Error.</li>
+<li><strong>Why it’s important:</strong> It shows that <strong>different
+selection criteria can lead to different “best” models</strong>. Here,
+BIC (a mathematical adjustment) picks a 4-variable model, while
+validation and CV (direct error estimation) both pick a 6-variable
+model.</li>
+</ul></li>
+</ol>
+<p>The slides use the <code>Credit</code> dataset to demonstrate two key
+tasks: 1. <strong>Running</strong> different subset selection algorithms
+(forward, backward, best). 2. <strong>Using</strong> various statistical
+metrics (BIC, <span class="math inline">\(C_p\)</span>, CV error) to
+choose the single best model.</p>
+<h2 id="comparing-selection-algorithms-the-path">Comparing Selection
+Algorithms (The Path)</h2>
+<p>This part of the example compares the <em>sequence</em> of models
+selected by “Forward Stepwise” selection versus “Best Subset”
+selection.</p>
+<p><strong>Key Result (from Table 6.1):</strong></p>
+<p>This table is the most important result for comparing the
+algorithms.</p>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th style="text-align: left;">Variables</th>
+<th style="text-align: left;">Best Subset</th>
+<th style="text-align: left;">Forward Stepwise</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>one</strong></td>
+<td style="text-align: left;"><code>rating</code></td>
+<td style="text-align: left;"><code>rating</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>two</strong></td>
+<td style="text-align: left;"><code>rating</code>,
+<code>income</code></td>
+<td style="text-align: left;"><code>rating</code>,
+<code>income</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>three</strong></td>
+<td style="text-align: left;"><code>rating</code>, <code>income</code>,
+<code>student</code></td>
+<td style="text-align: left;"><code>rating</code>, <code>income</code>,
+<code>student</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>four</strong></td>
+<td style="text-align: left;"><code>cards</code>, <code>income</code>,
+<code>student</code>, <code>limit</code></td>
+<td style="text-align: left;"><code>rating</code>, <code>income</code>,
+<code>student</code>, <code>limit</code></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Summary of this result:</strong></p>
+<ul>
+<li><strong>Identical for 1, 2, and 3 variables:</strong> Both methods
+agree on the best one-variable model (<code>rating</code>), the best
+two-variable model (<code>rating</code>, <code>income</code>), and the
+best three-variable model (<code>rating</code>, <code>income</code>,
+<code>student</code>).</li>
+<li><strong>They Diverge at 4 variables:</strong>
+<ul>
+<li><strong>Forward selection</strong> is <em>greedy</em>. It started
+with <code>rating</code>, <code>income</code>, <code>student</code> and
+was “stuck” with them. It then added <code>limit</code>, as that was the
+best variable to <em>add</em> to its existing 3-variable model.</li>
+<li><strong>Best subset selection</strong> is <em>not</em> greedy. It
+tests all possible 4-variable combinations. It discovered that the model
+<code>cards</code>, <code>income</code>, <code>student</code>,
+<code>limit</code> has a slightly lower RSS than the model forward
+selection found.</li>
+</ul></li>
+<li><strong>Main Takeaway:</strong> This demonstrates the limitation of
+a greedy algorithm. Forward selection missed the “true” best 4-variable
+model because it was locked into its previous choices and couldn’t “swap
+out” <code>rating</code> for <code>cards</code>.</li>
+</ul>
+<h2 id="choosing-the-single-best-model-the-destination">Choosing the
+Single Best Model (The Destination)</h2>
+<p>This is the most critical part of the analysis. After running a
+selection algorithm (like forward, backward, or best subset), you get a
+list of the “best” models for each size (best 1-variable, best
+2-variable, etc.). Now you must decide: <strong>is the best model the
+4-variable one, the 6-variable one, or another?</strong></p>
+<p>The slides show several plots to help make this decision, all plotted
+against the “Number of Predictors.”</p>
+<p><strong>Summary of Plot Results:</strong></p>
+<p>Here’s what each plot tells you:</p>
+<ul>
+<li><strong>Residual Sum of Squares (RSS)</strong> (e.g., in slide
+<code>...230014.png</code>, top-left)
+<ul>
+<li><strong>What it shows:</strong> RSS <em>always</em> decreases as you
+add more variables. It drops sharply until 4 variables, then flattens
+out.</li>
+<li><strong>Conclusion:</strong> This plot is <strong>not useful for
+picking the best model</strong> because it will always pick the full
+model, which is overfit. It’s only used to see the diminishing returns
+of adding new variables.</li>
+</ul></li>
+<li><strong>Adjusted <span class="math inline">\(R^2\)</span></strong>
+(e.g., in slide <code>...230040.png</code>, right)
+<ul>
+<li><strong>What it shows:</strong> This metric penalizes adding useless
+variables. The plot rises quickly, then flattens, peaking at its
+<strong>maximum value around 6 or 7 variables</strong>.</li>
+<li><strong>Conclusion:</strong> This metric suggests a <strong>6 or
+7-variable model</strong>.</li>
+</ul></li>
+<li><strong>Mallows’ <span class="math inline">\(C_p\)</span></strong>
+(e.g., in slide <code>...230040.png</code>, left)
+<ul>
+<li><strong>What it shows:</strong> This is an estimate of test error.
+We want the model with the <strong>minimum <span
+class="math inline">\(C_p\)</span></strong>. The plot drops to a low
+value at 4 variables and stays low, with its absolute minimum around
+<strong>6 or 7 variables</strong>.</li>
+<li><strong>Conclusion:</strong> This metric also suggests a <strong>6
+or 7-variable model</strong>.</li>
+</ul></li>
+<li><strong>BIC (Bayesian Information Criterion)</strong> (e.g., in
+slide <code>...230040.png</code>, center)
+<ul>
+<li><strong>What it shows:</strong> This is another estimate of test
+error, but it has a <em>stronger penalty</em> for model complexity. The
+plot shows a clear “U” shape, reaching its <strong>minimum value at 4
+variables</strong> and then <em>increasing</em> afterward.</li>
+<li><strong>Conclusion:</strong> This metric strongly suggests a
+<strong>4-variable model</strong>.</li>
+</ul></li>
+<li><strong>Validation Set &amp; Cross-Validation (CV) Error</strong>
+(Slide <code>...230045.png</code>)
+<ul>
+<li><strong>What it shows:</strong> These plots show the <em>direct</em>
+estimate of test error (not a mathematical adjustment like BIC or <span
+class="math inline">\(C_p\)</span>). Both the validation set error and
+the 10-fold CV error show a “U” shape.</li>
+<li><strong>Conclusion:</strong> Both methods reach their
+<strong>minimum error at 6 variables</strong>. This is considered a very
+reliable result.</li>
+</ul></li>
+</ul>
+<h2 id="final-summary-of-results">Final Summary of Results</h2>
+<p>The analysis of the <code>Credit</code> dataset reveals two strong
+candidates for the “best” model, depending on your goal:</p>
+<ol type="1">
+<li><p><strong>The 6-Variable Model:</strong> This model is supported by
+the <strong>Adjusted <span class="math inline">\(R^2\)</span></strong>,
+<strong>Mallows’ <span class="math inline">\(C_p\)</span></strong>, and
+(most importantly) the <strong>Validation Set</strong> and
+<strong>10-fold Cross-Validation</strong> results. These metrics all
+indicate that the 6-variable model has the <strong>lowest prediction
+error</strong> on new data.</p></li>
+<li><p><strong>The 4-Variable Model:</strong> This model is supported by
+<strong>BIC</strong>. Because BIC penalizes complexity more heavily, it
+selects a simpler (more <em>parsimonious</em>) model.</p></li>
+</ol>
+<p><strong>Overall Conclusion:</strong> If your primary goal is
+<strong>maximum predictive accuracy</strong>, you should choose the
+<strong>6-variable model</strong>. If your goal is a <strong>simpler,
+more interpretable model</strong> that is still very good (and avoids
+any risk of overfitting), the <strong>4-variable model</strong> is an
+excellent choice.</p>
+<h1 id="section">5.</h1>
 
       
     </div>
