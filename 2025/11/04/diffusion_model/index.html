@@ -28,7 +28,7 @@
 <meta property="og:description" content="第 1 部分：基础数学工具与物理背景 在深入 DDPM 的核心推导之前，我们必须先打牢地基。这包括理解扩散模型所依赖的核心数学概念：高斯分布的性质、朗之万动力学（SDE）及其离散化。 1. 核心数学工具：高斯分布 (Gaussian Distribution) 扩散模型（尤其是 DDPM）的全部推导都建立在高斯分布的美妙性质之上。 1.1 定义 一个一维高斯分布（正态分布）由均值 \">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2025-11-04T03:00:00.000Z">
-<meta property="article:modified_time" content="2025-11-04T05:26:23.257Z">
+<meta property="article:modified_time" content="2025-11-04T05:30:10.012Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="数学基础">
 <meta name="twitter:card" content="summary">
@@ -175,7 +175,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2025-11-04 11:00:00 / 修改时间：13:26:23" itemprop="dateCreated datePublished" datetime="2025-11-04T11:00:00+08:00">2025-11-04</time>
+              <time title="创建时间：2025-11-04 11:00:00 / 修改时间：13:30:10" itemprop="dateCreated datePublished" datetime="2025-11-04T11:00:00+08:00">2025-11-04</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -361,6 +361,199 @@ x_0)}{q(x_t | x_0)}
 <li><strong>贝叶斯公式</strong>，指明了如何从 “加噪” 倒推出
 “去噪”。</li>
 </ol>
+<h3 id="ddpm-前向过程从图像到噪声-the-forward-process">2. DDPM
+前向过程：从图像到噪声 (The Forward Process)</h3>
+<p>前向过程的目标是模拟大纲
+中描述的“图片在向量空间中逐步噪声化的轨迹”。我们定义一个<strong>马尔可夫过程</strong>，在该过程中，我们从原始数据
+<span class="math inline">\(\mathbf{x}_0 \sim
+q(\mathbf{x}_0)\)</span>（即真实图片分布）开始，在 <span
+class="math inline">\(T\)</span>
+个离散的时间步中逐步向其添加高斯噪声。</p>
+<h4 id="单步加噪过程-qmathbfx_t-mathbfx_t-1">2.1 单步加噪过程 <span
+class="math inline">\(q(\mathbf{x}_t | \mathbf{x}_{t-1})\)</span></h4>
+<p>在每个 <span class="math inline">\(t\)</span> 步，我们向 <span
+class="math inline">\(\mathbf{x}_{t-1}\)</span> 添加少量噪声以生成 <span
+class="math inline">\(\mathbf{x}_t\)</span>。这个过程被定义为一个高斯转变（这源于我们第
+1 部分中对朗之万动力学的离散化）：</p>
+<p><span class="math display">\[
+q(\mathbf{x}_t | \mathbf{x}_{t-1}) = \mathcal{N}(\mathbf{x}_t; \sqrt{1 -
+\beta_t} \mathbf{x}_{t-1}, \beta_t \mathbf{I})
+\]</span></p>
+<ul>
+<li><span class="math inline">\(\{\beta_t\}_{t=1}^T\)</span>
+是一个预先设定的<strong>方差表 (variance schedule)</strong>。它们是
+<span class="math inline">\(T\)</span> 个很小的正常数（例如，<span
+class="math inline">\(\beta_1 = 10^{-4}, \beta_T =
+0.02\)</span>）。</li>
+<li><span class="math inline">\(\sqrt{1 - \beta_t}
+\mathbf{x}_{t-1}\)</span>：这是<strong>缩放项</strong>（大纲）。我们在添加噪声之前先将前一步的图片向量“缩小”一点。</li>
+<li><span class="math inline">\(\beta_t
+\mathbf{I}\)</span>：这是<strong>噪声项</strong>。<span
+class="math inline">\(\beta_t\)</span> 是添加的噪声的方差，<span
+class="math inline">\(\mathbf{I}\)</span>
+是单位矩阵，表示噪声在所有维度（像素）上是独立同分布的。</li>
+</ul>
+<p><strong>重参数化技巧的应用：</strong> 我们可以使用第 1
+部分中的<strong>重参数化技巧</strong>来显式地写出这个采样过程： <span
+class="math display">\[
+\mathbf{x}_t = \sqrt{1 - \beta_t} \mathbf{x}_{t-1} + \sqrt{\beta_t}
+\boldsymbol{\epsilon}_{t-1}
+\]</span> 其中 <span class="math inline">\(\boldsymbol{\epsilon}_{t-1}
+\sim \mathcal{N}(0, \mathbf{I})\)</span> 是在 <span
+class="math inline">\(t-1\)</span> 时刻采样的一个标准高斯噪声。</p>
+<h4 id="累积加噪过程-qmathbfx_t-mathbfx_0-核心推导">2.2 累积加噪过程
+<span class="math inline">\(q(\mathbf{x}_t | \mathbf{x}_0)\)</span>
+(核心推导)</h4>
+<p><strong>问题：</strong> 在训练期间（如大纲
+所述），我们希望<strong>随机跳到</strong>任意 <span
+class="math inline">\(t\)</span> 步并生成 <span
+class="math inline">\(\mathbf{x}_t\)</span>。如果我们必须从 <span
+class="math inline">\(\mathbf{x}_0\)</span> 迭代 <span
+class="math inline">\(t\)</span> 次，这将非常缓慢。</p>
+<p><strong>目标：</strong> 我们需要一个公式，能让我们从 <span
+class="math inline">\(\mathbf{x}_0\)</span> <strong>一次性</strong>得到
+<span class="math inline">\(\mathbf{x}_t\)</span> 的分布 <span
+class="math inline">\(q(\mathbf{x}_t |
+\mathbf{x}_0)\)</span>。这就是大纲
+中提到的“构造出高斯分布的累计变换”。</p>
+<p><strong>推导：</strong> 1. <strong>定义新变量：</strong>
+为了简化推导，我们定义 <span class="math inline">\(\alpha_t = 1 -
+\beta_t\)</span> 和 <span class="math inline">\(\bar{\alpha}_t =
+\prod_{i=1}^t \alpha_i\)</span>。 * <span
+class="math inline">\(\alpha_t\)</span> 是每一步的缩放因子。 * <span
+class="math inline">\(\bar{\alpha}_t\)</span> 是从第 1 步到第 <span
+class="math inline">\(t\)</span> 步的<strong>累积缩放因子</strong>。</p>
+<ol start="2" type="1">
+<li><p><strong>展开迭代 (Step-by-step Expansion)：</strong> 让我们从
+<span class="math inline">\(\mathbf{x}_t\)</span> 开始，逐步代入 <span
+class="math inline">\(\mathbf{x}_{t-1}\)</span>： <span
+class="math display">\[
+\mathbf{x}_t = \sqrt{\alpha_t} \mathbf{x}_{t-1} + \sqrt{1 - \alpha_t}
+\boldsymbol{\epsilon}_{t-1}
+\]</span> 现在，我们代入 <span class="math inline">\(\mathbf{x}_{t-1} =
+\sqrt{\alpha_{t-1}} \mathbf{x}_{t-2} + \sqrt{1 - \alpha_{t-1}}
+\boldsymbol{\epsilon}_{t-2}\)</span>： <span class="math display">\[
+\begin{aligned}
+\mathbf{x}_t &amp;= \sqrt{\alpha_t} (\sqrt{\alpha_{t-1}}
+\mathbf{x}_{t-2} + \sqrt{1 - \alpha_{t-1}} \boldsymbol{\epsilon}_{t-2})
++ \sqrt{1 - \alpha_t} \boldsymbol{\epsilon}_{t-1} \\
+&amp;= \sqrt{\alpha_t \alpha_{t-1}} \mathbf{x}_{t-2} + \sqrt{\alpha_t(1
+- \alpha_{t-1})} \boldsymbol{\epsilon}_{t-2} + \sqrt{1 - \alpha_t}
+\boldsymbol{\epsilon}_{t-1}
+\end{aligned}
+\]</span></p></li>
+<li><p><strong>合并高斯噪声 (Merging Gaussians)：</strong>
+注意上式的后两项：<span class="math inline">\(\sqrt{\alpha_t(1 -
+\alpha_{t-1})} \boldsymbol{\epsilon}_{t-2}\)</span> 和 <span
+class="math inline">\(\sqrt{1 - \alpha_t}
+\boldsymbol{\epsilon}_{t-1}\)</span>。</p>
+<ul>
+<li><span class="math inline">\(\boldsymbol{\epsilon}_{t-2}\)</span> 和
+<span class="math inline">\(\boldsymbol{\epsilon}_{t-1}\)</span>
+是两个<strong>独立</strong>的标准高斯分布。</li>
+<li>我们正在对两个独立的、均值为 0 的高斯分布进行线性组合。</li>
+<li>根据第 1 部分的<strong>性质 1.3</strong>
+(两个独立高斯分布之和)，它们的和仍然是一个均值为 0 的高斯分布。</li>
+<li>这个新的高斯分布的<strong>方差</strong>是多少？ <span
+class="math display">\[
+  \begin{aligned}
+  \text{Var}(\text{new\_noise}) &amp;= \text{Var}(\sqrt{\alpha_t(1 -
+\alpha_{t-1})} \boldsymbol{\epsilon}_{t-2}) + \text{Var}(\sqrt{1 -
+\alpha_t} \boldsymbol{\epsilon}_{t-1}) \\
+  &amp;= (\alpha_t(1 - \alpha_{t-1})) \mathbf{I} + (1 - \alpha_t)
+\mathbf{I} \\
+  &amp;= (\alpha_t - \alpha_t\alpha_{t-1} + 1 - \alpha_t) \mathbf{I} \\
+  &amp;= (1 - \alpha_t\alpha_{t-1}) \mathbf{I}
+  \end{aligned}
+  \]</span></li>
+<li>根据重参数化技巧，一个方差为 <span class="math inline">\((1 -
+\alpha_t\alpha_{t-1}) \mathbf{I}\)</span> 的高斯分布，可以写成 <span
+class="math inline">\(\sqrt{1 - \alpha_t\alpha_{t-1}} \cdot
+\bar{\boldsymbol{\epsilon}}_{t-2}\)</span>，其中 <span
+class="math inline">\(\bar{\boldsymbol{\epsilon}}_{t-2} \sim
+\mathcal{N}(0, \mathbf{I})\)</span> 是一个新的标准高斯噪声。</li>
+</ul></li>
+<li><p><strong>递归与通项公式：</strong> 我们将合并后的噪声代入第 2
+步的展开式： <span class="math display">\[
+\mathbf{x}_t = \sqrt{\alpha_t \alpha_{t-1}} \mathbf{x}_{t-2} + \sqrt{1 -
+\alpha_t \alpha_{t-1}} \bar{\boldsymbol{\epsilon}}_{t-2}
+\]</span></p>
+<ul>
+<li><span class="math inline">\(\mathbf{x}_t\)</span> 和 <span
+class="math inline">\(\mathbf{x}_{t-2}\)</span> 的关系，与 <span
+class="math inline">\(\mathbf{x}_t\)</span> 和 <span
+class="math inline">\(\mathbf{x}_{t-1}\)</span> 的关系（<span
+class="math inline">\(\mathbf{x}_t = \sqrt{\alpha_t} \mathbf{x}_{t-1} +
+\sqrt{1 - \alpha_t}
+\boldsymbol{\epsilon}_{t-1}\)</span>）在形式上是完全一致的！只是 <span
+class="math inline">\(\alpha_t\)</span> 变成了 <span
+class="math inline">\(\alpha_t \alpha_{t-1}\)</span>。</li>
+<li>我们可以将这个模式递归地应用 <span class="math inline">\(t\)</span>
+次： <span class="math display">\[
+  \begin{aligned}
+  \mathbf{x}_t &amp;= \sqrt{(\alpha_t \alpha_{t-1} \cdots \alpha_1)}
+\mathbf{x}_0 + \sqrt{1 - (\alpha_t \alpha_{t-1} \cdots \alpha_1)}
+\boldsymbol{\epsilon} \\
+  &amp;= \sqrt{\bar{\alpha}_t} \mathbf{x}_0 + \sqrt{1 - \bar{\alpha}_t}
+\boldsymbol{\epsilon}
+  \end{aligned}
+  \]</span></li>
+<li>其中 <span class="math inline">\(\boldsymbol{\epsilon} \sim
+\mathcal{N}(0, \mathbf{I})\)</span> 是一个（合并了 <span
+class="math inline">\(t\)</span> 次的）标准高斯噪声。</li>
+</ul></li>
+</ol>
+<h4 id="前向过程的最终公式">2.3 前向过程的最终公式</h4>
+<p>我们得到了前向过程中最关键的<strong>累积加噪公式</strong>： <span
+class="math display">\[
+q(\mathbf{x}_t | \mathbf{x}_0) = \mathcal{N}(\mathbf{x}_t;
+\sqrt{\bar{\alpha}_t} \mathbf{x}_0, (1 - \bar{\alpha}_t) \mathbf{I})
+\]</span> 这个公式的重参数化形式为： <span class="math display">\[
+\mathbf{x}_t = \sqrt{\bar{\alpha}_t} \mathbf{x}_0 + \sqrt{1 -
+\bar{\alpha}_t} \boldsymbol{\epsilon}
+\]</span> <strong>意义：</strong> * <strong>训练效率：</strong>
+这个公式是 DDPM 训练效率的<strong>关键</strong>。我们不需要迭代 <span
+class="math inline">\(t\)</span> 次来生成 <span
+class="math inline">\(\mathbf{x}_t\)</span>。 *
+<strong>随机训练：</strong> 在训练神经网络时，我们可以： 1.
+从数据集中拿一张清晰图片 <span
+class="math inline">\(\mathbf{x}_0\)</span>。 2.
+<strong>随机</strong>选择一个时间步 <span
+class="math inline">\(t\)</span>（例如 <span
+class="math inline">\(t=150\)</span>）。 3. 从 <span
+class="math inline">\(\mathcal{N}(0, \mathbf{I})\)</span> 中采样一个噪声
+<span class="math inline">\(\boldsymbol{\epsilon}\)</span>。 4.
+使用上述公式<strong>一步</strong>计算出 <span
+class="math inline">\(\mathbf{x}_t = \sqrt{\bar{\alpha}_t} \mathbf{x}_0
++ \sqrt{1 - \bar{\alpha}_t} \boldsymbol{\epsilon}\)</span>。 5. 将 <span
+class="math inline">\((\mathbf{x}_t, t, \boldsymbol{\epsilon})\)</span>
+喂给神经网络进行训练。</p>
+<p>当 <span class="math inline">\(t \to T\)</span> 时（例如 <span
+class="math inline">\(T=1000\)</span>），<span
+class="math inline">\(\bar{\alpha}_T = \prod_{i=1}^T (1 -
+\beta_i)\)</span>。由于所有的 <span class="math inline">\(\beta_i &gt;
+0\)</span>，<span class="math inline">\(\bar{\alpha}_T\)</span>
+会非常接近 0。 此时： <span class="math display">\[
+\mathbf{x}_T \approx \sqrt{0} \mathbf{x}_0 + \sqrt{1 - 0}
+\boldsymbol{\epsilon} = \boldsymbol{\epsilon}
+\]</span> 这意味着，在 <span class="math inline">\(T\)</span>
+步之后，<span class="math inline">\(\mathbf{x}_T\)</span> 的分布 <span
+class="math inline">\(q(\mathbf{x}_T | \mathbf{x}_0) \approx
+\mathcal{N}(0,
+\mathbf{I})\)</span>，它几乎完全变成了<strong>标准高斯噪声</strong>，并且与
+<span class="math inline">\(\mathbf{x}_0\)</span> 无关。</p>
+<p>成功地将复杂的图片分布 <span
+class="math inline">\(q(\mathbf{x}_0)\)</span>
+转化为了简单的标准高斯分布 <span
+class="math inline">\(q(\mathbf{x}_T)\)</span>。</p>
+<p><strong>小结</strong></p>
+<p>核心问题：如何<strong>逆转</strong>这个过程？如何从一张纯噪声图片
+<span class="math inline">\(\mathbf{x}_T \sim \mathcal{N}(0,
+\mathbf{I})\)</span> 出发，一步步去噪，最终得到一张清晰的图片 <span
+class="math inline">\(\mathbf{x}_0\)</span>？</p>
+<p>这需要推导<strong>反向去噪过程 (Reverse Process)</strong> <span
+class="math inline">\(p_\theta(\mathbf{x}_{t-1} |
+\mathbf{x}_t)\)</span>。</p>
 
     </div>
 
@@ -447,7 +640,10 @@ x_0)}{q(x_t | x_0)}
 关键性质 2：两个独立高斯分布之和 (Sum of Independent Gaussians)</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%89%A9%E7%90%86%E4%B8%8Esde%E6%9C%97%E4%B9%8B%E4%B8%87%E5%8A%A8%E5%8A%9B%E5%AD%A6-langevin-dynamics"><span class="nav-number">2.</span> <span class="nav-text">2.
 物理与SDE：朗之万动力学 (Langevin Dynamics)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%9A%8F%E6%9C%BA%E5%BE%AE%E5%88%86%E6%96%B9%E7%A8%8B-sde"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 随机微分方程 (SDE)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#sde-%E7%9A%84%E7%A6%BB%E6%95%A3%E5%8C%96%E6%AC%A7%E6%8B%89-%E4%B8%B8%E5%B1%B1%E6%B3%95-euler-maruyama"><span class="nav-number">2.2.</span> <span class="nav-text">2.2 SDE
 的离散化：欧拉-丸山法 (Euler-Maruyama)</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A0%B8%E5%BF%83%E6%95%B0%E5%AD%A6%E5%B7%A5%E5%85%B7%E8%B4%9D%E5%8F%B6%E6%96%AF%E5%85%AC%E5%BC%8F-bayes-theorem"><span class="nav-number">3.</span> <span class="nav-text">3.
-核心数学工具：贝叶斯公式 (Bayes’ Theorem)</span></a></li></ol></div>
+核心数学工具：贝叶斯公式 (Bayes’ Theorem)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ddpm-%E5%89%8D%E5%90%91%E8%BF%87%E7%A8%8B%E4%BB%8E%E5%9B%BE%E5%83%8F%E5%88%B0%E5%99%AA%E5%A3%B0-the-forward-process"><span class="nav-number">4.</span> <span class="nav-text">2. DDPM
+前向过程：从图像到噪声 (The Forward Process)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8D%95%E6%AD%A5%E5%8A%A0%E5%99%AA%E8%BF%87%E7%A8%8B-qmathbfx_t-mathbfx_t-1"><span class="nav-number">4.1.</span> <span class="nav-text">2.1 单步加噪过程 \(q(\mathbf{x}_t | \mathbf{x}_{t-1})\)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%B4%AF%E7%A7%AF%E5%8A%A0%E5%99%AA%E8%BF%87%E7%A8%8B-qmathbfx_t-mathbfx_0-%E6%A0%B8%E5%BF%83%E6%8E%A8%E5%AF%BC"><span class="nav-number">4.2.</span> <span class="nav-text">2.2 累积加噪过程
+\(q(\mathbf{x}_t | \mathbf{x}_0)\)
+(核心推导)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%89%8D%E5%90%91%E8%BF%87%E7%A8%8B%E7%9A%84%E6%9C%80%E7%BB%88%E5%85%AC%E5%BC%8F"><span class="nav-number">4.3.</span> <span class="nav-text">2.3 前向过程的最终公式</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
