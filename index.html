@@ -159,7 +159,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2025/11/04/diffusion_model/" class="post-title-link" itemprop="url">Diffusion model</a>
+            <a href="/2025/11/04/diffusion_model/" class="post-title-link" itemprop="url">Diffusion Model</a>
         </h2>
 
         <div class="post-meta">
@@ -170,7 +170,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2025-11-04 11:00:00 / 修改时间：13:30:10" itemprop="dateCreated datePublished" datetime="2025-11-04T11:00:00+08:00">2025-11-04</time>
+              <time title="创建时间：2025-11-04 11:00:00 / 修改时间：13:37:31" itemprop="dateCreated datePublished" datetime="2025-11-04T11:00:00+08:00">2025-11-04</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -194,8 +194,7 @@
 
       
           <p><strong>第 1 部分：基础数学工具与物理背景</strong></p>
-<p>在深入 DDPM
-的核心推导之前，我们必须先打牢地基。这包括理解扩散模型所依赖的核心数学概念：高斯分布的性质、朗之万动力学（SDE）及其离散化。</p>
+<p>最近在尝试理解扩散模型所依赖的核心数学概念：高斯分布的性质、朗之万动力学（SDE）及其离散化。</p>
 <h3 id="核心数学工具高斯分布-gaussian-distribution">1.
 核心数学工具：高斯分布 (Gaussian Distribution)</h3>
 <p>扩散模型（尤其是 DDPM）的全部推导都建立在高斯分布的美妙性质之上。</p>
@@ -233,19 +232,20 @@ class="math inline">\(\mathcal{N}(\mu, \sigma^2)\)</span>
 中采样，然后通过线性变换得到 <span class="math inline">\(x\)</span>：
 <span class="math display">\[
 x = \mu + \sigma \cdot \epsilon
-\]</span> <strong>推导：</strong> 1. 设 <span
+\]</span> <strong>推导：</strong> * <strong>1.：</strong> 设 <span
 class="math inline">\(\epsilon \sim \mathcal{N}(0, 1)\)</span>，即 <span
 class="math inline">\(E[\epsilon] = 0, \text{Var}(\epsilon) =
-1\)</span>。 2. 我们构造 <span class="math inline">\(x = \mu + \sigma
-\epsilon\)</span>。 3. 计算 <span class="math inline">\(x\)</span>
-的均值：<span class="math inline">\(E[x] = E[\mu + \sigma \epsilon] =
-E[\mu] + \sigma E[\epsilon] = \mu + \sigma \cdot 0 = \mu\)</span>。 4.
-计算 <span class="math inline">\(x\)</span> 的方差：<span
-class="math inline">\(\text{Var}(x) = \text{Var}(\mu + \sigma \epsilon)
-= \text{Var}(\sigma \epsilon) = \sigma^2 \text{Var}(\epsilon) = \sigma^2
-\cdot 1 = \sigma^2\)</span>。 5.
-由于高斯分布的线性变换仍然是高斯分布，因此 <span class="math inline">\(x
-\sim \mathcal{N}(\mu, \sigma^2)\)</span>。</p>
+1\)</span>。 * <strong>2.：</strong> 我们构造 <span
+class="math inline">\(x = \mu + \sigma \epsilon\)</span>。 * 计算 <span
+class="math inline">\(x\)</span> 的均值：<span
+class="math inline">\(E[x] = E[\mu + \sigma \epsilon] = E[\mu] + \sigma
+E[\epsilon] = \mu + \sigma \cdot 0 = \mu\)</span>。 *
+<strong>3.：</strong> 计算 <span class="math inline">\(x\)</span>
+的方差：<span class="math inline">\(\text{Var}(x) = \text{Var}(\mu +
+\sigma \epsilon) = \text{Var}(\sigma \epsilon) = \sigma^2
+\text{Var}(\epsilon) = \sigma^2 \cdot 1 = \sigma^2\)</span>。 *
+<strong>4.：</strong> 由于高斯分布的线性变换仍然是高斯分布，因此 <span
+class="math inline">\(x \sim \mathcal{N}(\mu, \sigma^2)\)</span>。</p>
 <p><strong>意义：</strong> 这使得采样过程可微。<span
 class="math inline">\(\mu\)</span> 和 <span
 class="math inline">\(\sigma\)</span> 可以是神经网络的输出，<span
@@ -264,15 +264,15 @@ class="math inline">\(X_2 \sim \mathcal{N}(\mu_2, \sigma_2^2)\)</span>
 相互独立，那么它们的和 <span class="math inline">\(Y = X_1 +
 X_2\)</span> 仍然是高斯分布： <span class="math display">\[
 Y \sim \mathcal{N}(\mu_1 + \mu_2, \sigma_1^2 + \sigma_2^2)
-\]</span> <strong>推导：</strong> 1. <strong>均值：</strong> <span
+\]</span> <strong>推导：</strong> * <strong>均值：</strong> <span
 class="math inline">\(E[Y] = E[X_1 + X_2] = E[X_1] + E[X_2] = \mu_1 +
-\mu_2\)</span>。 2. <strong>方差：</strong> 由于 <span
+\mu_2\)</span>。 * <strong>方差：</strong> 由于 <span
 class="math inline">\(X_1\)</span> 和 <span
 class="math inline">\(X_2\)</span> 相互独立，<span
 class="math inline">\(\text{Cov}(X_1, X_2) = 0\)</span>。 <span
 class="math inline">\(\text{Var}(Y) = \text{Var}(X_1 + X_2) =
 \text{Var}(X_1) + \text{Var}(X_2) + 2 \text{Cov}(X_1, X_2) = \sigma_1^2
-+ \sigma_2^2\)</span>。 3.
++ \sigma_2^2\)</span>。 *
 （两个独立高斯变量之和仍为高斯分布，这可以通过矩生成函数或特征函数严格证明，这里我们接受这个结论。）</p>
 <p><strong>意义：</strong> 这使得我们可以计算前向过程中任意 <span
 class="math inline">\(t\)</span> 时刻 <span
@@ -337,12 +337,13 @@ class="math inline">\(t\)</span> 时刻采样的标准高斯噪声。</p>
 p(x|y) = \frac{p(y|x) p(x)}{p(y)}
 \]</span> 其中 <span class="math inline">\(p(y) = \int p(y|x) p(x)
 dx\)</span>。</p>
-<p><strong>在扩散模型中的应用：</strong> *
+<p><strong>在扩散模型中的应用：</strong> * <strong>1.：</strong>
 我们定义了一个简单的前向加噪过程 <span class="math inline">\(q(x_t |
-x_{t-1})\)</span>（易于计算）。 * 我们想要的是反向去噪过程 <span
-class="math inline">\(p(x_{t-1} | x_t)\)</span>（难以计算）。 *
+x_{t-1})\)</span>（易于计算）。 * <strong>2.：</strong>
+我们想要的是反向去噪过程 <span class="math inline">\(p(x_{t-1} |
+x_t)\)</span>（难以计算）。 * <strong>3.：</strong>
 贝叶斯公式告诉我们：<span class="math inline">\(p(x_{t-1} | x_t) \propto
-p(x_t | x_{t-1}) p(x_{t-1})\)</span>。 * 在 DDPM
+p(x_t | x_{t-1}) p(x_{t-1})\)</span>。 * <strong>4.：</strong> 在 DDPM
 中，我们会看到一个更复杂的形式，它利用了 <span
 class="math inline">\(x_0\)</span>： <span class="math display">\[
     q(x_{t-1} | x_t, x_0) = \frac{q(x_t | x_{t-1}, x_0) q(x_{t-1} |
