@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"tianyaoblogs.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="第 1 部分：基础数学工具与物理背景 在深入 DDPM 的核心推导之前，我们必须先打牢地基。这包括理解扩散模型所依赖的核心数学概念：高斯分布的性质、朗之万动力学（SDE）及其离散化。 1. 核心数学工具：高斯分布 (Gaussian Distribution) 扩散模型（尤其是 DDPM）的全部推导都建立在高斯分布的美妙性质之上。 1.1 定义 一个一维高斯分布（正态分布）由均值 \">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Diffusion model">
+<meta property="og:url" content="https://tianyaoblogs.github.io/2025/11/04/diffusion_model/index.html">
+<meta property="og:site_name" content="TianyaoBlogs">
+<meta property="og:description" content="第 1 部分：基础数学工具与物理背景 在深入 DDPM 的核心推导之前，我们必须先打牢地基。这包括理解扩散模型所依赖的核心数学概念：高斯分布的性质、朗之万动力学（SDE）及其离散化。 1. 核心数学工具：高斯分布 (Gaussian Distribution) 扩散模型（尤其是 DDPM）的全部推导都建立在高斯分布的美妙性质之上。 1.1 定义 一个一维高斯分布（正态分布）由均值 \">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2025-11-04T03:00:00.000Z">
+<meta property="article:modified_time" content="2025-11-04T05:26:23.257Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="数学基础">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://tianyaoblogs.github.io/2025/11/04/diffusion_model/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Diffusion model | TianyaoBlogs</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">TianyaoBlogs</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://tianyaoblogs.github.io/2025/11/04/diffusion_model/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="TianyaoBlogs">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Diffusion model
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2025-11-04 11:00:00 / 修改时间：13:26:23" itemprop="dateCreated datePublished" datetime="2025-11-04T11:00:00+08:00">2025-11-04</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%89%A9%E6%95%A3%E6%A8%A1%E5%9E%8B/" itemprop="url" rel="index"><span itemprop="name">扩散模型</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p><strong>第 1 部分：基础数学工具与物理背景</strong></p>
+<p>在深入 DDPM
+的核心推导之前，我们必须先打牢地基。这包括理解扩散模型所依赖的核心数学概念：高斯分布的性质、朗之万动力学（SDE）及其离散化。</p>
+<h3 id="核心数学工具高斯分布-gaussian-distribution">1.
+核心数学工具：高斯分布 (Gaussian Distribution)</h3>
+<p>扩散模型（尤其是 DDPM）的全部推导都建立在高斯分布的美妙性质之上。</p>
+<h4 id="定义">1.1 定义</h4>
+<p>一个一维高斯分布（正态分布）由均值 <span
+class="math inline">\(\mu\)</span> 和方差 <span
+class="math inline">\(\sigma^2\)</span> 定义，其概率密度函数 (PDF) 为：
+<span class="math display">\[
+\mathcal{N}(x; \mu, \sigma^2) = \frac{1}{\sqrt{2\pi\sigma^2}}
+\exp\left(-\frac{(x - \mu)^2}{2\sigma^2}\right)
+\]</span> 对于 <span class="math inline">\(D\)</span> 维向量 <span
+class="math inline">\(\mathbf{x}\)</span>（例如视频中 <span
+class="math inline">\(32 \times 32 = 1024\)</span>
+维的图片向量），多维高斯分布由均值向量 <span
+class="math inline">\(\boldsymbol{\mu}\)</span> 和协方差矩阵 <span
+class="math inline">\(\boldsymbol{\Sigma}\)</span> 定义： <span
+class="math display">\[
+\mathcal{N}(\mathbf{x}; \boldsymbol{\mu}, \boldsymbol{\Sigma}) =
+\frac{1}{\sqrt{(2\pi)^D \det(\boldsymbol{\Sigma})}}
+\exp\left(-\frac{1}{2}(\mathbf{x} - \boldsymbol{\mu})^T
+\boldsymbol{\Sigma}^{-1}(\mathbf{x} - \boldsymbol{\mu})\right)
+\]</span> &gt; <strong>关键简化：</strong> 在 DDPM
+中，我们通常假设协方差矩阵是<strong>对角矩阵</strong> <span
+class="math inline">\(\boldsymbol{\Sigma} = \sigma^2
+\mathbf{I}\)</span>，其中 <span
+class="math inline">\(\mathbf{I}\)</span>
+是单位矩阵。这意味着向量的每个维度（每个像素）是独立同分布的（IID）。</p>
+<h4 id="关键性质-1重参数化技巧-reparameterization-trick">1.2 关键性质
+1：重参数化技巧 (Reparameterization Trick)</h4>
+<p><strong>问题：</strong> 我们如何从 <span
+class="math inline">\(\mathcal{N}(\mu, \sigma^2)\)</span>
+中采样？直接对这个分布采样是困难的，且在神经网络中无法传递梯度。</p>
+<p><strong>技巧：</strong> 我们可以从一个<strong>标准高斯分布</strong>
+<span class="math inline">\(\epsilon \sim \mathcal{N}(0, 1)\)</span>
+中采样，然后通过线性变换得到 <span class="math inline">\(x\)</span>：
+<span class="math display">\[
+x = \mu + \sigma \cdot \epsilon
+\]</span> <strong>推导：</strong> 1. 设 <span
+class="math inline">\(\epsilon \sim \mathcal{N}(0, 1)\)</span>，即 <span
+class="math inline">\(E[\epsilon] = 0, \text{Var}(\epsilon) =
+1\)</span>。 2. 我们构造 <span class="math inline">\(x = \mu + \sigma
+\epsilon\)</span>。 3. 计算 <span class="math inline">\(x\)</span>
+的均值：<span class="math inline">\(E[x] = E[\mu + \sigma \epsilon] =
+E[\mu] + \sigma E[\epsilon] = \mu + \sigma \cdot 0 = \mu\)</span>。 4.
+计算 <span class="math inline">\(x\)</span> 的方差：<span
+class="math inline">\(\text{Var}(x) = \text{Var}(\mu + \sigma \epsilon)
+= \text{Var}(\sigma \epsilon) = \sigma^2 \text{Var}(\epsilon) = \sigma^2
+\cdot 1 = \sigma^2\)</span>。 5.
+由于高斯分布的线性变换仍然是高斯分布，因此 <span class="math inline">\(x
+\sim \mathcal{N}(\mu, \sigma^2)\)</span>。</p>
+<p><strong>意义：</strong> 这使得采样过程可微。<span
+class="math inline">\(\mu\)</span> 和 <span
+class="math inline">\(\sigma\)</span> 可以是神经网络的输出，<span
+class="math inline">\(\epsilon\)</span>
+作为外部噪声输入，梯度可以反向传播回 <span
+class="math inline">\(\mu\)</span> 和 <span
+class="math inline">\(\sigma\)</span>。</p>
+<h4 id="关键性质-2两个独立高斯分布之和-sum-of-independent-gaussians">1.3
+关键性质 2：两个独立高斯分布之和 (Sum of Independent Gaussians)</h4>
+<p><strong>问题：</strong>
+两个独立高斯分布相加会怎样？这是前向加噪过程（Forward
+Process）的核心。</p>
+<p><strong>性质：</strong> 如果 <span class="math inline">\(X_1 \sim
+\mathcal{N}(\mu_1, \sigma_1^2)\)</span> 且 <span
+class="math inline">\(X_2 \sim \mathcal{N}(\mu_2, \sigma_2^2)\)</span>
+相互独立，那么它们的和 <span class="math inline">\(Y = X_1 +
+X_2\)</span> 仍然是高斯分布： <span class="math display">\[
+Y \sim \mathcal{N}(\mu_1 + \mu_2, \sigma_1^2 + \sigma_2^2)
+\]</span> <strong>推导：</strong> 1. <strong>均值：</strong> <span
+class="math inline">\(E[Y] = E[X_1 + X_2] = E[X_1] + E[X_2] = \mu_1 +
+\mu_2\)</span>。 2. <strong>方差：</strong> 由于 <span
+class="math inline">\(X_1\)</span> 和 <span
+class="math inline">\(X_2\)</span> 相互独立，<span
+class="math inline">\(\text{Cov}(X_1, X_2) = 0\)</span>。 <span
+class="math inline">\(\text{Var}(Y) = \text{Var}(X_1 + X_2) =
+\text{Var}(X_1) + \text{Var}(X_2) + 2 \text{Cov}(X_1, X_2) = \sigma_1^2
++ \sigma_2^2\)</span>。 3.
+（两个独立高斯变量之和仍为高斯分布，这可以通过矩生成函数或特征函数严格证明，这里我们接受这个结论。）</p>
+<p><strong>意义：</strong> 这使得我们可以计算前向过程中任意 <span
+class="math inline">\(t\)</span> 时刻 <span
+class="math inline">\(x_t\)</span> 从 <span
+class="math inline">\(x_0\)</span> 开始累积加噪的结果。</p>
+<h3 id="物理与sde朗之万动力学-langevin-dynamics">2.
+物理与SDE：朗之万动力学 (Langevin Dynamics)</h3>
+<p>这是扩散模型的物理原型。</p>
+<h4 id="随机微分方程-sde">2.1 随机微分方程 (SDE)</h4>
+<p>朗之万动力学描述了一个粒子（在我们的例子中是图片向量 <span
+class="math inline">\(\mathbf{x}\)</span>）在势场 <span
+class="math inline">\(U(\mathbf{x})\)</span>
+中运动，同时受到随机力（如布朗运动）的影响。其 SDE 形式 为： <span
+class="math display">\[
+d\mathbf{x}_t = \mathbf{f}(\mathbf{x}_t, t)dt + g(t)d\mathbf{w}_t
+\]</span> * <span class="math inline">\(\mathbf{x}_t\)</span>：<span
+class="math inline">\(t\)</span> 时刻的粒子位置（图片向量）。 * <span
+class="math inline">\(\mathbf{f}(\mathbf{x}_t,
+t)\)</span>：<strong>漂移项 (Drift)</strong>。代表确定性的力，如视频中
+提到的 “吸引回原点的线性运动”（例如 <span
+class="math inline">\(\mathbf{f}(\mathbf{x}, t) = -\beta
+\mathbf{x}\)</span>，使分布趋向原点）。它对应能量函数的负梯度 <span
+class="math inline">\(-\nabla U(\mathbf{x})\)</span>。 * <span
+class="math inline">\(g(t)\)</span>：<strong>扩散项
+(Diffusion)</strong>。控制随机噪声的强度。 * <span
+class="math inline">\(d\mathbf{w}_t\)</span>：<strong>维纳过程 (Wiener
+Process)</strong> 或布朗运动。它是一个随机项，其增量 <span
+class="math inline">\(d\mathbf{w}_t\)</span> 在 <span
+class="math inline">\(dt\)</span> 时间内服从高斯分布 <span
+class="math inline">\(d\mathbf{w}_t \sim \mathcal{N}(0, \mathbf{I}
+dt)\)</span>。</p>
+<h4 id="sde-的离散化欧拉-丸山法-euler-maruyama">2.2 SDE
+的离散化：欧拉-丸山法 (Euler-Maruyama)</h4>
+<p><strong>问题：</strong> 计算机无法处理连续时间 <span
+class="math inline">\(dt\)</span>。我们如何模拟这个 SDE？</p>
+<p><strong>方法：</strong> 我们使用欧拉近似法（在 SDE 中称为
+Euler-Maruyama）将其离散化为小的时间步 <span
+class="math inline">\(\Delta t\)</span>。 <span class="math display">\[
+\mathbf{x}_{t+\Delta t} - \mathbf{x}_t \approx \mathbf{f}(\mathbf{x}_t,
+t)\Delta t + g(t) (\mathbf{w}_{t+\Delta t} - \mathbf{w}_t)
+\]</span> 根据维纳过程的性质，在 <span class="math inline">\(\Delta
+t\)</span> 时间内的增量 <span
+class="math inline">\((\mathbf{w}_{t+\Delta t} - \mathbf{w}_t)\)</span>
+服从 <span class="math inline">\(\mathcal{N}(0, \mathbf{I} \Delta
+t)\)</span>。 根据<strong>性质 1.2（重参数化）</strong>，<span
+class="math inline">\(\mathcal{N}(0, \mathbf{I} \Delta t)\)</span>
+可以写成 <span class="math inline">\(\sqrt{\Delta t} \cdot
+\mathbf{z}\)</span>，其中 <span class="math inline">\(\mathbf{z} \sim
+\mathcal{N}(0, \mathbf{I})\)</span>。</p>
+<p><strong>离散迭代公式：</strong> <span class="math display">\[
+\mathbf{x}_{t+\Delta t} \approx \mathbf{x}_t + \mathbf{f}(\mathbf{x}_t,
+t)\Delta t + g(t) \sqrt{\Delta t} \mathbf{z}_t
+\]</span> 其中 <span class="math inline">\(\mathbf{z}_t \sim
+\mathcal{N}(0, \mathbf{I})\)</span> 是在 <span
+class="math inline">\(t\)</span> 时刻采样的标准高斯噪声。</p>
+<p>这就是 DDPM <strong>前向加噪过程 (Forward Process)</strong>
+的数学原型。</p>
+<h3 id="核心数学工具贝叶斯公式-bayes-theorem">3.
+核心数学工具：贝叶斯公式 (Bayes’ Theorem)</h3>
+<p>贝叶斯公式是连接<strong>前向过程</strong>（加噪）和<strong>反向过程</strong>（去噪）的桥梁。</p>
+<p>对于连续变量（概率密度函数）： <span class="math display">\[
+p(x|y) = \frac{p(y|x) p(x)}{p(y)}
+\]</span> 其中 <span class="math inline">\(p(y) = \int p(y|x) p(x)
+dx\)</span>。</p>
+<p><strong>在扩散模型中的应用：</strong> *
+我们定义了一个简单的前向加噪过程 <span class="math inline">\(q(x_t |
+x_{t-1})\)</span>（易于计算）。 * 我们想要的是反向去噪过程 <span
+class="math inline">\(p(x_{t-1} | x_t)\)</span>（难以计算）。 *
+贝叶斯公式告诉我们：<span class="math inline">\(p(x_{t-1} | x_t) \propto
+p(x_t | x_{t-1}) p(x_{t-1})\)</span>。 * 在 DDPM
+中，我们会看到一个更复杂的形式，它利用了 <span
+class="math inline">\(x_0\)</span>： <span class="math display">\[
+    q(x_{t-1} | x_t, x_0) = \frac{q(x_t | x_{t-1}, x_0) q(x_{t-1} |
+x_0)}{q(x_t | x_0)}
+    \]</span></p>
+<p><strong>小结</strong></p>
+<ol type="1">
+<li><strong>高斯分布的性质</strong>（重参数化、加法），能精确计算加噪后的分布。</li>
+<li><strong>朗之万动力学与欧拉近似</strong>，为 “逐步加噪”
+提供了物理和数学模型。</li>
+<li><strong>贝叶斯公式</strong>，指明了如何从 “加噪” 倒推出
+“去噪”。</li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80/" rel="tag"># 数学基础</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2025/10/13/5054C6/" rel="prev" title="MSDM 5054 - Statistical Machine Learning-L6">
+      <i class="fa fa-chevron-left"></i> MSDM 5054 - Statistical Machine Learning-L6
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A0%B8%E5%BF%83%E6%95%B0%E5%AD%A6%E5%B7%A5%E5%85%B7%E9%AB%98%E6%96%AF%E5%88%86%E5%B8%83-gaussian-distribution"><span class="nav-number">1.</span> <span class="nav-text">1.
+核心数学工具：高斯分布 (Gaussian Distribution)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%9A%E4%B9%89"><span class="nav-number">1.1.</span> <span class="nav-text">1.1 定义</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%85%B3%E9%94%AE%E6%80%A7%E8%B4%A8-1%E9%87%8D%E5%8F%82%E6%95%B0%E5%8C%96%E6%8A%80%E5%B7%A7-reparameterization-trick"><span class="nav-number">1.2.</span> <span class="nav-text">1.2 关键性质
+1：重参数化技巧 (Reparameterization Trick)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%85%B3%E9%94%AE%E6%80%A7%E8%B4%A8-2%E4%B8%A4%E4%B8%AA%E7%8B%AC%E7%AB%8B%E9%AB%98%E6%96%AF%E5%88%86%E5%B8%83%E4%B9%8B%E5%92%8C-sum-of-independent-gaussians"><span class="nav-number">1.3.</span> <span class="nav-text">1.3
+关键性质 2：两个独立高斯分布之和 (Sum of Independent Gaussians)</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%89%A9%E7%90%86%E4%B8%8Esde%E6%9C%97%E4%B9%8B%E4%B8%87%E5%8A%A8%E5%8A%9B%E5%AD%A6-langevin-dynamics"><span class="nav-number">2.</span> <span class="nav-text">2.
+物理与SDE：朗之万动力学 (Langevin Dynamics)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%9A%8F%E6%9C%BA%E5%BE%AE%E5%88%86%E6%96%B9%E7%A8%8B-sde"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 随机微分方程 (SDE)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#sde-%E7%9A%84%E7%A6%BB%E6%95%A3%E5%8C%96%E6%AC%A7%E6%8B%89-%E4%B8%B8%E5%B1%B1%E6%B3%95-euler-maruyama"><span class="nav-number">2.2.</span> <span class="nav-text">2.2 SDE
+的离散化：欧拉-丸山法 (Euler-Maruyama)</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A0%B8%E5%BF%83%E6%95%B0%E5%AD%A6%E5%B7%A5%E5%85%B7%E8%B4%9D%E5%8F%B6%E6%96%AF%E5%85%AC%E5%BC%8F-bayes-theorem"><span class="nav-number">3.</span> <span class="nav-text">3.
+核心数学工具：贝叶斯公式 (Bayes’ Theorem)</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">John Doe</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">16</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+          load: ['[tex]/mhchem'],
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+          packages: {'[+]': ['mhchem']},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+</body>
+</html>

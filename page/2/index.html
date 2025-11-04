@@ -145,6 +145,2086 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://tianyaoblogs.github.io/2025/09/16/5054C3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="TianyaoBlogs">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2025/09/16/5054C3/" class="post-title-link" itemprop="url">MSDM 5054 - Statistical Machine Learning-L3</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2025-09-16 21:00:00" itemprop="dateCreated datePublished" datetime="2025-09-16T21:00:00+08:00">2025-09-16</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2025-09-19 19:24:11" itemprop="dateModified" datetime="2025-09-19T19:24:11+08:00">2025-09-19</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Machine-Learning/" itemprop="url" rel="index"><span itemprop="name">Machine Learning</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>统计机器学习Lecture-3</p>
+<p><a target="_blank" rel="noopener" href="https://www.math.hkust.edu.hk/~madxia/">Lecturer: Prof.XIA
+DONG</a></p>
+<h1 id="general-linear-regression-model.">1. General linear regression
+model.</h1>
+<p><img src="/imgs/5054C3/General_linear_regression_model.png" alt="Diagram of a linear regression model">
+## 1.1 general linear regression model - <strong>内容</strong>:
+<strong>general linear regression model</strong>.</p>
+<p>the fundamental equation:</p>
+<p><span class="math display">\[y_i = \beta_0 + \beta_1x_{i1} + \dots +
+\beta_px_{ip} + \epsilon_i\]</span></p>
+<p>And it correctly identifies the main goal: to <strong>estimate the
+parameters</strong> (the coefficients <span
+class="math inline">\(\beta_0, \beta_1, \dots, \beta_p\)</span>) from
+data so we can make predictions on new data.</p>
+<p>核心目标：通过数据<strong>估计参数</strong>（即系数 <span
+class="math inline">\(\beta_0, \beta_1, \dots,
+\beta_p\)</span>），从而对新数据进行预测。</p>
+<h2
+id="how-we-actually-find-the-best-values-for-the-β-coefficients-parameter-estimation">1.2
+How we actually find the best values for the <span
+class="math inline">\(β\)</span> coefficients (parameter
+estimation)?:</h2>
+<ul>
+<li><strong>内容</strong>: We find the best values for the <span
+class="math inline">\(\beta\)</span> coefficients by finding the values
+that <strong>minimize the overall error</strong> of the model. The most
+common and fundamental method for this is called <strong>Ordinary Least
+Squares (OLS)</strong>.</li>
+</ul>
+<h3
+id="the-main-method-ordinary-least-squares-ols-普通最小二乘法-ols">##
+The Main Method: Ordinary Least Squares (OLS) 普通最小二乘法 (OLS)</h3>
+<p>The core idea of OLS is to find the line (or hyperplane in multiple
+dimensions) that is as close as possible to all the data points
+simultaneously. OLS
+的核心思想是找到一条尽可能同时接近所有数据点的直线（或多维超平面）。</p>
+<h4 id="define-the-error-residuals-误差">1. Define the Error (Residuals)
+误差</h4>
+<p>First, we need to define what “error” means. For any single data
+point, the error is the difference between the actual value (<span
+class="math inline">\(y_i\)</span>) and the value predicted by our model
+(<span class="math inline">\(\hat{y}_i\)</span>). This difference is
+called the <strong>residual</strong>.
+首先，需要定义“误差”的含义。对于任何单个数据点，误差是实际值 (<span
+class="math inline">\(y_i\)</span>) 与模型预测值 (<span
+class="math inline">\(\hat{y}_i\)</span>)
+之间的差值。这个差值称为<strong>残差</strong>。</p>
+<p><strong>Residual</strong> = Actual Value - Predicted Value
+<strong>残差</strong> = 实际值 - 预测值 <span class="math display">\[e_i
+= y_i - \hat{y}_i\]</span></p>
+<p>You can visualize residuals as the vertical distance from each data
+point to the regression line.
+可以将残差可视化为每个数据点到回归线的垂直距离。</p>
+<h4
+id="the-cost-function-sum-of-squared-residuals-成本函数残差平方和">2.
+The Cost Function: Sum of Squared Residuals 成本函数：残差平方和</h4>
+<p>We want to make all these residuals as small as possible. We can’t
+just add them up, because some are positive and some are negative, and
+they would cancel each other out.
+所有残差尽可能小。不能简单地将它们相加，因为有些是正数，有些是负数，它们会相互抵消。</p>
+<p>So, we square each residual (which makes them all positive) and then
+sum them up. This gives us the <strong>Sum of Squared Residuals
+(SSR)</strong>, which is our “cost function.”
+因此，将每个残差求平方（使它们都为正数），然后将它们相加。这就得到了<strong>残差平方和
+(SSR)</strong>，也就是“成本函数”。</p>
+<p><span class="math display">\[SSR = \sum_{i=1}^{n} e_i^2 =
+\sum_{i=1}^{n} (y_i - \hat{y}_i)^2\]</span></p>
+<p>The goal of OLS is simple: <strong>find the values of <span
+class="math inline">\(\beta_0, \beta_1, \dots, \beta_p\)</span> that
+make this SSR value as small as possible.</strong></p>
+<h4
+id="solving-for-the-coefficients-the-normal-equation-求解系数正态方程">3.
+Solving for the Coefficients: The Normal Equation
+求解系数：正态方程</h4>
+<p>For linear regression, calculus provides a direct, exact solution to
+this minimization problem. By taking the derivative of the SSR function
+with respect to each <span class="math inline">\(\beta\)</span>
+coefficient and setting it to zero, we can solve for the optimal values.
+对于线性回归，微积分为这个最小化问题提供了直接、精确的解。通过对 SSR
+函数的每个 <span class="math inline">\(\beta\)</span>
+系数求导并将其设为零，就可以求解出最优值。</p>
+<p>This process results in a formula known as the <strong>Normal
+Equation</strong>, which can be expressed cleanly using matrix algebra:
+这个过程会得到一个称为<strong>正态方程</strong>的公式，它可以用矩阵代数清晰地表示出来：</p>
+<p><span class="math display">\[\hat{\boldsymbol{\beta}} =
+(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\mathbf{y}\]</span></p>
+<ul>
+<li><span class="math inline">\(\hat{\boldsymbol{\beta}}\)</span> is the
+vector of our estimated coefficients.估计系数的向量。</li>
+<li><span class="math inline">\(\mathbf{X}\)</span> is a matrix where
+each row is an observation and each column is a feature (with an added
+column of 1s for the intercept <span
+class="math inline">\(\beta_0\)</span>).其中每一行代表一个观测值，每一列代表一个特征（截距
+<span class="math inline">\(\beta_0\)</span> 增加了一列全为 1
+的值）。</li>
+<li><span class="math inline">\(\mathbf{y}\)</span> is the vector of the
+actual response values.实际响应值的向量。</li>
+</ul>
+<p>Statistical software and programming libraries (like Scikit-learn in
+Python) use this equation (or more computationally stable versions of
+it) to find the best coefficients for you instantly.</p>
+<h3 id="an-alternative-method-gradient-descent-梯度下降">## An
+Alternative Method: Gradient Descent 梯度下降</h3>
+<p>While the Normal Equation gives a direct answer, it can be very slow
+if you have a massive number of features (e.g., hundreds of thousands).
+An alternative, iterative method used across machine learning is
+<strong>Gradient Descent</strong>.</p>
+<p><strong>The Intuition:</strong> Imagine the SSR cost function is a
+big valley. Your initial (random) <span
+class="math inline">\(\beta\)</span> coefficients place you somewhere on
+the slope of this valley.</p>
+<ol type="1">
+<li><strong>Check the slope</strong> (the gradient) at your current
+position. <strong>检查您当前位置的斜率</strong>（梯度）。</li>
+<li><strong>Take a small step</strong> in the steepest <em>downhill</em>
+direction. <strong>朝最陡的<em>下坡</em>方向</strong>迈出一小步**。</li>
+<li><strong>Repeat.</strong> You keep taking steps downhill until you
+reach the bottom of the valley. The bottom of the valley represents the
+minimum SSR, and your coordinates at that point are the optimal <span
+class="math inline">\(\beta\)</span> coefficients.
+<strong>重复</strong>。您继续向下走，直到到达山谷底部。谷底代表最小SSR，该点的坐标即为最优<span
+class="math inline">\(\beta\)</span>系数。</li>
+</ol>
+<p>The size of each “step” you take is controlled by a parameter called
+the <strong>learning rate</strong>. Gradient Descent is the foundational
+optimization algorithm for many complex models, including neural
+networks.
+每次“步进”的大小由一个称为<strong>学习率</strong>的参数控制。梯度下降是许多复杂模型（包括神经网络）的基础优化算法。</p>
+<h3 id="summary-ols-vs.-gradient-descent">## Summary: OLS vs. Gradient
+Descent</h3>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th style="text-align: left;">Feature</th>
+<th style="text-align: left;">Ordinary Least Squares (OLS)</th>
+<th style="text-align: left;">Gradient Descent</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>How it works</strong></td>
+<td style="text-align: left;">Direct calculation using the Normal
+Equation.</td>
+<td style="text-align: left;">Iterative; takes steps to minimize
+error.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Pros</strong></td>
+<td style="text-align: left;">Provides an exact, optimal solution. No
+parameters to tune.</td>
+<td style="text-align: left;">More efficient for very large datasets.
+Very versatile.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Cons</strong></td>
+<td style="text-align: left;">Can be computationally expensive with many
+features.</td>
+<td style="text-align: left;">Requires choosing a learning rate. May not
+find the exact minimum.</td>
+</tr>
+</tbody>
+</table>
+<h1 id="simple-linear-regression">2. Simple Linear Regression</h1>
+<p><img src="/imgs/5054C3/Simple_Linear_Regression.png" alt="Simple_Linear_Regression"></p>
+<h2 id="simple-linear-regression-1">2.1 Simple Linear Regression</h2>
+<ul>
+<li><strong>内容</strong>: <strong>Simple Linear Regression:</strong> a
+special case of the general model you showed earlier where you only have
+<strong>one</strong> predictor variable (<span
+class="math inline">\(p=1\)</span>).</li>
+</ul>
+<h3 id="the-model-and-the-goal-模型和目标">## The Model and the Goal
+模型和目标</h3>
+<p>Sets up the simplified equation for a line: <span
+class="math display">\[y_i = \beta_0 + \beta_1x_i + \epsilon_i\]</span>
+* <span class="math inline">\(y_i\)</span> is the outcome you want to
+predict.要预测的结果。 * <span class="math inline">\(x_i\)</span> is
+your single input feature or covariate.单个输入特征或协变量。 * <span
+class="math inline">\(\beta_1\)</span> is the <strong>slope</strong> of
+the line. It tells you how much <span class="math inline">\(y\)</span>
+is expected to increase for a one-unit increase in <span
+class="math inline">\(x\)</span>.表示 <span
+class="math inline">\(x\)</span> 每增加一个单位，<span
+class="math inline">\(y\)</span> 预计会增加多少。 * <span
+class="math inline">\(\beta_0\)</span> is the
+<strong>intercept</strong>. It’s the predicted value of <span
+class="math inline">\(y\)</span> when <span
+class="math inline">\(x\)</span> is zero.当 <span
+class="math inline">\(x\)</span> 为零时 <span
+class="math inline">\(y\)</span> 的预测值。 * <span
+class="math inline">\(\epsilon_i\)</span> is the random error
+term.是随机误差项。</p>
+<p>The goal, stated as “Minimize the sum of squares of err,” is exactly
+the <strong>Ordinary Least Squares (OLS)</strong> method we just
+discussed. It’s written here as: <span class="math display">\[\min_{a,b}
+\sum_{i=1}^{n} (y_i - a - bx_i)^2\]</span> This is just a different way
+of writing the same thing, where they use <code>a</code> for the
+intercept (<span class="math inline">\(\beta_0\)</span>) and
+<code>b</code> for the slope (<span
+class="math inline">\(\beta_1\)</span>). You’re trying to find the
+specific values of the slope and intercept that make the sum of all the
+squared errors as small as possible.
+目标，即“最小化误差平方和”，正是<strong>普通最小二乘法
+(OLS)</strong>。： <span class="math display">\[\min_{a,b}
+\sum_{i=1}^{n} (y_i - a - bx_i)^2\]</span> 这是另一种写法，其中用
+<code>a</code> 表示截距 (<span
+class="math inline">\(\beta_0\)</span>)，<code>b</code> 表示斜率 (<span
+class="math inline">\(\beta_1\)</span>)。尝试找到斜率和截距的具体值，使得所有平方误差之和尽可能小。</p>
+<h3 id="the-solution-the-estimator-formulas-解决方案估计公式">## The
+Solution: The Estimator Formulas 解决方案：估计公式</h3>
+<p>The most important part of this slide is the
+<strong>solution</strong>. For the simple case with only one variable,
+you don’t need complex matrix algebra (the Normal Equation). Instead,
+the minimization problem can be solved with these two straightforward
+formulas:
+对于只有一个变量的简单情况，不需要复杂的矩阵代数（正态方程）。相反，最小化问题可以用以下两个简单的公式来解决：</p>
+<h4 id="the-slope-hatbeta_1">1. The Slope: <span
+class="math inline">\(\hat{\beta}_1\)</span></h4>
+<p><span class="math display">\[\hat{\beta}_1 = \frac{\sum_{i=1}^{n}
+(x_i - \bar{x})(y_i - \bar{y})}{\sum_{i=1}^{n} (x_i -
+\bar{x})^2}\]</span> * <strong>Intuition:</strong> This formula might
+look complex, but it’s actually very intuitive. * The numerator, <span
+class="math inline">\(\sum(x_i - \bar{x})(y_i - \bar{y})\)</span>, is
+closely related to the <strong>covariance</strong> between X and Y. It
+measures whether X and Y tend to move in the same direction (positive
+slope) or in opposite directions (negative slope). 与 X 和 Y
+之间的<strong>协方差</strong>密切相关。它衡量 X 和 Y
+是倾向于朝相同方向（正斜率）还是朝相反方向（负斜率）移动。 * The
+denominator, <span class="math inline">\(\sum(x_i - \bar{x})^2\)</span>,
+is related to the <strong>variance</strong> of X. It measures how much X
+varies on its own. 它衡量 X 自身的变化量。 * <strong>In short, the slope
+is a measure of how X and Y vary together, scaled by how much X varies
+by itself.</strong> 斜率衡量的是 X 和 Y 共同变化的程度，并以 X
+自身的变化量为标度。</p>
+<h4 id="the-intercept-hatbeta_0-截距">2. The Intercept: <span
+class="math inline">\(\hat{\beta}_0\)</span> 截距</h4>
+<p><span class="math display">\[\hat{\beta}_0 = \bar{y} -
+\hat{\beta}_1\bar{x}\]</span> * <strong>Intuition:</strong> This formula
+is even simpler and has a wonderful geometric meaning. It ensures that
+the <strong>line of best fit always passes through the “center of mass”
+of the data</strong>, which is the point of averages <span
+class="math inline">\((\bar{x}, \bar{y})\)</span>.
+它确保<strong>最佳拟合线始终穿过数据的“质心”</strong>，即平均值 <span
+class="math inline">\((\bar{x}, \bar{y})\)</span> 的点。计算出最佳斜率
+(<span class="math inline">\(\hat{\beta}_1\)</span>)
+后，就可以将其代入此公式。然后，可以调整截距 (<span
+class="math inline">\(\hat{\beta}_0\)</span>)，使直线完美地围绕数据云的中心点旋转。
+* Once you’ve calculated the best slope (<span
+class="math inline">\(\hat{\beta}_1\)</span>), you can plug it into this
+formula. You then adjust the intercept (<span
+class="math inline">\(\hat{\beta}_0\)</span>) so that the line pivots
+perfectly around the central point of your data cloud.</p>
+<p>In summary, this slide provides the precise, closed-form formulas to
+calculate the slope and intercept for the line of best fit in a simple
+linear regression model.</p>
+<h1 id="statistical-inference">3. Statistical Inference</h1>
+<p><img src="/imgs/5054C3/Statistical_Inference1.png" alt="Statistical_Inference1">
+<img src="/imgs/5054C3/Statistical_Inference2.png" alt="Statistical_Inference2">
+## 3.1 Statistical Inference - <strong>内容</strong>:
+<strong>Statistical Inference:</strong> These two slides are deeply
+connected and explain how we go from just <em>calculating</em> the
+coefficients to understanding how <em>accurate</em> and
+<em>reliable</em> they are.
+解释了我们如何从仅仅<em>计算</em>系数到理解它们的<em>准确性</em>和<em>可靠性</em>。</p>
+<h3 id="the-core-problem-quantifying-uncertainty-量化不确定性">## The
+Core Problem: Quantifying Uncertainty 量化不确定性</h3>
+<p>The second slide poses the fundamental questions: * “How accurate are
+<span class="math inline">\(\hat{\beta}_0\)</span> and <span
+class="math inline">\(\hat{\beta}_1\)</span>?”准确性如何？ * “What are
+the distributions of <span class="math inline">\(\hat{\beta}_0\)</span>
+and <span class="math inline">\(\hat{\beta}_1\)</span>?”分布是什么？</p>
+<p>The reason we ask this is that our estimated coefficients (<span
+class="math inline">\(\hat{\beta}_0, \hat{\beta}_1\)</span>) were
+calculated from a <strong>specific sample of data</strong>. If we
+collected a different random sample from the same population, we would
+get slightly different estimates.估计的系数 (<span
+class="math inline">\(\hat{\beta}_0, \hat{\beta}_1\)</span>)
+是根据<strong>特定的数据样本</strong>计算出来的。如果我们从同一总体中随机抽取不同的样本，我们得到的估计值会略有不同。</p>
+<p>The goal of statistical inference is to use the estimates from our
+single sample to make conclusions about the <strong>true, unknown
+population parameters</strong> (<span class="math inline">\(\beta_0,
+\beta_1\)</span>) and to quantify our uncertainty about
+them.统计推断的目标是利用单个样本的估计值得出关于<strong>真实、未知的总体参数</strong>（<span
+class="math inline">\(\beta_0,
+\beta_1\)</span>）的结论，并量化对这些参数的不确定性。</p>
+<h3
+id="the-key-assumption-that-makes-it-possible-实现这一目标的关键假设">##
+The Key Assumption That Makes It Possible 实现这一目标的关键假设</h3>
+<p>To figure out the distribution of our estimates, we must make an
+assumption about the distribution of the errors. This is the most
+important assumption in linear regression for inference:
+为了确定估计值的分布，必须对误差的分布做出假设。这是线性回归推断中最重要的假设：
+<strong>Assumption:</strong> <span class="math inline">\(\epsilon_i
+\stackrel{\text{i.i.d.}}{\sim} N(0, \sigma^2)\)</span></p>
+<p>This means we assume the random error terms are: * <strong>Normally
+distributed</strong> (<span class="math inline">\(N\)</span>).*
+<strong>正态分布</strong>（<span class="math inline">\(N\)</span>）。 *
+Have a mean of <strong>zero</strong> (our model is correct on average).*
+均值为<strong>零</strong>（模型平均而言是正确的）。 * Have a constant
+variance <strong><span class="math inline">\(\sigma^2\)</span></strong>
+(homoscedasticity).* 方差为常数<strong><span
+class="math inline">\(\sigma^2\)</span></strong>（方差齐性）。 * Are
+<strong>independent and identically distributed</strong> (i.i.d.),
+meaning each error is independent of the others.*
+是<strong>独立同分布</strong>（i.i.d.）的，这意味着每个误差都独立于其他误差。</p>
+<p><strong>Why is this important?</strong> Because our coefficients
+<span class="math inline">\(\hat{\beta}_0\)</span> and <span
+class="math inline">\(\hat{\beta}_1\)</span> are calculated as weighted
+sums of the <span class="math inline">\(y_i\)</span> values, and the
+<span class="math inline">\(y_i\)</span> values depend on the errors
+<span class="math inline">\(\epsilon_i\)</span>. This assumption about
+the errors allows us to prove that our estimated coefficients themselves
+are also normally distributed. 系数 <span
+class="math inline">\(\hat{\beta}_0\)</span> 和 <span
+class="math inline">\(\hat{\beta}_1\)</span> 是通过 <span
+class="math inline">\(y_i\)</span> 值的加权和计算的，而 <span
+class="math inline">\(y_i\)</span> 值取决于误差 <span
+class="math inline">\(\epsilon_i\)</span>。这个关于误差的假设使能够证明估计的系数本身也服从正态分布。</p>
+<h3
+id="the-solution-the-theorem-and-the-t-distribution-定理和-t-分布">##
+The Solution: The Theorem and the t-distribution 定理和 t 分布</h3>
+<p>The first slide provides the central theorem that allows us to
+perform inference. It tells us exactly how to standardize our estimated
+coefficients so they follow a known distribution.
+第一张幻灯片提供了进行推断的核心定理。它准确地告诉我们如何对估计的系数进行标准化，使其服从已知的分布。</p>
+<h4 id="the-standard-error-s.e.-标准误差-s.e.">1. The Standard Error
+(s.e.) 标准误差 (s.e.)</h4>
+<p>First, look at the denominators in the red dotted boxes. These are
+the <strong>standard errors</strong> of the coefficients,
+<code>s.e.($\hat&#123;\beta&#125;_1$)</code> and
+<code>s.e.($\hat&#123;\beta&#125;_0$)</code>.
+第一张幻灯片提供了进行推断的核心定理。它准确地告诉我们如何对估计的系数进行标准化，使其服从已知的分布。</p>
+<ul>
+<li><strong>What it is:</strong> The standard error is the estimated
+<strong>standard deviation of the coefficient’s sampling
+distribution</strong>. In simpler terms, it’s a measure of the average
+amount by which our estimate <span
+class="math inline">\(\hat{\beta}_1\)</span> would differ from the true
+<span class="math inline">\(\beta_1\)</span> if we were to repeat the
+experiment many times.
+标准误差是系数抽样分布的<strong>标准差</strong>估计值。简单来说，它衡量的是如果我们重复实验多次，我们估计的
+<span class="math inline">\(\hat{\beta}_1\)</span> 与真实的 <span
+class="math inline">\(\beta_1\)</span> 之间的平均差异。</li>
+<li><strong>A smaller standard error means a more precise and reliable
+estimate.</strong>
+<strong>标准误差越小，估计值越精确可靠。</strong></li>
+</ul>
+<h4 id="the-t-statistic-t-统计量">2. The t-statistic t 统计量</h4>
+<p>The theorem shows two fractions that form a
+<strong>t-statistic</strong>. The general structure for this is:
+该定理展示了两个构成<strong>t 统计量</strong>的分数。其一般结构如下：
+<span class="math display">\[t = \frac{\text{ (Sample Estimate - True
+Value) }}{\text{ Standard Error of the Estimate }}\]</span></p>
+<p>For <span class="math inline">\(\beta_1\)</span>, this is: <span
+class="math inline">\(\frac{\hat{\beta}_1 -
+\beta_1}{\text{s.e.}(\hat{\beta}_1)}\)</span>.</p>
+<p>The key insight is that this specific quantity follows a
+<strong>Student’s t-distribution</strong> with <strong><span
+class="math inline">\(n-2\)</span> degrees of freedom</strong>.
+关键在于，这个特定量服从<strong>学生 t
+分布</strong>，其自由度为<strong><span
+class="math inline">\(n-2\)</span>。 * </strong>Student’s
+t-distribution:** This is a probability distribution that looks very
+similar to the normal distribution but has slightly “heavier” tails. We
+use it instead of the normal distribution because we had to
+<em>estimate</em> the standard deviation of the errors (<code>s</code>
+in the formula), which adds extra uncertainty.
+这是一种概率分布，与正态分布非常相似，但尾部略重。使用它来代替正态分布，是因为必须<em>估计</em>误差的标准差（公式中的
+<code>s</code>），这会增加额外的不确定性。 * <strong>Degrees of Freedom
+(n-2):</strong> We start with <code>n</code> data points, but we lose
+two degrees of freedom because we used the data to estimate two
+parameters: <span class="math inline">\(\beta_0\)</span> and <span
+class="math inline">\(\beta_1\)</span>. 从 <code>n</code>
+个数据点开始，但由于用这些数据估计了两个参数：<span
+class="math inline">\(\beta_0\)</span> 和 <span
+class="math inline">\(\beta_1\)</span>，因此损失了两个自由度。 #### 3.
+Estimating the Error Variance (<span
+class="math inline">\(s^2\)</span>)估计误差方差 (<span
+class="math inline">\(s^2\)</span>) To calculate the standard errors, we
+need a value for <code>s</code>, which is our estimate of the true error
+standard deviation <span class="math inline">\(\sigma\)</span>. This is
+calculated from the <strong>Residual Sum of Squares (RSS)</strong>.
+为了计算标准误差，我们需要一个 <code>s</code> 的值，它是对真实误差标准差
+<span class="math inline">\(\sigma\)</span>
+的估计值。该值由<strong>残差平方和 (RSS)</strong> 计算得出。 *
+<strong>RSS:</strong> First, we calculate the RSS = <span
+class="math inline">\(\sum(y_i - \hat{y}_i)^2\)</span>, which is the sum
+of all the squared errors.* <strong>RSS</strong>：首先，计算 RSS = <span
+class="math inline">\(\sum(y_i -
+\hat{y}_i)^2\)</span>，即所有平方误差之和。 * <strong><span
+class="math inline">\(s^2\)</span>:</strong> Then, we find the estimate
+of the error variance: <span class="math inline">\(s^2 = \text{RSS} /
+(n-2)\)</span>. We divide by <span class="math inline">\(n-2\)</span> to
+get an unbiased estimate. * <strong><span
+class="math inline">\(s^2\)</span></strong>：然后，计算误差方差的估计值：<span
+class="math inline">\(s^2 = \text{RSS} / (n-2)\)</span>。我们将其除以
+<span class="math inline">\(n-2\)</span> 即可得到无偏估计值。 *
+<code>s</code> is simply the square root of <span
+class="math inline">\(s^2\)</span>. This <code>s</code> is the value
+used in the standard error formulas.* <code>s</code> 就是 <span
+class="math inline">\(s^2\)</span> 的平方根。这个 <code>s</code>
+是标准误差公式中使用的值。</p>
+<h3 id="what-this-allows-us-to-do-the-practical-use">## What This Allows
+Us To Do (The Practical Use)</h3>
+<p>Because we know the exact distribution of our t-statistic, we can now
+achieve our goal of quantifying uncertainty: 因为知道 t
+统计量的精确分布，所以现在可以实现量化不确定性的目标：</p>
+<ol type="1">
+<li><strong>Hypothesis Testing:</strong> We can test if a predictor is
+actually useful. The most common test is for the null hypothesis <span
+class="math inline">\(H_0: \beta_1 = 0\)</span>. If we can prove the
+observed <span class="math inline">\(\hat{\beta}_1\)</span> is very
+unlikely to occur if the true <span
+class="math inline">\(\beta_1\)</span> were zero, we can conclude there
+is a statistically significant relationship between <span
+class="math inline">\(x\)</span> and <span
+class="math inline">\(y\)</span>.
+可以检验一个预测变量是否真的有用。最常见的检验是零假设 <span
+class="math inline">\(H_0: \beta_1 = 0\)</span>。如果能证明，当真实的
+<span class="math inline">\(\beta_1\)</span> 为零时，观测到的 <span
+class="math inline">\(\hat{\beta}_1\)</span>
+不太可能发生，那么就可以得出结论，<span class="math inline">\(x\)</span>
+和 <span class="math inline">\(y\)</span>
+之间存在统计学上的显著关系。</li>
+<li><strong>Confidence Intervals:</strong> We can construct a range of
+plausible values for the true coefficient. For example, we can calculate
+a 95% confidence interval for <span
+class="math inline">\(\beta_1\)</span>. This gives us a range where we
+are 95% confident the true value of <span
+class="math inline">\(\beta_1\)</span> lies.
+可以为真实系数构建一系列合理的值。</li>
+</ol>
+<h1 id="multiple-linear-regression">4. Multiple Linear Regression</h1>
+<p><img src="/imgs/5054C3/Multiple_Linear Regression1.png" alt="Multiple_Linear Regression1">
+<img src="/imgs/5054C3/Multiple_Linear Regression2.png" alt="Multiple_Linear Regression2">
+## 4.1 Multiple Linear Regression - <strong>内容</strong>:
+<strong>Multiple Linear Regression:</strong></p>
+<p>Here’s a detailed breakdown that connects both slides.</p>
+<h3
+id="the-model-from-one-to-many-predictors-从单预测变量到多预测变量">##
+The Model: From One to Many Predictors 从单预测变量到多预测变量</h3>
+<p>The first slide introduces the <strong>Multiple Linear Regression
+model</strong>. This is a direct extension of the simple model, but
+instead of using just one predictor variable, we use multiple (<span
+class="math inline">\(p\)</span>) predictors to explain our response
+variable.
+多元线性回归模型是简单模型的直接扩展，但不是只使用一个预测变量，而是使用多个（<span
+class="math inline">\(p\)</span>）预测变量来解释响应变量。</p>
+<p>The general formula is: <span class="math display">\[y_i = \beta_0 +
+\beta_1x_{i1} + \beta_2x_{i2} + \dots + \beta_px_{ip} +
+\epsilon_i\]</span></p>
+<h4 id="key-change-in-interpretation">Key Change in Interpretation</h4>
+<p>This is the most important new concept. In simple regression, <span
+class="math inline">\(\beta_1\)</span> was just the slope. In multiple
+regression, each coefficient has a more nuanced meaning:
+在简单回归中，<span class="math inline">\(\beta_1\)</span>
+只是斜率。在多元回归中，每个系数都有更微妙的含义：</p>
+<p><strong><span class="math inline">\(\beta_j\)</span> is the average
+change in <span class="math inline">\(y\)</span> for a one-unit increase
+in <span class="math inline">\(x_j\)</span>, while holding all other
+predictors constant.</strong></p>
+<p>This is incredibly powerful. Using the advertising example from your
+slide: * <span class="math inline">\(y_i = \beta_0 +
+\beta_1(\text{TV}_i) + \beta_2(\text{Radio}_i) +
+\beta_3(\text{Newspaper}_i) + \epsilon_i\)</span> * <span
+class="math inline">\(\beta_1\)</span> represents the effect of TV
+advertising on sales, <strong>after controlling for</strong> the amount
+spent on Radio and Newspaper ads. This allows you to isolate the unique
+contribution of each advertising
+channel.表示在<strong>控制</strong>广播和报纸广告支出后，电视广告对销售额的影响。这可以让您区分每个广告渠道的独特贡献。</p>
+<h3 id="the-solution-deriving-the-normal-equation-推导正态方程">## The
+Solution: Deriving the Normal Equation 推导正态方程</h3>
+<p>The second slide shows the mathematical process for finding the best
+coefficients (<span class="math inline">\(\beta_0, \beta_1, \dots,
+\beta_p\)</span>) using the <strong>Ordinary Least Squares
+(OLS)</strong> method. It’s essentially a condensed derivation of the
+<strong>Normal Equation</strong>. 使用<strong>普通最小二乘法
+(OLS)</strong> 寻找最佳系数 (<span class="math inline">\(\beta_0,
+\beta_1, \dots, \beta_p\)</span>)
+的数学过程。它本质上是<strong>正态方程</strong>的简化推导。</p>
+<h4 id="the-goal-minimizing-the-sum-of-squares-最小化平方和">1. The
+Goal: Minimizing the Sum of Squares 最小化平方和</h4>
+<p>Just like before, our goal is to minimize the sum of the squared
+errors (or residuals): 目标是最小化平方误差（或残差）之和。</p>
+<ul>
+<li><strong>Scalar Form:</strong> <span
+class="math inline">\(\sum_{i=1}^{n} (y_i - \beta_0 - \beta_1x_{i1} -
+\beta_2x_{i2} - \beta_3x_{i3})^2\)</span>
+<ul>
+<li>This is easy to read but gets very long with more variables.
+代码易于阅读，但变量越多，代码越长。</li>
+</ul></li>
+<li><strong>Vector Form:</strong> <span
+class="math inline">\(\sum_{i=1}^{n} (y_i - \boldsymbol{\beta}^T
+\mathbf{x}_i)^2\)</span>
+<ul>
+<li>This is a more compact and powerful way to write the same thing
+using linear algebra, where <span
+class="math inline">\(\boldsymbol{\beta}^T \mathbf{x}_i\)</span> is the
+dot product that calculates the entire predicted value <span
+class="math inline">\(\hat{y}_i\)</span>.
+这是一种更简洁、更强大的线性代数表示方法，其中 <span
+class="math inline">\(\boldsymbol{\beta}^T \mathbf{x}_i\)</span>
+是计算整个预测值 <span class="math inline">\(\hat{y}_i\)</span>
+的点积。</li>
+</ul></li>
+</ul>
+<h4
+id="the-method-using-calculus-to-find-the-minimum-使用微积分求最小值">2.
+The Method: Using Calculus to Find the Minimum 使用微积分求最小值</h4>
+<p>To find the set of <span class="math inline">\(\beta\)</span> values
+that results in the lowest possible error, we use calculus.</p>
+<ul>
+<li><p><strong>The Derivative (Gradient):</strong> Since our error
+function depends on multiple <span class="math inline">\(\beta\)</span>
+coefficients, we can’t take a simple derivative. Instead, we take the
+<strong>gradient</strong>, which is a vector of partial derivatives (one
+for each coefficient). This tells us the “slope” of the error function
+in every direction. 导数（梯度） 误差函数依赖于多个 <span
+class="math inline">\(\beta\)</span>
+系数，因此我们不能简单地求导数。相反，采用<strong>梯度</strong>，它是一个由偏导数组成的向量（每个系数对应一个偏导数）。这告诉误差函数在各个方向上的“斜率”。</p></li>
+<li><p><strong>Setting the Gradient to Zero:</strong> The minimum of a
+function occurs where its slope is zero (the very bottom of the error
+“valley”). The slide shows the result of taking this gradient and
+setting it to
+zero.函数的最小值出现在其斜率为零的地方（即误差“谷底”的最低点）。幻灯片展示了取此梯度并将其设为零的结果。</p></li>
+</ul>
+<p>The equation shown on the slide: <span class="math display">\[2
+\sum_{i=1}^{n} (\boldsymbol{\beta}^T \mathbf{x}_i - y_i)\mathbf{x}_i^T =
+0\]</span> …is the result of this calculus step. The goal is now to
+algebraically rearrange this equation to solve for <span
+class="math inline">\(\boldsymbol{\beta}\)</span>.
+是这一微积分步骤的结果。现在的目标是用代数方法重新排列这个方程，以求解
+<span class="math inline">\(\boldsymbol{\beta}\)</span>。</p>
+<h4 id="the-result-the-normal-equation-正则方程">3. The Result: The
+Normal Equation 正则方程</h4>
+<p>After rearranging the equation from the previous step and expressing
+the sums in their full matrix form, we arrive at a clean and beautiful
+solution. While the slide doesn’t show the final step, the result of
+“Setting the gradient zero and solve <span
+class="math inline">\(\beta\)</span>” is the <strong>Normal
+Equation</strong>:
+重新排列上一步中的方程，并将和表示为完整的矩阵形式后，得到了一个简洁美观的解。虽然幻灯片没有展示最后一步，“设置梯度零点并求解
+<span class="math inline">\(\beta\)</span>”
+的结果就是<strong>正态方程</strong>：</p>
+<p><span class="math display">\[\hat{\boldsymbol{\beta}} =
+(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\mathbf{y}\]</span></p>
+<ul>
+<li><span class="math inline">\(\hat{\boldsymbol{\beta}}\)</span> is the
+vector of our optimal coefficient estimates.</li>
+<li><span class="math inline">\(\mathbf{X}\)</span> is the “design
+matrix” where each row is an observation and each column is a predictor
+variable. <span class="math inline">\(\mathbf{X}\)</span>
+是“设计矩阵”，其中每一行代表一个观测值，每一列代表一个预测变量。</li>
+<li><span class="math inline">\(\mathbf{y}\)</span> is the vector of our
+response variable. <span class="math inline">\(\mathbf{y}\)</span>
+是我们的响应变量的向量。</li>
+</ul>
+<p>This single equation is the general solution for finding the OLS
+coefficients for <strong>any</strong> linear regression model, no matter
+how many predictors you have. This is what statistical software
+calculates for you under the hood.
+无论有多少个预测变量，这个简单的方程都是<strong>任何</strong>线性回归模型中
+OLS 系数的通解。</p>
+<h1 id="matrix-notatio">5. matrix notatio</h1>
+<p><img src="/imgs/5054C3/matrix_notatio.png"></p>
+<ul>
+<li><strong>内容</strong>: This slide introduces the <strong>matrix
+notation</strong> for multiple linear regression, which is a powerful
+way to represent the entire system of equations in a compact form. This
+notation isn’t just for tidiness—it’s the foundation for how the
+solutions are derived and calculated in software.</li>
+</ul>
+<p>多元线性回归的<strong>矩阵符号</strong>，这是一种以紧凑形式表示整个方程组的有效方法。这种符号不仅仅是为了简洁，它还是软件中推导和计算解的基础。
+Here is a more detailed breakdown.</p>
+<h3 id="why-use-matrix-notation">## Why Use Matrix Notation?</h3>
+<p>Imagine you have 10,000 observations (<span
+class="math inline">\(n=10,000\)</span>) and 5 predictor variables
+(<span class="math inline">\(p=5\)</span>). Writing out the model
+equation for each observation would be impossible: <span
+class="math inline">\(y_1 = \beta_0 + \beta_1x_{11} + \dots +
+\beta_5x_{15} + \epsilon_1\)</span> <span class="math inline">\(y_2 =
+\beta_0 + \beta_1x_{21} + \dots + \beta_5x_{25} + \epsilon_2\)</span>
+…and so on for 10,000 lines.</p>
+<p>假设你有 10,000 个观测值（n=10,000）和 5
+个预测变量（p=5）。为每个观测值写出模型方程是不可能的： <span
+class="math inline">\(y_1 = \beta_0 + \beta_1x_{11} + \dots +
+\beta_5x_{15} + \epsilon_1\)</span> <span class="math inline">\(y_2 =
+\beta_0 + \beta_1x_{21} + \dots + \beta_5x_{25} + \epsilon_2\)</span>
+……以此类推，直到 10,000 行。 Matrix notation allows us to consolidate
+this entire system into a single, elegant
+equation:矩阵符号使我们能够将整个系统合并成一个简洁的方程： <span
+class="math display">\[\mathbf{y} = \mathbf{X}\boldsymbol{\beta} +
+\boldsymbol{\epsilon}\]</span> Let’s break down each component shown on
+your slide.</p>
+<h3 id="the-components-explained">## The Components Explained</h3>
+<h4 id="the-design-matrix-mathbfx-设计矩阵">1. The Design Matrix: <span
+class="math inline">\(\mathbf{X}\)</span> 设计矩阵</h4>
+<p><span class="math display">\[\mathbf{X} = \begin{pmatrix} 1 &amp;
+x_{11} &amp; x_{12} &amp; \cdots &amp; x_{1p} \\ 1 &amp; x_{21} &amp;
+x_{22} &amp; \cdots &amp; x_{2p} \\ \vdots &amp; \vdots &amp; \vdots
+&amp; \ddots &amp; \vdots \\ 1 &amp; x_{n1} &amp; x_{n2} &amp; \cdots
+&amp; x_{np} \end{pmatrix}\]</span> This is the most important matrix.
+It contains all of your predictor variable
+data.这是最重要的矩阵。它包含所有预测变量数据。 * <strong>Rows:</strong>
+Each row represents a single observation (e.g., a person, a company, a
+day). There are <strong>n</strong>
+rows.每一行代表一个观察值（例如，一个人、一家公司、一天）。共有
+<strong>n</strong> 行。 * <strong>Columns:</strong> Each column
+represents a predictor variable. There are <strong>p</strong> predictor
+columns, plus one special column.每列代表一个预测变量。共有
+<strong>p</strong> 个预测列，外加一个特殊列。 * <strong>The Column of
+Ones:</strong> This is a crucial detail. This first column of all ones
+is a placeholder for the <strong>intercept term (<span
+class="math inline">\(\beta_0\)</span>)</strong>. When you perform
+matrix multiplication, this <code>1</code> gets multiplied by <span
+class="math inline">\(\beta_0\)</span>, ensuring the intercept is
+included in the model for every single observation.
+这是一个至关重要的细节。第一列（全 1）是<strong>截距项 (<span
+class="math inline">\(\beta_0\)</span>)</strong>
+的占位符。执行矩阵乘法时，这个 <code>1</code> 会乘以 <span
+class="math inline">\(\beta_0\)</span>，以确保截距包含在模型中，适用于每个观测值。</p>
+<h4 id="the-coefficient-vector-boldsymbolbeta-系数向量">2. The
+Coefficient Vector: <span
+class="math inline">\(\boldsymbol{\beta}\)</span> 系数向量</h4>
+<p><span class="math display">\[\boldsymbol{\beta} = \begin{pmatrix}
+\beta_0 \\ \beta_1 \\ \vdots \\ \beta_p \end{pmatrix}\]</span> This is a
+column vector that contains all the model parameters—the unknown values
+we want to estimate. The goal of linear regression is to find the
+numerical values for this vector.</p>
+<h4 id="the-response-vector-mathbfy-响应向量">3. The Response Vector:
+<span class="math inline">\(\mathbf{y}\)</span> 响应向量</h4>
+<p><span class="math display">\[\mathbf{y} = \begin{pmatrix} y_1 \\
+\vdots \\ y_n \end{pmatrix}\]</span> This is a column vector containing
+all the observed outcomes you are trying to predict (e.g., sales, test
+scores, stock prices).</p>
+<h4 id="the-error-vector-boldsymbolepsilon-误差向量">4. The Error
+Vector: <span class="math inline">\(\boldsymbol{\epsilon}\)</span>
+误差向量</h4>
+<p><span class="math display">\[\boldsymbol{\epsilon} = \begin{pmatrix}
+\epsilon_1 \\ \vdots \\ \epsilon_n \end{pmatrix}\]</span> This column
+vector bundles together all the individual, unobserved random errors. It
+represents the portion of <strong>y</strong> that our model cannot
+explain with <strong>X</strong>.</p>
+<h3 id="putting-it-all-together">## Putting It All Together</h3>
+<p>When you write the equation <span class="math inline">\(\mathbf{y} =
+\mathbf{X}\boldsymbol{\beta} + \boldsymbol{\epsilon}\)</span>, you are
+actually representing the entire system of individual equations.</p>
+<p>Let’s look at the multiplication <span
+class="math inline">\(\mathbf{X}\boldsymbol{\beta}\)</span>: <span
+class="math display">\[\begin{pmatrix} 1 &amp; x_{11} &amp; \dots &amp;
+x_{1p} \\ 1 &amp; x_{21} &amp; \dots &amp; x_{2p} \\ \vdots &amp; \vdots
+&amp; \ddots &amp; \vdots \\ 1 &amp; x_{n1} &amp; \dots &amp; x_{np}
+\end{pmatrix} \begin{pmatrix} \beta_0 \\ \beta_1 \\ \vdots \\ \beta_p
+\end{pmatrix} = \begin{pmatrix} 1\cdot\beta_0 + x_{11}\cdot\beta_1 +
+\dots + x_{1p}\cdot\beta_p \\ 1\cdot\beta_0 + x_{21}\cdot\beta_1 + \dots
++ x_{2p}\cdot\beta_p \\ \vdots \\ 1\cdot\beta_0 + x_{n1}\cdot\beta_1 +
+\dots + x_{np}\cdot\beta_p \end{pmatrix}\]</span> As you can see, the
+result of this multiplication is a single column vector where each row
+is the “predictor” part of the regression equation for that observation.
+此乘法的结果是一个单列向量，其中每一行都是该观测值的回归方程的“预测变量”部分。</p>
+<p>By setting this equal to <span class="math inline">\(\mathbf{y} -
+\boldsymbol{\epsilon}\)</span>, you perfectly recreate the entire set of
+<code>n</code> equations in one clean statement. This compact form is
+what allows us to easily derive and compute the <strong>Normal
+Equation</strong> solution: <span
+class="math inline">\(\hat{\boldsymbol{\beta}} =
+(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\mathbf{y}\)</span>.这种紧凑形式使我们能够轻松推导和计算<strong>正态方程</strong>的解</p>
+<h1
+id="the-core-mathematical-conclusion-of-ordinary-least-squares-ols">6.
+the core mathematical conclusion of Ordinary Least Squares (OLS)</h1>
+<p><img src="/imgs/5054C3/OLS1.png">
+<img src="/imgs/5054C3/OLS2.png"></p>
+<ul>
+<li><strong>内容</strong>: Of course. These slides present the core
+mathematical conclusion of Ordinary Least Squares (OLS) and a key
+geometric property that explains <em>why</em> this solution works.
+展示了普通最小二乘法 (OLS)
+的核心数学结论，以及一个关键的几何性质，解释了该解决方案<em>为何</em>有效。
+Let’s break down the concepts and the calculation processes in
+detail.</li>
+</ul>
+<hr />
+<h3 id="part-1-the-objective-and-the-solution-slide-1-最小化几何距离">##
+Part 1: The Objective and the Solution (Slide 1) 最小化几何距离</h3>
+<p>This slide summarizes the entire OLS problem and its solution in the
+language of matrix algebra.</p>
+<h4 id="the-concept-minimizing-geometric-distance"><strong>The Concept:
+Minimizing Geometric Distance</strong></h4>
+<p>“最小二乘准则”是我们模型的目标。 The “least squares criterion” is the
+objective of our model. The slide shows it in two equivalent forms:</p>
+<ol type="1">
+<li><strong>Summation Form:</strong> <span
+class="math inline">\(\sum_{i=1}^{n} (y_i - \beta_0 - \beta_1x_{i1} -
+\dots - \beta_px_{ip})^2\)</span> This is the sum of the squared
+differences between the actual values (<span
+class="math inline">\(y_i\)</span>) and the predicted values. 这是实际值
+(<span class="math inline">\(y_i\)</span>) 与预测值之差的平方和。</li>
+<li><strong>Matrix Form:</strong> <span
+class="math inline">\(||\mathbf{y} - \mathbf{X}\boldsymbol{\beta}||^2 =
+(\mathbf{y} - \mathbf{X}\boldsymbol{\beta})^T(\mathbf{y} -
+\mathbf{X}\boldsymbol{\beta})\)</span> This is the more powerful way to
+view the problem. Think of <span
+class="math inline">\(\mathbf{y}\)</span> (the vector of all actual
+outcomes) and <span
+class="math inline">\(\mathbf{X}\boldsymbol{\beta}\)</span> (the vector
+of all predicted outcomes) as two points in an n-dimensional space. The
+expression <span class="math inline">\(||\mathbf{y} -
+\mathbf{X}\boldsymbol{\beta}||^2\)</span> represents the <strong>squared
+Euclidean distance</strong> between these two points. 将 <span
+class="math inline">\(\mathbf{y}\)</span>（所有实际结果的向量）和 <span
+class="math inline">\(\mathbf{X}\boldsymbol{\beta}\)</span>（所有预测结果的向量）视为
+n 维空间中的两个点。表达式 <span class="math inline">\(||\mathbf{y} -
+\mathbf{X}\boldsymbol{\beta}||^2\)</span>
+表示这两点之间的<strong>平方欧氏距离</strong>。 Therefore, the OLS
+problem is a geometric one: <strong>Find the coefficient vector <span
+class="math inline">\(\boldsymbol{\beta}\)</span> that makes the
+predicted values vector <span
+class="math inline">\(\mathbf{X}\boldsymbol{\beta}\)</span> as close as
+possible to the actual values vector <span
+class="math inline">\(\mathbf{y}\)</span>.</strong> 因此，OLS
+问题是一个几何问题：<strong>找到一个系数向量 <span
+class="math inline">\(\boldsymbol{\beta}\)</span>，使预测值向量 <span
+class="math inline">\(\mathbf{X}\boldsymbol{\beta}\)</span>
+尽可能接近实际值向量 <span
+class="math inline">\(\mathbf{y}\)</span>。</strong></li>
+</ol>
+<h4
+id="the-solution-the-least-squares-estimator-lse最小二乘估计器-lse"><strong>The
+Solution: The Least Squares Estimator (LSE)</strong>最小二乘估计器
+(LSE)</h4>
+<p>The slide provides the direct solution to this minimization problem,
+which is the <strong>Normal
+Equation</strong>:此最小化问题的直接解，即<strong>正态方程</strong>：</p>
+<p><span class="math display">\[\hat{\boldsymbol{\beta}} =
+(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\mathbf{y}\]</span></p>
+<p>This formula gives you the exact vector of coefficients <span
+class="math inline">\(\hat{\boldsymbol{\beta}}\)</span> that minimizes
+the squared distance. We get this formula by taking the gradient (the
+multidimensional version of a derivative) of the distance function with
+respect to <span class="math inline">\(\boldsymbol{\beta}\)</span>,
+setting it to zero, and solving, as hinted at in your previous slides.
+给出了使平方距离最小化的精确系数向量 通过取距离函数关于 <span
+class="math inline">\(\boldsymbol{\beta}\)</span>
+的梯度（导数的多维版本），将其设为零，然后求解，即可得到此公式。
+Finally, the slide defines: * <strong>Fitted values:</strong> <span
+class="math inline">\(\hat{\mathbf{y}} =
+\mathbf{X}\hat{\boldsymbol{\beta}}\)</span> (The vector of predictions
+using our optimal coefficients). 拟合值 * <strong>Residuals:</strong>
+<span class="math inline">\(\hat{\boldsymbol{\epsilon}} = \mathbf{y} -
+\hat{\mathbf{y}}\)</span> (The vector of errors, representing the
+difference between actuals and
+predictions).误差向量，表示实际值与预测值之间的差异</p>
+<h3
+id="part-2-the-geometric-property-and-proofs-slide-2几何性质及证明">##
+Part 2: The Geometric Property and Proofs (Slide 2)几何性质及证明</h3>
+<p>This slide explains a beautiful and fundamental property of the least
+squares solution:
+<strong>orthogonality</strong>.解释了最小二乘解的一个美妙而基本的性质：<strong>正交性</strong>。</p>
+<h4 id="the-concept-orthogonality-of-residuals残差的正交性"><strong>The
+Concept: Orthogonality of Residuals</strong>残差的正交性</h4>
+<p>The main idea is that the residual vector <span
+class="math inline">\(\hat{\boldsymbol{\epsilon}}\)</span> is
+<strong>orthogonal</strong> (perpendicular) to every predictor variable
+in your model. 主要思想是残差向量 <span
+class="math inline">\(\hat{\boldsymbol{\epsilon}}\)</span>
+与模型中的每个预测变量<strong>正交</strong>（垂直）。</p>
+<ul>
+<li><p><strong>Geometric Intuition:</strong> Think of the columns of
+your matrix <span class="math inline">\(\mathbf{X}\)</span> (i.e., your
+predictors and the intercept) as defining a flat surface, or a
+“hyperplane,” in a high-dimensional space. Your actual data vector <span
+class="math inline">\(\mathbf{y}\)</span> exists somewhere in this
+space, likely not on the hyperplane. The OLS process finds the point on
+that hyperplane, <span class="math inline">\(\hat{\mathbf{y}}\)</span>,
+that is closest to <span class="math inline">\(\mathbf{y}\)</span>. The
+shortest line from a point to a plane is always one that is
+<strong>perpendicular</strong> to the plane. The residual vector, <span
+class="math inline">\(\hat{\boldsymbol{\epsilon}} = \mathbf{y} -
+\hat{\mathbf{y}}\)</span>, <em>is</em> that line. 将矩阵 <span
+class="math inline">\(\mathbf{X}\)</span>
+的列（即预测变量和截距）想象成在高维空间中定义一个平面或“超平面”。实际数据向量
+<span class="math inline">\(\mathbf{y}\)</span>
+存在于该空间的某个位置，可能不在超平面上。OLS 过程会在该超平面 <span
+class="math inline">\(\hat{\mathbf{y}}\)</span> 上找到与 <span
+class="math inline">\(\mathbf{y}\)</span>
+最接近的点。从一个点到一个平面的最短线始终是与该平面<strong>垂直</strong>的线。残差向量
+<span class="math inline">\(\hat{\boldsymbol{\epsilon}} = \mathbf{y} -
+\hat{\mathbf{y}}\)</span> 就是这条直线。</p></li>
+<li><p><strong>Mathematical Statement:</strong> This geometric property
+is stated as <span class="math inline">\(\mathbf{X}^T
+\hat{\boldsymbol{\epsilon}} = \mathbf{0}\)</span>. This equation means
+that the dot product of the residual vector with every column of <span
+class="math inline">\(\mathbf{X}\)</span> is zero, which is the
+mathematical definition of orthogonality. 该等式意味着残差向量与 <span
+class="math inline">\(\mathbf{X}\)</span>
+每一列的点积都为零，这正是正交性的数学定义。</p></li>
+</ul>
+<h4 id="the-calculation-process-the-proofs"><strong>The Calculation
+Process (The Proofs)</strong></h4>
+<p><strong>1. Proof of Orthogonality:</strong> The slide shows a
+step-by-step calculation to prove that <span
+class="math inline">\(\mathbf{X}^T \hat{\boldsymbol{\epsilon}}\)</span>
+is indeed zero. * <strong>Step 1:</strong> Start with the expression to
+be proven: <span class="math inline">\(\mathbf{X}^T
+\hat{\boldsymbol{\epsilon}}\)</span> 从待证明的表达式开始： *
+<strong>Step 2:</strong> Substitute the definition of the residual,
+<span class="math inline">\(\hat{\boldsymbol{\epsilon}} = \mathbf{y} -
+\mathbf{X}\hat{\boldsymbol{\beta}}\)</span>: <span
+class="math display">\[\mathbf{X}^T (\mathbf{y} -
+\mathbf{X}\hat{\boldsymbol{\beta}})\]</span> 代入残差的定义 *
+<strong>Step 3:</strong> Distribute the <span
+class="math inline">\(\mathbf{X}^T\)</span>: <span
+class="math display">\[\mathbf{X}^T \mathbf{y} -
+\mathbf{X}^T\mathbf{X}\hat{\boldsymbol{\beta}}\]</span><em>分配 </em>
+<strong>Step 4:</strong> Substitute the Normal Equation for <span
+class="math inline">\(\hat{\boldsymbol{\beta}}\)</span>: <span
+class="math display">\[\mathbf{X}^T \mathbf{y} - \mathbf{X}^T\mathbf{X}
+[(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\mathbf{y}]\]</span> *
+<strong>Step 5:</strong> The key step is the cancellation. A matrix
+<span class="math inline">\((\mathbf{X}^T\mathbf{X})\)</span> multiplied
+by its inverse <span
+class="math inline">\((\mathbf{X}^T\mathbf{X})^{-1}\)</span> equals the
+identity matrix <span class="math inline">\(\mathbf{I}\)</span>, which
+acts like the number 1 in multiplication. <span
+class="math display">\[\mathbf{X}^T \mathbf{y} - \mathbf{I}
+\mathbf{X}^T\mathbf{y} = \mathbf{X}^T \mathbf{y} -
+\mathbf{X}^T\mathbf{y} = \mathbf{0}\]</span> 关键步骤是消去。 This
+completes the proof, showing that the orthogonality property is a direct
+consequence of the Normal Equation solution.</p>
+<p><strong>2. Proof of LSE:</strong> This is a more abstract proof
+showing that our <span
+class="math inline">\(\hat{\boldsymbol{\beta}}\)</span> truly gives the
+minimum possible error. It uses the orthogonality property and the
+Pythagorean theorem for vectors. It essentially shows that for any other
+possible coefficient vector <span
+class="math inline">\(\boldsymbol{v}\)</span>, the error <span
+class="math inline">\(||\mathbf{y} -
+\mathbf{X}\boldsymbol{v}||^2\)</span> will always be greater than or
+equal to the error from our LSE, <span
+class="math inline">\(||\mathbf{y} -
+\mathbf{X}\hat{\boldsymbol{\beta}}||^2\)</span>.</p>
+<h1 id="geometric-interpretation">7.geometric interpretation</h1>
+<p><img src="/imgs/5054C3/geometric_interpretation1.png">
+<img src="/imgs/5054C3/geometric_interpretation2.png"></p>
+<ul>
+<li><strong>内容</strong>:</li>
+</ul>
+<p>These two slides together provide a powerful geometric interpretation
+of how Ordinary Least Squares (OLS) works, centered on the concepts of
+<strong>orthogonality</strong> and <strong>projection</strong>.
+以<strong>正交性</strong>和<strong>投影</strong>的概念为中心，从几何角度有力地诠释了普通最小二乘法
+(OLS) 的工作原理。</p>
+<p>Here’s a detailed summary of the concepts and the processes they
+describe.</p>
+<h3 id="summary">## Summary</h3>
+<p>These slides explain that the process of finding the “best fit” line
+in regression is geometrically equivalent to <strong>projecting</strong>
+the actual data vector (<span class="math inline">\(\mathbf{y}\)</span>)
+onto a hyperplane defined by the predictor variables (<span
+class="math inline">\(\mathbf{X}\)</span>). This projection splits the
+actual data into two perpendicular components:
+解释了回归分析中寻找“最佳拟合”直线的过程，其几何意义等同于将实际数据向量
+(<span class="math inline">\(\mathbf{y}\)</span>)
+<strong>投影</strong>到由预测变量 (<span
+class="math inline">\(\mathbf{X}\)</span>)
+定义的超平面上。此投影将实际数据拆分为两个垂直分量：</p>
+<ol type="1">
+<li><strong>The Fitted Values (<span
+class="math inline">\(\hat{\mathbf{y}}\)</span>):</strong> The part of
+the data that is perfectly explained by the model (the projection).
+数据中能够被模型完美解释的部分（投影）。</li>
+<li><strong>The Residuals (<span
+class="math inline">\(\hat{\boldsymbol{\epsilon}}\)</span>):</strong>
+The part of the data that is unexplained (the error), which is
+perpendicular to the explained part.
+数据中无法解释的部分（误差），它与被解释部分垂直。 A special tool called
+the <strong>projection matrix (H)</strong>, or “hat matrix,” is
+introduced as the operator that performs this projection.
+引入一个称为<strong>投影矩阵
+(H)</strong>（或称“帽子矩阵”）的特殊工具，作为执行此投影的运算符。</li>
+</ol>
+<h3 id="concepts-and-process-explained-in-detail">## Concepts and
+Process Explained in Detail</h3>
+<h4 id="the-fitted-values-as-a-linear-combination-拟合值作为线性组合">1.
+The Fitted Values as a Linear Combination 拟合值作为线性组合</h4>
+<p>The first slide starts by stating that the fitted value vector <span
+class="math inline">\(\hat{\mathbf{y}} =
+\mathbf{X}\hat{\boldsymbol{\beta}}\)</span> is a <strong>linear
+combination</strong> of the columns of <span
+class="math inline">\(\mathbf{X}\)</span> (your predictors).</p>
+<ul>
+<li><p><strong>Concept:</strong> This means that the vector of fitted
+values, <span class="math inline">\(\hat{\mathbf{y}}\)</span>, must lie
+within the geometric space (a line, plane, or hyperplane) spanned by
+your predictor variables. The model is incapable of producing a
+prediction that does not live in this space. 这意味着拟合值向量 <span
+class="math inline">\(\hat{\mathbf{y}}\)</span>
+必须位于预测变量所构成的几何空间（直线、平面或超平面）内。模型无法生成不存在于此空间的预测。
+#### 2. The Projection Matrix (The “Hat Matrix”) 投影矩阵（“帽子矩阵”）
+The second slide introduces the tool that makes this projection happen:
+the <strong>projection matrix</strong>, also called the <strong>hat
+matrix</strong>, <strong>H</strong>.</p></li>
+<li><p><strong>Definition:</strong> <span
+class="math inline">\(\mathbf{H} =
+\mathbf{X}(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\)</span></p></li>
+<li><p><strong>Process:</strong> This matrix has a special job. When you
+multiply it by any vector (like our data vector <span
+class="math inline">\(\mathbf{y}\)</span>), it projects that vector onto
+the space spanned by the columns of <span
+class="math inline">\(\mathbf{X}\)</span>. We can see this by starting
+with our definition of fitted values and substituting the normal
+equation solution for <span
+class="math inline">\(\hat{\boldsymbol{\beta}}\)</span>: <span
+class="math display">\[\hat{\mathbf{y}} =
+\mathbf{X}\hat{\boldsymbol{\beta}} =
+\mathbf{X}[(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\mathbf{y}] =
+[\mathbf{X}(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T]\mathbf{y}\]</span>
+This shows that: <span class="math display">\[\hat{\mathbf{y}} =
+\mathbf{H}\mathbf{y}\]</span> This is why <strong>H</strong> is
+nicknamed the <strong>hat matrix</strong>—it “puts the hat” on <span
+class="math inline">\(\mathbf{y}\)</span>.
+这个矩阵有其特殊的用途。当你将它乘以任何向量（例如我们的数据向量 <span
+class="math inline">\(\mathbf{y}\)</span>）时，它会将该向量投影到由
+<span class="math inline">\(\mathbf{X}\)</span> 的列所跨越的空间上。
+#### 3. The Orthogonality of Fitted Values and Residuals
+拟合值和残差的正交性 This is the central concept of the first slide and
+a fundamental property of least squares.</p></li>
+<li><p><strong>Concept:</strong> The fitted value vector (<span
+class="math inline">\(\hat{\mathbf{y}}\)</span>) and the residual vector
+(<span class="math inline">\(\hat{\boldsymbol{\epsilon}} = \mathbf{y} -
+\hat{\mathbf{y}}\)</span>) are <strong>orthogonal</strong>
+(perpendicular) to each other.</p></li>
+<li><p><strong>Mathematical Statement:</strong> Their dot product is
+zero: <span class="math inline">\(\hat{\mathbf{y}}^T(\mathbf{y} -
+\hat{\mathbf{y}}) = 0\)</span>.</p></li>
+<li><p><strong>Geometric Intuition:</strong> This means the vectors
+<span class="math inline">\(\mathbf{y}\)</span>, <span
+class="math inline">\(\hat{\mathbf{y}}\)</span>, and <span
+class="math inline">\(\hat{\boldsymbol{\epsilon}}\)</span> form a
+<strong>right-angled triangle</strong> in n-dimensional space. The
+actual data vector <span class="math inline">\(\mathbf{y}\)</span> is
+the hypotenuse, while the model’s prediction <span
+class="math inline">\(\hat{\mathbf{y}}\)</span> and the error <span
+class="math inline">\(\hat{\boldsymbol{\epsilon}}\)</span> are the two
+perpendicular legs. 这意味着向量 <span
+class="math inline">\(\mathbf{y}\)</span>、<span
+class="math inline">\(\hat{\mathbf{y}}\)</span> 和 <span
+class="math inline">\(\hat{\boldsymbol{\epsilon}}\)</span> 在 n
+维空间中构成一个<strong>直角三角形</strong>。实际数据向量 <span
+class="math inline">\(\mathbf{y}\)</span> 是斜边，而模型的预测值 <span
+class="math inline">\(\hat{\mathbf{y}}\)</span> 和误差值 <span
+class="math inline">\(\hat{\boldsymbol{\epsilon}}\)</span>
+是两条垂直边。</p></li>
+</ul>
+<h4 id="the-pythagorean-theorem-of-least-squares">4. The Pythagorean
+Theorem of Least Squares</h4>
+<p>The orthogonality relationship directly implies the Pythagorean
+theorem.</p>
+<ul>
+<li><strong>Formula:</strong> <span
+class="math inline">\(||\mathbf{y}||^2 = ||\hat{\mathbf{y}}||^2 +
+||\mathbf{y} - \hat{\mathbf{y}}||^2\)</span></li>
+<li><strong>Concept:</strong> This is one of the most important
+equations in statistics, as it partitions the total variance in the
+data. 这是统计学中最重要的方程之一，因为它可以分割数据中的总方差。
+<ul>
+<li><span class="math inline">\(||\mathbf{y}||^2\)</span> is
+proportional to the <strong>Total Sum of Squares (TSS):</strong> The
+total variation of the response variable around its
+mean.响应变量围绕其均值的总变异。</li>
+<li><span class="math inline">\(||\hat{\mathbf{y}}||^2\)</span> is
+proportional to the <strong>Explained Sum of Squares (ESS):</strong> The
+portion of the total variation that is explained by your regression
+model.回归模型可以解释的总变异部分。</li>
+<li><span class="math inline">\(||\mathbf{y} -
+\hat{\mathbf{y}}||^2\)</span> is the <strong>Residual Sum of Squares
+(RSS):</strong> The portion of the total variation that is left
+unexplained (the error).总变异中未解释的部分（即误差）。</li>
+</ul></li>
+</ul>
+<p>This relationship, <strong>Total Variation = Explained Variation +
+Unexplained Variation</strong>, is the foundation for calculating
+metrics like <strong>R-squared (<span
+class="math inline">\(R^2\)</span>)</strong>, which measures the
+goodness of fit of your model. <strong>总变异 = 解释变异 +
+未解释变异</strong>，是计算<strong>R 平方 (<span
+class="math inline">\(R^2\)</span>)</strong>
+等指标的基础，该指标用于衡量模型的拟合优度。</p>
+<h4 id="residuals-and-the-identity-matrix-残差和单位矩阵">5. Residuals
+and the Identity Matrix 残差和单位矩阵</h4>
+<p>Finally, the second slide shows that just as <strong>H</strong>
+projects onto the “model space,” a related matrix projects onto the
+“error space.” 最后，第二张幻灯片显示，正如<strong>H</strong>
+投影到“模型空间”一样，相关矩阵也会投影到“误差空间”。 *
+<strong>Process:</strong> We can express the residuals using the hat
+matrix: <span class="math display">\[\hat{\boldsymbol{\epsilon}} =
+\mathbf{y} - \hat{\mathbf{y}} = \mathbf{y} - \mathbf{H}\mathbf{y} =
+(\mathbf{I} - \mathbf{H})\mathbf{y}\]</span> The matrix <span
+class="math inline">\((\mathbf{I} - \mathbf{H})\)</span> is also a
+projection matrix. It takes the original data vector <span
+class="math inline">\(\mathbf{y}\)</span> and projects it onto the space
+that is orthogonal to all of your predictors, giving you the residual
+vector directly.</p>
+<h1
+id="visualization-of-ordinary-least-squares-ols-regression">8.visualization
+of Ordinary Least Squares (OLS) regression</h1>
+<p><img src="/imgs/5054C3/visualization_of_Ordinary_Least_Squares_(OLS)_regression.png"></p>
+<ul>
+<li><strong>内容</strong>:</li>
+</ul>
+<p>This slide provides an excellent geometric visualization of what’s
+happening “under the hood” in Ordinary Least Squares (OLS) regression.
+It translates the algebraic formulas into a more intuitive spatial
+concept. 这张幻灯片以出色的几何可视化方式展现了普通最小二乘 (OLS)
+回归的“幕后”机制。它将代数公式转化为更直观的空间概念。</p>
+<h3 id="summary-1">## Summary</h3>
+<p>The image shows that the process of finding the least squares
+estimates is geometrically equivalent to taking the <strong>actual
+outcome vector</strong> (<span
+class="math inline">\(\mathbf{y}\)</span>) and finding its
+<strong>orthogonal projection</strong> (<span
+class="math inline">\(\hat{\mathbf{y}}\)</span>) onto a
+<strong>hyperplane</strong> formed by the predictor variables (<span
+class="math inline">\(\mathbf{x}_1\)</span> and <span
+class="math inline">\(\mathbf{x}_2\)</span>). The projection <span
+class="math inline">\(\hat{\mathbf{y}}\)</span> is the vector of fitted
+values, representing the closest possible approximation of the real data
+that the model can achieve.</p>
+<p>该图显示，寻找最小二乘估计值的过程在几何上等同于将<strong>实际结果向量</strong>
+(<span class="math inline">\(\mathbf{y}\)</span>)
+求出其<strong>正交投影</strong> (<span
+class="math inline">\(\hat{\mathbf{y}}\)</span>) 到由预测变量 (<span
+class="math inline">\(\mathbf{x}_1\)</span> 和 <span
+class="math inline">\(\mathbf{x}_2\)</span>
+构成的<strong>超平面</strong>上。投影 <span
+class="math inline">\(\hat{\mathbf{y}}\)</span>
+是拟合值的向量，表示模型能够达到的与真实数据最接近的近似值。</p>
+<h3 id="the-concepts-explained-spatially空间概念解释">## The Concepts
+Explained Spatially空间概念解释</h3>
+<p>Let’s break down each element of the diagram and its meaning:</p>
+<h4 id="the-space-itself-空间本身">1. The Space Itself 空间本身</h4>
+<ul>
+<li><strong>Concept:</strong> We are not in a simple 2D or 3D graph
+where axes are X and Y. Instead, we are in an <strong>n-dimensional
+space</strong>, where <strong>n is the number of observations</strong>
+in your dataset. Each axis in this space corresponds to one observation
+(e.g., one person, one day).
+我们并非身处一个简单的二维或三维图形中，其中坐标轴为 X 和
+Y。相反，我们身处一个 <strong>n 维空间</strong>，其中 <strong>n
+是数据集中的观测值数量</strong>。此空间中的每个轴对应一个观测值（例如，一个人，一天）。</li>
+<li><strong>Meaning:</strong> A vector like <strong>y</strong> or
+<strong>x₁</strong> is a single point in this high-dimensional space.
+For example, if you have 50 data points, <strong>y</strong> is a vector
+pointing to a specific location in a 50-dimensional space. 像
+<strong>y</strong> 或 <strong>x₁</strong>
+这样的向量是这个高维空间中的单个点。例如，如果您有 50
+个数据点，<strong>y</strong> 就是指向 50 维空间中特定位置的向量。</li>
+</ul>
+<h4
+id="the-predictor-hyperplane-the-yellow-surface预测变量超平面黄色表面">2.
+The Predictor Hyperplane (The Yellow
+Surface)预测变量超平面（黄色表面）</h4>
+<ul>
+<li><strong>Concept:</strong> The vectors for your predictor variables,
+<strong>x₁</strong> and <strong>x₂</strong>, define a flat surface. If
+you had only one predictor, this would be a line. With two, it’s a
+plane. With more, it’s a <strong>hyperplane</strong>.预测变量的向量
+<strong>x₁</strong> 和 <strong>x₂</strong>
+定义了一个平面。如果只有一个预测变量，它就是一条线。如果有两个，它就是一个平面。如果有更多的预测变量，它就是一个<strong>超平面</strong>。</li>
+<li><strong>Meaning:</strong> This yellow plane represents the
+<strong>“world of possible predictions”</strong> that your model is
+allowed to make. Any linear combination of your predictors—which is what
+a linear regression model calculates—will result in a vector that lies
+<em>somewhere</em> on this surface.
+这个黄色平面代表你的模型可以做出的<strong>“可能预测的世界”</strong>。任何预测变量的线性组合（也就是线性回归模型计算的结果）都会产生一个位于这个平面<em>某处</em>的向量。
+#### 3. The Actual Outcome Vector (y)实际结果向量 (y)</li>
+<li><strong>Concept:</strong> The red vector <strong>y</strong>
+represents your actual, observed data. It’s a single point in the
+n-dimensional space. 红色向量 <strong>y</strong>
+代表你实际观察到的数据。它是 n 维空间中的一个点。</li>
+<li><strong>Meaning:</strong> Critically, this vector usually does
+<strong>not</strong> lie on the predictor hyperplane. If it did, your
+model would be a perfect fit with zero error. The fact that it’s “off
+the plane” represents the real-world noise and variation that the model
+cannot fully capture.
+至关重要的是，这个向量通常<strong>不</strong>位于预测变量超平面上。如果它位于超平面上，你的模型将完美拟合，误差为零。它“偏离平面”代表了模型无法完全捕捉到的真实世界的噪声和变化。</li>
+</ul>
+<h4 id="the-fitted-value-vector-ŷ拟合值向量-ŷ">4. The Fitted Value
+Vector (ŷ)拟合值向量 (ŷ)</h4>
+<ul>
+<li><strong>Concept:</strong> Since <strong>y</strong> is not on the
+plane, we find the point on the plane that is <strong>geometrically
+closest</strong> to <strong>y</strong>. This closest point is found by
+dropping a perpendicular line from <strong>y</strong> to the plane. The
+point where it lands is the <strong>orthogonal projection</strong>,
+labeled <strong>ŷ</strong> (y-hat). 由于 <strong>y</strong>
+不在平面上，因此我们在平面上找到与 <strong>y</strong>
+<strong>几何上最接近的点。这个最接近点是通过从 </strong>y**
+到平面做一条垂直线找到的。垂直线所在的点就是<strong>正交投影</strong>，标记为
+<strong>ŷ</strong> (y-hat)。</li>
+<li><strong>Meaning:</strong> <strong>ŷ is the vector of your model’s
+fitted values.</strong> It is the “best” possible approximation of the
+real data that can be created using the given predictors because it
+minimizes the distance (and therefore the squared error) between the
+actual data (<strong>y</strong>) and the model’s prediction. <strong>ŷ
+是模型拟合值的向量。</strong>它是使用给定预测变量可以创建的对真实数据的“最佳”近似值，因为它最小化了实际数据
+(<strong>y</strong>)
+与模型预测值之间的距离（从而最小化了平方误差）。</li>
+</ul>
+<h4 id="the-residual-vector-the-dashed-line残差向量虚线">5. The Residual
+Vector (The Dashed Line)残差向量（虚线）</h4>
+<ul>
+<li><strong>Concept:</strong> The dashed line connecting the tip of
+<strong>y</strong> to the tip of <strong>ŷ</strong> is the
+<strong>residual vector</strong> (<span
+class="math inline">\(\boldsymbol{\epsilon} = \mathbf{y} -
+\hat{\mathbf{y}}\)</span>). Its length is the shortest possible distance
+from <strong>y</strong> to the hyperplane.
+连接<strong>y</strong>顶点和<strong>ŷ</strong>顶点的虚线是<strong>残差向量</strong>
+(<span class="math inline">\(\boldsymbol{\epsilon} = \mathbf{y} -
+\hat{\mathbf{y}}\)</span>)。其长度是从<strong>y</strong>到超平面的最短可能距离。</li>
+<li><strong>Meaning:</strong> This vector represents the
+<strong>error</strong> of the model—the part of the actual data that is
+left over after accounting for the predictors. The right-angle symbol
+(└) is the most important part of the diagram, as it shows this error is
+<strong>orthogonal</strong> (perpendicular) to the prediction and to all
+the predictors. This visualizes the core property that the model’s
+errors are uncorrelated with the predictors.
+连接<strong>y</strong>顶点和<strong>ŷ</strong>顶点的虚线是<strong>残差向量</strong>
+(<span class="math inline">\(\boldsymbol{\epsilon} = \mathbf{y} -
+\hat{\mathbf{y}}\)</span>)。其长度是从<strong>y</strong>到超平面的最短可能距离。</li>
+</ul>
+<h1 id="singular-value-decomposition-svd-奇异值分解-svd">9.Singular
+Value Decomposition (SVD) 奇异值分解 (SVD)</h1>
+<p><img src="/imgs/5054C3/SVD1.png">
+<img src="/imgs/5054C3/SVD2.png"></p>
+<ul>
+<li><strong>内容</strong>:</li>
+</ul>
+<p>These slides delve into the more advanced linear algebra behind the
+projection matrix (<strong>H</strong>), explaining its fundamental
+properties and offering a new way to construct it using <strong>Singular
+Value Decomposition (SVD)</strong>. 探讨了投影矩阵 (<strong>H</strong>)
+背后更高级的线性代数，解释了它的基本性质，并提供了一种使用<strong>奇异值分解
+(SVD)</strong> 构造它的新方法。</p>
+<h3 id="summary-2">## Summary</h3>
+<p>These slides show that the <strong>projection matrix (H)</strong>,
+which is central to least squares, has two key mathematical properties:
+it’s <strong>symmetric</strong> and <strong>idempotent</strong>
+(projecting twice is the same as projecting once). These properties
+dictate that its eigenvalues must be either 1 or 0. Singular Value
+Decomposition (SVD) of the data matrix <strong>X</strong> provides an
+elegant and numerically stable way to express <strong>H</strong> as
+<strong>UUᵀ</strong>, which makes these fundamental properties easier to
+understand and prove. 这些幻灯片展示了<strong>投影矩阵
+(H)</strong>（最小二乘法的核心）的两个关键数学性质：<strong>对称</strong>和<strong>幂等</strong>（投影两次等于投影一次）。这些性质决定了它的特征值必须为
+1 或 0。数据矩阵 <strong>X</strong> 的奇异值分解 (SVD)
+提供了一种优雅且数值稳定的方式，将<strong>H</strong> 表示为
+<strong>UUᵀ</strong>，这使得这些基本性质更容易理解和证明。</p>
+<h3 id="concepts-and-process-explained-in-detail-1">## Concepts and
+Process Explained in Detail</h3>
+<h4 id="singular-value-decomposition-svd">1. Singular Value
+Decomposition (SVD)</h4>
+<p>The first slide introduces SVD, a powerful method for factoring any
+matrix.</p>
+<ul>
+<li><strong>Concept:</strong> SVD breaks down your data matrix
+<strong>X</strong> into three simpler matrices: <strong>X =
+UDVᵀ</strong>. Think of this as revealing the fundamental structure of
+your data.SVD 将数据矩阵 <strong>X</strong>
+分解为三个更简单的矩阵：<strong>X =
+UDVᵀ</strong>。这可以理解为揭示数据的基本结构。
+<ul>
+<li><strong>U:</strong> An <strong>orthogonal matrix</strong> whose
+columns form a perfect, orthonormal basis for the space spanned by your
+predictors (the column space of <strong>X</strong>). These columns
+represent the principal directions of your data’s
+space.一个<strong>正交矩阵</strong>，其列构成预测变量所占空间（<strong>X</strong>
+的列空间）的完美正交基。这些列代表数据空间的主方向。</li>
+<li><strong>D:</strong> A <strong>diagonal matrix</strong> containing
+the “singular values,” which measure the importance or magnitude of each
+of these principal
+directions.一个<strong>对角矩阵</strong>，包含“奇异值”，用于衡量每个主方向的重要性或大小。</li>
+<li><strong>V:</strong> Another <strong>orthogonal
+matrix</strong>.另一个<strong>正交矩阵</strong>。</li>
+</ul></li>
+<li><strong>Process (How SVD simplifies the Projection Matrix) SVD
+如何简化投影矩阵:</strong> The main takeaway from this slide is the new,
+simpler formula for the hat matrix: <span
+class="math display">\[\mathbf{H} = \mathbf{UU}^T\]</span> This result
+is derived by substituting <strong>X = UDVᵀ</strong> into the original,
+more complex formula for <strong>H</strong>: <span
+class="math display">\[\mathbf{H} =
+\mathbf{X}(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\]</span> When you
+perform this substitution and use the fact that for orthogonal matrices
+<strong>U</strong> and <strong>V</strong>, we have <strong>UᵀU =
+I</strong> and <strong>VᵀV = I</strong>, the <strong>D</strong> and
+<strong>V</strong> matrices completely cancel out, leaving the
+beautifully simple form <strong>H = UUᵀ</strong>. This tells us that
+projection is fundamentally about the basis vectors (<strong>U</strong>)
+of the predictor space. 执行此代入并利用正交矩阵 <strong>U</strong> 和
+<strong>V</strong> 的公式，即 <strong>UᵀU = I</strong> 和 <strong>VᵀV =
+I</strong>，<strong>D</strong> 和 <strong>V</strong>
+矩阵完全抵消，剩下简洁的形式 <strong>H =
+UUᵀ</strong>。这告诉我们，投影本质上是关于预测空间的基向量（<strong>U</strong>）的。</li>
+</ul>
+<h4 id="the-properties-of-the-projection-matrix-h-投影矩阵-h-的性质">2.
+The Properties of the Projection Matrix (H) 投影矩阵 (H) 的性质</h4>
+<p>The second slide describes the essential nature of any projection
+matrix.</p>
+<ul>
+<li><p><strong>Symmetric (H = Hᵀ):</strong> This property ensures that
+the projection is orthogonal (i.e., it finds the closest point by moving
+perpendicularly).
+此性质确保投影是正交的（即，它通过垂直移动找到最近的点）。</p></li>
+<li><p><strong>Idempotent (H² = H):</strong> This is the most intuitive
+property of a projection. 这是投影最直观的性质。</p>
+<ul>
+<li><strong>Concept:</strong> “Doing it twice is the same as doing it
+once.” “两次和一次相同。”</li>
+<li><strong>Geometric Meaning:</strong> Imagine you project a point onto
+a flat tabletop. That projected point is now <em>on the table</em>. If
+you try to project it onto the table <em>again</em>, it doesn’t move.
+The projection of a projection is just the projection itself.
+Mathematically, this is <strong>H(Hv) = Hv</strong>, which simplifies to
+<strong>H² = H</strong>.
+想象一下，你将一个点投影到平坦的桌面上。这个投影点现在<em>在桌子上</em>。如果你尝试<em>再次</em>将它投影到桌子上，它不会移动。投影的投影就是投影本身。从数学上讲，这是<strong>H(Hv)
+= Hv</strong>，简化为<strong>H² = H</strong>。</li>
+</ul></li>
+</ul>
+<h4 id="eigenvalues-and-eigenspaces-特征值和特征空间">3. Eigenvalues and
+Eigenspaces 特征值和特征空间</h4>
+<p>The idempotency property has a profound consequence for the matrix’s
+eigenvalues.</p>
+<ul>
+<li><strong>Concept:</strong> The eigenvalues of <strong>H</strong> can
+only be <strong>1 or 0</strong>.
+<strong>H</strong>的特征值只能是<strong>1</strong>或0**。</li>
+<li><strong>Process (The Proof):</strong>
+<ol type="1">
+<li>Let <strong>v</strong> be an eigenvector of <strong>H</strong> with
+eigenvalue <span class="math inline">\(\lambda\)</span>. By definition,
+<strong>Hv</strong> = <span
+class="math inline">\(\lambda\)</span><strong>v</strong>.
+设<strong>v</strong>是<strong>H</strong>的特征向量，其特征值为<span
+class="math inline">\(\lambda\)</span>。根据定义，<strong>Hv</strong> =
+<span class="math inline">\(\lambda\)</span><strong>v</strong>。</li>
+<li>If we apply <strong>H</strong> again, we get <strong>H(Hv)</strong>
+= <strong>H</strong>(<span
+class="math inline">\(\lambda\)</span><strong>v</strong>) = <span
+class="math inline">\(\lambda\)</span>(<strong>Hv</strong>) = <span
+class="math inline">\(\lambda\)</span>(<span
+class="math inline">\(\lambda\)</span><strong>v</strong>) = <span
+class="math inline">\(\lambda^2\)</span><strong>v</strong>.
+如果我们再次应用<strong>H</strong>，我们得到<strong>H(Hv)</strong> =
+<strong>H</strong>(<span
+class="math inline">\(\lambda\)</span><strong>v</strong>) = <span
+class="math inline">\(\lambda\)</span>(<strong>Hv</strong>) = <span
+class="math inline">\(\lambda\)</span>(<span
+class="math inline">\(\lambda\)</span><strong>v</strong>) = <span
+class="math inline">\(\lambda^2\)</span><strong>v</strong>。</li>
+<li>So, we have <strong>H²v</strong> = <span
+class="math inline">\(\lambda^2\)</span><strong>v</strong>.
+因此，我们有<strong>H²v</strong> = <span
+class="math inline">\(\lambda^2\)</span><strong>v</strong>。</li>
+<li>But since <strong>H</strong> is idempotent, <strong>H² = H</strong>,
+which means <strong>H²v = Hv</strong> = <span
+class="math inline">\(\lambda\)</span><strong>v</strong>.
+但由于<strong>H</strong>是幂等的，<strong>H² =
+H</strong>，这意味着<strong>H²v = Hv</strong> = <span
+class="math inline">\(\lambda\)</span><strong>v</strong>。</li>
+<li>Therefore, we must have <span
+class="math inline">\(\lambda^2\)</span><strong>v</strong> = <span
+class="math inline">\(\lambda\)</span><strong>v</strong>, which means
+<span class="math inline">\(\lambda^2 = \lambda\)</span>. The only two
+numbers in existence that satisfy this equation are <strong>0 and
+1</strong>. 因此，我们必须有<span
+class="math inline">\(\lambda^2\)</span><strong>v</strong> = <span
+class="math inline">\(\lambda\)</span><strong>v</strong>，这意味着<span
+class="math inline">\(\lambda^2 =
+\lambda\)</span>。满足此等式的仅有两个数字是<strong>0</strong>和<strong>1</strong>。</li>
+</ol></li>
+<li><strong>Connecting Eigenvalues to the Model
+将特征值连接到模型:</strong>
+<ul>
+<li><p><strong>Eigenvalue = 1:</strong> The eigenvectors associated with
+an eigenvalue of 1 are the vectors that <strong>do not change</strong>
+when projected. This is only possible if they were already in the space
+being projected onto. Therefore, the space <code>L₁</code> is the
+<strong>column space of X</strong>—the “model space.” <strong>H</strong>
+is the projection onto this space. <strong>与特征值为 1
+相关联的特征向量是投影时</strong>不会改变<strong>的向量。只有当它们已经存在于投影到的空间中时，这种情况才有可能发生。因此，空间
+<code>L₁</code> 是 X 的</strong>列空间<strong>——“模型空间”。</strong>H**
+是到该空间的投影。</p></li>
+<li><p><strong>Eigenvalue = 0:</strong> The eigenvectors associated with
+an eigenvalue of 0 are the vectors that get sent to the zero vector when
+projected. This happens to vectors that are <strong>orthogonal</strong>
+to the projection space. Therefore, the space <code>L₀</code> is the
+<strong>orthogonal “error” space</strong>. The matrix <strong>I -
+H</strong> is the projection onto this space.</p></li>
+</ul>
+<strong>与特征值为 0
+相关联的特征向量是投影时被发送到零向量的向量。这种情况发生在与投影空间</strong>正交<strong>的向量上。因此，空间
+<code>L₀</code> 是</strong>正交“误差”空间<strong>。矩阵 </strong>I - H**
+是到该空间的投影。</li>
+</ul>
+<h1 id="statistical-inference-1">10.statistical inference</h1>
+<p><img src="/imgs/5054C3/statistical_inference_in_linear_regression1.png">
+<img src="/imgs/5054C3/statistical_inference_in_linear_regression2.png"></p>
+<ul>
+<li><strong>内容</strong>:</li>
+</ul>
+<p>These slides cover the theoretical backbone of statistical inference
+in linear regression. They explain the necessary assumptions and the
+resulting probability distributions of our estimates, which is what
+allows us to perform hypothesis tests and create confidence
+intervals.</p>
+<p>这些幻灯片涵盖了线性回归中统计推断的理论基础。它们解释了必要的假设以及由此得出的估计概率分布，这使我们能够进行假设检验并创建置信区间。</p>
+<h3 id="summary-3">## Summary</h3>
+<p>These slides lay out the statistical assumptions required for the
+Least Squares Estimator (LSE). The core idea is that if we assume the
+errors are independent and normally distributed, we can then prove that:
+这些幻灯片列出了最小二乘估计量 (LSE)
+所需的统计假设。其核心思想是，如果我们假设误差是独立的且服从正态分布，那么我们可以证明：</p>
+<ol type="1">
+<li><p>Our estimated coefficients (<span
+class="math inline">\(\hat{\boldsymbol{\beta}}\)</span>) also follow a
+<strong>Normal distribution</strong> (or a
+<strong>t-distribution</strong> when standardized). 我们的估计系数
+(<span class="math inline">\(\hat{\boldsymbol{\beta}}\)</span>)
+也服从<strong>正态分布</strong>（标准化后服从<strong>t
+分布</strong>）。</p></li>
+<li><p>Our summed-up squared errors (RSS) follow a <strong>Chi-squared
+distribution</strong>. 我们的平方误差总和 (RSS)
+服从<strong>卡方分布</strong>。</p></li>
+<li><p>A specific ratio of the explained variance to the unexplained
+variance follows an <strong>F-distribution</strong>, which is used to
+test the overall significance of the model.
+解释方差与未解释方差的特定比率服从<strong>F
+分布</strong>，该分布用于检验模型的整体显著性。</p></li>
+</ol>
+<p>These known distributions are the foundation for all statistical
+inference in linear
+models.这些已知的分布是线性模型中所有统计推断的基础。</p>
+<h3 id="deeper-dive-into-concepts-and-processes">## Deeper Dive into
+Concepts and Processes</h3>
+<h4 id="the-model-assumptions-the-foundation-模型假设基础">1. The Model
+Assumptions (The Foundation) 模型假设（基础）</h4>
+<p>The first slide states the two assumptions that are critical for
+everything that follows. Without them, we can’t make claims about the
+statistical properties of our estimates.
+第一张幻灯片阐述了对后续所有内容都至关重要的两个假设。没有它们，我们就无法断言估计值的统计特性。</p>
+<ul>
+<li><strong>Assumption 1: <span class="math inline">\(\epsilon_i \sim
+N(0, \sigma^2)\)</span></strong>
+<ul>
+<li><strong>Concept:</strong> This assumes that the error terms (the
+part of <code>y</code> that the model can’t explain) are drawn from a
+normal (bell-curve) distribution with a mean of zero and a constant
+variance <span class="math inline">\(\sigma^2\)</span>.
+**假设误差项（模型无法解释的 y
+值部分）服从正态（钟形曲线）分布，该分布的均值为零，方差为常数 <span
+class="math inline">\(\sigma^2\)</span>。</li>
+<li><strong>Meaning in Plain English:</strong>
+<ul>
+<li><strong>Mean of 0:</strong> The model is “correct on average.” The
+errors are not systematically positive or negative.
+**模型“平均正确”。误差并非系统地为正或负。</li>
+<li><strong>Normal Distribution:</strong> Small errors are more likely
+than large errors. This is a common assumption for random noise.
+**小误差比大误差更有可能出现。这是随机噪声的常见假设。</li>
+<li><strong>Constant Variance (<span
+class="math inline">\(\sigma^2\)</span>):</strong> The amount of random
+scatter around the regression line is the same at all levels of the
+predictor variables. This is called <strong>homoscedasticity</strong>.
+回归线周围的随机散度在预测变量的各个水平上都是相同的。这被称为<strong>同方差性</strong>。</li>
+</ul></li>
+</ul></li>
+<li><strong>Assumption 2: Observations are independent</strong>
+观测值是独立的**
+<ul>
+<li><strong>Concept:</strong> Each data point <span
+class="math inline">\((x_i, y_i)\)</span> is an independent piece of
+information. The value of the error for one observation gives no
+information about the error for another observation. 每个数据点 <span
+class="math inline">\((x_i, y_i)\)</span>
+都是一条独立的信息。一个观测值的误差值并不能反映另一个观测值的误差。</li>
+<li><strong>Meaning:</strong> This is often true for cross-sectional
+data (e.g., a random sample of people) but can be violated in
+time-series data where today’s error might be correlated with
+yesterday’s.
+这通常适用于横截面数据（例如，随机抽样的人群），但在时间序列数据中可能不成立，因为今天的误差可能与昨天的误差相关。</li>
+</ul></li>
+</ul>
+<h4
+id="the-distribution-of-the-coefficients-theorem-of-lse-系数分布最小二乘法定理">2.
+The Distribution of the Coefficients (Theorem of LSE)
+系数分布（最小二乘法定理）</h4>
+<p>This is the most important result for understanding the accuracy of
+our individual predictors.</p>
+<ul>
+<li><strong>Concept 1: The Sampling Distribution of <span
+class="math inline">\(\hat{\boldsymbol{\beta}}\)</span></strong>
+<ul>
+<li><p><strong>Formula:</strong> <span
+class="math inline">\(\hat{\boldsymbol{\beta}} \sim
+N(\boldsymbol{\beta},
+\sigma^2(\mathbf{X}^T\mathbf{X})^{-1})\)</span></p></li>
+<li><p><strong>Meaning:</strong> If you were to take many different
+random samples from the population and calculate the coefficients <span
+class="math inline">\(\hat{\boldsymbol{\beta}}\)</span> for each sample,
+the distribution of those coefficients would be a multivariate normal
+distribution. **如果从总体中随机抽取许多不同的样本，并计算每个样本的系数
+<span
+class="math inline">\(\hat{\boldsymbol{\beta}}\)</span>，则这些系数的分布将服从多元正态分布。</p>
+<ul>
+<li>The center of this distribution is the <strong>true population
+coefficient vector <span
+class="math inline">\(\boldsymbol{\beta}\)</span></strong>. This means
+our estimator is <strong>unbiased</strong>—on average, it finds the
+right answer. 该分布的中心是<strong>真实的总体系数向量 <span
+class="math inline">\(\boldsymbol{\beta}\)</span></strong>。这意味着我们的估计器是<strong>无偏的</strong>——平均而言，它能够找到正确的答案。</li>
+<li>The “spread” of this distribution is its variance-covariance matrix,
+<span
+class="math inline">\(\sigma^2(\mathbf{X}^T\mathbf{X})^{-1}\)</span>.
+This tells us the uncertainty in our estimates.
+该分布的“散度”是其方差-协方差矩阵</li>
+</ul></li>
+</ul></li>
+<li><strong>Concept 2: The t-statistic</strong> t 统计量
+<ul>
+<li><strong>Formula:</strong> The standardized coefficient, <span
+class="math inline">\(\frac{\hat{\beta}_j -
+\beta_j}{\text{s.e.}(\hat{\beta}_j)}\)</span>, follows a
+<strong>t-distribution</strong> with <strong><span
+class="math inline">\(n-p-1\)</span> degrees of freedom</strong>.</li>
+<li><strong>Process &amp; Meaning:</strong> In the real world, we don’t
+know the true error variance <span
+class="math inline">\(\sigma^2\)</span>. We have to estimate it using
+our sample data, which gives us <span
+class="math inline">\(s^2\)</span>. Because we are using an
+<em>estimate</em> of the variance, we introduce extra uncertainty. The
+t-distribution is like a normal distribution but with slightly “fatter”
+tails to account for this additional uncertainty. The degrees of
+freedom, <span class="math inline">\(n-p-1\)</span>, reflect the number
+of data points (<code>n</code>) minus the number of parameters we had to
+estimate (<code>p</code> slopes + 1 intercept). This is the basis for
+t-tests and confidence intervals for each coefficient.
+在现实世界中，我们不知道真实的误差方差 <span
+class="math inline">\(\sigma^2\)</span>。我们必须使用样本数据来估计它，从而得到
+<span
+class="math inline">\(s^2\)</span>。由于我们使用的是方差的<em>估计值</em>，因此引入了额外的不确定性。
+t 分布类似于正态分布，但尾部略微“丰满”，以解释这种额外的不确定性。自由度
+<span class="math inline">\(n-p-1\)</span>
+表示数据点的数量（<code>n</code>）减去我们需要估计的参数数量（<code>p</code>
+个斜率 + 1 个截距）。这是 t 检验和每个系数置信区间的基础。</li>
+</ul></li>
+</ul>
+<h4
+id="the-distribution-of-the-error-theorem-of-residual-误差分布残差定理">3.
+The Distribution of the Error (Theorem of Residual)
+误差分布（残差定理）</h4>
+<p>This theorem helps us understand the properties of our model’s
+overall error.</p>
+<ul>
+<li><p><strong>Concept:</strong> The <strong>Residual Sum of Squares
+(RSS)</strong>, when scaled by the true variance, follows a
+<strong>Chi-squared (<span class="math inline">\(\chi^2\)</span>)
+distribution</strong> with <span class="math inline">\(n-p-1\)</span>
+degrees of freedom. <strong>残差平方和 (RSS)</strong>
+经真实方差缩放后，服从自由度为 <span
+class="math inline">\(n-p-1\)</span> 的<strong>卡方 (<span
+class="math inline">\(\chi^2\)</span>) 分布</strong>。</p></li>
+<li><p><strong>Process &amp; Meaning:</strong> The Chi-squared
+distribution often arises when dealing with sums of squared normal
+variables. This theorem provides a formal probability distribution for
+our total model error. Its most important consequence is that it allows
+us to prove that:
+**卡方分布通常用于处理正态变量的平方和。该定理为我们模型的总体误差提供了一个正式的概率分布。它最重要的推论是，它使我们能够证明：</p>
+<p><span class="math display">\[s^2 = \text{RSS}/(n - p - 1)\]</span> is
+an <strong>unbiased estimate</strong> of the true error variance <span
+class="math inline">\(\sigma^2\)</span>. This <span
+class="math inline">\(s^2\)</span> is a critical ingredient for
+calculating the standard errors of our coefficients. <span
+class="math display">\[s^2 = \text{RSS}/(n - p - 1)\]</span>
+是真实误差方差 <span class="math inline">\(\sigma^2\)</span>
+的<strong>无偏估计</strong>。这个 <span
+class="math inline">\(s^2\)</span>
+是计算系数标准误差的关键因素。</p></li>
+</ul>
+<h4 id="the-f-distribution-and-the-overall-model-test">4. The
+F-Distribution and the Overall Model Test</h4>
+<p>This final theorem combines our findings about the coefficients and
+the residuals.</p>
+<ul>
+<li><p><strong>Concept:</strong> The F-statistic, which is essentially a
+ratio of the variance explained by the model to the variance left
+unexplained, follows an <strong>F-distribution</strong>. F
+统计量本质上是模型解释的方差与未解释方差的比率，服从 F 分布。</p></li>
+<li><p><strong>Process &amp; Meaning:</strong> This result relies on the
+fact that our coefficient estimates (<span
+class="math inline">\(\hat{\boldsymbol{\beta}}\)</span>) are independent
+of our total error (RSS). The F-distribution is used for the
+<strong>F-test of overall significance</strong>. This test checks the
+null hypothesis that <em>all</em> of your slope coefficients are
+simultaneously zero (<span class="math inline">\(\beta_1 = \beta_2 =
+\dots = \beta_p = 0\)</span>). If the F-test gives a small p-value, you
+can conclude that your model, as a whole, is statistically significant
+and provides a better fit than a model with no predictors. 如果 F
+检验得出的 p
+值较小，则可以得出结论，您的模型整体上具有统计显著性，并且比没有预测因子的模型拟合效果更好。</p></li>
+</ul>
+<h1 id="construct-different-types-of-intervals">11.construct different
+types of intervals</h1>
+<p><img src="/imgs/5054C3/construct_different_types_of_intervals1.png">
+<img src="/imgs/5054C3/construct_different_types_of_intervals2.png"></p>
+<ul>
+<li><strong>内容</strong>:</li>
+</ul>
+<p>These slides explain how to use the statistical properties of the
+least squares estimates to construct different types of intervals, which
+are essential for quantifying the uncertainty in your model’s
+predictions and parameters.
+这些幻灯片解释了如何利用最小二乘估计的统计特性来构建不同类型的区间，这对于量化模型预测和参数中的不确定性至关重要。</p>
+<h3 id="summary-4">Summary</h3>
+<p>These slides show how to calculate three distinct types of intervals
+in linear regression, each answering a different question about
+uncertainty:
+展示了如何计算线性回归中三种不同类型的区间，每种区间分别回答了关于不确定性的不同问题：</p>
+<ol type="1">
+<li><strong>Confidence Interval for a Parameter (<span
+class="math inline">\(\beta_j\)</span>):</strong> Provides a plausible
+range for a single, true unknown coefficient in the model.
+为模型中单个真实未知系数提供一个合理的范围。</li>
+<li><strong>Confidence Interval for the Mean Response:</strong> Provides
+a plausible range for the <em>average</em> outcome for a given set of
+predictor values.
+为给定一组预测变量值的<em>平均</em>结果提供一个合理的范围。</li>
+<li><strong>Prediction Interval:</strong> Provides a plausible range for
+a <em>single future</em> outcome for a given set of predictor values.
+This interval is always wider than the confidence interval for the mean
+response because it must also account for individual random error.
+为给定一组预测变量值的<em>单个未来</em>结果提供一个合理的范围。该区间始终比平均响应的置信区间更宽，因为它还必须考虑单个随机误差。</li>
+</ol>
+<h3 id="deeper-dive-into-concepts-and-processes-1">Deeper Dive into
+Concepts and Processes</h3>
+<h4
+id="confidence-interval-for-a-single-parameter-单个参数的置信区间">1.
+Confidence Interval for a Single Parameter 单个参数的置信区间</h4>
+<p>This interval addresses the uncertainty around one specific
+coefficient, like the slope for your most important predictor.
+此区间用于解决围绕某个特定系数的不确定性，例如最重要的预测因子的斜率。</p>
+<ul>
+<li><strong>The Question It Answers:</strong> “I’ve calculated a slope
+of <span class="math inline">\(\hat{\beta}_1 = 10.5\)</span>. How sure
+am I about this number? What is a plausible range for the <em>true</em>
+population slope?” 我计算出了斜率为 <span
+class="math inline">\(\hat{\beta}_1 =
+10.5\)</span>。我对这个数字有多确定？<em>真实</em>总体斜率的合理范围是多少？”</li>
+<li><strong>The Formula:</strong> <span
+class="math inline">\(\hat{\beta}_j \pm t_{n-p-1}(\alpha/2) s
+\sqrt{c_{jj}}\)</span>
+<ul>
+<li><strong><span class="math inline">\(\hat{\beta}_j\)</span></strong>:
+This is your best point estimate for the coefficient, taken directly
+from the model output. 这是该系数的最佳点估计值，直接取自模型输出。</li>
+<li><strong><span
+class="math inline">\(t_{n-p-1}(\alpha/2)\)</span></strong>: This is the
+<strong>critical value</strong> from a t-distribution. It’s a multiplier
+that sets the width of the interval based on your desired confidence
+level (e.g., for 95% confidence, <span
+class="math inline">\(\alpha=0.05\)</span>). 这是 t
+分布的<strong>临界值</strong>。它是一个乘数，根据您所需的置信水平设置区间宽度（例如，对于
+95% 的置信度，<span class="math inline">\(\alpha=0.05\)</span>）。</li>
+<li><strong><span class="math inline">\(s
+\sqrt{c_{jj}}\)</span></strong>: This whole term is the <strong>standard
+error</strong> of the coefficient <span
+class="math inline">\(\hat{\beta}_j\)</span>. It measures the precision
+of your estimate. A smaller standard error means a narrower, more
+precise interval. 这整个项是系数 <span
+class="math inline">\(\hat{\beta}_j\)</span>
+的<strong>标准误差</strong>。它衡量您估计的精度。标准误差越小，区间越窄，精度越高。</li>
+</ul></li>
+</ul>
+<h4 id="confidence-interval-for-the-mean-response-平均响应的置信区间">2.
+Confidence Interval for the Mean Response 平均响应的置信区间</h4>
+<p>This interval addresses the uncertainty about the location of the
+regression line itself. 这个区间解决了回归线本身位置的不确定性。</p>
+<ul>
+<li><strong>The Question It Answers:</strong> “For a house with 3
+bedrooms and 2 bathrooms, what is the plausible range for the
+<em>average</em> selling price of <em>all such houses</em>?”
+<strong>它回答的问题</strong>：“对于一栋有 3 间卧室和 2
+间浴室的房子，<em>所有此类房屋</em>的<em>平均</em>售价的合理范围是多少？”</li>
+<li><strong>The Formula:</strong> <span
+class="math inline">\(\hat{\boldsymbol{\beta}}^T \mathbf{x} \pm
+t_{n-p-1}(\alpha/2)s\sqrt{\mathbf{x}^T(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{x}}\)</span>
+<ul>
+<li><strong><span class="math inline">\(\hat{\boldsymbol{\beta}}^T
+\mathbf{x}\)</span></strong>: This is your point prediction, <span
+class="math inline">\(\hat{y}\)</span>, for the given input vector
+<strong>x</strong>. 这是给定输入向量 <strong>x</strong> 的点预测 <span
+class="math inline">\(\hat{y}\)</span>。</li>
+<li><strong><span
+class="math inline">\(s\sqrt{\mathbf{x}^T(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{x}}\)</span></strong>:
+This is the standard error of the mean response. Its value depends on
+how far the input vector <strong>x</strong> is from the center of the
+data. This means the confidence interval is narrowest near the average
+of your data and gets wider as you move toward the extremes.
+这是平均响应的标准误差。其值取决于输入向量 <strong>x</strong>
+距离数据中心的距离。这意味着置信区间在数据平均值附近最窄，并且随着接近极值而变宽。</li>
+</ul></li>
+</ul>
+<h4
+id="prediction-interval-for-an-individual-response-单个响应的预测区间">3.
+Prediction Interval for an Individual Response 单个响应的预测区间</h4>
+<p>This is the most comprehensive interval and is often the most useful
+for making real-world predictions.
+这是最全面的区间，通常对于进行实际预测最有用。</p>
+<ul>
+<li><strong>The Question It Answers:</strong> “I want to predict the
+selling price for <em>one specific house</em> that has 3 bedrooms and 2
+bathrooms. What is a plausible price range for this <em>single
+house</em>?”</li>
+<li><strong>The Formula:</strong> <span
+class="math inline">\(\hat{\boldsymbol{\beta}}^T \mathbf{x} \pm
+t_{n-p-1}(\alpha/2)s\sqrt{1 +
+\mathbf{x}^T(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{x}}\)</span></li>
+<li><strong>The Key Difference:</strong> Notice the formula is identical
+to the one above, except for the <strong><code>1 + ...</code></strong>
+inside the square root. This “1” is critically important. It accounts
+for the second source of uncertainty.
+<strong>请注意，该公式与上面的公式完全相同，只是平方根中的</strong><code>1 + ...</code>**不同。这个“1”至关重要。它解释了第二个不确定性来源。
+<ol type="1">
+<li><strong>Uncertainty in the model:</strong> We are not perfectly
+certain about the true location of the regression line. This is captured
+by the <span
+class="math inline">\(\mathbf{x}^T(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{x}\)</span>
+term. **我们无法完全确定回归线的真实位置。这可以通过 <span
+class="math inline">\(\mathbf{x}^T(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{x}\)</span>
+项来捕捉。</li>
+<li><strong>Uncertainty in the individual data point:</strong> Even if
+we knew the true regression line perfectly, individual data points would
+still be scattered around it due to random error (<span
+class="math inline">\(\epsilon\)</span>). The “1” in the formula
+accounts for this irreducible, random error of a single observation.
+即使我们完全了解真实的回归线，由于随机误差 (<span
+class="math inline">\(\epsilon\)</span>)，单个数据点仍然会散布在其周围。公式中的“1”解释了单个观测值中这种不可约的随机误差。</li>
+</ol></li>
+</ul>
+<p>Because it accounts for both types of uncertainty, the
+<strong>prediction interval is always wider than the confidence interval
+for the mean</strong>.
+由于它同时考虑了两种不确定性，因此<strong>预测区间</strong>总是比均值的置信区间更宽。</p>
+<h4 id="the-core-difference-an-analogy-一个类比">The Core Difference: An
+Analogy 一个类比</h4>
+<ul>
+<li><p><strong>Confidence Interval (Mean) 均值置信区间:</strong> Like
+predicting the <strong>average</strong> arrival time for a specific
+flight that runs every day. After observing it for a year, you can
+predict the average very accurately (e.g., 10:05 AM ± 2 minutes).
+就像预测每天特定航班的<strong>平均</strong>到达时间。经过一年的观察，您可以非常准确地预测平均值（例如，上午
+10:05 ± 2 分钟）。</p></li>
+<li><p><strong>Prediction Interval (Individual) 个体预测区间:</strong>
+Like predicting the arrival time for that same flight on <strong>one
+specific day</strong> next week. You have to account for the uncertainty
+in the average <em>plus</em> the potential for random, one-time events
+like weather or air traffic delays. Your prediction must be wider to be
+safe (e.g., 10:05 AM ± 15 minutes).
+就像预测同一航班下周<strong>某一天</strong>的到达时间。您必须考虑平均值的不确定性，以及*可能出现的随机、一次性事件，例如天气或空中交通延误。您的预测范围必须更广才能安全（例如，上午
+10:05 ± 15 分钟）。</p></li>
+</ul>
+<h1 id="construct-different-types-of-intervals-1">12.construct different
+types of intervals</h1>
+<p><img src="/imgs/5054C3/ANOVA1.png">
+<img src="/imgs/5054C3/ANOVA2.png"></p>
+<ul>
+<li><strong>内容</strong>:</li>
+</ul>
+<p>These slides explain <strong>Analysis of Variance (ANOVA)</strong>, a
+method used in regression to break down the total variability in your
+data to test if your model is statistically significant as a
+whole.这些幻灯片讲解了<strong>方差分析
+(ANOVA)</strong>，这是一种用于回归分析的方法，用于分解数据中的总变异性，以检验模型整体是否具有统计显著性。</p>
+<h3 id="summary-5">Summary</h3>
+<p>The core idea is to decompose the total variation in the response
+variable (<strong>Total Sum of Squares, SS_total</strong>) into two
+parts: the variation that is explained by your regression model
+(<strong>Regression Sum of Squares, SS_reg</strong>) and the variation
+that is left unexplained (<strong>Error Sum of Squares,
+SS_error</strong>).
+其核心思想是将响应变量的总变异（<strong>总平方和，SS_total</strong>）分解为两部分：回归模型可以解释的变异（<strong>回归平方和，SS_reg</strong>）和未解释的变异（<strong>误差平方和，SS_error</strong>）。</p>
+<p>By comparing the size of the explained variation to the unexplained
+variation using an <strong>F-statistic</strong>, we can formally test
+the hypothesis that our model has predictive power. This entire process
+is neatly organized in an <strong>ANOVA table</strong>.
+通过使用<strong>F
+统计量</strong>比较已解释变异与未解释变异的大小，我们可以正式检验模型具有预测能力的假设。整个过程都整齐地组织在<strong>方差分析表</strong>中。</p>
+<h3 id="deeper-dive-into-concepts-and-connections">Deeper Dive into
+Concepts and Connections</h3>
+<h4
+id="the-decomposition-of-variances-the-core-equation-方差分解核心方程">1.
+The Decomposition of Variances (The Core Equation)
+方差分解（核心方程）</h4>
+<p>The first slide starts with the fundamental equation of ANOVA, which
+stems directly from the geometric properties of least squares:
+第一张幻灯片以方差分析的基本方程开头，该方程直接源于最小二乘的几何性质：</p>
+<p><span class="math display">\[SS_{total} = SS_{reg} +
+SS_{error}\]</span></p>
+<ul>
+<li><strong>SS_total (Total Sum of Squares):</strong> <span
+class="math inline">\(\sum(y_i - \bar{y})^2\)</span>
+<ul>
+<li><strong>Concept:</strong> This measures the <strong>total
+variation</strong> in your response variable, <code>y</code>. Imagine
+you didn’t have a model and your only prediction for any <code>y</code>
+was its overall average, <code>ȳ</code>. SS_total is the total squared
+error of this simple “mean-only” model. It represents the total amount
+of variation you are trying to explain.
+这测量的是响应变量“y”的<strong>总变异</strong>。假设你没有模型，你对任何“y”的唯一预测是它的整体平均值“ȳ”。SS_total
+是这个简单的“仅均值”模型的总平方误差。它代表了你试图解释的变异总量。</li>
+</ul></li>
+<li><strong>SS_reg (Regression Sum of Squares):</strong> <span
+class="math inline">\(\sum(\hat{y}_i - \bar{y})^2\)</span>
+<ul>
+<li><strong>Concept:</strong> This measures the <strong>explained
+variation</strong>. It’s the amount of variation in <code>y</code> that
+is captured by your regression model. It calculates the difference
+between your model’s predictions (<code>ŷ</code>) and the simple average
+(<code>ȳ</code>). A large SS_reg means your model’s predictions are a
+big improvement over just guessing the average.
+<strong>它衡量</strong>解释变异**。它是回归模型捕捉到的 y
+的变异量。它计算模型预测值（“ŷ”）与简单平均值（“ȳ”）之间的差异。较大的
+SS_reg 意味着模型的预测结果比仅仅猜测平均值有显著改善。</li>
+</ul></li>
+<li><strong>SS_error (Error Sum of Squares):</strong> <span
+class="math inline">\(\sum(y_i - \hat{y}_i)^2\)</span>
+<ul>
+<li><strong>Concept:</strong> This measures the <strong>unexplained
+variation</strong> (also called the Residual Sum of Squares). It’s the
+amount of variation your model <em>failed</em> to capture. It’s the sum
+of the squared differences between the actual data (<code>y</code>) and
+your model’s predictions (<code>ŷ</code>).
+<strong>它衡量</strong>未解释变异**（也称为残差平方和）。它是模型<em>未能</em>捕捉到的变异量。它是实际数据
+(<code>y</code>) 与模型预测值 (<code>ŷ</code>) 之间平方差之和。</li>
+</ul></li>
+</ul>
+<p>The <strong>R-squared</strong> value is a direct consequence of this
+decomposition. It’s the proportion of the total variance that is
+explained by the model: <strong>R 平方</strong>
+值是这种分解的直接结果。它是模型解释的总方差的比例：</p>
+<p><span class="math display">\[R^2 =
+\frac{SS_{reg}}{SS_{total}}\]</span></p>
+<h4 id="the-anova-table-and-the-f-test">2. The ANOVA Table and the
+F-test</h4>
+<p>方差分析表和 F 检验 The second slide organizes these sums of squares
+to perform a formal hypothesis test.
+第二张幻灯片整理了这些平方和，以进行正式的假设检验。</p>
+<ul>
+<li><strong>The Question:</strong> “Is there <em>any</em> relationship
+between my set of predictors and the response variable?” or “Is my model
+better than nothing?”
+“我的预测变量集和响应变量之间是否存在<em>任何</em>关系？”或“我的模型比没有模型好吗？”</li>
+<li><strong>The Hypotheses:</strong>
+<ul>
+<li><strong>Null Hypothesis (<span
+class="math inline">\(H_0\)</span>):</strong> <span
+class="math inline">\(\beta_1 = \beta_2 = \dots = \beta_p = 0\)</span>.
+(None of the predictors have a relationship with the response; the model
+is useless). <strong>零假设 (<span
+class="math inline">\(H_0\)</span>)</strong>：<span
+class="math inline">\(\beta_1 = \beta_2 = \dots = \beta_p = 0\)</span>。
+（所有预测变量都与响应变量无关；该模型毫无用处）。</li>
+<li><strong>Alternative Hypothesis (<span
+class="math inline">\(H_1\)</span>):</strong> At least one <span
+class="math inline">\(\beta_j\)</span> is not zero. (The model has some
+predictive value). <strong>备择假设 (<span
+class="math inline">\(H_1\)</span>)：</strong>至少有一个 <span
+class="math inline">\(\beta_j\)</span>
+不为零。（该模型具有一定的预测值）。</li>
+</ul></li>
+</ul>
+<p>To test this, we can’t just compare the raw SS values, because they
+depend on the number of data points and predictors. We need to normalize
+them. 为了验证这一点，我们不能仅仅比较原始的 SS
+值，因为它们取决于数据点和预测变量的数量。我们需要对它们进行归一化。</p>
+<ul>
+<li><strong>Mean Squares (MS):</strong> This is the “average” variation.
+We calculate it by dividing the Sum of Squares by its <strong>degrees of
+freedom (df)</strong>.
+<strong>这是“平均”变异。我们通过将平方和除以其</strong>自由度 (df)**
+来计算它。
+<ul>
+<li><strong>MS_reg</strong> = <span class="math inline">\(SS_{reg} /
+p\)</span>. This is the average explained variation <em>per
+predictor</em>. 这是<em>每个预测变量</em>的平均解释变异。</li>
+<li><strong>MS_error</strong> = <span class="math inline">\(SS_{error} /
+(n - p - 1)\)</span>. This is the average unexplained variation, which
+is our estimate of the error variance, <span
+class="math inline">\(s^2\)</span>. 这是平均未解释变异，即我们对误差方差
+<span class="math inline">\(s^2\)</span> 的估计值。</li>
+</ul></li>
+</ul>
+<h4 id="the-connection-the-f-statistic-联系f-统计量">3. The Connection:
+The F-statistic 联系：F 统计量</h4>
+<p>The <strong>F-statistic</strong> is the key that connects everything.
+It’s the ratio of the two mean squares: <strong>F
+统计量</strong>是连接一切的关键。它是两个均方的比值： <span
+class="math display">\[F = \frac{\text{Mean Squared
+Regression}}{\text{Mean Squared Error}} =
+\frac{MS_{reg}}{MS_{error}}\]</span></p>
+<ul>
+<li><strong>Intuitive Meaning:</strong> The F-statistic is a ratio of
+the <strong>average explained variation</strong> to the <strong>average
+unexplained variation</strong>. F
+统计量是<strong>平均解释变异</strong>与<strong>平均未解释变异</strong>的比值。
+<ul>
+<li>If your model is useless (<span class="math inline">\(H_0\)</span>
+is true), the explained variation should be about the same as the
+random, unexplained variation. The F-statistic will be close to 1.
+如果你的模型无效（H_0$
+为真），则解释变异应该与随机的未解释变异大致相同。F 统计量接近 1。</li>
+<li>If your model is useful (<span class="math inline">\(H_1\)</span> is
+true), the explained variation should be significantly larger than the
+unexplained variation. The F-statistic will be much greater than 1.
+如果你的模型有效（H_1$ 为真），则解释变异应该显著大于未解释变异。 F
+统计量将远大于 1。</li>
+</ul></li>
+</ul>
+<p>We compare our calculated F-statistic to an
+<strong>F-distribution</strong> to get a <strong>p-value</strong>. A
+small p-value (&lt; 0.05) provides strong evidence to reject the null
+hypothesis and conclude that your model, as a whole, is statistically
+significant. 我们将计算出的 F 统计量与<strong>F
+分布</strong>进行比较，得出<strong>p 值</strong>。较小的 p 值（&lt;
+0.05）可以提供强有力的证据来拒绝零假设，并得出您的模型整体具有统计显著性的结论。</p>
+<h1 id="construct-different-types-of-intervals-2">12.construct different
+types of intervals</h1>
+<p><img src="/imgs/5054C3/Gauss_Markov1.png">
+<img src="/imgs/5054C3/Gauss_Markov2.png"></p>
+<ul>
+<li><strong>内容</strong>: These slides explain the <strong>Gauss-Markov
+theorem</strong>, a cornerstone result in statistics that establishes
+why the Least Squares Estimator (LSE) is considered the gold standard
+for fitting linear models under a specific set of assumptions.
+这些幻灯片解释了<strong>高斯-马尔可夫定理</strong>，这是统计学中的一个基石性成果，它阐明了为什么最小二乘估计量
+(LSE) 被认为是在特定假设条件下拟合线性模型的黄金标准。</li>
+</ul>
+<h3 id="summary-6">Summary</h3>
+<p>The slides argue for the superiority of the Least Squares Estimator
+(LSE) by highlighting its key properties: it’s easy to compute,
+consistent, and efficient. This culminates in the <strong>Gauss-Markov
+Theorem</strong>, which proves that LSE is <strong>BLUE</strong>: the
+<strong>B</strong>est <strong>L</strong>inear <strong>U</strong>nbiased
+<strong>E</strong>stimator. This means that among all estimators that
+are both linear and unbiased, the LSE is the “best” because it has the
+smallest possible variance, making it the most precise. The second slide
+provides the key steps for the mathematical proof of this important
+theorem. 这些幻灯片通过强调最小二乘估计量 (LSE)
+的关键特性来论证其优越性：易于计算、一致性高且高效。最终得出了<strong>高斯-马尔可夫定理</strong>，该定理证明了
+LSE
+是<strong>BLUE</strong>：<strong>最佳</strong>线性<strong>无偏</strong>估计量。这意味着在所有线性且无偏的估计量中，LSE
+是“最佳”的，因为它具有最小的方差，因此精度最高。第二张幻灯片提供了这一重要定理的数学证明的关键步骤。</p>
+<h3 id="deeper-dive-into-the-concepts">Deeper Dive into the
+Concepts</h3>
+<h4 id="properties-of-lse-slide-1-局部正交估计-lse-的性质">Properties of
+LSE (Slide 1) 局部正交估计 (LSE) 的性质</h4>
+<ul>
+<li><strong>Easy Computation易于计算:</strong> The LSE has a direct,
+closed-form solution called the Normal Equation (<span
+class="math inline">\(\hat{\boldsymbol{\beta}} =
+(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\mathbf{y}\)</span>). You can
+calculate it directly without needing complex iterative algorithms.</li>
+<li><strong>Consistency一致性:</strong> As your sample size gets larger
+and larger, the LSE estimate (<span
+class="math inline">\(\hat{\boldsymbol{\beta}}\)</span>) is guaranteed
+to get closer and closer to the true population value (<span
+class="math inline">\(\boldsymbol{\beta}\)</span>). With enough data, it
+will find the truth. 随着样本量越来越大，LSE 估计值 (<span
+class="math inline">\(\hat{\boldsymbol{\beta}}\)</span>)
+必然会越来越接近真实的总体值 (<span
+class="math inline">\(\boldsymbol{\beta}\)</span>)。只要有足够的数据，它就能找到真相。</li>
+<li><strong>Efficiency效率:</strong> An efficient estimator is the one
+with the lowest possible variance. This means its estimates are the most
+precise and least spread out.
+高效的估计器是方差尽可能低的估计器。这意味着它的估计值最精确，且分布最均匀。</li>
+<li><strong>BLUE (Best Linear Unbiased
+Estimator)BLUE（最佳线性无偏估计器）:</strong> This acronym elegantly
+summarizes the Gauss-Markov theorem.
+这个缩写完美地概括了高斯-马尔可夫定理。
+<ul>
+<li><strong>Linear:</strong> The estimator is a linear function of the
+response variable <strong>y</strong>. We can write it as <span
+class="math inline">\(\hat{\boldsymbol{\beta}} =
+\mathbf{A}\mathbf{y}\)</span> for some matrix <strong>A</strong>.
+估计器是响应变量<strong>y</strong>的线性函数。对于某个矩阵<strong>A</strong>，我们可以将其写成
+<span class="math inline">\(\hat{\boldsymbol{\beta}} =
+\mathbf{A}\mathbf{y}\)</span>。</li>
+<li><strong>Unbiased:</strong> The estimator does not systematically
+overestimate or underestimate the true parameter. On average, its
+expected value is the true value: <span
+class="math inline">\(E[\hat{\boldsymbol{\beta}}] =
+\boldsymbol{\beta}\)</span>.
+估计器不会系统性地高估或低估真实参数。平均而言，其预期值即为真实值：<span
+class="math inline">\(E[\hat{\boldsymbol{\beta}}] =
+\boldsymbol{\beta}\)</span>。</li>
+<li><strong>Best:</strong> It has the <strong>minimum variance</strong>
+of all possible linear unbiased estimators. It’s the most precise and
+reliable estimator in its class.
+在所有可能的线性无偏估计器中，它的<strong>方差</strong>最小。它是同类中最精确、最可靠的估计器。</li>
+</ul></li>
+</ul>
+<h4 id="the-gauss-markov-theorem-高斯-马尔可夫定理">The Gauss-Markov
+Theorem 高斯-马尔可夫定理</h4>
+<p>The theorem provides the theoretical justification for using OLS.
+该定理为使用最小二乘法 (OLS) 提供了理论依据。 * <strong>The Core
+Idea:</strong> You could invent many different ways to estimate the
+coefficients of a linear model. As long as your proposed methods are
+both linear and unbiased, the Gauss-Markov theorem guarantees that none
+of them will be more precise than the standard least squares method. LSE
+gives the “sharpest” possible estimates.
+你可以发明许多不同的方法来估计线性模型的系数。只要你提出的方法是线性的且无偏的，高斯-马尔可夫定理就能保证，它们都不会比标准最小二乘法更精确。最小二乘法
+(LSE) 给出了“最精确”的估计值。</p>
+<ul>
+<li><strong>The Logic of the Proof (Slide 2) 证明逻辑:</strong> The
+proof is a clever comparison of variances. **该证明巧妙地比较了方差。
+<ol type="1">
+<li>It starts by defining <strong>any</strong> other linear unbiased
+estimator as <span class="math inline">\(\tilde{\boldsymbol{\beta}} =
+\mathbf{A}\mathbf{y}\)</span>.
+首先，将<strong>任何</strong>其他线性无偏估计量定义为 <span
+class="math inline">\(\tilde{\boldsymbol{\beta}} =
+\mathbf{A}\mathbf{y}\)</span>。</li>
+<li>It uses the “unbiased” property to force a condition on the matrix
+<strong>A</strong>, which ultimately leads to the insight that
+<strong>A</strong> can be written in terms of the LSE matrix plus some
+other matrix <strong>D</strong>, where <strong>DX = 0</strong>.
+它利用“无偏”性质对矩阵<strong>A</strong>强制施加一个条件，最终得出<strong>A</strong>可以写成LSE矩阵加上另一个矩阵<strong>D</strong>，其中<strong>DX
+= 0</strong>。</li>
+<li>It then calculates the variance of this other estimator, which turns
+out to be: <span class="math display">\[Var(\tilde{\boldsymbol{\beta}})
+= Var(\text{LSE}) + \text{a non-negative term involving }
+\mathbf{D}\]</span> 然后计算另一个估计量的方差，结果为： <span
+class="math display">\[Var(\tilde{\boldsymbol{\beta}}) = Var(\text{LSE})
++ \text{一个包含 } \mathbf{D} 的非负项\]</span></li>
+<li>Since the variance of any other linear unbiased estimator is the
+variance of the LSE <em>plus</em> something non-negative, the variance
+of the LSE must be the smallest possible value.
+由于任何其他线性无偏估计量的方差都是LSE的方差<em>加上</em>一个非负项，因此LSE的方差必须是最小的可能值。</li>
+</ol></li>
+</ul>
+<h3 id="further-understandings-beyond-the-slides">Further Understandings
+Beyond the Slides</h3>
+<h4 id="what-are-the-required-assumptions需要哪些假设">1. What are the
+required assumptions?需要哪些假设？</h4>
+<p>The Gauss-Markov theorem is powerful, but it’s not magic. It only
+holds if a set of assumptions about the model’s errors (<span
+class="math inline">\(\epsilon\)</span>) are met:
+高斯-马尔可夫定理虽然强大，但并非魔法。它仅在满足以下关于模型误差 (<span
+class="math inline">\(\epsilon\)</span>) 的假设时成立： * <strong>Zero
+Mean零均值:</strong> The average of the errors is zero (<span
+class="math inline">\(E[\epsilon] = 0\)</span>). 误差的平均值为零 (<span
+class="math inline">\(E[\epsilon] = 0\)</span>)。 * <strong>Constant
+Variance (Homoscedasticity)恒定方差（同方差性）:</strong> The errors
+have the same variance, <span class="math inline">\(\sigma^2\)</span>,
+at all levels of the predictors.
+<strong>在预测变量的各个水平上，误差具有相同的方差 <span
+class="math inline">\(\sigma^2\)</span>。 * </strong>Uncorrelated
+Errors不相关误差:** The error for one observation is not correlated with
+the error for another. 一个观测值的误差与另一个观测值的误差不相关。 *
+<strong>No Perfect Multicollinearity非完全多重共线性:</strong> The
+predictor variables are not perfectly linearly related.
+预测变量并非完全线性相关。</p>
+<p><strong>Crucially, the Gauss-Markov theorem does NOT require the
+errors to be normally distributed.</strong> The normality assumption is
+only needed later for constructing confidence intervals and conducting
+t-tests and F-tests.
+至关重要的是，高斯-马尔可夫定理并不要求误差服从正态分布。**正态性假设仅在构建置信区间以及进行
+t 检验和 F 检验时需要。</p>
+<h4
+id="when-is-lse-not-the-best-the-bias-variance-tradeoff-什么时候-lse-不是最佳选择-偏差-方差权衡">2.
+When is LSE NOT the Best? (The Bias-Variance Tradeoff) 什么时候 LSE
+不是最佳选择？ （偏差-方差权衡）</h4>
+<p>While LSE is the best <em>unbiased</em> estimator, sometimes we can
+get better predictive performance by accepting a little bit of bias in
+exchange for a large reduction in variance. This is the core idea behind
+modern regularization methods: 虽然 LSE
+是最好的<em>无偏</em>估计器，但有时我们可以通过接受少量偏差来大幅降低方差，从而获得更好的预测性能。这是现代正则化方法背后的核心思想：
+* <strong>Ridge Regression and LASSO岭回归和 LASSO:</strong> These are
+popular techniques that produce <em>biased</em> estimates of the
+coefficients. However, by introducing this small amount of bias, they
+can often produce models with a lower overall error (Mean Squared Error)
+than LSE, especially when predictors are highly correlated.
+这些是产生<em>有偏</em>系数估计的流行技术。然而，通过引入少量偏差，它们通常可以生成比
+LSE
+具有更低总体误差（均方误差）的模型，尤其是在预测变量高度相关的情况下。
+Therefore, while LSE is the theoretical champion in the world of
+unbiased estimators, in the world of predictive modeling, methods that
+intentionally introduce bias can sometimes be superior. 因此，虽然 LSE
+是无偏估计领域的理论冠军，但在预测模型领域，有意引入偏差的方法有时会更胜一筹。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://tianyaoblogs.github.io/2025/09/16/2025_9_15%E4%BC%9A%E8%AE%AE%E7%BA%AA%E8%A6%81/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1165,18 +3245,18 @@ configuration</h3>
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">15</span>
+          <span class="site-state-item-count">16</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
-        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-count">9</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
-        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-count">9</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
