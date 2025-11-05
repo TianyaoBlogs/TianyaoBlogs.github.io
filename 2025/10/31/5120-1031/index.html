@@ -28,7 +28,7 @@
 <meta property="og:description" content="PHYS 5120 - 计算能源材料和电子结构模拟 Lecture 1 Møller-Plesset (MP) 微扰理论:  内容:  量子化学中关于 Møller-Plesset (MP) 微扰理论 的推导过程。这是一种在 Hartree-Fock (HF) 方法基础上引入电子相关效应（electron correlation）的后-HF方法。 标准微扰理论公式 这部分列出的是">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2025-10-31T13:00:00.000Z">
-<meta property="article:modified_time" content="2025-11-05T06:42:02.957Z">
+<meta property="article:modified_time" content="2025-11-05T07:24:36.162Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="PHYS-5120">
 <meta name="twitter:card" content="summary">
@@ -181,7 +181,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2025-11-05 14:42:02" itemprop="dateModified" datetime="2025-11-05T14:42:02+08:00">2025-11-05</time>
+                <time title="修改时间：2025-11-05 15:24:36" itemprop="dateModified" datetime="2025-11-05T15:24:36+08:00">2025-11-05</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -321,7 +321,7 @@ class="math inline">\(E_{MP1}\)</span>) 的总和恰好等于 Hartree-Fock
 能量的第一个修正（即电子相关能），我们必须计算到二阶，即
 <strong>MP2</strong>。</p>
 </blockquote>
-<h3 id="mp2-能量推导">MP2 能量推导</h3>
+<h2 id="mp2-能量推导">2. MP2 能量推导</h2>
 <p>这部分是 MP 理论的核心，推导了 <strong>MP2
 能量（二阶能量修正）</strong>：</p>
 <ol type="1">
@@ -448,8 +448,8 @@ E_{MP1}\)</span>）的基础上进一步降低总能量。这是符合物理直�
 的电子相关能。</li>
 </ul></li>
 </ol>
-<h3 id="耦合簇理论-coupled-cluster-theory">耦合簇理论 (Coupled Cluster
-Theory)</h3>
+<h2 id="耦合簇理论-coupled-cluster-theory">3. 耦合簇理论 (Coupled
+Cluster Theory)</h2>
 <p>这部分介绍了一种更强大、更准确（也更昂贵）的后-HF方法。</p>
 <ol type="1">
 <li><p><strong>标题:</strong>
@@ -524,7 +524,7 @@ class="math inline">\(\hat{T} = \hat{T}_1 + \hat{T}_2\)</span>)
 是描述电子“躲避”彼此这一行为的<em>最主要</em>、<em>最基本</em>的数学方式。</strong></p>
 <p>MP2 和 CCSD 都高度关注双激发，因为它们是捕获“电子相关能” (Electron
 Correlation Energy) 的关键。</p>
-<h3 id="问题的根源hf-理论错过了什么">1. 问题的根源：HF
+<h3 id="问题的根源hf-理论错过了什么">问题的根源：HF
 理论错过了什么？</h3>
 <p>在白板的 MP 理论推导中，我们从 <strong>Hartree-Fock (HF)
 波函数</strong> (<span class="math inline">\(\Phi_0\)</span>) 开始。</p>
@@ -542,7 +542,7 @@ class="math inline">\(j\)</span> 会倾向于<em>避开</em> A 点，跑到 B
 </ul>
 <p>HF 理论忽略了这种瞬时躲避，因此 HF
 能量总是高于真实的基态能量。我们所说的“电子相关能”，就是这个能量差。</p>
-<h3 id="解决方案双激发phi_ijab">2. 解决方案：双激发（<span
+<h3 id="解决方案双激发phi_ijab">解决方案：双激发（<span
 class="math inline">\(\Phi_{ij}^{ab}\)</span>）</h3>
 <p>我们如何用数学来描述“电子 <span class="math inline">\(i\)</span> 和
 <span class="math inline">\(j\)</span> 相互躲避”？</p>
@@ -572,7 +572,7 @@ class="math inline">\(j\)</span>
 class="math inline">\(\langle \Phi_0 | \hat{H}&#39; | \Phi_i^a \rangle =
 0\)</span>）告诉我们，在 MP 理论框架下，HF
 基态和单激发态之间没有直接的相互作用。单激发主要描述的是轨道本身的形状调整（轨道弛豫），而不是电子<em>之间</em>的相关。</p>
-<h3 id="mp2-和-ccsd-的联系与区别">3. MP2 和 CCSD 的联系与区别</h3>
+<h3 id="mp2-和-ccsd-的联系与区别">MP2 和 CCSD 的联系与区别</h3>
 <p>MP2 和 CCSD
 都是基于这个核心思想，但实现方式的复杂程度和准确性完全不同。</p>
 <h4 id="mp2-møller-plesset-2nd-order">🔹 MP2 (Møller-Plesset 2nd
@@ -672,6 +672,594 @@ style="text-align: left;">用指数算符包含所有<strong>单、双激发</st
 <p><strong>双激发是描述电子相关（相互躲避）的物理核心。MP2
 用最简单的方式估算了它的能量贡献，而 CCSD
 则用一种更完备、更强大的数学（指数）形式将其及组合效应系统地包含了进来。</strong></p>
+<h2 id="量子蒙特卡洛-quantum-monte-carlo">4. 量子蒙特卡洛 (Quantum Monte
+Carlo)</h2>
+<h3 id="耦合簇理论-coupled-cluster">耦合簇理论 (Coupled Cluster)</h3>
+<h4 id="ccsdtt-的含义">1. CCSD(T)：“(T)” 的含义</h4>
+<ul>
+<li><strong>回顾 <code>CCSD</code>：</strong> 正如标题
+<code>Coupled Cluster Singles and Doubles (CCSD)</code> 所示，CCSD
+方法只完整地包含了单激发算符 (<span
+class="math inline">\(\hat{T}_1\)</span>) 和双激发算符 (<span
+class="math inline">\(\hat{T}_2\)</span>)。它通过指数形式 <span
+class="math inline">\(e^{(\hat{T}_1 +
+\hat{T}_2)}\)</span>，已经能间接地包含一些高阶激发（如四激发 <span
+class="math inline">\(\hat{T}_2^2\)</span>）。</li>
+<li><strong>缺失的项：</strong> CCSD <strong>没有</strong> 显式地包含
+<strong>“连通”(connected) 三激发算符 <span
+class="math inline">\(\hat{T}_3\)</span></strong>。<span
+class="math inline">\(\hat{T}_3\)</span>
+描述的是三个电子<em>同时</em>相互关联并激发到三个空轨道。</li>
+<li><strong><code>(T)</code> 的含义：</strong> <code>(T)</code> 代表
+<strong>“微扰三激发” (perturbative Triples)</strong>。
+<ul>
+<li><strong>为什么不直接用 <code>CCSDT</code>？</strong> 完整地求解包含
+<span class="math inline">\(\hat{T}_3\)</span> 的方程（即 CCSDT
+方法）在计算上极其昂贵（计算量随体系大小的 <span
+class="math inline">\(N^8\)</span> 增长）。</li>
+<li><strong><code>(T)</code> 的解决之道：</strong> <code>CCSD(T)</code>
+是一种巧妙的折中。它首先执行一个完整的、较便宜的 CCSD 计算（求解 <span
+class="math inline">\(\hat{T}_1\)</span> 和 <span
+class="math inline">\(\hat{T}_2\)</span>）。然后，它使用这些已知的 <span
+class="math inline">\(\hat{T}_1\)</span> 和 <span
+class="math inline">\(\hat{T}_2\)</span>
+振幅，通过<strong>微扰理论</strong>（就像第一张白板上的 MP
+理论一样！）来<em>估算</em> <span
+class="math inline">\(\hat{T}_3\)</span>
+会对总能量产生的<em>修正</em>。</li>
+</ul></li>
+<li><strong>“黄金标准” (Gold Standard)：</strong> <code>CCSD(T)</code>
+方法被广泛认为是量子化学的“黄金标准”。它以可承受的计算成本（<span
+class="math inline">\(N^7\)</span>
+增长）提供了接近“完美”的能量，是绝大多数高精度计算的基准。</li>
+<li><strong>“95%” 注释：</strong> 白板上的 <code>95%</code>
+注释很可能是讲师的一个经验之谈，即 CCSD 大约能恢复 95%
+的电子相关能（相比 MP2 的 ~80%），而 <code>(T)</code>
+修正则能将这个数字推向 99% 甚至更高。</li>
+</ul>
+<h4 id="耦合簇方程-cc-equations">2. 耦合簇方程 (CC Equations)</h4>
+<p>白板的中间部分展示了如何<em>求解</em> CCSD 方程以获得能量 <span
+class="math inline">\(E\)</span> 和振幅 <span
+class="math inline">\(t_i^a, t_{ij}^{ab}\)</span>。</p>
+<ul>
+<li><p><strong>总薛定谔方程：</strong></p>
+<ul>
+<li><span class="math inline">\(H e^{\hat{T}} | \Phi_0 \rangle = E
+e^{\hat{T}} | \Phi_0 \rangle\)</span></li>
+<li>这是 CC 理论要解的薛定谔方程 (<span class="math inline">\(\hat{H}
+|\Psi_{CC}\rangle = E |\Psi_{CC}\rangle\)</span>)。</li>
+</ul></li>
+<li><p><strong>求解方法（投影法）：</strong> 为了解出未知的 <span
+class="math inline">\(E\)</span>, <span
+class="math inline">\(\hat{T}_1\)</span>, <span
+class="math inline">\(\hat{T}_2\)</span>，我们将这个总方程“投影”到不同的激发空间上：</p>
+<ol type="1">
+<li><strong>能量 <span class="math inline">\(E\)</span>：</strong>
+<ul>
+<li><span class="math inline">\(\langle \Phi_0 |
+e^{-(\hat{T}_1+\hat{T}_2)} \hat{H} e^{(\hat{T}_1+\hat{T}_2)} | \Phi_0
+\rangle = E\)</span></li>
+<li>将总方程左乘 <span class="math inline">\(\langle \Phi_0
+|\)</span>（HF 基态）并积分，可以直接得到总能量 <span
+class="math inline">\(E\)</span>。</li>
+</ul></li>
+<li><strong>求解 <span class="math inline">\(\hat{T}_1\)</span>（方程
+①）：</strong>
+<ul>
+<li><span class="math inline">\(\langle \Phi_i^a |
+e^{-(\hat{T}_1+\hat{T}_2)} \hat{H} e^{(\hat{T}_1+\hat{T}_2)} | \Phi_0
+\rangle = 0\)</span></li>
+<li>将总方程左乘 <span class="math inline">\(\langle \Phi_i^a
+|\)</span>（所有<strong>单激发</strong>态）。这会产生一系列方程，求解它们可以得到所有
+<span class="math inline">\(\hat{T}_1\)</span> 的振幅 <span
+class="math inline">\(t_i^a\)</span>。</li>
+</ul></li>
+<li><strong>求解 <span class="math inline">\(\hat{T}_2\)</span>（方程
+②）：</strong>
+<ul>
+<li><span class="math inline">\(\langle \Phi_{ij}^{ab} |
+e^{-(\hat{T}_1+\hat{T}_2)} \hat{H} e^{(\hat{T}_1+\hat{T}_2)} | \Phi_0
+\rangle = 0\)</span></li>
+<li>将总方程左乘 <span class="math inline">\(\langle \Phi_{ij}^{ab}
+|\)</span>（所有<strong>双激发</strong>态）。这会产生另一系列方程，求解它们可以得到所有
+<span class="math inline">\(\hat{T}_2\)</span> 的振幅 <span
+class="math inline">\(t_{ij}^{ab}\)</span>。</li>
+</ul></li>
+</ol></li>
+</ul>
+<p><strong>总结：</strong> CCSD
+是一个复杂的非线性方程组。我们通过求解方程 ① 和 ②
+得到所有激发振幅，然后将这些振幅代入能量方程，得到最终的 CCSD 能量。</p>
+<h3 id="量子蒙特卡洛-quantum-monte-carlo-qmc">量子蒙特卡洛 (Quantum
+Monte Carlo, QMC)</h3>
+<p>这部分介绍了一种<strong>完全不同</strong>的、不依赖于轨道和激发的方法。</p>
+<ul>
+<li><strong>标题：</strong> <code>Quantum Monte Carlo</code></li>
+<li><strong>子标题：</strong> <code>Variational / Diffusion MC</code>
+(变分蒙特卡洛 / 扩散蒙特卡洛)</li>
+</ul>
+<h4 id="变分蒙特卡洛-vmc">变分蒙特卡洛 (VMC)</h4>
+<p>VMC 的核心思想，基于<strong>变分原理</strong>：</p>
+<ol type="1">
+<li><strong>能量期望值：</strong>
+<ul>
+<li><span class="math inline">\(E(\theta) = \frac{\langle \Psi(\theta) |
+\hat{H} | \Psi(\theta) \rangle}{\langle \Psi(\theta) | \Psi(\theta)
+\rangle}\)</span></li>
+<li>任何一个“试验波函数” <span
+class="math inline">\(\Psi(\theta)\)</span>（<span
+class="math inline">\(\theta\)</span> 是函数中的可调参数）所计算出的能量
+<span class="math inline">\(E(\theta)\)</span>
+永远<strong>大于或等于</strong>真实的基态能量 <span
+class="math inline">\(E_{\text{ground}}\)</span>。</li>
+<li><strong>目标：</strong>
+<code>min $E(\theta)$ = $E_&#123;\text&#123;ground&#125;&#125;$</code> (更准确地说是 <span
+class="math inline">\(E_{\text{approx}}\)</span>)</li>
+<li>通过调整参数 <span class="math inline">\(\theta\)</span> 来最小化
+<span
+class="math inline">\(E(\theta)\)</span>，我们可以获得对基态能量的最佳近似。</li>
+</ul></li>
+<li><strong>蒙特卡洛方法如何计算？</strong>
+<ul>
+<li>上述能量公式是一个极其复杂的高维积分（积分维度 = 3 <span
+class="math inline">\(\times\)</span> 电子数）。</li>
+<li>QMC
+它<strong>不直接计算这个积分</strong>，而是使用<strong>随机抽样</strong>（“蒙特卡洛”方法）来估算它。</li>
+</ul></li>
+<li><strong>VMC 计算步骤（如白板所示）：</strong>
+<ul>
+<li><strong>a. 重写积分：</strong> <span class="math inline">\(E =
+\frac{\int |\Psi(\vec{x}, \theta)|^2 \left[ \frac{\hat{H} \Psi(\vec{x},
+\theta)}{\Psi(\vec{x}, \theta)} \right] d\vec{x}}{\int |\Psi(\vec{x},
+\theta)|^2 d\vec{x}}\)</span>
+<ul>
+<li><span class="math inline">\(\vec{x}\)</span> 代表所有电子的坐标
+(<span class="math inline">\(r_1, r_2, \dots\)</span>)。</li>
+<li><span class="math inline">\(\frac{|\Psi(\vec{x})|^2}{\int
+|\Psi(\vec{x})|^2 d\vec{x}}\)</span> 是电子在 <span
+class="math inline">\(\vec{x}\)</span>
+处被发现的<strong>概率密度</strong> <span
+class="math inline">\(P(\vec{x})\)</span>。</li>
+<li><span class="math inline">\(E_L(\vec{x}) = \frac{\hat{H}
+\Psi(\vec{x}, \theta)}{\Psi(\vec{x}, \theta)}\)</span> 被称为
+<strong>“局域能量” (Local Energy)</strong>。</li>
+</ul></li>
+<li><strong>b. 抽样：</strong>
+<ul>
+<li>整个积分就变成了在 <span class="math inline">\(P(\vec{x})\)</span>
+概率分布下，对 <span class="math inline">\(E_L(\vec{x})\)</span>
+求平均值。</li>
+<li>VMC 方法通过一种算法（如 Metropolis 算法）产生大量的、符合 <span
+class="math inline">\(|\Psi|^2\)</span>
+分布的随机电子构型（“walkers”）。</li>
+</ul></li>
+<li><strong>c. 求平均：</strong>
+<ul>
+<li><span class="math inline">\(E \approx \frac{1}{N}
+\sum_{\text{samples } \vec{x}} E_L(\vec{x})\)</span></li>
+<li>最终的能量就是所有采样点上“局域能量”的简单平均值。</li>
+</ul></li>
+</ul></li>
+</ol>
+<p><strong>总结：</strong> VMC
+通过在“真实空间”中随机移动电子来直接估算能量，完全绕过了 MP 或 CC
+理论中复杂的轨道和激发概念。<code>Diffusion MC</code> (DMC)
+是其更高级的变体，原则上可以找到精确的基态能量。</p>
+<p>这张白板标志着一个<strong>重大的理论转变</strong>：从前面讨论的“波函数方法”（Wavefunction
+Methods, 如 MP2,
+CCSD）转向了一种完全不同的、在计算化学和物理中占主导地位的方法——<strong>密度泛函理论
+(Density Functional Theory, DFT)</strong>。</p>
+<h2 id="波函数方法的维度灾难">5. 波函数方法的“维度灾难”</h2>
+<p>一个生动的例子，说明了为什么基于波函数的方法（如
+CCSD）在计算上极其昂贵，甚至是不可能的。</p>
+<ol type="1">
+<li><strong>“wavefunction method” (波函数方法):</strong>
+<ul>
+<li>这类方法（如 HF, MP2, CCSD）的中心目标是求解体系的 <span
+class="math inline">\(N\)</span> 电子波函数 <span
+class="math inline">\(\Psi(\vec{r}_1, \vec{r}_2, \dots,
+\vec{r}_N)\)</span>。</li>
+<li>这个波函数 <span class="math inline">\(\Psi\)</span>
+是一个极其复杂的对象，它是一个 <span class="math inline">\(3N\)</span>
+维度的函数（每个电子有 3 个空间坐标 <span class="math inline">\(x, y,
+z\)</span>）。</li>
+</ul></li>
+<li><strong>计算成本的“立方体”比喻：</strong>
+<ul>
+<li>假设我们想在一个 3D 空间中存储<em>一个</em>电子的波函数。</li>
+<li>如果我们在每个维度（x, y, z）上只使用 <strong>10</strong>
+个网格点，我们就需要 <span class="math inline">\(10 \times 10 \times 10
+= 10^3\)</span> 个点来描述这<em>一个</em>电子。</li>
+<li>现在，考虑一个有 <strong>30</strong>
+个电子的体系（一个中等大小的分子）。</li>
+<li>由于总波函数 <span class="math inline">\(\Psi\)</span> 是 <span
+class="math inline">\(3 \times 30 = 90\)</span> 维的，我们需要 <span
+class="math inline">\((10^3)^{30} = 10^{90}\)</span>
+个网格点来存储这个波函数。</li>
+<li><strong><span class="math inline">\(10^{90}\)</span>
+是一个天文数字！</strong> 白板上的 <span
+class="math inline">\(10^{77}\)</span> 或 <span
+class="math inline">\(10^{80}\)</span>
+可能是用来比较的数字（例如，可观测宇宙中的原子总数约 <span
+class="math inline">\(10^{80}\)</span>）。这个数字 (<span
+class="math inline">\(10^{90}\)</span>) 意味着直接存储或计算 N
+电子波函数在计算上是<strong>绝对不可能</strong>的。</li>
+<li>这就是所谓的“<strong>维度灾难 (Curse of
+Dimensionality)</strong>”。</li>
+</ul></li>
+<li><strong>DFT：解决方案登场</strong>
+<ul>
+<li>在指出了波函数方法的根本困难后，白板上写下了
+<strong>DFT</strong>，预示着它是一种解决方案。</li>
+</ul></li>
+<li><strong>体系的哈密顿算符 (<span
+class="math inline">\(\hat{H}\)</span>):</strong>
+<ul>
+<li><span class="math inline">\(\hat{H} = \underbrace{-\sum_i
+\frac{\hbar^2}{2m} \nabla_i^2}_{\text{电子动能}} + \underbrace{\sum_i
+V_{\text{ext}}(\vec{r}_i)}_{\text{电子-原子核吸引}} +
+\underbrace{\frac{1}{2} \sum_{i \neq j} \frac{e^2}{|\vec{r}_i -
+\vec{r}_j|}}_{\text{电子-电子排斥}}\)</span></li>
+<li>这是任何分子体系的完整（非相对论）哈密顿算符。</li>
+</ul></li>
+<li><strong>关键的简化：</strong>
+<ul>
+<li><span class="math inline">\(\langle \Psi | \sum_i
+V_{\text{ext}}(\vec{r}_i) | \Psi \rangle = \int V_{\text{ext}}(\vec{r})
+\rho(\vec{r}) d\vec{r}\)</span></li>
+<li>这一行展示了一个至关重要的简化：<span
+class="math inline">\(N\)</span> 电子的“电子-原子核吸引能”的期望值（一个
+<span class="math inline">\(3N\)</span>
+维积分），可以被<em>精确地</em>重写为一个只涉及<strong>电子密度 <span
+class="math inline">\(\rho(\vec{r})\)</span></strong> 的** 3
+维积分**。</li>
+<li>这就引出了一个问题：我们是否能用这个简单的 <span
+class="math inline">\(\rho(\vec{r})\)</span> 来代替 <span
+class="math inline">\(\Psi\)</span> 呢？</li>
+</ul></li>
+</ol>
+<h3 id="dft-的理论基石">DFT 的理论基石</h3>
+<p>这部分介绍了 DFT 的核心定理</p>
+<ol type="1">
+<li><strong>电子密度 (Electron Density, <span
+class="math inline">\(\rho(\vec{r})\)</span>):</strong>
+<ul>
+<li><span class="math inline">\(\int \rho(\vec{r}) d\vec{r} =
+N\)</span></li>
+<li>电子密度 <span class="math inline">\(\rho(\vec{r})\)</span>
+是一个<strong>在 3D 空间中的函数</strong>。它描述了在任意空间点 <span
+class="math inline">\(\vec{r}\)</span> 处找到一个电子的概率。</li>
+<li>无论体系有多少电子（<span class="math inline">\(N=30\)</span> 或
+<span class="math inline">\(N=1000\)</span>），<span
+class="math inline">\(\rho(\vec{r})\)</span>
+<strong>始终</strong>是一个简单的 3 维函数。这与 <span
+class="math inline">\(3N\)</span> 维的波函数 <span
+class="math inline">\(\Psi\)</span> 形成了鲜明对比。</li>
+</ul></li>
+<li><strong>Hohenberg-Kohn (H-K) 定理：</strong>
+<ul>
+<li>这是 DFT 的全部理论基础。白板上的图示完美地总结了第一个 H-K
+定理：</li>
+<li><strong>标准路径（上 <span
+class="math inline">\(\rightarrow\)</span> 下）：</strong> <span
+class="math inline">\(V_{\text{ext}}(\vec{r})\)</span>（外势，即原子核的位置和电荷）<span
+class="math inline">\(\implies \Psi(\vec{r})\)</span>（基态波函数）<span
+class="math inline">\(\implies \rho(\vec{r})\)</span>（基态密度）。
+<ul>
+<li><em>解释：</em> 原子核的位置决定了 <span
+class="math inline">\(\hat{H}\)</span>，求解 <span
+class="math inline">\(\hat{H}\)</span> 得到 <span
+class="math inline">\(\Psi\)</span>，由 <span
+class="math inline">\(\Psi\)</span> 可以计算出 <span
+class="math inline">\(\rho\)</span>。</li>
+</ul></li>
+<li><strong>H-K 革命性路径（下 <span
+class="math inline">\(\leftrightarrow\)</span> 上）：</strong> <span
+class="math inline">\(V_{\text{ext}}(\vec{r}) \Longleftrightarrow
+\rho(\vec{r})\)</span>
+<ul>
+<li><strong>第一 H-K 定理</strong>证明：体系的<strong>基态电子密度 <span
+class="math inline">\(\rho(\vec{r})\)</span></strong>
+<em>唯一地</em>决定了<strong>外势 <span
+class="math inline">\(V_{\text{ext}}(\vec{r})\)</span></strong>（因此也唯一决定了
+<span class="math inline">\(\hat{H}\)</span>、<span
+class="math inline">\(\Psi\)</span> 和总能量 <span
+class="math inline">\(E\)</span>）。</li>
+</ul></li>
+</ul></li>
+<li><strong>H-K 定理的重大意义：</strong>
+<ul>
+<li><strong>所有信息都在 <span
+class="math inline">\(\rho(\vec{r})\)</span> 中！</strong>
+体系的基态总能量 <span class="math inline">\(E\)</span> 是基态密度 <span
+class="math inline">\(\rho\)</span> 的一个<strong>泛函
+(Functional)</strong>，记为 <span
+class="math inline">\(E[\rho]\)</span>。</li>
+<li><strong>目标转变：</strong> 我们不再需要去求解那个 <span
+class="math inline">\(10^{90}\)</span> 维的波函数 <span
+class="math inline">\(\Psi\)</span>！我们只需要找到那个能使总能量 <span
+class="math inline">\(E[\rho]\)</span> 最小的 3 维密度 <span
+class="math inline">\(\rho(\vec{r})\)</span>。</li>
+</ul></li>
+</ol>
+<p><strong>总结：</strong>
+首先论证了“波函数方法”在计算上的不可能性（维度灾难），然后引入了
+<strong>DFT</strong> 作为解决方案，其理论依据是 <strong>H-K
+定理</strong>——即体系的所有信息都包含在简单的 3 维电子密度 <span
+class="math inline">\(\rho(\vec{r})\)</span> 中。</p>
+<h2
+id="证明-第一-hohenberg-kohn-h-k-定理的经典证明这个定理是密度泛函理论-dft-的基石">6：证明
+<strong>第一 Hohenberg-Kohn (H-K)
+定理的经典证明</strong>。这个定理是密度泛函理论 (DFT) 的基石。</h2>
+<p>这个证明使用的是 <strong>“Proof by contradiction”
+(反证法)</strong>。</p>
+<p><strong>定理内容：</strong> 体系的基态电子密度 <span
+class="math inline">\(\rho_0(\vec{r})\)</span> 唯一地决定了其外势 <span
+class="math inline">\(V_{ext}(\vec{r})\)</span>（即原子核的位置和电荷），并因此唯一地决定了体系的哈密顿算符
+<span class="math inline">\(\hat{H}\)</span> 和波函数 <span
+class="math inline">\(\Psi\)</span>。</p>
+<h3 id="证明步骤详解">证明步骤详解</h3>
+<h4 id="假设-为反证法设置">1. 假设 (为反证法设置)</h4>
+<p>我们假设 H-K 定理是<strong>错</strong>的。</p>
+<p>这意味着我们假设存在<strong>两个不同 (different)</strong> 的外势
+<span class="math inline">\(V_{ext}^{(1)}\)</span> 和 <span
+class="math inline">\(V_{ext}^{(2)}\)</span>，它们分别对应各自的哈密顿算符
+<span class="math inline">\(\hat{H}^{(1)}\)</span>、<span
+class="math inline">\(\hat{H}^{(2)}\)</span> 和基态波函数 <span
+class="math inline">\(\Psi^{(1)}\)</span>、<span
+class="math inline">\(\Psi^{(2)}\)</span>。</p>
+<p>但我们<strong>假设</strong>，这两个完全不同的体系却碰巧产生了<strong>完全相同
+(same)</strong> 的基态电子密度 <span
+class="math inline">\(\rho_0(\vec{r})\)</span>。</p>
+<blockquote>
+<p><strong>假设总结：</strong> * <span
+class="math inline">\(V_{ext}^{(1)} \neq V_{ext}^{(2)}\)</span> （因此
+<span class="math inline">\(\hat{H}^{(1)} \neq \hat{H}^{(2)}\)</span> 且
+<span class="math inline">\(\Psi^{(1)} \neq \Psi^{(2)}\)</span>） * 但是
+<span class="math inline">\(\rho^{(1)}(\vec{r}) = \rho^{(2)}(\vec{r}) =
+\rho_0(\vec{r})\)</span> * <span class="math inline">\(E^{(1)}\)</span>
+是体系1的基态能量。 * <span class="math inline">\(E^{(2)}\)</span>
+是体系2的基态能量。</p>
+</blockquote>
+<h4 id="应用变分原理-第-1-步">2. 应用变分原理 (第 1 步)</h4>
+<p>变分原理指出：任何一个“试验波函数” <span
+class="math inline">\(\Psi_{\text{trial}}\)</span> 对某个哈密顿算符
+<span class="math inline">\(\hat{H}\)</span>
+的能量期望值，永远高于或等于该 <span
+class="math inline">\(\hat{H}\)</span> 的真实基态能量 <span
+class="math inline">\(E_{GS}\)</span>。</p>
+<ul>
+<li>我们将 <span class="math inline">\(\Psi^{(2)}\)</span>
+(体系2的基态波函数) 作为体系1的<strong>试验波函数</strong>。</li>
+<li>根据变分原理，<span class="math inline">\(\Psi^{(2)}\)</span>
+计算出的 <span class="math inline">\(\hat{H}^{(1)}\)</span>
+的能量必定高于 <span class="math inline">\(\hat{H}^{(1)}\)</span>
+的真实基态能量 <span
+class="math inline">\(E^{(1)}\)</span>（因为我们假设了 <span
+class="math inline">\(\Psi^{(1)} \neq \Psi^{(2)}\)</span>）。</li>
+<li><strong><span class="math inline">\(E^{(1)} &lt; \langle \Psi^{(2)}
+| \hat{H}^{(1)} | \Psi^{(2)} \rangle\)</span></strong>
+(白板上的第3行)</li>
+</ul>
+<h4 id="展开能量-第-2-步">3. 展开能量 (第 2 步)</h4>
+<p>我们来展开 <span class="math inline">\(\langle \Psi^{(2)} |
+\hat{H}^{(1)} | \Psi^{(2)} \rangle\)</span> 这一项。</p>
+<ul>
+<li><p>我们知道 <span class="math inline">\(\hat{H}^{(1)} =
+\hat{H}^{(2)} + (V_{ext}^{(1)} - V_{ext}^{(2)})\)</span>。</p></li>
+<li><p>代入上式： <span class="math inline">\(\langle \Psi^{(2)} |
+\hat{H}^{(1)} | \Psi^{(2)} \rangle = \langle \Psi^{(2)} | \hat{H}^{(2)}
++ V_{ext}^{(1)} - V_{ext}^{(2)} | \Psi^{(2)} \rangle\)</span></p></li>
+<li><p>拆分它： <span class="math inline">\(= \langle \Psi^{(2)} |
+\hat{H}^{(2)} | \Psi^{(2)} \rangle + \langle \Psi^{(2)} | V_{ext}^{(1)}
+- V_{ext}^{(2)} | \Psi^{(2)} \rangle\)</span></p></li>
+<li><p>第一项 <span class="math inline">\(\langle \Psi^{(2)} |
+\hat{H}^{(2)} | \Psi^{(2)} \rangle\)</span> 正是体系2的基态能量 <span
+class="math inline">\(E^{(2)}\)</span>。</p></li>
+<li><p>第二项（如上一张白板所示）可以写成关于密度的积分： <span
+class="math inline">\(\int (V_{ext}^{(1)} - V_{ext}^{(2)})
+\rho^{(2)}(\vec{r}) d\vec{r}\)</span></p></li>
+<li><p>根据我们的初始假设，<span
+class="math inline">\(\rho^{(2)}(\vec{r}) =
+\rho_0(\vec{r})\)</span>。</p></li>
+<li><p>将这些组合起来，第1步的变分不等式 <span
+class="math inline">\(E^{(1)} &lt; \dots\)</span> 就变成了：
+<strong><span class="math inline">\(E^{(1)} &lt; E^{(2)} + \int
+(V_{ext}^{(1)} - V_{ext}^{(2)}) \rho_0(\vec{r})
+d\vec{r}\)</span></strong> (白板上的第5行)</p></li>
+</ul>
+<h4 id="对称地应用变分原理-第-3-步">4. 对称地应用变分原理 (第 3 步)</h4>
+<p>现在我们反过来，将 <span class="math inline">\(\Psi^{(1)}\)</span>
+作为体系2的<strong>试验波函数</strong>。</p>
+<ul>
+<li><p>根据变分原理： <strong><span class="math inline">\(E^{(2)} &lt;
+\langle \Psi^{(1)} | \hat{H}^{(2)} | \Psi^{(1)}
+\rangle\)</span></strong></p></li>
+<li><p>我们用同样的方法展开 <span class="math inline">\(\hat{H}^{(2)} =
+\hat{H}^{(1)} + (V_{ext}^{(2)} - V_{ext}^{(1)})\)</span>： <span
+class="math inline">\(\langle \Psi^{(1)} | \hat{H}^{(2)} | \Psi^{(1)}
+\rangle = \langle \Psi^{(1)} | \hat{H}^{(1)} | \Psi^{(1)} \rangle +
+\langle \Psi^{(1)} | V_{ext}^{(2)} - V_{ext}^{(1)} | \Psi^{(1)}
+\rangle\)</span></p></li>
+<li><p>这等于： <span class="math inline">\(= E^{(1)} + \int
+(V_{ext}^{(2)} - V_{ext}^{(1)}) \rho^{(1)}(\vec{r})
+d\vec{r}\)</span></p></li>
+<li><p>再次使用我们的假设 <span
+class="math inline">\(\rho^{(1)}(\vec{r}) =
+\rho_0(\vec{r})\)</span>。</p></li>
+<li><p>因此，我们得到了第二个不等式： <strong><span
+class="math inline">\(E^{(2)} &lt; E^{(1)} + \int (V_{ext}^{(2)} -
+V_{ext}^{(1)}) \rho_0(\vec{r}) d\vec{r}\)</span></strong>
+(白板上的第6行)</p></li>
+</ul>
+<h4 id="导出矛盾-第-4-步">5. 导出矛盾 (第 4 步)</h4>
+<p>现在我们把两个不等式（第5行和第6行）相加：</p>
+<p><span class="math inline">\(E^{(1)} + E^{(2)} &lt; \left[ E^{(2)} +
+\int (V_{ext}^{(1)} - V_{ext}^{(2)}) \rho_0 d\vec{r} \right] + \left[
+E^{(1)} + \int (V_{ext}^{(2)} - V_{ext}^{(1)}) \rho_0 d\vec{r}
+\right]\)</span></p>
+<p>我们来合并右侧的项：</p>
+<p><span class="math inline">\(E^{(1)} + E^{(2)} &lt; (E^{(1)} +
+E^{(2)}) + \int \underbrace{[(V_{ext}^{(1)} - V_{ext}^{(2)}) +
+(V_{ext}^{(2)} - V_{ext}^{(1)})]}_{= 0} \rho_0 d\vec{r}\)</span></p>
+<p>右侧的两个积分项<strong>完全抵消</strong>，变成了 0。</p>
+<ul>
+<li>于是我们得到了最终的荒谬结论： <strong><span
+class="math inline">\(E^{(1)} + E^{(2)} &lt; E^{(1)} +
+E^{(2)}\)</span></strong> (白板上的最后一行)</li>
+</ul>
+<h4 id="结论">6. 结论</h4>
+<p>“一个数严格小于它自己” (<span class="math inline">\(A &lt;
+A\)</span>) 是一个数学上<strong>不可能</strong>的悖论。</p>
+<p>这个悖论证明了我们的<strong>初始假设一定是错误的</strong>。</p>
+<p>因此，两个不同的外势 <span
+class="math inline">\(V_{ext}^{(1)}\)</span> 和 <span
+class="math inline">\(V_{ext}^{(2)}\)</span> <strong>不可能</strong>
+产生相同的基态密度 <span class="math inline">\(\rho_0\)</span>。</p>
+<p><strong>证明完毕：</strong> 体系的基态电子密度 <span
+class="math inline">\(\rho_0(\vec{r})\)</span>
+<strong>唯一地</strong>决定了其外势 <span
+class="math inline">\(V_{ext}(\vec{r})\)</span>，并因此决定了体系的所有基态性质。</p>
+<h2 id="更多">7. 更多</h2>
+<p>Hohenberg-Kohn (H-K) 定理证明了 <span
+class="math inline">\(E[\rho]\)</span>（能量是密度的泛函）的<em>存在性</em>，但它没有告诉我们这个泛函到底长什么样。</p>
+<p><strong>问题在于：</strong> 我们不知道电子动能 <span
+class="math inline">\(T[\rho]\)</span> 和电子-电子排斥能 <span
+class="math inline">\(V_{ee}[\rho]\)</span> 的精确泛函形式。</p>
+<p><strong>Kohn-Sham (KS) 理论</strong>
+就是为了解决这个问题而提出的。</p>
+<p>这个理论的核心思想是：<strong>“我们假装在解一个简单问题，然后把所有的复杂性都藏在一个我们去近似的项里。”</strong></p>
+<p>以下是这个实践过程的分解：</p>
+<h3 id="引入一个虚拟的无相互作用体系">1.
+引入一个“虚拟”的无相互作用体系</h3>
+<p>Kohn 和 Sham
+假设存在一个<em>虚拟的</em>、<strong>无相互作用</strong>（non-interacting）的电子体系。</p>
+<p>这个虚拟体系有一个关键的约束：它被设计为与<em>真实的</em>、有相互作用的体系具有<strong>完全相同的基态电子密度
+<span class="math inline">\(\rho(\vec{r})\)</span></strong>。</p>
+<p><strong>这为什么有帮助？</strong>
+因为对于一个<strong>无相互作用</strong>的体系，我们<strong>精确地知道</strong>它的动能泛函
+<span class="math inline">\(T_s[\rho]\)</span>！它就是所有单电子轨道
+<span class="math inline">\(\phi_i\)</span> 的动能之和。（<span
+class="math inline">\(s\)</span> 代表 “single-particle” 或
+“non-interacting”）。</p>
+<h3 id="重写总能量泛函-erho">2. 重写总能量泛函 <span
+class="math inline">\(E[\rho]\)</span></h3>
+<p>现在，Kohn-Sham 将<em>真实</em>体系的总能量 <span
+class="math inline">\(E[\rho]\)</span> 重新组织为以下四项：</p>
+<p><span class="math inline">\(E[\rho] = T_s[\rho] + \int
+V_{ext}(\vec{r}) \rho(\vec{r}) d\vec{r} + E_H[\rho] +
+E_{xc}[\rho]\)</span></p>
+<p>我们来逐项分析：</p>
+<ol type="1">
+<li><strong><span
+class="math inline">\(T_s[\rho]\)</span>：无相互作用动能</strong>
+<ul>
+<li>这是我们刚刚引入的<em>虚拟</em>体系的动能。我们<strong>可以精确计算</strong>它（通过求解轨道
+<span class="math inline">\(\phi_i\)</span>）。</li>
+<li><em>（注：这</em>不是<em>真实体系的动能 <span
+class="math inline">\(T[\rho]\)</span>，但它通常是 <span
+class="math inline">\(T[\rho]\)</span> 的一个很好的近似。）</em></li>
+</ul></li>
+<li><strong><span class="math inline">\(\int V_{ext}(\vec{r})
+\rho(\vec{r}) d\vec{r}\)</span>：外势能</strong>
+<ul>
+<li>这是电子-原子核的吸引能。这个泛函是<strong>精确已知</strong>的（就像上一张白板展示的）。</li>
+</ul></li>
+<li><strong><span class="math inline">\(E_H[\rho]\)</span>：哈特里
+(Hartree) 能量</strong>
+<ul>
+<li><span class="math inline">\(E_H[\rho] = \frac{1}{2} \iint
+\frac{\rho(\vec{r})\rho(\vec{r}&#39;)}{|\vec{r}-\vec{r}&#39;|}
+d\vec{r}d\vec{r}&#39;\)</span></li>
+<li>这是电子密度与其自身相互作用的经典库仑排斥能。这个泛函也是<strong>精确已知</strong>的。</li>
+</ul></li>
+<li><strong><span class="math inline">\(E_{xc}[\rho]\)</span>：交换-相关
+(Exchange-Correlation) 泛函</strong>
+<ul>
+<li><strong>这是 DFT 实践的核心！</strong></li>
+<li><span class="math inline">\(E_{xc}[\rho]\)</span>
+被定义为一个“垃圾桶”，它包含了所有我们不知道的、以及我们故意用近似替换掉的<em>所有</em>复杂物理：
+<ul>
+<li>(<span class="math inline">\(T[\rho] -
+T_s[\rho]\)</span>)：真实动能与无相互作用动能之间的差值（即动能的相关部分）。</li>
+<li>(<span class="math inline">\(V_{ee}[\rho] -
+E_H[\rho]\)</span>)：总电子排斥能与经典库仑排斥能之间的差值（即所有非经典的交换效应和相关效应）。</li>
+</ul></li>
+</ul></li>
+</ol>
+<h3 id="kohn-sham-方程实践的工具">3. Kohn-Sham 方程：实践的工具</h3>
+<p>现在我们有了能量表达式。根据变分原理（Hohenberg-Kohn
+第二定理），我们通过最小化 <span class="math inline">\(E[\rho]\)</span>
+来寻找基态密度 <span class="math inline">\(\rho(\vec{r})\)</span>。</p>
+<p>对这个能量泛函 <span class="math inline">\(E[\rho]\)</span>
+应用变分法，最终会得到一组<strong>类似于薛定谔方程</strong>的单电子方程，这就是著名的
+<strong>Kohn-Sham (KS) 方程</strong>：</p>
+<p><span class="math inline">\(\left( -\frac{\hbar^2}{2m} \nabla^2 +
+V_{eff}(\vec{r}) \right) \phi_i(\vec{r}) = \varepsilon_i
+\phi_i(\vec{r})\)</span></p>
+<ul>
+<li><span class="math inline">\(\phi_i(\vec{r})\)</span> 就是“Kohn-Sham
+轨道”，电子密度由它们构成：<span class="math inline">\(\rho(\vec{r}) =
+\sum_i |\phi_i(\vec{r})|^2\)</span>。</li>
+<li><span class="math inline">\(V_{eff}(\vec{r})\)</span>
+是一个“有效势”，无相互作用的电子在这个势场中运动： <span
+class="math inline">\(V_{eff}(\vec{r}) = V_{ext}(\vec{r}) + V_H(\vec{r})
++ V_{xc}(\vec{r})\)</span>
+<ul>
+<li><span class="math inline">\(V_{ext}\)</span>：原子核的势。</li>
+<li><span class="math inline">\(V_H\)</span>：电子间的经典库仑势（来自
+<span class="math inline">\(E_H\)</span>）。</li>
+<li><span
+class="math inline">\(V_{xc}\)</span>：<strong>交换-相关势</strong>（来自
+<span class="math inline">\(E_{xc}\)</span>）。</li>
+</ul></li>
+</ul>
+<h3 id="唯一的近似泛函动物园">4. 唯一的近似：“泛函动物园”</h3>
+<p><strong>Kohn-Sham 理论在形式上是精确的。</strong>
+如果我们知道了<em>精确的</em> <span
+class="math inline">\(E_{xc}[\rho]\)</span>
+泛函，我们将得到体系的精确基态能量和密度。</p>
+<p><strong>但在实践中，我们不知道精确的 <span
+class="math inline">\(E_{xc}[\rho]\)</span>。</strong></p>
+<p>因此，<strong>所有实用的 DFT 计算都变成了对 <span
+class="math inline">\(E_{xc}[\rho]\)</span> 的近似。</strong></p>
+<p>这就是您可能听说过的所有“泛函”（functionals）的来源，它们是对 <span
+class="math inline">\(E_{xc}[\rho]\)</span>
+的不同近似，构成了所谓的“泛函动物园”(Functional Zoo)：</p>
+<ul>
+<li><strong>LDA (局域密度近似):</strong> 最简单的近似，只依赖于 <span
+class="math inline">\(\rho\)</span>。</li>
+<li><strong>GGA (广义梯度近似):</strong> 依赖于 <span
+class="math inline">\(\rho\)</span> 和它的梯度 <span
+class="math inline">\(\nabla\rho\)</span> (例如 PBE, BLYP)。</li>
+<li><strong>Hybrid (杂化) 泛函:</strong> 混合了一部分 Hartree-Fock
+的精确交换（例如 B3LYP, PBE0）。</li>
+</ul>
+<h3 id="总结实践中的-dft">总结：实践中的 DFT</h3>
+<ol type="1">
+<li><strong>选择一个近似的 <span
+class="math inline">\(E_{xc}[\rho]\)</span> 泛函</strong>（例如
+B3LYP）。</li>
+<li><strong>猜测</strong>一个初始的电子密度 <span
+class="math inline">\(\rho_{guess}\)</span>。</li>
+<li>根据 <span class="math inline">\(\rho_{guess}\)</span> 计算出有效势
+<span class="math inline">\(V_{eff}\)</span>。</li>
+<li>求解 Kohn-Sham 方程，得到一组新的轨道 <span
+class="math inline">\(\phi_i\)</span>。</li>
+<li>根据新的 <span class="math inline">\(\phi_i\)</span>
+计算出一个新的电子密度 <span
+class="math inline">\(\rho_{new}\)</span>。</li>
+<li>比较 <span class="math inline">\(\rho_{new}\)</span> 和 <span
+class="math inline">\(\rho_{guess}\)</span>。如果它们足够接近，计算完成（“自洽”）。</li>
+<li>如果不同，则混合新旧密度，返回第 3
+步，<strong>循环迭代</strong>直到收敛。</li>
+</ol>
+<p>Kohn-Sham 理论的伟大之处在于，它将一个极其复杂的 <span
+class="math inline">\(N\)</span> 电子问题（如 <span
+class="math inline">\(10^{90}\)</span>
+维度），<strong>在数学上等价地</strong>转化为了一个（原则上精确的）求解
+<span class="math inline">\(N\)</span> 个电子在有效势场中运动的 3
+维问题。</p>
 
     </div>
 
@@ -755,11 +1343,16 @@ style="text-align: left;">用指数算符包含所有<strong>单、双激发</st
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#m%C3%B8ller-plesset-mp-%E5%BE%AE%E6%89%B0%E7%90%86%E8%AE%BA"><span class="nav-number">1.</span> <span class="nav-text">1 Møller-Plesset (MP) 微扰理论:</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A0%87%E5%87%86%E5%BE%AE%E6%89%B0%E7%90%86%E8%AE%BA%E5%85%AC%E5%BC%8F"><span class="nav-number">1.1.</span> <span class="nav-text">标准微扰理论公式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#m%C3%B8ller-plesset-%E7%90%86%E8%AE%BA%E7%9A%84%E5%AE%9A%E4%B9%89"><span class="nav-number">1.2.</span> <span class="nav-text">Møller-Plesset 理论的定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#mp2-%E8%83%BD%E9%87%8F%E6%8E%A8%E5%AF%BC"><span class="nav-number">1.3.</span> <span class="nav-text">MP2 能量推导</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#mp2-%E8%83%BD%E9%87%8F%E7%9A%84%E6%B7%B1%E5%85%A5%E6%8E%A2%E8%AE%A8"><span class="nav-number">1.4.</span> <span class="nav-text">MP2 能量的深入探讨</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%80%A6%E5%90%88%E7%B0%87%E7%90%86%E8%AE%BA-coupled-cluster-theory"><span class="nav-number">1.5.</span> <span class="nav-text">耦合簇理论 (Coupled Cluster
-Theory)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%97%AE%E9%A2%98%E7%9A%84%E6%A0%B9%E6%BA%90hf-%E7%90%86%E8%AE%BA%E9%94%99%E8%BF%87%E4%BA%86%E4%BB%80%E4%B9%88"><span class="nav-number">1.6.</span> <span class="nav-text">1. 问题的根源：HF
-理论错过了什么？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88%E5%8F%8C%E6%BF%80%E5%8F%91phi_ijab"><span class="nav-number">1.7.</span> <span class="nav-text">2. 解决方案：双激发（\(\Phi_{ij}^{ab}\)）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#mp2-%E5%92%8C-ccsd-%E7%9A%84%E8%81%94%E7%B3%BB%E4%B8%8E%E5%8C%BA%E5%88%AB"><span class="nav-number">1.8.</span> <span class="nav-text">3. MP2 和 CCSD 的联系与区别</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#mp2-m%C3%B8ller-plesset-2nd-order"><span class="nav-number">1.8.1.</span> <span class="nav-text">🔹 MP2 (Møller-Plesset 2nd
-Order)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ccsd-coupled-cluster-singles-and-doubles"><span class="nav-number">1.8.2.</span> <span class="nav-text">🔹 CCSD (Coupled
-Cluster Singles and Doubles)</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%BB%E7%BB%93%E5%AF%B9%E6%AF%94"><span class="nav-number">1.9.</span> <span class="nav-text">总结对比</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#m%C3%B8ller-plesset-mp-%E5%BE%AE%E6%89%B0%E7%90%86%E8%AE%BA"><span class="nav-number">1.</span> <span class="nav-text">1 Møller-Plesset (MP) 微扰理论:</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A0%87%E5%87%86%E5%BE%AE%E6%89%B0%E7%90%86%E8%AE%BA%E5%85%AC%E5%BC%8F"><span class="nav-number">1.1.</span> <span class="nav-text">标准微扰理论公式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#m%C3%B8ller-plesset-%E7%90%86%E8%AE%BA%E7%9A%84%E5%AE%9A%E4%B9%89"><span class="nav-number">1.2.</span> <span class="nav-text">Møller-Plesset 理论的定义</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mp2-%E8%83%BD%E9%87%8F%E6%8E%A8%E5%AF%BC"><span class="nav-number">2.</span> <span class="nav-text">2. MP2 能量推导</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#mp2-%E8%83%BD%E9%87%8F%E7%9A%84%E6%B7%B1%E5%85%A5%E6%8E%A2%E8%AE%A8"><span class="nav-number">2.1.</span> <span class="nav-text">MP2 能量的深入探讨</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%80%A6%E5%90%88%E7%B0%87%E7%90%86%E8%AE%BA-coupled-cluster-theory"><span class="nav-number">3.</span> <span class="nav-text">3. 耦合簇理论 (Coupled
+Cluster Theory)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%97%AE%E9%A2%98%E7%9A%84%E6%A0%B9%E6%BA%90hf-%E7%90%86%E8%AE%BA%E9%94%99%E8%BF%87%E4%BA%86%E4%BB%80%E4%B9%88"><span class="nav-number">3.1.</span> <span class="nav-text">问题的根源：HF
+理论错过了什么？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88%E5%8F%8C%E6%BF%80%E5%8F%91phi_ijab"><span class="nav-number">3.2.</span> <span class="nav-text">解决方案：双激发（\(\Phi_{ij}^{ab}\)）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#mp2-%E5%92%8C-ccsd-%E7%9A%84%E8%81%94%E7%B3%BB%E4%B8%8E%E5%8C%BA%E5%88%AB"><span class="nav-number">3.3.</span> <span class="nav-text">MP2 和 CCSD 的联系与区别</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#mp2-m%C3%B8ller-plesset-2nd-order"><span class="nav-number">3.3.1.</span> <span class="nav-text">🔹 MP2 (Møller-Plesset 2nd
+Order)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ccsd-coupled-cluster-singles-and-doubles"><span class="nav-number">3.3.2.</span> <span class="nav-text">🔹 CCSD (Coupled
+Cluster Singles and Doubles)</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%BB%E7%BB%93%E5%AF%B9%E6%AF%94"><span class="nav-number">3.4.</span> <span class="nav-text">总结对比</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%87%8F%E5%AD%90%E8%92%99%E7%89%B9%E5%8D%A1%E6%B4%9B-quantum-monte-carlo"><span class="nav-number">4.</span> <span class="nav-text">4. 量子蒙特卡洛 (Quantum Monte
+Carlo)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%80%A6%E5%90%88%E7%B0%87%E7%90%86%E8%AE%BA-coupled-cluster"><span class="nav-number">4.1.</span> <span class="nav-text">耦合簇理论 (Coupled Cluster)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#ccsdtt-%E7%9A%84%E5%90%AB%E4%B9%89"><span class="nav-number">4.1.1.</span> <span class="nav-text">1. CCSD(T)：“(T)” 的含义</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%80%A6%E5%90%88%E7%B0%87%E6%96%B9%E7%A8%8B-cc-equations"><span class="nav-number">4.1.2.</span> <span class="nav-text">2. 耦合簇方程 (CC Equations)</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%87%8F%E5%AD%90%E8%92%99%E7%89%B9%E5%8D%A1%E6%B4%9B-quantum-monte-carlo-qmc"><span class="nav-number">4.2.</span> <span class="nav-text">量子蒙特卡洛 (Quantum
+Monte Carlo, QMC)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8F%98%E5%88%86%E8%92%99%E7%89%B9%E5%8D%A1%E6%B4%9B-vmc"><span class="nav-number">4.2.1.</span> <span class="nav-text">变分蒙特卡洛 (VMC)</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B3%A2%E5%87%BD%E6%95%B0%E6%96%B9%E6%B3%95%E7%9A%84%E7%BB%B4%E5%BA%A6%E7%81%BE%E9%9A%BE"><span class="nav-number">5.</span> <span class="nav-text">5. 波函数方法的“维度灾难”</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#dft-%E7%9A%84%E7%90%86%E8%AE%BA%E5%9F%BA%E7%9F%B3"><span class="nav-number">5.1.</span> <span class="nav-text">DFT 的理论基石</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AF%81%E6%98%8E-%E7%AC%AC%E4%B8%80-hohenberg-kohn-h-k-%E5%AE%9A%E7%90%86%E7%9A%84%E7%BB%8F%E5%85%B8%E8%AF%81%E6%98%8E%E8%BF%99%E4%B8%AA%E5%AE%9A%E7%90%86%E6%98%AF%E5%AF%86%E5%BA%A6%E6%B3%9B%E5%87%BD%E7%90%86%E8%AE%BA-dft-%E7%9A%84%E5%9F%BA%E7%9F%B3"><span class="nav-number">6.</span> <span class="nav-text">6：证明
+第一 Hohenberg-Kohn (H-K)
+定理的经典证明。这个定理是密度泛函理论 (DFT) 的基石。</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AF%81%E6%98%8E%E6%AD%A5%E9%AA%A4%E8%AF%A6%E8%A7%A3"><span class="nav-number">6.1.</span> <span class="nav-text">证明步骤详解</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%81%87%E8%AE%BE-%E4%B8%BA%E5%8F%8D%E8%AF%81%E6%B3%95%E8%AE%BE%E7%BD%AE"><span class="nav-number">6.1.1.</span> <span class="nav-text">1. 假设 (为反证法设置)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%BA%94%E7%94%A8%E5%8F%98%E5%88%86%E5%8E%9F%E7%90%86-%E7%AC%AC-1-%E6%AD%A5"><span class="nav-number">6.1.2.</span> <span class="nav-text">2. 应用变分原理 (第 1 步)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%B1%95%E5%BC%80%E8%83%BD%E9%87%8F-%E7%AC%AC-2-%E6%AD%A5"><span class="nav-number">6.1.3.</span> <span class="nav-text">3. 展开能量 (第 2 步)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AF%B9%E7%A7%B0%E5%9C%B0%E5%BA%94%E7%94%A8%E5%8F%98%E5%88%86%E5%8E%9F%E7%90%86-%E7%AC%AC-3-%E6%AD%A5"><span class="nav-number">6.1.4.</span> <span class="nav-text">4. 对称地应用变分原理 (第 3 步)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AF%BC%E5%87%BA%E7%9F%9B%E7%9B%BE-%E7%AC%AC-4-%E6%AD%A5"><span class="nav-number">6.1.5.</span> <span class="nav-text">5. 导出矛盾 (第 4 步)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BB%93%E8%AE%BA"><span class="nav-number">6.1.6.</span> <span class="nav-text">6. 结论</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9B%B4%E5%A4%9A"><span class="nav-number">7.</span> <span class="nav-text">7. 更多</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BC%95%E5%85%A5%E4%B8%80%E4%B8%AA%E8%99%9A%E6%8B%9F%E7%9A%84%E6%97%A0%E7%9B%B8%E4%BA%92%E4%BD%9C%E7%94%A8%E4%BD%93%E7%B3%BB"><span class="nav-number">7.1.</span> <span class="nav-text">1.
+引入一个“虚拟”的无相互作用体系</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%87%8D%E5%86%99%E6%80%BB%E8%83%BD%E9%87%8F%E6%B3%9B%E5%87%BD-erho"><span class="nav-number">7.2.</span> <span class="nav-text">2. 重写总能量泛函 \(E[\rho]\)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#kohn-sham-%E6%96%B9%E7%A8%8B%E5%AE%9E%E8%B7%B5%E7%9A%84%E5%B7%A5%E5%85%B7"><span class="nav-number">7.3.</span> <span class="nav-text">3. Kohn-Sham 方程：实践的工具</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%94%AF%E4%B8%80%E7%9A%84%E8%BF%91%E4%BC%BC%E6%B3%9B%E5%87%BD%E5%8A%A8%E7%89%A9%E5%9B%AD"><span class="nav-number">7.4.</span> <span class="nav-text">4. 唯一的近似：“泛函动物园”</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%BB%E7%BB%93%E5%AE%9E%E8%B7%B5%E4%B8%AD%E7%9A%84-dft"><span class="nav-number">7.5.</span> <span class="nav-text">总结：实践中的 DFT</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
