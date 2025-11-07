@@ -1,0 +1,1226 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"tianyaoblogs.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="PHYS 5120 - 计算能源材料和电子结构模拟 Lecture Lecturer: Prof.PAN DING 密度泛函理论 (Density Functional Theory, DFT) 的核心概念笔记，这是一种在物理和化学领域，特别是量子化学和凝聚态物理中，用于研究多电子体系电子结构的计算方法。 密度泛函理论 (Density Functional Theory)  N-">
+<meta property="og:type" content="article">
+<meta property="og:title" content="PHYS 5120 - Computational Energy Materials and Electronic Structure Simulations-W9-2">
+<meta property="og:url" content="https://tianyaoblogs.github.io/2025/11/07/5120c9/index.html">
+<meta property="og:site_name" content="TianyaoBlogs">
+<meta property="og:description" content="PHYS 5120 - 计算能源材料和电子结构模拟 Lecture Lecturer: Prof.PAN DING 密度泛函理论 (Density Functional Theory, DFT) 的核心概念笔记，这是一种在物理和化学领域，特别是量子化学和凝聚态物理中，用于研究多电子体系电子结构的计算方法。 密度泛函理论 (Density Functional Theory)  N-">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2025-11-07T13:00:00.000Z">
+<meta property="article:modified_time" content="2025-11-07T08:56:36.950Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="PHYS-5120">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://tianyaoblogs.github.io/2025/11/07/5120c9/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>PHYS 5120 - Computational Energy Materials and Electronic Structure Simulations-W9-2 | TianyaoBlogs</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">TianyaoBlogs</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://tianyaoblogs.github.io/2025/11/07/5120c9/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="TianyaoBlogs">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          PHYS 5120 - Computational Energy Materials and Electronic Structure Simulations-W9-2
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2025-11-07 21:00:00 / 修改时间：16:56:36" itemprop="dateCreated datePublished" datetime="2025-11-07T21:00:00+08:00">2025-11-07</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/PHYS-5120/" itemprop="url" rel="index"><span itemprop="name">PHYS-5120</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>PHYS 5120 - 计算能源材料和电子结构模拟 Lecture</p>
+<p><a target="_blank" rel="noopener" href="https://chem.hkust.edu.hk/people/ding-pan-panding">Lecturer:
+Prof.PAN DING</a></p>
+<p><strong>密度泛函理论 (Density Functional Theory, DFT)</strong>
+的核心概念笔记，这是一种在物理和化学领域，特别是量子化学和凝聚态物理中，用于研究多电子体系电子结构的计算方法。</p>
+<h3 id="密度泛函理论-density-functional-theory">密度泛函理论 (Density
+Functional Theory)</h3>
+<ul>
+<li><strong>N-electron (N 电子体系):</strong>
+<ul>
+<li>波函数 (Wavefunction): <span class="math inline">\(\Psi(\vec{r}_1,
+\vec{r}_2, ..., \vec{r}_N): \mathbb{R}^{3N} \to \mathbb{C}\)</span>
+<ul>
+<li>这是一个包含 N 个电子的体系，其波函数 <span
+class="math inline">\(\Psi\)</span> 是 <span
+class="math inline">\(3N\)</span>
+个空间坐标（每个电子有3个坐标）的函数，值域为复数 <span
+class="math inline">\(\mathbb{C}\)</span>。这是一个非常高维度的复杂函数。</li>
+</ul></li>
+<li>电子密度 (Electron density): <span
+class="math inline">\(\rho(\vec{r}): \mathbb{R}^3 \to
+\mathbb{R}\)</span>
+<ul>
+<li>电子密度 <span class="math inline">\(\rho\)</span> 只是空间中一点
+<span
+class="math inline">\(\vec{r}\)</span>（3个坐标）的函数，值域为实数
+<span class="math inline">\(\mathbb{R}\)</span>。</li>
+<li>DFT 的核心思想就是用这个更简单的 <span
+class="math inline">\(\rho(\vec{r})\)</span> 来代替复杂的 <span
+class="math inline">\(\Psi\)</span> 作为基本变量。</li>
+</ul></li>
+</ul></li>
+<li><strong>H.K. (Hohenberg-Kohn) 定理:</strong>
+<ul>
+<li>这是 DFT 的理论基石。白板上的图示 ① 和 ② 总结了这两个定理。</li>
+<li><strong>图示 ① (H.K. 第一定理):</strong>
+<ul>
+<li><code>Vext/H</code> <span
+class="math inline">\(\leftrightarrow\)</span> <code>ρ(r)</code> <span
+class="math inline">\(\leftrightarrow\)</span>
+<code>Ψi(r1, r2, ...)</code></li>
+<li><strong>含义:</strong> 体系的外势 <span
+class="math inline">\(V_{ext}\)</span>
+（通常指原子核对电子的吸引势，它决定了体系的哈密顿量 <span
+class="math inline">\(H\)</span>）与基态电子密度 <span
+class="math inline">\(\rho(\vec{r})\)</span> 之间存在一一对应关系。</li>
+<li><strong>推论:</strong> 由于 <span
+class="math inline">\(V_{ext}\)</span> 决定了波函数 <span
+class="math inline">\(\Psi\)</span>，因此，基态电子密度 <span
+class="math inline">\(\rho_0\)</span> 唯一地决定了基态波函数 <span
+class="math inline">\(\Psi_0\)</span> 以及体系的所有性质。</li>
+</ul></li>
+<li><strong>图示 ② (H.K. 第二定理):</strong>
+<ul>
+<li><code>min E[ρ(r)] → ρ₀, Egs</code></li>
+<li><strong>含义:</strong> 能量泛函 <span
+class="math inline">\(E[\rho]\)</span>
+（能量是电子密度的函数）在正确的基态密度 <span
+class="math inline">\(\rho_0\)</span>
+处取得最小值，这个最小值就是体系的基态能量 <span
+class="math inline">\(E_{gs}\)</span>。</li>
+</ul></li>
+</ul></li>
+<li><strong>Levy-Lieb 泛函 (Levy-Lieb functional):</strong>
+<ul>
+<li>也称为 <strong>Levy 约束搜索 (constrained search)
+泛函</strong>。这是对 H.K. 定理中能量泛函 <span
+class="math inline">\(E[\rho]\)</span> 的一种更严格和普适的定义。</li>
+<li><code>ρ ← Vext : v-representability</code>
+<ul>
+<li>这提出了一个问题：什么样的密度 <span
+class="math inline">\(\rho\)</span> 可以对应于某个外势 <span
+class="math inline">\(V_{ext}\)</span>？这被称为“v-可表征性”问题。</li>
+</ul></li>
+<li><code>Δ</code> (三角符号通常表示 “定义为”)</li>
+<li><code>N</code> (圆圈) <span class="math inline">\(\supset\)</span>
+<code>K</code> (圆圈)
+<ul>
+<li><em>这个符号旁边的字迹有些潦草，但结合上下文，这可能是在区分
+N-representability（N-可表征性）和
+v-representability（v-可表Vext表征性）。</em></li>
+</ul></li>
+</ul></li>
+</ul>
+<h3 id="칠-能量泛函与计算">칠 能量泛函与计算</h3>
+<ul>
+<li><strong>约束搜索 (Constrained search):</strong>
+<ul>
+<li><span class="math inline">\(\int \rho(\vec{r}) d\vec{r} = N\)</span>
+<ul>
+<li>这是一个约束条件，即电子密度在全空间积分必须等于体系的总电子数 <span
+class="math inline">\(N\)</span>。</li>
+</ul></li>
+</ul></li>
+<li><strong>① 能量泛函 <span class="math inline">\(E_{LL}[\rho]\)</span>
+(Levy-Lieb):</strong>
+<ul>
+<li><span class="math inline">\(E_{LL}[\rho] = \min_{\Psi \to \rho}
+\langle \Psi | \hat{T} + \hat{V}_{ee} | \Psi \rangle + \int d\vec{r}
+V_{ext}(\vec{r}) \rho(\vec{r})\)</span></li>
+<li><strong>解释:</strong>
+<ul>
+<li>这个公式定义了总能量 <span class="math inline">\(E\)</span>
+如何作为密度 <span class="math inline">\(\rho\)</span> 的泛函。</li>
+<li>它分为两部分：
+<ol type="1">
+<li><span class="math inline">\(\int d\vec{r} V_{ext}(\vec{r})
+\rho(\vec{r})\)</span>: 电子在外势 <span
+class="math inline">\(V_{ext}\)</span> 中的能量。这部分是已知的（如果
+<span class="math inline">\(V_{ext}\)</span> 和 <span
+class="math inline">\(\rho\)</span> 已知）。</li>
+<li><span class="math inline">\(\min_{\Psi \to \rho} \langle \Psi |
+\hat{T} + \hat{V}_{ee} | \Psi \rangle\)</span>: 这是
+<strong>Hohenberg-Kohn 泛函</strong> <span
+class="math inline">\(F_{HK}[\rho]\)</span>（也常被称为 Levy-Lieb
+泛函），它代表动能 <span class="math inline">\(\hat{T}\)</span>
+和电子-电子相互作用能 <span class="math inline">\(\hat{V}_{ee}\)</span>
+的总和。</li>
+</ol></li>
+<li><strong>约束搜索 (min <span class="math inline">\(\Psi \to
+\rho\)</span>)</strong>： <span
+class="math inline">\(F_{HK}[\rho]\)</span>
+的值是通过搜索所有能够产生该密度 <span
+class="math inline">\(\rho\)</span> 的波函数 <span
+class="math inline">\(\Psi\)</span>，并从中找出使 <span
+class="math inline">\(\langle \hat{T} + \hat{V}_{ee} \rangle\)</span>
+最小的那个 <span class="math inline">\(\Psi\)</span> 来确定的。这个泛函
+<span class="math inline">\(F_{HK}[\rho]\)</span> 是<strong>普适
+(Universal)</strong> 的，因为它不依赖于 <span
+class="math inline">\(V_{ext}\)</span>。</li>
+</ul></li>
+</ul></li>
+<li><strong>② 求解基态 (Finding the Ground State):</strong>
+<ul>
+<li><span class="math inline">\(E_{gs} = \min_{\rho}
+E_{LL}[\rho]\)</span>
+<ul>
+<li><strong>含义 (H.K. 第二定理的变分原理):</strong> 体系的基态能量
+<span class="math inline">\(E_{gs}\)</span> 可以通过最小化总能量泛函
+<span class="math inline">\(E_{LL}[\rho]\)</span> 来获得。</li>
+</ul></li>
+<li><span class="math inline">\(\rho_0 \to \{\Psi_0^{(1)}, \Psi_0^{(2)},
+...\} \Rightarrow V_{ext}\)</span>
+<ul>
+<li><strong>含义:</strong> 当找到最优的基态密度 <span
+class="math inline">\(\rho_0\)</span> 时，我们就同时确定了基态能量 <span
+class="math inline">\(E_{gs}\)</span>。通过这个 <span
+class="math inline">\(\rho_0\)</span>（以及它对应的波函数集合），原则上也可以反推出唯一确定它的外势
+<span class="math inline">\(V_{ext}\)</span>。</li>
+</ul></li>
+</ul></li>
+</ul>
+<h3 id="其他笔记">其他笔记</h3>
+<ul>
+<li><strong><span class="math inline">\(p_i \propto e^{-\beta E_i /
+Z}\)</span> finite temperature</strong>
+<ul>
+<li>这是白板右下角的一行字，与上面的 DFT 主题略有不同。</li>
+<li><strong>含义:</strong> 这描述的是<strong>有限温度 (finite
+temperature)</strong> 下的<strong>正则系综 (canonical
+ensemble)</strong>。</li>
+<li><span class="math inline">\(p_i\)</span> 是体系处于能量为 <span
+class="math inline">\(E_i\)</span> 的某个状态的概率。</li>
+<li><span class="math inline">\(\beta = 1 / (k_B T)\)</span>，<span
+class="math inline">\(k_B\)</span> 是玻尔兹曼常数，<span
+class="math inline">\(T\)</span> 是温度。</li>
+<li><span class="math inline">\(Z\)</span> 是配分函数 (Partition
+function)。</li>
+<li>这个公式（玻尔兹曼分布）是统计力学的基础，用于将 DFT 推广到 <span
+class="math inline">\(T &gt; 0\)</span> K 的情况（即 Mermin
+泛函）。</li>
+</ul></li>
+</ul>
+<h3 id="总结">总结</h3>
+<p>总结了密度泛函理论 (DFT) 的数学和物理基础，从 Hohenberg-Kohn
+定理（能量和密度的一一对应及变分原理）讲到了 Levy-Lieb
+的约束搜索构造方法，这是现代 DFT
+理论的核心。右下角的笔记则暗示了如何将此理论推广到有限温度体系。</p>
+<p>这是（基态 DFT）内容的延续，主题是<strong>有限温度和系综 DFT (Finite
+temperature and ensemble DFT)</strong>，以及<strong>无轨道 DFT
+(Orbital-free DFT)</strong>。</p>
+<p>以下是白板上内容的逐条中文转录和解释：</p>
+<h3 id="有限温度和系综-dft-mermin-dft">有限温度和系综 DFT (Mermin
+DFT)</h3>
+<p>这部分内容将 DFT 从 <span
+class="math inline">\(T=0\text{K}\)</span>（绝对零度，只关心基态）推广到
+<span class="math inline">\(T &gt;
+0\text{K}\)</span>（有限温度，需要考虑热激发和系综平均）。</p>
+<ul>
+<li><strong>对比 <span class="math inline">\(T=0\text{K}\)</span> 和
+<span class="math inline">\(T\)</span> finite (有限温度):</strong>
+<ul>
+<li><strong><span class="math inline">\(T=0K\)</span> (左栏):</strong>
+<ul>
+<li><span class="math inline">\(\rho_0\)</span> (基态密度)</li>
+<li><span class="math inline">\(|\Psi\rangle\)</span> (基态波函数)</li>
+<li><span class="math inline">\(\langle \hat{O} \rangle = \langle \Psi |
+\hat{O} | \Psi \rangle\)</span> (零温下的期望值)</li>
+</ul></li>
+<li><strong><span class="math inline">\(T\)</span> finite
+(中栏):</strong>
+<ul>
+<li><span class="math inline">\(p_e\)</span> (系综密度 /
+热力学密度)</li>
+<li><span class="math inline">\(\hat{\rho} = \sum_i f_i
+|\Psi_i\rangle\langle\Psi_i|\)</span> (密度矩阵)</li>
+<li><span class="math inline">\(\langle \hat{O} \rangle =
+\text{Tr}(\hat{\rho}\hat{O})\)</span>
+(有限温度下的期望值，即系综平均)</li>
+</ul></li>
+</ul></li>
+<li><strong>Mermin 泛函 (Mermin Functional):</strong>
+<ul>
+<li>这是 Mermin (1965年) 对 DFT 的推广，用于描述有限温度下的体系。</li>
+<li>目标是最小化<strong>自由能 (Free
+Energy)</strong>，而不是总能量。</li>
+<li><strong><span class="math inline">\(F_{Mermin}[\rho] =
+\min_{\hat{\rho} \to \rho} \text{Tr} \{ \hat{\rho} [ \hat{H} +
+\frac{1}{\beta}\ln\hat{\rho} ] \}\)</span></strong>
+<ul>
+<li><strong>解释:</strong>
+<ul>
+<li>这里的 <span class="math inline">\(F\)</span> 不是指 Hohenberg-Kohn
+泛函，而是指<strong>亥姆霍兹自由能 (Helmholtz free energy)</strong>
+<span class="math inline">\(\Omega\)</span>（或 <span
+class="math inline">\(A\)</span>）。白板上写 <span
+class="math inline">\(F\)</span> 可能是指普适泛函部分。</li>
+<li><span class="math inline">\(\hat{H}\)</span> 是哈密顿量（不含 <span
+class="math inline">\(V_{ext}\)</span> 的部分，即 <span
+class="math inline">\(\hat{T} + \hat{V}_{ee}\)</span>）。</li>
+<li><span class="math inline">\(\frac{1}{\beta}\ln\hat{\rho}\)</span>
+这一项与<strong>熵 (Entropy)</strong> 相关 (<span
+class="math inline">\(S = -k_B
+\text{Tr}(\hat{\rho}\ln\hat{\rho})\)</span>)。</li>
+<li><span class="math inline">\(\beta = 1 / (k_B T)\)</span>。</li>
+<li>整个 <span class="math inline">\(\text{Tr}\{...\}\)</span>
+表达式代表系统的亥姆霍兹自由能 <span
+class="math inline">\(A\)</span>。</li>
+<li><span class="math inline">\(\min_{\hat{\rho} \to \rho}\)</span>：与
+Levy-Lieb 约束搜索类似，这里是搜索所有能产生密度 <span
+class="math inline">\(\rho\)</span> 的密度矩阵 <span
+class="math inline">\(\hat{\rho}\)</span>，并找到使自由能最小的那个。</li>
+</ul></li>
+</ul></li>
+</ul></li>
+<li><strong>② 自由能最小化:</strong>
+<ul>
+<li><strong><span class="math inline">\(F_e = \min_{\hat{\rho}_e}
+f_{mermin}[\rho], \rho_e\)</span></strong>
+<ul>
+<li><em>这行字迹有些潦草，但结合上下文，它表达的意思是：</em>
+体系的平衡自由能 <span class="math inline">\(F_e\)</span> (或 <span
+class="math inline">\(\Omega_e\)</span>) 是通过最小化 Mermin
+泛函得到的，此时对应的密度是平衡态密度 <span
+class="math inline">\(\rho_e\)</span>。</li>
+</ul></li>
+<li><strong><span class="math inline">\(\hat{\rho}_e = \frac{e^{-\beta
+\hat{H}}}{\text{Tr}(e^{-\beta \hat{H}})} = \frac{e^{-\beta
+\hat{H}}}{Z}\)</span></strong>
+<ul>
+<li>这是热力学平衡态下的<strong>正则系综密度矩阵 (equilibrium density
+matrix)</strong>。<span class="math inline">\(Z\)</span>
+是配分函数。</li>
+</ul></li>
+<li><strong><span class="math inline">\(\hat{H} =
+-\frac{1}{\beta}\ln(\hat{\rho}_e)\)</span></strong>
+<ul>
+<li>这是上一个公式的简单变形，反解出哈密顿量 <span
+class="math inline">\(\hat{H}\)</span>。</li>
+</ul></li>
+</ul></li>
+<li><strong>应用场景 (右上角):</strong>
+<ul>
+<li><strong><span class="math inline">\(T &gt; 10,000K\)</span>
+warm-dense materials</strong>
+<ul>
+<li>指出这种有限温度 DFT 理论常用于研究<strong>温稠密物质</strong>
+(WDM)，如行星核心或惯性约束聚变 (ICF) 实验中的状态。</li>
+</ul></li>
+<li><strong>Fermi sea (费米海):</strong>
+<ul>
+<li>旁边的图示 (一个方框和坐标轴)
+可能是在示意费米面在高温下变得模糊（即费米-狄拉克分布不再是 <span
+class="math inline">\(T=0\)</span> 时的阶跃函数）。</li>
+</ul></li>
+</ul></li>
+</ul>
+<h3 id="칠-无轨道-dft-orbital-free-dft">칠 无轨道 DFT (Orbital-free
+DFT)</h3>
+<p>这部分回到了 <span class="math inline">\(T=0\)</span>
+的情况（或稍作修改也可用于有限温度），但介绍了一种计算上更简化的 DFT
+方法。</p>
+<ul>
+<li><strong><span class="math inline">\(E[\rho]\)</span> ?</strong>
+<ul>
+<li>提出一个问题：能量泛函 <span class="math inline">\(E[\rho]\)</span>
+到底是什么样子的？</li>
+</ul></li>
+<li><strong><span class="math inline">\(\Delta\)</span> Orbital-free DFT
+(OF-DFT):</strong>
+<ul>
+<li><strong>动机:</strong> Kohn-Sham DFT (标准的 DFT)
+仍然需要求解一组单电子轨道，计算量随系统增大而急剧上升 (通常是 <span
+class="math inline">\(N^3\)</span> 或更高)。OF-DFT
+试图完全避免求解轨道，只依赖于密度 <span
+class="math inline">\(\rho\)</span> 本身。</li>
+<li><strong>Thomas-Fermi-Dirac approximation (托马斯-费米-狄拉克
+近似):</strong>
+<ul>
+<li>这是 OF-DFT 中最早期和最简单的近似。</li>
+<li><strong><span class="math inline">\(E_{TF}[\rho] = T[\rho] + \int
+V_{ext}(\vec{r})\rho(\vec{r})d\vec{r} + \frac{e^2}{2} \iint
+\frac{\rho(\vec{r})\rho(\vec{r}&#39;)}{|\vec{r}-\vec{r}&#39;|}d\vec{r}d\vec{r}&#39;
++ E_{xc}[\rho]\)</span> ?</strong></li>
+<li><strong>泛函的组成：</strong>
+<ol type="1">
+<li><strong><span class="math inline">\(T[\rho]\)</span>:</strong>
+动能泛函。在 OF-DFT 中，最大的挑战就是找到 <span
+class="math inline">\(T[\rho]\)</span>
+的一个精确的、仅依赖于密度的表达式。Thomas-Fermi
+理论给出了第一个近似（<span class="math inline">\(T_{TF}[\rho] \propto
+\int \rho^{5/3} d\vec{r}\)</span>）。</li>
+<li><strong><span class="math inline">\(\int
+V_{ext}(\vec{r})\rho(\vec{r})d\vec{r}\)</span>:</strong> 外势能量
+(与标准 DFT 相同)。</li>
+<li><strong><span class="math inline">\(\frac{e^2}{2} \iint
+...\)</span>:</strong> 电子-电子相互作用的<strong>哈特里 (Hartree)
+能量</strong>，即经典的静电排斥能 (与标准 DFT 相同)。</li>
+<li><strong><span class="math inline">\(E_{xc}[\rho]\)</span>
+?:</strong> <strong>交换关联 (Exchange-Correlation) 能量</strong>。
+<ul>
+<li><em>白板上在这一项后面打了一个问号</em>，表示这部分也需要一个仅依赖于
+<span class="math inline">\(\rho\)</span> 的近似泛函（例如 Local Density
+Approximation, LDA，其中 <span class="math inline">\(E_x \propto \int
+\rho^{4/3} d\vec{r}\)</span>）。</li>
+<li>当 <span class="math inline">\(E_{xc}\)</span> 包含狄拉克 (Dirac)
+的交换能近似时，就称为 Thomas-Fermi-Dirac (TFD) 理论。</li>
+</ul></li>
+</ol></li>
+</ul></li>
+</ul></li>
+</ul>
+<h3 id="总结-1">总结</h3>
+<p>从 <span class="math inline">\(T=0\)</span> 的基态 DFT
+出发，探讨了两个进阶主题： 1. <strong>Mermin DFT:</strong> 如何将 DFT
+框架从 <span class="math inline">\(T=0\)</span> 的总能量 <span
+class="math inline">\(E\)</span> 推广到 <span class="math inline">\(T
+&gt; 0\)</span> 的自由能 <span
+class="math inline">\(F\)</span>，这对于描述高温系统（如温稠密物质）至关重要。
+2. <strong>Orbital-free DFT:</strong>
+一种计算上可能更高效（但目前精度较低）的 DFT 方法，它试图避免使用
+Kohn-Sham 轨道，而是直接构建总能量（特别是动能 <span
+class="math inline">\(T[\rho]\)</span>）作为电子密度的显式泛函。</p>
+<p><strong>Orbital-free DFT (OF-DFT)</strong> 是一种“理想中”的
+DFT，而我们通常在实践中（例如在 Google 上搜索“DFT 计算”）谈论的几乎都是
+<strong>Kohn-Sham DFT (KS-DFT)</strong>。</p>
+<p>它们都基于相同的 Hohenberg-Kohn
+定理，但实现这个定理的<strong>策略</strong>完全不同。</p>
+<h3 id="kohn-sham-ks-dft实用的妥协方案">Kohn-Sham (KS)
+DFT：实用的妥协方案</h3>
+<p>KS-DFT 的天才之处在于它<strong>没有</strong>试图直接解决那个最棘手的
+<strong><span
+class="math inline">\(T[\rho]\)</span></strong>（动能泛函）。</p>
+<p><strong>1. 核心思想：引入“虚拟系统”</strong></p>
+<p>Kohn 和 Sham
+提出：我们不去处理那个复杂、强相互作用的<strong>真实电子系统</strong>，而是构建一个<strong>虚拟的、无相互作用的电子系统</strong>。</p>
+<p>这个虚拟系统被设计为<strong>恰好</strong>具有与真实系统<strong>完全相同的基态电子密度
+<span class="math inline">\(\rho_0(\vec{r})\)</span></strong>。</p>
+<p><strong>2. 为什么这样做有好处？</strong></p>
+<ul>
+<li>对于<strong>无相互作用</strong>的系统，我们<strong>精确地知道</strong>如何计算其动能！</li>
+<li>动能 <span class="math inline">\(T_s\)</span> 就是所有虚拟粒子（称为
+Kohn-Sham 轨道 <span
+class="math inline">\(\phi_i\)</span>）动能的总和。</li>
+<li>这个系统的波函数就是一个简单的斯莱特行列式（Slater
+determinant），密度 <span class="math inline">\(\rho(\vec{r}) = \sum_i^N
+|\phi_i(\vec{r})|^2\)</span>。</li>
+</ul>
+<p><strong>3. Kohn-Sham 能量泛函</strong></p>
+<p>KS-DFT 将总能量 <span class="math inline">\(E[\rho]\)</span>
+重新划分为以下几项：</p>
+<p><span class="math display">\[E_{KS}[\rho] = T_s[\{\phi_i\}] + \int
+V_{ext} \rho(\vec{r}) d\vec{r} + E_H[\rho] + E_{xc}[\rho]\]</span></p>
+<ul>
+<li><span class="math inline">\(T_s[\{\phi_i\}]\)</span>:
+<strong>无相互作用动能</strong>。这是通过求解轨道 <span
+class="math inline">\(\phi_i\)</span>
+来<strong>精确计算</strong>的，而不是作为 <span
+class="math inline">\(\rho\)</span> 的泛函来近似。</li>
+<li><span class="math inline">\(\int V_{ext} \rho(\vec{r})
+d\vec{r}\)</span>: 外势能 (与 OF-DFT 相同)。</li>
+<li><span class="math inline">\(E_H[\rho]\)</span>: 电子-电子静电排斥能
+(Hartree 能量，与 OF-DFT 相同)。</li>
+<li><span class="math inline">\(E_{xc}[\rho]\)</span>:
+<strong>交换关联能</strong>。</li>
+</ul>
+<p><strong>4. 在 <span class="math inline">\(E_{xc}\)</span>
+中</strong></p>
+<p>现在，未知被藏在了 <span class="math inline">\(E_{xc}[\rho]\)</span>
+这一项里。它包含： 1. <strong>交换能</strong> (纯量子效应)。 2.
+<strong>关联能</strong> (电子如何相互“躲避”)。 3.
+<strong>动能差</strong>：真实系统的动能 <span
+class="math inline">\(T\)</span> 和我们计算的无相互作用动能 <span
+class="math inline">\(T_s\)</span> 之间的差值 <span
+class="math inline">\((T - T_s)\)</span>。</p>
+<p>KS-DFT 的<strong>巨大成功</strong>在于：<strong><span
+class="math inline">\(E_{xc}[\rho]\)</span>
+这一项（虽然仍然未知且必须近似）被证明比直接近似 <span
+class="math inline">\(T[\rho]\)</span> 要容易得多！</strong></p>
+<p>KS-DFT 的工作就是求解一组单电子方程（Kohn-Sham 方程），找到轨道 <span
+class="math inline">\(\phi_i\)</span>，从而构建 <span
+class="math inline">\(\rho\)</span>，并计算总能量。</p>
+<h3 id="对比kohn-sham-dft-vs.-orbital-free-dft">对比：Kohn-Sham DFT
+vs. Orbital-Free DFT</h3>
+<p>这张表格总结了两者最关键的区别：</p>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th style="text-align: left;">特征</th>
+<th style="text-align: left;">🔵 Kohn-Sham DFT (KS-DFT)</th>
+<th style="text-align: left;">🟠 Orbital-Free DFT (OF-DFT)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>基本变量</strong></td>
+<td style="text-align: left;">Kohn-Sham <strong>轨道</strong> <span
+class="math inline">\(\{\phi_i\}\)</span> (用来构建密度 <span
+class="math inline">\(\rho\)</span>)</td>
+<td style="text-align: left;"><strong>电子密度</strong> <span
+class="math inline">\(\rho(\vec{r})\)</span></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>核心挑战</strong></td>
+<td style="text-align: left;">近似<strong>交换关联泛函 <span
+class="math inline">\(E_{xc}[\rho]\)</span></strong></td>
+<td style="text-align: left;">近似<strong>动能泛函 <span
+class="math inline">\(T[\rho]\)</span></strong> (以及 <span
+class="math inline">\(E_{xc}[\rho]\)</span>)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>动能处理</strong></td>
+<td style="text-align: left;"><strong>间接计算</strong>：通过求解轨道
+<span class="math inline">\(\phi_i\)</span>
+精确计算<strong>无相互作用动能 <span
+class="math inline">\(T_s\)</span></strong>。</td>
+<td style="text-align: left;"><strong>直接近似</strong>：必须找到一个
+<span class="math inline">\(T[\rho]\)</span> 的表达式 (例如 <span
+class="math inline">\(T \propto \int \rho^{5/3}\)</span>)。</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>计算成本</strong></td>
+<td
+style="text-align: left;"><strong>高</strong>。求解轨道是计算瓶颈，计算量通常随系统大小
+<span class="math inline">\(N\)</span> 呈 <span
+class="math inline">\(N^3\)</span> 增长。</td>
+<td style="text-align: left;"><strong>非常低</strong>。原则上可以 <span
+class="math inline">\(N \log N\)</span> 或 <span
+class="math inline">\(N\)</span> (线性标度)，因为它只处理 3D 变量 <span
+class="math inline">\(\rho\)</span>。</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>当前精度</strong></td>
+<td
+style="text-align: left;"><strong>高</strong>。是量子化学和材料科学的标准方法。</td>
+<td style="text-align: left;"><strong>低</strong>。找到一个普适且精确的
+<span class="math inline">\(T[\rho]\)</span>
+泛函被证明<strong>极其困难</strong>。</td>
+</tr>
+</tbody>
+</table>
+<h3 id="总结-2">总结</h3>
+<ul>
+<li><strong>OF-DFT </strong>
+一个完全依赖于密度的理论，计算速度极快，但苦于找不到准确的<strong>动能泛函</strong>
+<span class="math inline">\(T[\rho]\)</span>。</li>
+<li><strong>KS-DFT (标准方法)</strong>
+是一个务实的“妥协”。它引入了<strong>轨道</strong>，用 <span
+class="math inline">\(T_s\)</span>
+这一项精确地处理了大部分动能，把更小的、更“好近似”的动能差 <span
+class="math inline">\((T-T_s)\)</span> 连同交换关联能一起打包成 <span
+class="math inline">\(E_{xc}[\rho]\)</span>。</li>
+</ul>
+<p>当今几乎所有的 DFT 软件（如 VASP, Gaussian, QE）都是基于 Kohn-Sham
+方案的。</p>
+<p>这推导的是<strong>自由电子气 (free electron gas)</strong>
+的动能泛函，这个结果是<strong>无轨道 DFT (OF-DFT)</strong>
+和<strong>局域密度近似 (LDA)</strong> 的理论基础。</p>
+<p>这内容承接了上一张图的 <span
+class="math inline">\(T[\rho]\)</span>（动能泛函）问题，展示了如何为最简单的系统——均匀的自由电子气——推导出
+<span class="math inline">\(T\)</span> 和 <span
+class="math inline">\(\rho\)</span> 的关系。</p>
+<h3 id="详解">详解</h3>
+<h4
+id="左半部分自由电子气的基本设定">左半部分：自由电子气的基本设定</h4>
+<ol type="1">
+<li><strong>标题：free electron gas (自由电子气)</strong>
+<ul>
+<li>这是一个理想化模型，假设电子在无外势（或均匀正电荷背景）中自由运动。</li>
+</ul></li>
+<li><strong>薛定谔方程：</strong>
+<ul>
+<li><span class="math inline">\(-\frac{\hbar^2}{2m}\nabla^2\Psi =
+E_k\Psi\)</span></li>
+<li>这是自由粒子的定态薛定谔方程，其解为平面波。</li>
+</ul></li>
+<li><strong>波函数与能量：</strong>
+<ul>
+<li><span class="math inline">\(\Psi_k = \frac{1}{\sqrt{\Omega}}
+e^{i\vec{k}\cdot\vec{r}}\)</span> （平面波解）</li>
+<li><span class="math inline">\(\Omega = L^3\)</span> （系统体积）</li>
+<li><span class="math inline">\(E_k = \frac{\hbar^2 k^2}{2m}\)</span>
+（能量本征值，k 是波矢 <span
+class="math inline">\(k=|\vec{k}|\)</span>）</li>
+</ul></li>
+<li><strong>PBC (周期性边界条件):</strong>
+<ul>
+<li><code>kx = 0, ±2π/L, ±4π/L, ...</code></li>
+<li>这说明 <span class="math inline">\(\vec{k}\)</span>
+矢量在“k空间”中不是连续的，而是形成一个晶格，每个点占据的体积是 <span
+class="math inline">\((\frac{2\pi}{L})^3\)</span>。</li>
+</ul></li>
+<li><strong>3D 状态填充 (费米球):</strong>
+<ul>
+<li>图示为一个球体，半径为 <span
+class="math inline">\(k_F\)</span>（费米波矢）。在 <span
+class="math inline">\(T=0\text{K}\)</span> 时，所有 <span
+class="math inline">\(k &lt; k_F\)</span> 的状态都被电子填满。</li>
+<li><strong>计算电子总数 <span class="math inline">\(N^\sigma\)</span>
+(单一自旋):</strong>
+<ul>
+<li><span class="math inline">\(N^\sigma =
+\frac{\text{费米球体积}}{\text{单个 k 态体积}}\)</span></li>
+<li><span class="math inline">\(N^\sigma = \frac{\frac{4}{3}\pi
+(k_F^\sigma)^3}{(\frac{2\pi}{L})^3} = \frac{\frac{4}{3}\pi
+(k_F^\sigma)^3}{(2\pi)^3/\Omega}\)</span></li>
+</ul></li>
+</ul></li>
+</ol>
+<h4 id="右半部分推导-trho-动能泛函">右半部分：推导 <span
+class="math inline">\(T[\rho]\)</span> (动能泛函)</h4>
+<ol type="1">
+<li><strong>关联 <span class="math inline">\(k_F\)</span> 和密度 <span
+class="math inline">\(\rho\)</span>:</strong>
+<ul>
+<li>从左侧公式整理可得：<span class="math inline">\(\rho^\sigma =
+\frac{N^\sigma}{\Omega} = \frac{(k_F^\sigma)^3}{6\pi^2}\)</span>。</li>
+<li>假设系统是自旋非极化的（<span class="math inline">\(\rho^\uparrow =
+\rho^\downarrow\)</span>），总密度 <span class="math inline">\(\rho =
+\rho^\uparrow + \rho^\downarrow = 2\rho^\sigma\)</span>，且 <span
+class="math inline">\(k_F^\uparrow = k_F^\downarrow =
+k_F\)</span>。</li>
+<li>代入可得：<span class="math inline">\(\rho = 2 \cdot
+\frac{k_F^3}{6\pi^2} = \frac{k_F^3}{3\pi^2}\)</span>。</li>
+<li><strong><span class="math inline">\(\Rightarrow (k_F)^3 = 3\pi^2
+\rho\)</span></strong> (白板上的关键关系)</li>
+</ul></li>
+<li><strong>费米能 (Fermi Energy):</strong>
+<ul>
+<li><code>HOMO/VBM → EF</code> (在连续能带中，最高占据能级就是费米能
+<span class="math inline">\(E_F\)</span>)</li>
+<li><span class="math inline">\(E_F = \frac{\hbar^2
+k_F^2}{2m}\)</span></li>
+</ul></li>
+<li><strong>计算总动能 <span class="math inline">\(T\)</span>:</strong>
+<ul>
+<li>总动能 <span class="math inline">\(T\)</span>
+是所有电子动能的总和。在 <span
+class="math inline">\(T=0\text{K}\)</span>
+时，等于对费米球内所有状态的能量 <span
+class="math inline">\(E_k\)</span> 进行积分。</li>
+<li><span class="math inline">\(T = T^\uparrow +
+T^\downarrow\)</span></li>
+<li>通过积分（白板上省略了积分步骤，直接用了熟知结论），可以得到<strong>平均动能</strong>
+<span class="math inline">\(\langle E_{kin} \rangle = \frac{3}{5}
+E_F\)</span>。</li>
+<li>因此，总动能 <span class="math inline">\(T = N \cdot \langle E_{kin}
+\rangle = N \cdot \frac{3}{5} E_F\)</span>。</li>
+</ul></li>
+<li><strong>T 作为 <span class="math inline">\(\rho\)</span> 的泛函
+(最终推导):</strong>
+<ul>
+<li>这是最关键的一步：将 <span class="math inline">\(T = \frac{3}{5} N
+E_F\)</span> 中的 <span class="math inline">\(N\)</span> 和 <span
+class="math inline">\(E_F\)</span> 全部用密度 <span
+class="math inline">\(\rho\)</span> 替换掉。</li>
+<li><span class="math inline">\(N = \int \rho(\vec{r}) d\vec{r}\)</span>
+(电子总数)</li>
+<li><span class="math inline">\(E_F = \frac{\hbar^2 k_F^2}{2m} =
+\frac{\hbar^2}{2m} (3\pi^2 \rho)^{2/3}\)</span> (将 <span
+class="math inline">\(k_F\)</span> 用 <span
+class="math inline">\(\rho\)</span> 替换)</li>
+<li><strong>局域密度近似 (Local Density Approximation, LDA):</strong>
+<ul>
+<li>我们<strong>假设</strong>一个真实系统（密度<em>不</em>均匀，<span
+class="math inline">\(\rho =
+\rho(\vec{r})\)</span>）的总动能，可以通过在空间中每一点 <span
+class="math inline">\((\vec{r})\)</span>
+使用上述<strong>均匀电子气</strong>的结果，然后求和（积分）得到。</li>
+<li><span class="math inline">\(T[\rho] = \int (\text{电子数密度}) \cdot
+(\text{平均动能}) d\vec{r}\)</span></li>
+<li><span class="math inline">\(T[\rho] = \int \rho(\vec{r}) \cdot
+\frac{3}{5} E_F(\rho(\vec{r})) d\vec{r}\)</span></li>
+<li><span class="math inline">\(T[\rho] = \int \rho(\vec{r}) \cdot
+\frac{3}{5} \left[ \frac{\hbar^2}{2m} (3\pi^2 \rho(\vec{r}))^{2/3}
+\right] d\vec{r}\)</span></li>
+</ul></li>
+<li><strong>整理后得到白板上的最终公式：</strong>
+<ul>
+<li><span class="math inline">\(T[\rho] = \frac{\hbar^2}{m} \frac{3}{10}
+(3\pi^2)^{2/3} \int \rho^{5/3}(\vec{r}) d\vec{r}\)</span></li>
+<li>这被称为<strong>托马斯-费米 (Thomas-Fermi) 动能泛函</strong>。</li>
+</ul></li>
+</ul></li>
+</ol>
+<h3 id="总结-3">总结</h3>
+<p>这展示了 <span class="math inline">\(T[\rho] \propto \int \rho^{5/3}
+d\vec{r}\)</span> 这个著名公式的来源。</p>
+<ul>
+<li>它为<strong>无轨道 DFT</strong>
+提供了第一个（也是最简单的）<strong>动能泛函</strong> <span
+class="math inline">\(T[\rho]\)</span> 近似。</li>
+<li>它也是<strong>局域密度近似 (LDA)</strong> 的基础。在 Kohn-Sham DFT
+中，虽然 <span class="math inline">\(T_s\)</span> (无相互作用动能)
+是通过轨道精确计算的，但 <span class="math inline">\(E_{xc}\)</span>
+(交换关联能) 里的交换能 <span class="math inline">\(E_x\)</span>
+也是用完全相同的逻辑（自由电子气模型）推导出来的（<span
+class="math inline">\(E_x[\rho] \propto \int \rho^{4/3}
+d\vec{r}\)</span>）。</li>
+</ul>
+<p><strong>无轨道密度泛函理论 (Orbital-Free DFT)</strong>
+的核心求解方程，它直接源自前面的推导。</p>
+<p><strong>如何通过最小化能量泛函来找到基态密度 <span
+class="math inline">\(\rho_0\)</span></strong>。</p>
+<h3 id="详解-1">详解</h3>
+<p><strong>1. 核心思想：约束下的最小化</strong></p>
+<ul>
+<li><strong><span class="math inline">\(\frac{\delta}{\delta\rho} \left(
+E_{TF}[\rho] - \mu (\int \rho(\vec{r})d\vec{r} - N) \right) =
+0\)</span></strong>
+<ul>
+<li>这是一个使用“拉格朗日乘子法”的<strong>泛函求导</strong>（或称变分）方程。</li>
+<li><strong>目的：</strong> 寻找使总能量 <span
+class="math inline">\(E_{TF}[\rho]\)</span>
+达到<strong>最小值</strong>的那个密度 <span
+class="math inline">\(\rho\)</span>。</li>
+<li><strong>约束：</strong>
+这个最小化必须满足一个条件，即电子密度在全空间积分必须等于总电子数 <span
+class="math inline">\(N\)</span>（即 <span class="math inline">\(\int
+\rho(\vec{r})d\vec{r} = N\)</span>）。</li>
+<li><strong><span class="math inline">\(\mu\)</span> (mu):</strong>
+就是为这个约束条件引入的“拉格朗日乘子”。</li>
+</ul></li>
+</ul>
+<p><strong>2. 欧拉-拉格朗日方程 (Euler-Lagrange Equation)</strong></p>
+<ul>
+<li>下面那一大长串方程，就是执行上面那行泛函求导 <span
+class="math inline">\(\frac{\delta}{\delta\rho}\)</span>
+后得到的结果，其形式为 <span class="math inline">\(\frac{\delta
+E_{TF}[\rho]}{\delta\rho} = \mu\)</span>。</li>
+<li>让我们逐项分解 <span class="math inline">\(\frac{\delta
+E_{TF}[\rho]}{\delta\rho}\)</span>：
+<ul>
+<li><strong><span class="math inline">\(E_{TF}[\rho] = T[\rho] +
+E_{V_{ext}}[\rho] + E_H[\rho] + E_{xc}[\rho]\)</span></strong>
+(这是上一张白板中定义的总能量)</li>
+</ul></li>
+<li><strong>方程的各项：</strong>
+<ul>
+<li><strong>第一项：<span class="math inline">\(\frac{\hbar^2}{m}
+\frac{3}{10} (3\pi^2)^{2/3} \cdot \frac{5}{3}
+\rho^{2/3}\)</span></strong>
+<ul>
+<li>这是对 <strong>动能泛函 <span
+class="math inline">\(T[\rho]\)</span></strong> 求泛函导数的结果。</li>
+<li><span class="math inline">\(T[\rho] = C_F \int \rho^{5/3}
+d\vec{r}\)</span> (来自上一张白板)。</li>
+<li><span class="math inline">\(\frac{\delta T[\rho]}{\delta\rho} = C_F
+\cdot \frac{5}{3} \rho^{2/3}\)</span>。</li>
+<li>这一项代表一种源自动能的“量子压力”。</li>
+</ul></li>
+<li><strong>第二项：<span
+class="math inline">\(V_{ext}(\vec{r})\)</span></strong>
+<ul>
+<li>这是对 <strong>外势能</strong> <span
+class="math inline">\(E_{V_{ext}}[\rho] = \int V_{ext}(\vec{r})
+\rho(\vec{r}) d\vec{r}\)</span> 求导的结果。</li>
+<li><span class="math inline">\(\frac{\delta
+E_{V_{ext}}[\rho]}{\delta\rho} = V_{ext}(\vec{r})\)</span>。</li>
+</ul></li>
+<li><strong>第三项：<span class="math inline">\(+ e^2 \int d\vec{r}&#39;
+\frac{\rho(\vec{r}&#39;)}{|\vec{r}-\vec{r}&#39;|}\)</span></strong>
+<ul>
+<li>这是对 <strong>哈特里 (Hartree) 能量</strong> <span
+class="math inline">\(E_H[\rho]\)</span>
+（电子间经典静电排斥能）求导的结果。</li>
+<li>这一项就是<strong>哈特里势 <span
+class="math inline">\(V_H(\vec{r})\)</span></strong>，即 <span
+class="math inline">\(\rho\)</span> 在 <span
+class="math inline">\(\vec{r}\)</span>
+处感受到的来自所有其他电子的静电势。</li>
+<li><em>(注：白板上在 <span class="math inline">\(V_{ext}\)</span>
+和这一项之间写的 <span class="math inline">\(V_{exc}[\rho]\)</span>
+似乎是个笔误或简写，因为方程后面明确地分别写出了哈特里项和交换关联项。)</em></li>
+</ul></li>
+<li><strong>第四项：<span class="math inline">\(+ \frac{\delta
+E_{xc}[\rho]}{\delta\rho}\)</span></strong>
+<ul>
+<li>这是对 <strong>交换关联 (Exchange-Correlation) 能量 <span
+class="math inline">\(E_{xc}[\rho]\)</span></strong> 求导的结果。</li>
+<li>这个导数本身被<strong>定义</strong>为<strong>交换关联势 <span
+class="math inline">\(V_{xc}(\vec{r})\)</span></strong>。</li>
+</ul></li>
+</ul></li>
+</ul>
+<p><strong>3. 方程的物理意义</strong></p>
+<ul>
+<li><strong><span class="math inline">\(= \mu \text{ chemical
+potential}\)</span></strong>
+<ul>
+<li>方程表明，在基态密度 <span class="math inline">\(\rho_0\)</span>
+下，系统中所有“势”的总和在空间中处处等于一个常数 <span
+class="math inline">\(\mu\)</span>。</li>
+<li>这个常数 <span
+class="math inline">\(\mu\)</span>（拉格朗日乘子）的物理意义是体系的<strong>化学势
+(chemical potential)</strong>，即向系统中添加一个电子所需的能量。</li>
+</ul></li>
+</ul>
+<p><strong>4. 总结 </strong></p>
+<ul>
+<li><strong><span class="math inline">\(\rho_0 \quad E_{TF}[\rho_0]
+\quad \text{shell}\)</span></strong>
+<ul>
+<li><strong><span class="math inline">\(\rho_0\)</span>:</strong>
+通过求解上面那个复杂的（非线性）积分-微分方程，我们就能得到<strong>基态密度
+<span class="math inline">\(\rho_0\)</span></strong>。</li>
+<li><strong><span
+class="math inline">\(E_{TF}[\rho_0]\)</span>:</strong> 将 <span
+class="math inline">\(\rho_0\)</span> 代回到 <span
+class="math inline">\(E_{TF}[\rho]\)</span>
+的原始表达式中，就能计算出体系的<strong>基态总能量</strong>。</li>
+<li><strong><span class="math inline">\(\text{shell}\)</span>
+(壳层):</strong> 这是一个非常重要的旁注。托马斯-费米 (Thomas-Fermi)
+理论（即 OF-DFT
+的最早版本）的一个著名<strong>缺陷</strong>是它无法预测原子中<strong>电子壳层结构</strong>（如
+1s, 2s, 2p…）。它的密度 <span class="math inline">\(\rho\)</span>
+曲线是平滑的，没有“Kohn-Sham
+DFT”中轨道所产生的波峰和波谷。这个词很可能是在提醒这个理论的局限性。</li>
+</ul></li>
+</ul>
+<h3 id="整个系列总结">整个系列总结</h3>
+<p>这四部分构成了一个关于 DFT 基础： 1. <strong>1:</strong> 介绍了 DFT
+的<strong>核心思想</strong> (Hohenberg-Kohn 定理)，即能量是密度的泛函
+<span class="math inline">\(E[\rho]\)</span>。 2. <strong>2:</strong>
+探讨了两种 DFT 的实现：一种用于<strong>有限温度</strong> (Mermin
+DFT)，另一种是<strong>无轨道 DFT (OF-DFT)</strong>，并写出了 <span
+class="math inline">\(E_{TF}[\rho]\)</span> 的一般形式。 3.
+<strong>3:</strong> 详细<strong>推导</strong>了 OF-DFT
+中最关键的<strong>动能泛函</strong> <span class="math inline">\(T[\rho]
+\propto \int \rho^{5/3} d\vec{r}\)</span>，其基于自由电子气模型。 4.
+<strong>4:</strong> 展示了如何<strong>使用</strong>这个 <span
+class="math inline">\(E_{TF}[\rho]\)</span>
+泛函，通过泛函求导（变分法）建立一个可解的方程（欧拉-拉格朗日方程），以求得基态密度
+<span class="math inline">\(\rho_0\)</span> 和能量 <span
+class="math inline">\(E_0\)</span>。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/PHYS-5120/" rel="tag"># PHYS-5120</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2025/11/04/diffusion_model/" rel="prev" title="Diffusion Model">
+      <i class="fa fa-chevron-left"></i> Diffusion Model
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AF%86%E5%BA%A6%E6%B3%9B%E5%87%BD%E7%90%86%E8%AE%BA-density-functional-theory"><span class="nav-number">1.</span> <span class="nav-text">密度泛函理论 (Density
+Functional Theory)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EC%B9%A0-%E8%83%BD%E9%87%8F%E6%B3%9B%E5%87%BD%E4%B8%8E%E8%AE%A1%E7%AE%97"><span class="nav-number">2.</span> <span class="nav-text">칠 能量泛函与计算</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B6%E4%BB%96%E7%AC%94%E8%AE%B0"><span class="nav-number">3.</span> <span class="nav-text">其他笔记</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">4.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9C%89%E9%99%90%E6%B8%A9%E5%BA%A6%E5%92%8C%E7%B3%BB%E7%BB%BC-dft-mermin-dft"><span class="nav-number">5.</span> <span class="nav-text">有限温度和系综 DFT (Mermin
+DFT)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EC%B9%A0-%E6%97%A0%E8%BD%A8%E9%81%93-dft-orbital-free-dft"><span class="nav-number">6.</span> <span class="nav-text">칠 无轨道 DFT (Orbital-free
+DFT)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%BB%E7%BB%93-1"><span class="nav-number">7.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#kohn-sham-ks-dft%E5%AE%9E%E7%94%A8%E7%9A%84%E5%A6%A5%E5%8D%8F%E6%96%B9%E6%A1%88"><span class="nav-number">8.</span> <span class="nav-text">Kohn-Sham (KS)
+DFT：实用的妥协方案</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AF%B9%E6%AF%94kohn-sham-dft-vs.-orbital-free-dft"><span class="nav-number">9.</span> <span class="nav-text">对比：Kohn-Sham DFT
+vs. Orbital-Free DFT</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%BB%E7%BB%93-2"><span class="nav-number">10.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AF%A6%E8%A7%A3"><span class="nav-number">11.</span> <span class="nav-text">详解</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%B7%A6%E5%8D%8A%E9%83%A8%E5%88%86%E8%87%AA%E7%94%B1%E7%94%B5%E5%AD%90%E6%B0%94%E7%9A%84%E5%9F%BA%E6%9C%AC%E8%AE%BE%E5%AE%9A"><span class="nav-number">11.1.</span> <span class="nav-text">左半部分：自由电子气的基本设定</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8F%B3%E5%8D%8A%E9%83%A8%E5%88%86%E6%8E%A8%E5%AF%BC-trho-%E5%8A%A8%E8%83%BD%E6%B3%9B%E5%87%BD"><span class="nav-number">11.2.</span> <span class="nav-text">右半部分：推导 \(T[\rho]\) (动能泛函)</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%BB%E7%BB%93-3"><span class="nav-number">12.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AF%A6%E8%A7%A3-1"><span class="nav-number">13.</span> <span class="nav-text">详解</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B4%E4%B8%AA%E7%B3%BB%E5%88%97%E6%80%BB%E7%BB%93"><span class="nav-number">14.</span> <span class="nav-text">整个系列总结</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">John Doe</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">18</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+          load: ['[tex]/mhchem'],
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+          packages: {'[+]': ['mhchem']},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+</body>
+</html>
