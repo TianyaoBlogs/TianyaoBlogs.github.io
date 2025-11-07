@@ -145,6 +145,813 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://tianyaoblogs.github.io/2025/11/07/5120c9-2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="TianyaoBlogs">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2025/11/07/5120c9-2/" class="post-title-link" itemprop="url">PHYS 5120 - Computational Energy Materials and Electronic Structure Simulations-W9-2</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2025-11-07 22:00:00 / 修改时间：19:01:30" itemprop="dateCreated datePublished" datetime="2025-11-07T22:00:00+08:00">2025-11-07</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/PHYS-5120/" itemprop="url" rel="index"><span itemprop="name">PHYS-5120</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>PHYS 5120 - 计算能源材料和电子结构模拟 Lecture</p>
+<p><a target="_blank" rel="noopener" href="https://chem.hkust.edu.hk/people/ding-pan-panding">Lecturer:
+Prof.PAN DING</a></p>
+<p>在前面，我们看到了“理想”的<strong>无轨道 DFT
+(OF-DFT)</strong>，它试图将能量 <span class="math inline">\(E\)</span>
+直接写成密度 <span class="math inline">\(\rho\)</span> 的泛函 <span
+class="math inline">\(E[\rho]\)</span>。但它失败了，因为我们无法找到一个足够精确的<strong>动能泛函
+<span class="math inline">\(T[\rho]\)</span></strong>。</p>
+<p>接下来介绍的是<strong>Kohn-Sham (KS)
+DFT</strong>，它采用了一种“妥协”方案，彻底绕开了这个难题。</p>
+<h3 id="概念回顾无轨道-dft-的困境">1. 概念回顾：无轨道 DFT 的困境</h3>
+<p>首先回顾我们已知的（也是 OF-DFT 的）总能量泛函：</p>
+<p><span class="math display">\[E[\rho] = \underbrace{T[\rho]}_{\text{①
+动能}} + \int V_{ext}(\vec{r})\rho(\vec{r})d\vec{r} +
+\underbrace{\frac{e^2}{2}\iint d\vec{r}d\vec{r}&#39;
+\frac{\rho(\vec{r})\rho(\vec{r}&#39;)}{|\vec{r}-\vec{r}&#39;|}}_{\text{Hartree
+能量}} + \underbrace{E_{xc}[\rho]}_{\text{② 交换关联能}}\]</span></p>
+<ul>
+<li><strong>问题所在：</strong>
+<ul>
+<li><strong>① <span class="math inline">\(T[\rho]\)</span>
+(动能)：</strong>
+这是最大的难题。动能是一个与波函数<strong>曲率</strong> (curvature)
+相关的量子力学量 (<span class="math inline">\(\hat{T} \propto
+\nabla^2\)</span>)。我们无法简单地通过密度 <span
+class="math inline">\(\rho\)</span>（一个标量场）来精确描述它。前面推导的
+<span class="math inline">\(T[\rho] \propto \int \rho^{5/3}
+d\vec{r}\)</span> 只是一个非常粗糙的近似。</li>
+<li><strong>② <span class="math inline">\(E_{xc}[\rho]\)</span>
+(交换关联能)：</strong>
+这是第二个难题。它包含了所有复杂的、非经典的电子-电子相互作用（泡利不相容原理的交换效应、电子相互躲避的关联效应）。</li>
+</ul></li>
+</ul>
+<p>KS-DFT 的目标就是<strong>同时解决这两个问题</strong>。</p>
+<h3 id="核心概念kohn-sham-辅助系统">2. 核心概念：Kohn-Sham 辅助系统</h3>
+<p>Kohn-Sham 的核心思想是：“我承认 <span
+class="math inline">\(T[\rho]\)</span>
+太难了，所以我干脆<strong>不去近似它</strong>。”</p>
+<blockquote>
+<p><strong>Kohn-Sham 的核心假设：</strong>
+对于<em>任何</em>一个我们关心的、有相互作用的<strong>真实系统</strong>（其基态密度为
+<span
+class="math inline">\(\rho_{true}\)</span>），我们<em>总能</em>构建一个<strong>虚构的
+(fictitious)</strong>、<strong>无相互作用的</strong>辅助系统，这个系统被设计为<strong>恰好具有与真实系统完全相同的基态密度
+<span class="math inline">\(\rho(\vec{r}) =
+\rho_{true}(\vec{r})\)</span></strong>。</p>
+</blockquote>
+<p>这个想法彻底改变了规则。</p>
+<ul>
+<li><strong>公式 1：Kohn-Sham 哈密顿量 <span
+class="math inline">\(\hat{H}_{KS}\)</span></strong>
+<ul>
+<li><code>Ĥ_KS = -ħ²/2m ∇² + V_KS(r)</code></li>
+<li>这是一个描述 <span class="math inline">\(N\)</span>
+个<strong>无相互作用</strong>电子的哈密顿量，它们都在一个共同的<strong>有效势
+<span class="math inline">\(V_{KS}(\vec{r})\)</span></strong>
+中运动。</li>
+<li><strong>关键点：</strong>
+这个哈密顿量中<strong>没有</strong>电子-电子相互作用项（如 <span
+class="math inline">\(e^2/|\vec{r}_i -
+\vec{r}_j|\)</span>）。这使得它在数学上变得极其简单。</li>
+</ul></li>
+<li><strong>公式 2：Kohn-Sham 波函数 <span
+class="math inline">\(\Phi\)</span></strong>
+<ul>
+<li>一个斯莱特行列式：<code>Φ = 1/√N! | ... |</code></li>
+<li><strong>详细解释：</strong> 由于 <span
+class="math inline">\(\hat{H}_{KS}\)</span> 是 <span
+class="math inline">\(N\)</span> 个无相互作用粒子的哈密顿量（<span
+class="math inline">\(\hat{H}_{KS} = \sum_i
+\hat{h}_i\)</span>），它的基态波函数 <span
+class="math inline">\(\Phi\)</span>
+可以被<strong>精确地</strong>写成一个由 <span
+class="math inline">\(N\)</span> 个最低能量的单电子<strong>Kohn-Sham
+轨道 <span class="math inline">\(\phi_i\)</span></strong>
+构成的<strong>斯莱特行列式 (Slater Determinant)</strong>。</li>
+<li>这些轨道 <span class="math inline">\(\phi_i\)</span>
+是单粒子薛定谔方程（即 <strong>Kohn-Sham 方程</strong>）的解： <span
+class="math display">\[\left( -\frac{\hbar^2}{2m}\nabla^2 +
+V_{KS}(\vec{r}) \right) \phi_i(\vec{r}) = \epsilon_i
+\phi_i(\vec{r})\]</span></li>
+</ul></li>
+</ul>
+<h3 id="关键公式密度和动能">3. 关键公式：密度和动能</h3>
+<p>现在，我们来看看这个“虚构系统”是如何帮我们解决问题的。</p>
+<ul>
+<li><strong>公式 3：KS 系统的电子密度 <span
+class="math inline">\(\rho(\vec{r})\)</span></strong>
+<ul>
+<li><code>ρ(r) = ⟨Φ| Σ δ(r-ri) |Φ⟩ = Σ_&#123;i=1&#125;^N |φ_i|²</code></li>
+<li><strong>详细解释：</strong>
+<ul>
+<li><code>⟨Φ| Σ δ(r-ri) |Φ⟩</code>：这是密度 <span
+class="math inline">\(\rho(\vec{r})\)</span> 的标准量子力学定义，即“在
+<span class="math inline">\(\vec{r}\)</span>
+处找到<em>任意</em>一个电子的概率”。</li>
+<li><code>= Σ_&#123;i=1&#125;^N |φ_i|²</code>：这是最关键的简化。对于一个斯莱特行列式波函数
+<span
+class="math inline">\(\Phi\)</span>，总的电子密度<strong>精确地等于</strong>所有被占据的
+KS 轨道的概率密度之和。</li>
+</ul></li>
+<li><strong>KS 假设的重申：</strong> 我们假设存在一个 <span
+class="math inline">\(V_{KS}(\vec{r})\)</span>，使得这个 <span
+class="math inline">\(\rho(\vec{r})\)</span>
+<strong>恒等于</strong>我们想研究的<strong>真实系统</strong>的密度 <span
+class="math inline">\(\rho_{true}(\vec{r})\)</span>。</li>
+</ul></li>
+<li><strong>公式 4：无相互作用动能 <span
+class="math inline">\(T_s[\rho]\)</span></strong>
+<ul>
+<li><code>Ts[ρ] = ⟨Φ| Σ -ħ²/2m ∇_i² |Φ⟩ = Σ_&#123;i=1&#125;^N ⟨φ_i| -ħ²/2m ∇² |φ_i⟩</code></li>
+<li><strong>详细解释：</strong>
+<ul>
+<li><strong>这就是 KS 方案的全部意义！</strong></li>
+<li>我们想知道这个虚构系统的总动能 <span
+class="math inline">\(T_s\)</span> (s 代表 ‘single-particle’ 或
+‘non-interacting’)。</li>
+<li><span class="math inline">\(T_s = \langle \Phi | \hat{T} | \Phi
+\rangle\)</span>。</li>
+<li>与密度一样，由于 <span class="math inline">\(\Phi\)</span>
+是斯莱特行列式，<span class="math inline">\(\hat{T}\)</span>
+是单体算符，总动能<strong>精确地等于</strong>所有被占据的 KS
+轨道的动能之和。</li>
+</ul></li>
+<li><strong>结论：</strong> 我们成功地<strong>避免了对 <span
+class="math inline">\(T[\rho]\)</span>
+的近似</strong>。我们现在不去近似它，而是通过求解 KS 轨道 <span
+class="math inline">\(\phi_i\)</span>
+来<strong>精确计算</strong>动能的主要部分 <span
+class="math inline">\(T_s\)</span>。</li>
+</ul></li>
+</ul>
+<h3 id="证明t_srho-与-t_truerho-的关系">4. “证明”：<span
+class="math inline">\(T_s[\rho]\)</span> 与 <span
+class="math inline">\(T_{true}[\rho]\)</span> 的关系</h3>
+<p>提出了一个问题和一个潦草的证明：</p>
+<ul>
+<li><p><strong>问题：</strong> <code>Ts[ρ] ≤ T_true[ρ] ?</code></p>
+<ul>
+<li>我们通过轨道计算的<strong>无相互作用动能 <span
+class="math inline">\(T_s\)</span></strong>
+与<strong>真实系统</strong>的<strong>真正动能 <span
+class="math inline">\(T_{true}\)</span></strong> 相比，哪个更大？</li>
+</ul></li>
+<li><p><strong>答案：<span class="math inline">\(T_s[\rho] \le
+T_{true}[\rho]\)</span> 恒成立。</strong></p></li>
+<li><p><strong>证明</strong>：</p>
+<ul>
+<li><code>Proof: ⟨Φ_ks| ...</code>
+这里的字迹非常潦草，似乎是想用变分原理来论证，但写得并不清楚。</li>
+</ul></li>
+<li><p><strong>一个更清晰的、概念性的证明：</strong></p>
+<ol type="1">
+<li><span class="math inline">\(T_s[\rho]\)</span>
+是一个<strong>无相互作用</strong>系统在密度为 <span
+class="math inline">\(\rho\)</span> 时的基态动能。</li>
+<li><span class="math inline">\(T_{true}[\rho]\)</span>
+是一个<strong>有相互作用</strong>系统在密度为 <span
+class="math inline">\(\rho\)</span> 时的基态动能。</li>
+<li>在真实系统中，电子不仅受 <span
+class="math inline">\(V_{ext}\)</span> 束缚，它们还必须<strong>相互排斥
+(correlation)</strong>。为了“躲避”彼此，它们的波函数必须变得更加“弯曲”或“扭动”。</li>
+<li>在量子力学中，<strong>动能 <span class="math inline">\(\propto \int
+|\nabla \Psi|^2\)</span></strong>，它衡量的是波函数的“弯曲程度”。</li>
+<li>真实电子为了相互躲避而增加的额外“弯曲”，导致了<strong>额外的动能</strong>。</li>
+<li>因此，对于同一个密度 <span
+class="math inline">\(\rho\)</span>，真实系统的动能 <span
+class="math inline">\(T_{true}\)</span>
+必然<strong>大于或等于</strong>那个不需要考虑相互躲避的、虚构的无相互作用系统的动能
+<span class="math inline">\(T_s\)</span>。</li>
+</ol></li>
+<li><p><strong>这引出了最终的 KS-DFT 能量划分：</strong></p>
+<ol type="1">
+<li><p>真实动能 <span class="math inline">\(T_{true}\)</span>
+被拆分为：<span class="math inline">\(T_{true}[\rho] = T_s[\rho] +
+T_c[\rho]\)</span></p>
+<ul>
+<li><span
+class="math inline">\(T_s[\rho]\)</span>：无相互作用动能（<strong>我们用轨道精确计算</strong>）。</li>
+<li><span
+class="math inline">\(T_c[\rho]\)</span>：<strong>动能的关联部分</strong>（<span
+class="math inline">\(T_{true} - T_s\)</span>，这是个未知的小量）。</li>
+</ul></li>
+<li><p>现在，Kohn-Sham 方案将所有未知项——<span
+class="math inline">\(T_c[\rho]\)</span> 和 <span
+class="math inline">\(E_{xc}[\rho]\)</span>（来自 OF-DFT）——
+<strong>全部打包</strong> 进一个<strong>新的</strong>交换关联泛函 <span
+class="math inline">\(E_{xc}^{KS}[\rho]\)</span> 中。</p></li>
+<li><p><strong>Kohn-Sham 总能量泛函：</strong> <span
+class="math display">\[E[\rho] = \mathbf{T_s[\{\phi_i\}]} + \int
+V_{ext}(\vec{r})\rho(\vec{r})d\vec{r} + E_H[\rho] +
+\mathbf{E_{xc}^{KS}[\rho]}\]</span></p></li>
+</ol></li>
+</ul>
+<p><strong>总结：</strong> KS-DFT
+的赌注是：通过轨道<strong>精确计算</strong> <span
+class="math inline">\(T_s\)</span>，剩下的那个包含 <span
+class="math inline">\(T_c\)</span> 的<strong>新 <span
+class="math inline">\(E_{xc}^{KS}[\rho]\)</span></strong>，会比原来那个包含整个
+<span class="math inline">\(T_{true}\)</span> 的 OF-DFT
+泛函<strong>容易得多</strong>。</p>
+<p>历史证明，这个赌注赢了。</p>
+<p><strong>现代 DFT 计算的核心——Kohn-Sham 方程</strong>。</p>
+<p>它回答了两个终极问题： 1. 我们把所有“脏活累活”都塞进 <span
+class="math inline">\(E_{xc}\)</span> (交换关联能) 里，那这个 <span
+class="math inline">\(E_{xc}\)</span> <strong>到底是什么</strong>？ 2.
+我们如何<strong>求解</strong>这个 KS 系统来找到轨道 <span
+class="math inline">\(\phi_i\)</span> 和密度 <span
+class="math inline">\(\rho\)</span>？</p>
+<h3 id="概念e_xc-的正式定义-左侧">1. 概念：<span
+class="math inline">\(E_{xc}\)</span> 的正式定义 (左侧)</h3>
+<p>接下来给出了 Kohn-Sham 交换关联能 <span
+class="math inline">\(E_{xc}\)</span>
+的<strong>精确定义</strong>。它是一个“垃圾堆”泛函，包含了所有真实系统与虚构
+KS 系统之间的差异。</p>
+<ul>
+<li><strong><span class="math inline">\(E_{xc}[\rho] = (T_{true}[\rho] -
+T_s[\rho]) + (\langle \Psi_{true} | \hat{V}_{ee} | \Psi_{true} \rangle -
+E_{Hartree}[\rho])\)</span></strong>
+<ul>
+<li><strong>第一部分：<span class="math inline">\((T_{true}[\rho] -
+T_s[\rho])\)</span></strong>
+<ul>
+<li>这是<strong>动能的关联部分 <span
+class="math inline">\(T_c\)</span></strong>。</li>
+<li><span class="math inline">\(T_{true}\)</span>
+是真实系统的（未知的）总动能。</li>
+<li><span class="math inline">\(T_s\)</span> 是我们用 KS
+轨道<strong>精确计算</strong>的无相互作用动能。</li>
+<li><span class="math inline">\(E_{xc}\)</span>
+必须包含这个动能差。</li>
+</ul></li>
+<li><strong>第二部分：<span class="math inline">\((\langle \Psi_{true} |
+\hat{V}_{ee} | \Psi_{true} \rangle -
+E_{Hartree}[\rho])\)</span></strong>
+<ul>
+<li>这是<strong>势能的交换与关联部分</strong>。</li>
+<li><span class="math inline">\(\langle \Psi_{true} | \hat{V}_{ee} |
+\Psi_{true} \rangle\)</span> 是真实系统中电子-电子相互作用 <span
+class="math inline">\(\hat{V}_{ee}\)</span>
+的完整（未知的）期望值。</li>
+<li><span class="math inline">\(E_{Hartree}[\rho]\)</span>
+是我们<strong>可以精确计算</strong>的经典静电排斥能（哈特里能量）。</li>
+<li><span class="math inline">\(E_{xc}\)</span>
+包含了真实相互作用与经典排斥之间的<strong>差值</strong>，这部分就是纯粹的量子效应（交换
++ 关联）。</li>
+</ul></li>
+</ul></li>
+</ul>
+<p><strong>一句话总结：<span class="math inline">\(E_{xc}\)</span>
+包含了所有我们不知道的动能和势能的复杂量子效应。</strong></p>
+<h3 id="核心公式kohn-sham-总能量">2. 核心公式：Kohn-Sham 总能量</h3>
+<p>有了 <span class="math inline">\(E_{xc}\)</span> 的定义，Kohn-Sham
+的<strong>总能量泛函</strong>现在可以被<strong>精确地</strong>（在形式上）写为：</p>
+<p><span class="math display">\[E_{KS}[\rho] = \mathbf{T_s[\{\phi_i\}]}
++ \int d\vec{r} V_{ext}(\vec{r})\rho(\vec{r}) + \frac{1}{2}\iint
+d\vec{r}d\vec{r}&#39;
+\frac{\rho(\vec{r})\rho(\vec{r}&#39;)}{|\vec{r}-\vec{r}&#39;|} +
+\mathbf{E_{xc}[\rho]}\]</span></p>
+<ul>
+<li><strong><span
+class="math inline">\(T_s[\{\phi_i\}]\)</span></strong>：无相互作用动能（<strong>通过轨道精确计算</strong>）。</li>
+<li><strong><span class="math inline">\(\int V_{ext}
+\rho\)</span></strong>：外势能（例如原子核吸引，已知）。</li>
+<li><strong><span class="math inline">\(\frac{1}{2}\iint
+...\)</span></strong>：哈特里能量（经典静电排斥，已知）。</li>
+<li><strong><span
+class="math inline">\(E_{xc}[\rho]\)</span></strong>：交换关联能（<strong>这是唯一需要近似的部分！</strong>）。</li>
+</ul>
+<p><strong>这是整个 KS-DFT 的基石。</strong> 我们成功地将一个无法解决的
+<span class="math inline">\(T_{true}\)</span>
+问题，转化为了一个<strong>可以被近似</strong>的 <span
+class="math inline">\(E_{xc}\)</span> 问题。</p>
+<h3 id="推导kohn-sham-方程">3. 推导：Kohn-Sham 方程</h3>
+<p>我们如何找到使 <span class="math inline">\(E_{KS}[\rho]\)</span>
+最小的轨道 <span class="math inline">\(\phi_i\)</span> 呢？
+答案是使用<strong>变分法</strong>：我们对总能量 <span
+class="math inline">\(E_{KS}\)</span> 求关于轨道 <span
+class="math inline">\(\phi_i^*\)</span> 的泛函导数，并令其为零。</p>
+<ul>
+<li><strong><span class="math inline">\(\frac{\delta}{\delta\phi_i^*}
+\left( E_{KS}[\rho] - \sum_j \epsilon_j (\int |\phi_j|^2 d\vec{r} - 1)
+\right) = 0\)</span></strong>
+<ul>
+<li>这就是带有<strong>约束条件</strong>（每个轨道必须归一化）的能量最小化。</li>
+<li><span class="math inline">\(\epsilon_j\)</span>
+是拉格朗日乘子。</li>
+</ul></li>
+<li><strong>对 <span class="math inline">\(E_{KS}\)</span>
+的每一项求导：</strong>
+<ul>
+<li><span class="math inline">\(\frac{\delta
+T_s}{\delta\phi_i^*}\)</span> <span
+class="math inline">\(\rightarrow\)</span> <span
+class="math inline">\(-\frac{\hbar^2}{2m}\nabla^2
+\phi_i(\vec{r})\)</span></li>
+<li><span class="math inline">\(\frac{\delta
+E_{V_{ext}}}{\delta\phi_i^*}\)</span> <span
+class="math inline">\(\rightarrow\)</span> <span
+class="math inline">\(V_{ext}(\vec{r}) \phi_i(\vec{r})\)</span></li>
+<li><span class="math inline">\(\frac{\delta
+E_{Hartree}}{\delta\phi_i^*}\)</span> <span
+class="math inline">\(\rightarrow\)</span> <span
+class="math inline">\(\left( \int
+\frac{\rho(\vec{r}&#39;)}{|\vec{r}-\vec{r}&#39;|} d\vec{r}&#39; \right)
+\phi_i(\vec{r})\)</span> (即 <span
+class="math inline">\(V_H(\vec{r})\phi_i(\vec{r})\)</span>)</li>
+<li><span class="math inline">\(\frac{\delta
+E_{xc}}{\delta\phi_i^*}\)</span> <span
+class="math inline">\(\rightarrow\)</span> <span
+class="math inline">\(\left( \frac{\delta E_{xc}}{\delta\rho} \right)
+\phi_i(\vec{r})\)</span> (即 <span
+class="math inline">\(V_{xc}(\vec{r})\phi_i(\vec{r})\)</span>)</li>
+<li><span class="math inline">\(\frac{\delta
+(\text{约束项})}{\delta\phi_i^*}\)</span> <span
+class="math inline">\(\rightarrow\)</span> <span
+class="math inline">\(\epsilon_i \phi_i(\vec{r})\)</span></li>
+</ul></li>
+<li><strong>把所有项合并，我们就得到了最终的 Kohn-Sham 方程：</strong>
+<span class="math display">\[\left[ -\frac{\hbar^2}{2m}\nabla^2 +
+V_{ext}(\vec{r}) + \int
+\frac{\rho(\vec{r}&#39;)}{|\vec{r}-\vec{r}&#39;|} d\vec{r}&#39; +
+V_{xc}(\vec{r}) \right] \phi_i(\vec{r}) = \epsilon_i
+\phi_i(\vec{r})\]</span>
+<ul>
+<li><span
+class="math inline">\(\epsilon_i\)</span>（拉格朗日乘子）的物理意义是
+<strong>Kohn-Sham 轨道 <span class="math inline">\(\phi_i\)</span>
+的能量</strong>。</li>
+</ul></li>
+</ul>
+<h3 id="结论v_ks-的最终形式">4. 结论：<span
+class="math inline">\(V_{KS}\)</span> 的最终形式</h3>
+<p><strong>Kohn-Sham
+方程</strong>本质上是一个<strong>单粒子薛定谔方程</strong>
+<code>Ĥ_KS φ_i = ε_i φ_i</code>。</p>
+<p>通过上面的推导，我们明确地找到了这个虚构的 <strong>Kohn-Sham 势 <span
+class="math inline">\(V_{KS}\)</span></strong> 到底是什么：</p>
+<p><span class="math display">\[V_{KS}(\vec{r}) = V_{ext}(\vec{r}) +
+V_H(\vec{r}) + V_{xc}(\vec{r})\]</span></p>
+<p><span class="math display">\[V_{KS}(\vec{r}) =
+\underbrace{V_{ext}(\vec{r})}_{\text{原子核势}} + \underbrace{\int
+\frac{\rho(\vec{r}&#39;)}{|\vec{r}-\vec{r}&#39;|}
+d\vec{r}&#39;}_{\text{哈特里势 (经典排斥)}} + \underbrace{\frac{\delta
+E_{xc}[\rho]}{\delta\rho}}_{\text{交换关联势 (量子效应)}}\]</span></p>
+<h3 id="最终总结">最终总结</h3>
+<p>这个方程完美地闭合了整个理论： * 我们想求解 <span
+class="math inline">\(V_{KS}\)</span> 中的 <span
+class="math inline">\(\phi_i\)</span>。 * 但 <span
+class="math inline">\(V_{KS}\)</span> 本身又依赖于 <span
+class="math inline">\(V_H\)</span> 和 <span
+class="math inline">\(V_{xc}\)</span>。 * <span
+class="math inline">\(V_H\)</span> 和 <span
+class="math inline">\(V_{xc}\)</span> 又依赖于 <span
+class="math inline">\(\rho\)</span>（密度）。 * 而 <span
+class="math inline">\(\rho\)</span> 又是由 <span
+class="math inline">\(\phi_i\)</span>（<span class="math inline">\(\rho
+= \sum |\phi_i|^2\)</span>）构成的。</p>
+<p>这是一个<strong>“鸡生蛋，蛋生鸡”</strong>的问题。
+在实践中，我们必须通过<strong>自洽迭代 (self-consistent loop)</strong>
+来求解： 1. <strong>猜测</strong>一个初始密度 <span
+class="math inline">\(\rho_{in}\)</span>。 2. 用 <span
+class="math inline">\(\rho_{in}\)</span> 计算 <span
+class="math inline">\(V_H\)</span> 和 <span
+class="math inline">\(V_{xc}\)</span>，得到 <span
+class="math inline">\(V_{KS}\)</span>。 3. 求解 KS 方程 <span
+class="math inline">\(\hat{H}_{KS} \phi_i = \epsilon_i \phi_i\)</span>
+得到新的轨道 <span class="math inline">\(\phi_i\)</span>。 4. 用新的
+<span class="math inline">\(\phi_i\)</span>
+计算出<strong>新的密度</strong> <span class="math inline">\(\rho_{out} =
+\sum |\phi_i|^2\)</span>。 5. 比较 <span
+class="math inline">\(\rho_{out}\)</span> 和 <span
+class="math inline">\(\rho_{in}\)</span>。如果它们不一致，就混合新旧密度，重复步骤
+2。 6. 循环往复，直到 <span class="math inline">\(\rho_{out} =
+\rho_{in}\)</span>，达到<strong>自洽</strong>，计算完成。</p>
+<p>在前面，我们推导出了一切都取决于一个<strong>未知的</strong>、需要<strong>近似</strong>的能量项：<strong>交换关联泛函
+<span class="math inline">\(E_{xc}[\rho]\)</span></strong>。</p>
+<p>接下来展示的就是在实践中<strong>如何近似 <span
+class="math inline">\(E_{xc}[\rho]\)</span></strong>
+的两种最基本、最重要的方法：<strong>LDA</strong> 和
+<strong>GGA</strong>。</p>
+<h3 id="局域密度近似-local-density-approximation-lda">1. 局域密度近似
+(Local Density Approximation, LDA)</h3>
+<p>这是对 <span class="math inline">\(E_{xc}[\rho]\)</span>
+最简单、最基础的近似。</p>
+<ul>
+<li><strong>图示：</strong>
+白板左上角画了一个图：一个真实的、密度不均匀的分子（或固体），但在某一点
+<span class="math inline">\(\vec{r}\)</span>
+处，我们“假装”它周围是一片均匀的电子海洋（自由电子气）。</li>
+<li><strong>核心思想 (LDA)：</strong> 系统在 <span
+class="math inline">\(\vec{r}\)</span>
+处的交换关联能量密度，<strong>仅仅</strong>取决于<strong>该点 <span
+class="math inline">\(\vec{r}\)</span> 处的电子密度 <span
+class="math inline">\(\rho(\vec{r})\)</span></strong>。
+我们假设它与具有相同密度的<strong>均匀电子气 (free electron
+gas)</strong> 的交换关联能量密度 <span
+class="math inline">\(\epsilon_{xc}^{unif}(\rho)\)</span>
+完全相同。</li>
+<li><strong>公式 1：<span
+class="math inline">\(E_{xc}^{LDA}[\rho]\)</span></strong> <span
+class="math display">\[E_{xc}^{LDA}[\rho] = \int d\vec{r} \rho(\vec{r})
+\epsilon_{xc}^{unif}(\rho(\vec{r}))\]</span>
+<ul>
+<li><strong><span
+class="math inline">\(\epsilon_{xc}^{unif}(\rho)\)</span></strong>：这就是我们在<strong>第
+3
+张白板</strong>上推导过的<strong>均匀电子气</strong>的（单粒子）交换关联能量。这是一个已知的、关于
+<span class="math inline">\(\rho\)</span>
+的函数（通过量子蒙特卡洛等方法可以精确算出）。</li>
+<li><strong><span
+class="math inline">\(\rho(\vec{r})\)</span></strong>：该点的电子密度。</li>
+<li><strong>含义：</strong> 我们在空间中逐点计算该点的 <span
+class="math inline">\(\rho\)</span> 对应的 <span
+class="math inline">\(\epsilon_{xc}\)</span>，然后乘以该点的密度 <span
+class="math inline">\(\rho\)</span>，最后在整个空间积分（求和）。</li>
+</ul></li>
+<li><strong>公式 2：<span class="math inline">\(V_{xc}^{LDA}\)</span>
+(交换关联势)</strong> <span class="math display">\[V_{xc} = \frac{\delta
+E_{xc}}{\delta \rho} = \epsilon_{xc}(\rho, \vec{r}) + \rho(\vec{r})
+\frac{\partial \epsilon_{xc}}{\partial \rho}\]</span>
+<ul>
+<li>这是将 <span class="math inline">\(E_{xc}^{LDA}\)</span>
+代入我们在<strong>第 5 张白板</strong>上定义的 <span
+class="math inline">\(V_{xc} = \delta E_{xc} / \delta \rho\)</span>
+中，通过链式法则推导出来的结果。</li>
+</ul></li>
+<li><strong>“Perdew-Zunger (1981)”</strong>
+<ul>
+<li>这是一个<strong>具体的 LDA 泛函</strong>的名称。Perdew 和 Zunger 在
+1981 年利用高精度的均匀电子气数据（来自 Ceperley-Alder 的 QMC
+计算），拟合出了一套非常精确和实用的 <span
+class="math inline">\(\epsilon_{xc}^{unif}(\rho)\)</span>
+参数化公式。这至今仍是 LDA 计算的标准。</li>
+</ul></li>
+</ul>
+<h3 id="广义梯度近似-generalized-gradient-approximation-gga">2.
+广义梯度近似 (Generalized-Gradient Approximation, GGA)</h3>
+<p>LDA 假设在 <span class="math inline">\(\vec{r}\)</span>
+处的能量只取决于 <span
+class="math inline">\(\rho(\vec{r})\)</span>，这是一个<strong>非常强</strong>（且通常不正确）的假设。真实系统（如分子）的密度变化非常快。</p>
+<ul>
+<li><strong>核心思想 (GGA)：</strong>
+一个更智能的近似，不仅要考虑<strong>该点的密度 <span
+class="math inline">\(\rho(\vec{r})\)</span></strong>，还应该考虑<strong>该点密度的变化率</strong>，即<strong>梯度的模
+<span class="math inline">\(|\nabla\rho|\)</span></strong>。
+<ul>
+<li>如果 <span class="math inline">\(|\nabla\rho|\)</span>
+很大，说明密度变化剧烈（如在分子键合区域或原子边缘），<span
+class="math inline">\(\epsilon_{xc}\)</span> 应该与 LDA 不同。</li>
+</ul></li>
+<li><strong>公式 3：<span
+class="math inline">\(E_{xc}^{GGA}[\rho^\uparrow,
+\rho^\downarrow]\)</span></strong> <span
+class="math display">\[E_{xc}^{GGA}[\rho^\uparrow, \rho^\downarrow] =
+\int d\vec{r} \rho(\vec{r}) \epsilon_{xc}(\rho^\uparrow,
+\rho^\downarrow, |\nabla\rho^\uparrow|, |\nabla\rho^\downarrow|,
+\vec{r})\]</span>
+<ul>
+<li><strong><span class="math inline">\(\rho^\uparrow,
+\rho^\downarrow\)</span></strong>：自旋向上和自旋向下的电子密度（更完整的表述）。</li>
+<li><strong><span class="math inline">\(|\nabla\rho^\uparrow|,
+|\nabla\rho^\downarrow|\)</span></strong>：<strong>新加入的项！</strong>
+密度梯度的信息被包含了进来。</li>
+<li><strong><span
+class="math inline">\(\epsilon_{xc}(...)\)</span></strong>：现在是一个更复杂的函数，它不仅是
+<span class="math inline">\(\rho\)</span> 的函数，还是 <span
+class="math inline">\(|\nabla\rho|\)</span> 的函数。</li>
+</ul></li>
+<li><strong>“PBE”, “BLYP” …</strong>
+<ul>
+<li>这些都是<strong>具体的 GGA 泛函</strong>的名称。它们就像 <span
+class="math inline">\(\epsilon_{xc}\)</span> 的不同“配方”。</li>
+<li><strong>BLYP</strong> = Becke (交换) + Lee, Yang, Parr (关联)。</li>
+<li><strong>PBE</strong> = Perdew, Burke, Ernzerhof。</li>
+<li>PBE 和 BLYP 是化学和材料科学中<strong>最常用、最成功</strong>的 GGA
+泛函之二。</li>
+</ul></li>
+</ul>
+<p>接下来介绍的是“Jacob’s Ladder”（DFT
+近似的雅各天梯）的更高几层：<strong>meta-GGA</strong> 和 <strong>Hybrid
+functionals (混合泛函)</strong>。</p>
+<h3 id="密度泛函近似-dfa">1. 密度泛函近似 (DFA)</h3>
+<ul>
+<li><strong>DFA (Density Functional Approximation):</strong>
+<ul>
+<li>这是一个总称，泛指我们对 <span
+class="math inline">\(E_{xc}[\rho]\)</span>（交换关联泛函）所做的<strong>所有近似</strong>，包括
+LDA, GGA 等。</li>
+</ul></li>
+</ul>
+<h3 id="meta-gga">2. Meta-GGA</h3>
+<p>这是超越 GGA 的“天梯”的下一级。</p>
+<ul>
+<li><strong><span class="math inline">\(\Delta\)</span> meta
+GGA:</strong>
+<ul>
+<li><strong>核心思想：</strong> GGA 只用了 <span
+class="math inline">\(\rho\)</span>（密度）和 <span
+class="math inline">\(|\nabla\rho|\)</span>（密度梯度）。为了获得更高精度，meta-GGA
+引入了<strong>第三种信息</strong>。</li>
+<li><strong>成分：<span class="math inline">\(\rho, |\nabla\rho|,
+\nabla^2\rho? |\nabla\phi_i|^2\)</span></strong>
+<ul>
+<li><span class="math inline">\(\rho\)</span> (密度)</li>
+<li><span class="math inline">\(|\nabla\rho|\)</span> (密度梯度)</li>
+<li><code>∇²ρ?</code> (密度的拉普拉斯，一种可能的成分)</li>
+<li><strong><span
+class="math inline">\(|\nabla\phi_i|^2\)</span></strong> (Kohn-Sham
+轨道的动能密度 <span class="math inline">\(\tau\)</span>)：这是现代
+meta-GGA
+泛函中<strong>最关键</strong>的成分。它使得泛函<strong>间接地</strong>依赖于轨道，从而能“感知”更复杂的电子结构信息（例如，区分是单键、双键还是孤对电子）。</li>
+</ul></li>
+</ul></li>
+<li><strong>“SCAN”</strong>
+<ul>
+<li>这是一个<strong>具体的 meta-GGA
+泛函</strong>的名称，是目前最流行、最成功的 meta-GGA 之一。</li>
+</ul></li>
+</ul>
+<h3 id="一个关键问题自相互作用误差-sie">3. 一个关键问题：自相互作用误差
+(SIE)</h3>
+<p>为什么我们需要更高级的泛函？因为 LDA 和 GGA
+有一个<strong>根本性的缺陷</strong>。</p>
+<ul>
+<li><strong>“self-interaction error” (自相互作用误差, SIE):</strong>
+<ul>
+<li><strong>问题来源：</strong> 在 DFT 中，一个电子的密度 <span
+class="math inline">\(\rho\)</span> 是其自身的总密度 <span
+class="math inline">\(\rho\)</span> 的一部分。在计算哈特里能量 <span
+class="math inline">\(E_H[\rho] \propto \iint \rho \rho&#39;
+...\)</span>
+时，这个电子<strong>错误地与它自己</strong>产生了静电排斥。</li>
+<li><strong>本应：</strong> <span
+class="math inline">\(E_{xc}\)</span>（交换能）应该<strong>完美地抵消</strong>掉这个虚假的自排斥。</li>
+<li><strong>现实：</strong> <strong>LDA 和 GGA
+泛函都未能</strong>完美抵消它。</li>
+</ul></li>
+<li><strong>“charge too delocalized” (电荷过度离域):</strong>
+<ul>
+<li><strong>后果：</strong>
+由于电子错误地“排斥”自己，系统为了降低能量，会倾向于将电子“涂抹”或“离域”
+(delocalize) 到尽可能大的空间中，以减小这种虚假的自排斥。</li>
+<li><strong>图示：</strong> 白板上的山峰（或势垒）图示说明：SIE
+导致电荷在过渡态的局域化（电子集中在某处）变得困难，因此 LDA/GGA
+总是<strong>低估</strong>化学反应的<strong>能垒</strong>。</li>
+<li><strong>“Cl- — nH₂O”</strong>
+<ul>
+<li>这是一个具体例子：一个 Cl⁻ 离子被水分子包围。LDA/GGA 会错误地将 Cl⁻
+上的负电荷“泄露”或“离域”到周围的水分子上，从而导致错误的体系结构和能量。</li>
+</ul></li>
+</ul></li>
+</ul>
+<h3 id="解决方案混合泛函-hybrid-functional">4. 解决方案：混合泛函
+(Hybrid Functional)</h3>
+<p>这是“天梯”的第四级，是目前在化学计算中<strong>最标准、最常用</strong>的高精度方法。</p>
+<ul>
+<li><strong><span class="math inline">\(\Delta\)</span> Hybrid
+functional:</strong>
+<ul>
+<li><strong>核心思想：</strong> 如何修复 SIE？
+<ul>
+<li>我们知道，在 <strong>Hartree-Fock (HF) 理论</strong>中，其“交换能”
+<span class="math inline">\(E_x^{HF}\)</span>
+是通过轨道<strong>精确计算</strong>的，并且它<strong>完美地</strong>抵消了自相互作用。</li>
+<li><strong>混合 (Hybrid) 思想：</strong> 让我们把 DFT (如 PBE)
+的交换项拿掉一部分，<strong>替换</strong>为同一比例的“精确”的 HF
+交换项。</li>
+</ul></li>
+</ul></li>
+<li><strong>“PBE0” (一个具体的混合泛函名称):</strong>
+<ul>
+<li>这是最著名的混合泛函之一。</li>
+<li><strong><span class="math inline">\(E_{xc} = \frac{1}{4} E_x^{HF} +
+\frac{3}{4} E_x^{PBE} + E_c^{PBE}\)</span></strong></li>
+<li><strong>公式分解：</strong>
+<ul>
+<li><strong><span class="math inline">\(\frac{1}{4}
+E_x^{HF}\)</span></strong>：用 <strong>25%</strong> 的<strong>精确 HF
+交换</strong>。</li>
+<li><strong><span class="math inline">\(\frac{3}{4}
+E_x^{PBE}\)</span></strong>：用 <strong>75%</strong> 的 <strong>PBE
+(GGA) 交换</strong>。</li>
+<li><strong><span class="math inline">\(E_c^{PBE}\)</span></strong>：用
+<strong>100%</strong> 的 <strong>PBE (GGA) 关联</strong>。</li>
+</ul></li>
+<li><strong>效果：</strong> 引入 25%
+的精确交换，极大地<strong>纠正</strong>了自相互作用误差
+(SIE)，使其在计算能垒、带隙、分子性质等方面远比纯 GGA 准确。</li>
+</ul></li>
+</ul>
+<p>接下来介绍了当今计算化学和材料科学中<strong>最先进、最常用</strong>的几种高级泛函。</p>
+<p><strong>混合泛函 (Hybrid functional) 家族的“动物园”</strong>——
+它们是如何被构建的，以及它们各自解决了什么问题。</p>
+<h3 id="b3lyp-最著名的经验混合泛函">1. B3LYP (最著名的经验混合泛函)</h3>
+<ul>
+<li><strong><span class="math inline">\(\Delta\)</span> B3LYP:</strong>
+<ul>
+<li>这是<strong>最著名</strong>的混合泛函之一，特别是在量子化学领域。</li>
+<li>它的构造是<strong>半经验的
+(semi-empirical)</strong>，意味着它的混合参数是由拟合（fitting）一组精确的实验/基准化学数据（如分子的原子化热）而确定的。</li>
+</ul></li>
+<li><strong>公式：</strong> <span class="math display">\[E_{xc} =
+E_x^{LDA} + a_0(E_x^{HF} - E_x^{LDA}) + a_x(E_x^{Becke} - E_x^{LDA}) +
+E_c^{LDA} + a_c(E_c^{LYP} - E_c^{LDA})\]</span></li>
+<li><strong>解释：</strong>
+<ul>
+<li>B3LYP (Becke, 3-parameter, Lee-Yang-Parr)
+是一个复杂的“鸡尾酒”。</li>
+<li>它混合了 <strong>LDA</strong> 的交换和关联、<strong>Hartree-Fock
+(HF)</strong> 的精确交换，以及 <strong>GGA</strong> 的交换 (Becke88)
+和关联 (LYP)。</li>
+<li><code>a_0</code>, <code>a_x</code>, <code>a_c</code>
+是三个被拟合的参数，用于确定每种成分的“配比”。</li>
+</ul></li>
+</ul>
+<h3 id="自洽混合泛函-self-consistent-hybrid">2. 自洽混合泛函
+(Self-consistent hybrid)</h3>
+<ul>
+<li><strong><span class="math inline">\(\Delta\)</span> Self-consistent
+hybrid:</strong>
+<ul>
+<li><strong>思想：</strong> 与其像 PBE0（固定 25%）或
+B3LYP（经验拟合）那样<em>指定</em>一个混合参数 <span
+class="math inline">\(\alpha\)</span>，我们是否能从<strong>第一性原理
+(ab initio)</strong> 出发，让系统<strong>自己决定</strong>应该混合多少
+HF 交换？</li>
+</ul></li>
+<li><strong>公式：</strong>
+<ul>
+<li><span class="math inline">\(E_{xc} = \alpha E_x^{HF} + (1-\alpha)
+E_x^{GGA} + E_c^{GGA}\)</span> (这与 PBE0 的形式相同)</li>
+</ul></li>
+<li><strong>关键创新：</strong>
+<ul>
+<li><strong><span class="math inline">\(\alpha =
+\frac{1}{\epsilon_\infty}\)</span></strong></li>
+<li><strong>解释：</strong> 混合比例 <span
+class="math inline">\(\alpha\)</span> 被设定为材料<strong>高频介电常数
+<span class="math inline">\(\epsilon_\infty\)</span>
+的倒数</strong>。</li>
+<li><strong>物理意义：</strong> <span
+class="math inline">\(\epsilon_\infty\)</span>
+描述了材料中电子<strong>屏蔽 (screening)</strong> 库仑相互作用的能力。
+<ul>
+<li>绝缘体/半导体：<span class="math inline">\(\epsilon_\infty\)</span>
+较小（例如 2-10），<span class="math inline">\(\alpha\)</span>
+较大（例如 10-50%），需要更多 HF 交换来打开带隙。</li>
+<li>金属：<span class="math inline">\(\epsilon_\infty \to
+\infty\)</span>，<span class="math inline">\(\alpha \to
+0\)</span>，不需要 HF 交换（退化为纯 GGA）。</li>
+</ul></li>
+<li>这是一个<strong>自洽</strong>过程：<span
+class="math inline">\(\alpha\)</span> 决定了电子结构，而电子结构（通过
+<code>GW</code> 等理论）又决定了 <span
+class="math inline">\(\epsilon_\infty\)</span>。</li>
+</ul></li>
+</ul>
+<h3 id="范围分离混合泛函-range-separated-hybrid">3. 范围分离混合泛函
+(Range-separated hybrid)</h3>
+<ul>
+<li><strong><span class="math inline">\(\Delta\)</span> Range-separated
+hybrid:</strong>
+<ul>
+<li><strong>思想：</strong> 电子-电子排斥 <span
+class="math inline">\(1/r\)</span>
+在短距离和长距离下表现不同。也许我们不需要“一刀切”的混合。</li>
+<li><strong>策略：</strong> 将 <span class="math inline">\(1/r\)</span>
+分割为<strong>短程 (short-range, SR)</strong> 和<strong>长程
+(long-range, LR)</strong>
+两部分，并对它们使用<strong>不同</strong>的泛函。</li>
+<li>旁边的涂鸦 <code>... ~ ...</code> 和
+<code>screening</code>（屏蔽）形象地说明了这种思想：在长程，相互作用被“屏蔽”了。</li>
+</ul></li>
+<li><strong>公式 (以 HSE06 为例):</strong>
+<ul>
+<li>白板上写了 <code>HSE06'</code>（HSE 泛函的 2006
+年版本），并给出了其参数：</li>
+<li><strong><span class="math inline">\(\alpha = 0, \beta =
+1/4\)</span></strong> (代入白板上那个复杂的通用公式)</li>
+</ul></li>
+<li><strong>HSE06 泛函的通俗解释：</strong>
+<ul>
+<li>它将 PBE (GGA) 泛函的<strong>交换部分 <span
+class="math inline">\(E_x^{PBE}\)</span></strong> 进行了范围分离：</li>
+<li><strong>在短程 (SR):</strong> <span class="math inline">\(E_x =
+\frac{1}{4} E_x^{HF,SR} + \frac{3}{4} E_x^{PBE,SR}\)</span>
+<ul>
+<li>(在短距离内，它是一个 PBE0 泛函，混合了 25% 的 HF 精确交换)</li>
+</ul></li>
+<li><strong>在长程 (LR):</strong> <span class="math inline">\(E_x =
+E_x^{PBE,LR}\)</span>
+<ul>
+<li>(在长距离处，它退化为 100% 的 PBE 纯 GGA 交换)</li>
+</ul></li>
+<li><strong>关联部分 <span class="math inline">\(E_c\)</span></strong>
+始终是 100% 的 PBE 关联。</li>
+</ul></li>
+<li><strong>为什么这样做？</strong>
+<ul>
+<li><strong>物理上：</strong> 修正了长程的自相互作用误差。</li>
+<li><strong>计算上：</strong> 在<strong>固体 (solid)</strong>
+计算中<strong>极其重要</strong>。HF
+交换的计算量非常大，尤其是在长程。HSE
+泛函通过在长程<strong>关闭</strong>HF
+交换（即“屏蔽”它），使得计算<strong>速度</strong>大幅提升，同时保留了混合泛函在短程（如化学键）的<strong>高精度</strong>。</li>
+</ul></li>
+</ul>
+<h3 id="总结">总结</h3>
+<ol type="1">
+<li><strong>1 (HK 定理):</strong> 奠定了<strong>理论基石</strong>——
+<span class="math inline">\(E = E[\rho]\)</span>。</li>
+<li><strong>2 (OF-DFT):</strong> 提出了<strong>理想</strong>的无轨道
+DFT，并指出了其 <span class="math inline">\(T[\rho]\)</span>
+的<strong>困难</strong>。</li>
+<li><strong>3 (自由电子气):</strong> <strong>推导</strong>了 <span
+class="math inline">\(T[\rho]\)</span> 的<strong>最简近似</strong> <span
+class="math inline">\(T \propto \int \rho^{5/3}\)</span>。</li>
+<li><strong>4 (OF-DFT 求解):</strong>
+展示了如何通过<strong>变分法</strong> <span class="math inline">\(\delta
+E / \delta \rho = \mu\)</span> 求解 <span
+class="math inline">\(\rho_0\)</span>。</li>
+<li><strong>5 (Kohn-Sham):</strong> 引入了<strong>实用方案
+(KS-DFT)</strong>，用“轨道” <span class="math inline">\(\phi_i\)</span>
+<strong>精确计算</strong>动能 <span
+class="math inline">\(T_s\)</span>，将未知项塞入 <span
+class="math inline">\(E_{xc}\)</span>。</li>
+<li><strong>6 (LDA/GGA):</strong> 展示了如何<strong>近似 <span
+class="math inline">\(E_{xc}\)</span></strong>（“雅各天梯”的第一、二层），即
+LDA（依赖 <span class="math inline">\(\rho\)</span>）和 GGA（依赖 <span
+class="math inline">\(\rho, |\nabla\rho|\)</span>）。</li>
+<li><strong>7 (Meta-GGA / Hybrid):</strong> 攀登天梯的更高层 (Meta-GGA,
+Hybrid-PBE0)，并指出了 LDA/GGA
+的<strong>根本缺陷</strong>（自相互作用误差 SIE）。</li>
+<li><strong>8 (B3LYP / HSE):</strong>
+展示了<strong>最先进的泛函</strong> (B3LYP, HSE06)
+是如何通过经验拟合或范围分离等技巧，在精度和计算效率之间达到最佳平衡的。</li>
+</ol>
+<p>这完整地勾勒出了 DFT 从 1960
+年代的抽象理论到当今最前沿的计算工具的整个发展脉络。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://tianyaoblogs.github.io/2025/11/07/5120c9/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -159,7 +966,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2025/11/07/5120c9/" class="post-title-link" itemprop="url">PHYS 5120 - Computational Energy Materials and Electronic Structure Simulations-W9-2</a>
+            <a href="/2025/11/07/5120c9/" class="post-title-link" itemprop="url">PHYS 5120 - Computational Energy Materials and Electronic Structure Simulations-W9-1</a>
         </h2>
 
         <div class="post-meta">
@@ -170,7 +977,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2025-11-07 21:00:00 / 修改时间：16:56:36" itemprop="dateCreated datePublished" datetime="2025-11-07T21:00:00+08:00">2025-11-07</time>
+              <time title="创建时间：2025-11-07 21:00:00 / 修改时间：17:17:51" itemprop="dateCreated datePublished" datetime="2025-11-07T21:00:00+08:00">2025-11-07</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -277,7 +1084,7 @@ v-representability（v-可表Vext表征性）。</em></li>
 </ul></li>
 </ul></li>
 </ul>
-<h3 id="칠-能量泛函与计算">칠 能量泛函与计算</h3>
+<h3 id="能量泛函与计算">能量泛函与计算</h3>
 <ul>
 <li><strong>约束搜索 (Constrained search):</strong>
 <ul>
@@ -13365,89 +14172,6 @@ class="math inline">\(E_k(\vec{R})\)</span>
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://tianyaoblogs.github.io/2025/09/18/img_assert/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="John Doe">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="TianyaoBlogs">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2025/09/18/img_assert/" class="post-title-link" itemprop="url">BLOGS - IMG Assert</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2025-09-18 10:00:00" itemprop="dateCreated datePublished" datetime="2025-09-18T10:00:00+08:00">2025-09-18</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2025-09-19 19:24:51" itemprop="dateModified" datetime="2025-09-19T19:24:51+08:00">2025-09-19</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%8A%80%E6%9C%AF/" itemprop="url" rel="index"><span itemprop="name">技术</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="问题主要为了图像不显示问题">【问题】主要为了图像不显示问题</h2>
-<h3 id="step1根目录中的配置文件">Step1:根目录中的配置文件</h3>
-<h3 id="step2将-markdown-行替换为html-代码">Step2:将 Markdown
-行替换为HTML 代码</h3>
-<h3 id="step3设置下方添加root">Step3:设置下方添加ROOT</h3>
-<h3
-id="step4不需要此插件终端中运行以下命令来卸载插件">Step4:不需要此插件终端中运行以下命令来卸载插件：</h3>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="comment"># URL</span></span><br><span class="line"><span class="comment">## Set your site url here. For example, if you use GitHub Page, set url as &#x27;https://username.github.io/project&#x27;</span></span><br><span class="line">$ url: https://TianyaoBlogs.github.io/</span><br><span class="line"></span><br><span class="line">$ root: /</span><br><span class="line"></span><br><span class="line">$ permalink: :year/:month/:day/:title/</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ &lt;img src=<span class="string">&quot;/imgs/5054C3/General_linear_regression_model.png&quot;</span> alt=<span class="string">&quot;A diagram of the general linear regression model&quot;</span>&gt;</span><br></pre></td></tr></table></figure>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm uninstall hexo-asset-image</span><br></pre></td></tr></table></figure>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -13517,7 +14241,7 @@ id="step4不需要此插件终端中运行以下命令来卸载插件">Step4:不
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">18</span>
+          <span class="site-state-item-count">19</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
