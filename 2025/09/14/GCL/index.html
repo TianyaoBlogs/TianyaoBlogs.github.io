@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"tianyaoblogs.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="这是一篇加密文章">
+<meta property="og:type" content="article">
+<meta property="og:title" content="PAPER READING - Contrastive Learning">
+<meta property="og:url" content="https://tianyaoblogs.github.io/2025/09/14/GCL/index.html">
+<meta property="og:site_name" content="TianyaoBlogs">
+<meta property="og:description" content="这是一篇加密文章">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2025-09-14T13:00:00.000Z">
+<meta property="article:modified_time" content="2025-11-08T06:28:24.791Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="Unsupervised Learning">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://tianyaoblogs.github.io/2025/09/14/GCL/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>PAPER READING - Contrastive Learning | TianyaoBlogs</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">TianyaoBlogs</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://tianyaoblogs.github.io/2025/09/14/GCL/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="TianyaoBlogs">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          PAPER READING - Contrastive Learning
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2025-09-14 21:00:00" itemprop="dateCreated datePublished" datetime="2025-09-14T21:00:00+08:00">2025-09-14</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2025-11-08 14:28:24" itemprop="dateModified" datetime="2025-11-08T14:28:24+08:00">2025-11-08</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Deep-Learning/" itemprop="url" rel="index"><span itemprop="name">Deep Learning</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <div class="hbe hbe-container" id="hexo-blog-encrypt" data-wpm="Oh, this is an invalid password. Check and try again, please." data-whm="OOPS, these decrypted content may changed, but you can still have a look.">
+  <script id="hbeData" type="hbeData" data-hmacdigest="713693e5b46fe041362a64a95a4e74cbfcf56269ab8b251ab1abaed28364d3c9">59a49609dd043cd4328b9dde94a53936fe7d03e9d5763d6dfa8394ac9bde23f76a8e1729acc1c5de640a05b1acc2b470a01fdc55ebe0169e78a5fdc94b5ad23e43e14147444d941bcc293d726a4d2610d55cbbdd936e31b862bb861eca3fe48460194e4181ff8b3a33f9ac138052cfdcfd0356c742d78687cc81eb4ee16af38c733d76fa8fc36baba8a34f406c14ab6eeab2801a90f2e02ce2e7be1c03f8b58f9447be3e0c6ba456cd2888b8ab294e6b4809d9bcbdd135a23455c7be8d07dde6d11e04c17f89e608b66489aec887d6805855c90f560fda252393fb0045f61df45ce99466a1039bf8ec55c2fa799205305fbb8160b30581e6e6015ae1f1533b2e0555ea9ded4a72963f951fbdd137fa4462005a7b34af60405001a49ce661be24f5c67df4b6319dd3931acd0bfb9a5b9f46075c3b22fc49aa311a700b1df599dfd75f3cfa15d6f540c64f35f0a9bef2896084e163a061145c58465d79d73d74b6fdc898aa8a8e243b9bfd0d50549c9bcd4e762e6e2040caa5f8223e0a0edd932ad1c9144810a9af9d73f358e7836d6a4d7cdcfd1b0f3c5df7b1f5f0f5b371add949582789131a59d9f93388857bb20dac28f9456586a63869f9248bd4b5581a045bbde9b0d74accc3dc49aacc89ea72affb0366397b67d7ef09218656c5125da9001b7b2af7d09de160f01a9933cb441832983074292153188cd7d7827e74d5e161ff9142957d6ed68d372922375e8b75185fa725bfe634bb707e18af97ea2e1b3b253ec5748a455a5aeecbd7621a26cc91bf9f64884f09c558e44c1630f52592e55bc88c5cd8f721e6df1fe5d180263b4ab69442b9f0a890cf8e65382aeba5d41d7de854e83835576bcd4912674a7c2ef168b5eef50d78c236d2552a3c033f2811d30460dacf79f1662011e8317e08086013e2a7110b2cf1afcc7cedd4deb2c36416399f17f3b8742a8760933608e0c1e844f23fd82947e671083d653fe05aa816095fca70b70ee53f7e2292ca8f8328384929e713775500df6560b3a33e0b8817b23a43714cba569a0ab466c8e8dc5d09ed76be41818b03f4ba13fa6fecadf35d45e630e72399c758d89cb1ac34358fc2a36b4e9312f279ff47d598bad86785d44531711bae14db4ccbd85f0c087d775e3492b310063b4b1466da9a906932ea5df0bf7a35ce15aae8ef4048ef4eabab0600bd1437fbeda9a57bc77fb15ae80124b38fd1185f6fe45ee35b1d655a623ecc3e62ecc829fea54f434785154fc8009f4c65ae8a4085d2c10ff28d7c4ea7d5f0aea3221d891b79a4c4ae3d24e13fbc23ce52f76ad7a490ef85faef268b677b0b4f7749ffcecb6b2e8d71ab1164debd2ba135600589eef47bf919fccfcba959548e474a972cdb508185faa4d4561644ddfa9ac5de9a9a6b3ab00488b229cd61a714812158d7addc0f07858c28a667256555e24e0618843de8fb320fda92067192f12f47aca14f220909bb9c836987bfb8b56a9d4ac67d6226e67e334294a4dc329a409e77177d0af37cb487cc3256c2e4eec8dd9d1073b843b1c9ce79bc7b8c23ebf8ba9fbead4bde654cc6544a66720bf66f0592cab9f8ad215a5435e23ad80e798182c169874d4bedbab7e4ba8ae5637d77b315b234f878542201a74edc671d0cde6db05294da0d52dd4f399068b1f6ababa2072a7d27d32015ee8681a42fedc8a46d0cd6c286e32e22794fe053e8850c1a4e8c69bd1bf3165ffe78ab1ebc532db0b9687ede62b7a85a2df6c37a218e2817511edd6de33ed5277c60a145cf</script>
+  <div class="hbe hbe-content">
+    <div class="hbe hbe-input hbe-input-default">
+      <input class="hbe hbe-input-field hbe-input-field-default" type="password" id="hbePass">
+      <label class="hbe hbe-input-label hbe-input-label-default" for="hbePass">
+        <span class="hbe hbe-input-label-content hbe-input-label-content-default">请输入密码查看内容</span>
+      </label>
+    </div>
+  </div>
+</div>
+<script data-pjax src="/lib/hbe.js"></script><link href="/css/hbe.style.css" rel="stylesheet" type="text/css">
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Unsupervised-Learning/" rel="tag"># Unsupervised Learning</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2025/09/14/CaltechData/" rel="prev" title="Criegee, H10 chain, small radicals, water bond dissociation, and QMSpin energy datasets with MOB features for MOB-ML(KA-GPR)">
+      <i class="fa fa-chevron-left"></i> Criegee, H10 chain, small radicals, water bond dissociation, and QMSpin energy datasets with MOB features for MOB-ML(KA-GPR)
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2025/09/14/contrastive_learning/" rel="next" title="PAPER READING - Contrastive Learning">
+      PAPER READING - Contrastive Learning <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">John Doe</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">20</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+          load: ['[tex]/mhchem'],
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+          packages: {'[+]': ['mhchem']},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+</body>
+</html>
