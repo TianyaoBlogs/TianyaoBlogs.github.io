@@ -170,7 +170,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2025-11-10 21:00:00 / 修改时间：00:41:19" itemprop="dateCreated datePublished" datetime="2025-11-10T21:00:00+08:00">2025-11-10</time>
+              <time title="创建时间：2025-11-10 21:00:00 / 修改时间：00:48:33" itemprop="dateCreated datePublished" datetime="2025-11-10T21:00:00+08:00">2025-11-10</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -4186,6 +4186,1216 @@ class="math inline">\(10^{90}\)</span>
 维度），<strong>在数学上等价地</strong>转化为了一个（原则上精确的）求解
 <span class="math inline">\(N\)</span> 个电子在有效势场中运动的 3
 维问题。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://tianyaoblogs.github.io/2025/10/24/5120c7-2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="TianyaoBlogs">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2025/10/24/5120c7-2/" class="post-title-link" itemprop="url">PHYS 5120 - Computational Energy Materials and Electronic Structure Simulations-W7-2</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2025-10-24 22:00:00" itemprop="dateCreated datePublished" datetime="2025-10-24T22:00:00+08:00">2025-10-24</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2025-11-10 01:59:59" itemprop="dateModified" datetime="2025-11-10T01:59:59+08:00">2025-11-10</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/PHYS-5120/" itemprop="url" rel="index"><span itemprop="name">PHYS-5120</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>PHYS 5120 - 计算能源材料和电子结构模拟 Lecture</p>
+<p><a target="_blank" rel="noopener" href="https://chem.hkust.edu.hk/people/ding-pan-panding">Lecturer:
+Prof.PAN DING</a></p>
+<p>好的，让我们来详细解析白板上的每一个公式和概念。</p>
+<h2 id="i">I:</h2>
+<h3 id="基本概念与定义">1. 基本概念与定义</h3>
+<h4 id="hf-theory-hartree-fock-理论">“HF theory” (Hartree-Fock
+理论)</h4>
+<p>这是一种在量子化学中用于近似求解多电子体系（如分子）薛定谔方程的<strong>从头计算法
+(ab initio method)</strong>。</p>
+<ul>
+<li><strong>核心思想</strong>:
+它将复杂的多电子问题简化为一系列独立的单电子问题。它假设每个电子都在一个由原子核和其他所有电子共同产生的<strong>平均场</strong>中运动。</li>
+<li><strong>波函数</strong>: 它使用一个<strong>斯莱特行列式 (Slater
+determinant)</strong> 来描述 N
+电子体系的波函数，这自动满足了泡利不相容原理（即波函数在交换任意两个电子时反号）。</li>
+</ul>
+<h4 id="e_hf-neq-sum_i-epsilon_i"><span class="math inline">\(E_{HF}
+\neq \sum_{i} \epsilon_i\)</span></h4>
+<ul>
+<li><strong><span class="math inline">\(E_{HF}\)</span></strong>:
+<strong>HF 总能量</strong>。这是整个 N
+电子体系的<strong>总能量</strong>，包含了所有电子的动能、电子与原子核的吸引能、以及电子与电子之间的排斥能。</li>
+<li><strong><span class="math inline">\(\epsilon_i\)</span></strong>:
+<strong>轨道能量 (Orbital Energy)</strong>。这是第 <span
+class="math inline">\(i\)</span> 个电子在所有其他 <span
+class="math inline">\(N-1\)</span> 个电子的平均场中所具有的能量。</li>
+<li><strong><span class="math inline">\(\sum_{i}
+\epsilon_i\)</span></strong>:
+所有<strong>被占据</strong>轨道能量的总和。</li>
+<li><strong>为什么不相等?</strong>:
+<ul>
+<li>在计算总能量 <span class="math inline">\(E_{HF}\)</span>
+时，电子-电子排斥能 <span class="math inline">\(V_{ee}\)</span>
+只计算一次。</li>
+<li>在计算每个轨道能量 <span class="math inline">\(\epsilon_i\)</span>
+时，它包含了第 <span class="math inline">\(i\)</span>
+个电子与<strong>所有</strong> <span class="math inline">\(j\)</span>
+电子（<span class="math inline">\(j \neq i\)</span>）的排斥。</li>
+<li>当你把所有的 <span class="math inline">\(\epsilon_i\)</span> 相加时
+(<span class="math inline">\(\sum_i \epsilon_i\)</span>)，每一对电子
+(<span class="math inline">\(i\)</span> 和 <span
+class="math inline">\(j\)</span>)
+之间的排斥能被计算了<strong>两次</strong>（一次在 <span
+class="math inline">\(\epsilon_i\)</span> 中，一次在 <span
+class="math inline">\(\epsilon_j\)</span> 中）。</li>
+<li><strong>正确的公式是</strong>: <span class="math inline">\(E_{HF} =
+\sum_{i} \epsilon_i - V_{ee}\)</span>，或者更准确地写为： <span
+class="math display">\[E_{HF} = \sum_{i} \epsilon_i - \frac{1}{2}
+\sum_{i,j} (J_{ij} - K_{ij})\]</span> (这里的 <span
+class="math inline">\(J_{ij}\)</span> 和 <span
+class="math inline">\(K_{ij}\)</span>
+是下面会讲到的库仑积分和交换积分)。这个 <span
+class="math inline">\(\frac{1}{2}\)</span> 就是为了修正重复计算。</li>
+</ul></li>
+</ul>
+<h4 id="band-gap-带隙">“band gap” (带隙)</h4>
+<p>这个图显示了两个关键的分子轨道： * <strong>HOMO</strong>:
+<strong>Highest Occupied Molecular Orbital</strong>
+(最高占据分子轨道)。这是在体系基态下，能量最高的、包含电子的轨道。 *
+<strong>LUMO</strong>: <strong>Lowest Unoccupied Molecular
+Orbital</strong>
+(最低未占分子轨道)。这是在体系基态下，能量最低的、没有电子的轨道。 *
+<strong>HOMO-LUMO 隙</strong>: <span class="math inline">\(E_{LUMO} -
+E_{HOMO}\)</span>。在分子中，这通常被粗略地称为“带隙”，它大致对应于将电子从基态激发到第一激发态所需的最低能量（光学带隙）。</p>
+<h4 id="fundamental-band-gap-i---a">“fundamental band gap = I - A”</h4>
+<ul>
+<li><strong>解释</strong>:
+这是<strong>基本带隙</strong>（或称准粒子带隙）的<strong>严格定义</strong>。它和
+HOMO-LUMO 隙是<strong>不同</strong>的概念。</li>
+<li>它代表了在不考虑电子-空穴相互作用（激子效应）的情况下，产生一个分离的电子和一个空穴所需的能量。</li>
+<li><span class="math inline">\(I - A = [E(N-1) - E(N)] - [E(N) -
+E(N+1)] = E(N-1) + E(N+1) - 2E(N)\)</span>。</li>
+</ul>
+<h4 id="ionization-energy-i-en-1---en-0">“ionization energy: I = E(N-1)
+- E(N) &gt; 0”</h4>
+<ul>
+<li><strong>电离能 (I)</strong>:
+<ul>
+<li><strong><span class="math inline">\(E(N)\)</span></strong>: 具有 N
+个电子的中性体系的基态总能量。</li>
+<li><strong><span class="math inline">\(E(N-1)\)</span></strong>:
+移走一个电子后，具有 (N-1) 个电子的阳离子的基态总能量。</li>
+<li><strong>定义</strong>:
+从一个体系中移走一个电子所需的<strong>最小能量</strong>。</li>
+<li>因为电子被原子核束缚，移走它需要外界提供能量，所以 <span
+class="math inline">\(I\)</span> 总是大于 0。</li>
+</ul></li>
+</ul>
+<h4 id="electron-affinity-a-en---en1-0">“electron affinity: A = E(N) -
+E(N+1) &gt; 0”</h4>
+<ul>
+<li><strong>电子亲和能 (A)</strong>:
+<ul>
+<li><strong><span class="math inline">\(E(N+1)\)</span></strong>:
+增加一个电子后，具有 (N+1) 个电子的阴离子的基态总能量。</li>
+<li><strong>定义</strong>:
+一个中性体系获得一个电子并形成稳定阴离子时所<strong>释放</strong>的能量。</li>
+<li><strong>注意</strong>: 如果 <span class="math inline">\(E(N+1) &lt;
+E(N)\)</span>（即阴离子更稳定），则 <span class="math inline">\(A &gt;
+0\)</span>，体系释放能量。如果阴离子不稳定（<span
+class="math inline">\(E(N+1) &gt; E(N)\)</span>），则 <span
+class="math inline">\(A &lt; 0\)</span>。白板上的 <span
+class="math inline">\(&gt; 0\)</span> 假设了形成稳定阴离子的情况。</li>
+</ul></li>
+</ul>
+<h3 id="hartree-fock-总能量公式">2. Hartree-Fock 总能量公式</h3>
+<p><strong><span class="math inline">\(E_{HF}\)</span>（HF
+总能量）的完整表达式</strong>。它由三部分组成：</p>
+<h4 id="第一行单电子能量-one-electron-energy">第一行：单电子能量
+(One-Electron Energy)</h4>
+<p><span class="math display">\[\sum_{i\sigma} \int d\vec{r}
+\phi_i^*(\vec{r}) \left( -\frac{\hbar^2}{2m} \nabla^2 + V_{ext} \right)
+\phi_i(\vec{r})\]</span></p>
+<ul>
+<li><strong><span
+class="math inline">\(\sum_{i\sigma}\)</span></strong>:
+对所有被占据的<strong>自旋轨道 (spin-orbital)</strong> <span
+class="math inline">\(i\)</span> (自旋为 <span
+class="math inline">\(\sigma\)</span>) 求和。</li>
+<li><strong><span class="math inline">\(\int d\vec{r}\)</span></strong>:
+对空间坐标 <span class="math inline">\(\vec{r}\)</span> 积分。</li>
+<li><strong><span
+class="math inline">\(\phi_i(\vec{r})\)</span></strong>: 第 <span
+class="math inline">\(i\)</span> 个自旋轨道的波函数。<span
+class="math inline">\(\phi_i^*\)</span> 是它的复共轭。</li>
+<li><strong><span class="math inline">\(-\frac{\hbar^2}{2m}
+\nabla^2\)</span></strong>: <strong>动能算符</strong>。<span
+class="math inline">\(\hbar\)</span> 是约化普朗克常数，<span
+class="math inline">\(m\)</span> 是电子质量，<span
+class="math inline">\(\nabla^2\)</span> 是拉普拉斯算符。</li>
+<li><strong><span class="math inline">\(V_{ext}\)</span></strong>:
+<strong>外势场</strong>。这是来自所有原子核对电子的<strong>库仑吸引势</strong>。</li>
+<li><strong>含义</strong>:
+这一整行代表了所有电子的<strong>动能</strong>与它们受到原子核<strong>吸引势能</strong>的总和。</li>
+</ul>
+<h4 id="第二行库仑项-coulomb-term-j">第二行：库仑项 (Coulomb Term,
+J)</h4>
+<p><span class="math display">\[+ \frac{e^2}{2} \sum_{i\sigma,
+j\sigma&#39;} \iint d\vec{r} d\vec{r}&#39; \frac{|\phi_i(\vec{r})|^2
+|\phi_j(\vec{r}&#39;)|^2}{|\vec{r} - \vec{r}&#39;|}\]</span></p>
+<ul>
+<li><strong><span class="math inline">\(\frac{e^2}{2} \sum_{i\sigma,
+j\sigma&#39;}\)</span></strong>: 对<strong>所有</strong>电子对 (<span
+class="math inline">\(i\)</span> 和 <span
+class="math inline">\(j\)</span>，无论自旋 <span
+class="math inline">\(\sigma\)</span> 和 <span
+class="math inline">\(\sigma&#39;\)</span> 是否相同) 求和。<span
+class="math inline">\(e\)</span> 是电子电荷。</li>
+<li><strong><span class="math inline">\(\frac{1}{2}\)</span></strong>:
+修正因子，因为求和时 (<span class="math inline">\(i,j\)</span>) 和
+(<span class="math inline">\(j,i\)</span>)
+被计算了两次，而它们是同一种相互作用。</li>
+<li><strong><span
+class="math inline">\(|\phi_i(\vec{r})|^2\)</span></strong>: 电子 <span
+class="math inline">\(i\)</span> 在 <span
+class="math inline">\(\vec{r}\)</span>
+处出现的<strong>概率密度</strong>（即电荷密度）。</li>
+<li><strong><span class="math inline">\(\frac{...}{|\vec{r} -
+\vec{r}&#39;|}\)</span></strong>: 两个点电荷之间的库仑排斥。</li>
+<li><strong>含义</strong>: 这是电子 <span
+class="math inline">\(i\)</span> 的电荷云和电子 <span
+class="math inline">\(j\)</span>
+的电荷云之间的<strong>经典静电排斥能</strong>。这是一个纯粹的经典概念。</li>
+</ul>
+<h4 id="第三行交换项-exchange-term-k">第三行：交换项 (Exchange Term,
+K)</h4>
+<p><span class="math display">\[- \frac{e^2}{2} \sum_{i\sigma, j\sigma}
+\iint d\vec{r} d\vec{r}&#39; \frac{\phi_i^*(\vec{r}) \phi_j(\vec{r})
+\phi_j^*(\vec{r}&#39;) \phi_i(\vec{r}&#39;)}{|\vec{r} -
+\vec{r}&#39;|}\]</span> <em>（注意：白板上的公式在 <span
+class="math inline">\(\phi\)</span>
+的变量上似乎有些笔误，这里写的是标准形式）</em> * <strong><span
+class="math inline">\(\sum_{i\sigma, j\sigma}\)</span></strong>:
+<strong>关键区别！</strong> 这里的求和<strong>只对自旋相同</strong>
+(<span class="math inline">\(\sigma\)</span>) 的电子对进行。 *
+<strong>含义</strong>:
+这是一个纯粹的<strong>量子力学效应</strong>，没有经典对应。它源于波函数必须满足泡利不相容原理（反对称性）。
+*
+它修正了库仑项。由于泡利不相容，自旋相同的电子有“避开”彼此的倾向（称为<strong>费米空穴
+(Fermi
+hole)</strong>），这导致它们的实际排斥能<strong>小于</strong>经典的库仑排斥能。交换项
+<span class="math inline">\(K\)</span>
+是一个正值，因此在总能量中它是一个<strong>负的贡献</strong>（使能量更低，体系更稳定）。</p>
+<h3 id="核心对比delta-scf-与-koopmans-定理">3. 核心对比：<span
+class="math inline">\(\Delta SCF\)</span> 与 Koopmans 定理</h3>
+<p>核心是比较计算 <span class="math inline">\(I\)</span> 和 <span
+class="math inline">\(A\)</span> 的两种方法。</p>
+<h4 id="delta-scf-delta-scf">“<span class="math inline">\(\Delta
+SCF\)</span>” (Delta SCF)</h4>
+<ul>
+<li><strong>含义</strong>: “<span class="math inline">\(\Delta\)</span>”
+(Delta) 指的是<strong>差值</strong>，“SCF” (Self-Consistent Field,
+自洽场) 是求解 HF 方程的计算过程。</li>
+<li><strong>方法</strong>:
+<ol type="1">
+<li>对 N 电子体系进行一次<strong>完整的 SCF 计算</strong>，得到总能量
+<span class="math inline">\(E(N)\)</span>。</li>
+<li>对 (N-1) 电子体系（阳离子）进行<strong>另一次完整的 SCF
+计算</strong>，得到总能量 <span
+class="math inline">\(E(N-1)\)</span>。</li>
+<li><span class="math inline">\(I = E(N-1) - E(N)\)</span>。</li>
+</ol></li>
+<li><strong>特点</strong>:
+<ul>
+<li><strong>准确</strong>: 这是在 HF
+理论框架内计算电离能的<strong>最准确</strong>方法。</li>
+<li><strong>计算量大</strong>: 需要进行两次（或多次）独立的、昂贵的 SCF
+计算。</li>
+</ul></li>
+</ul>
+<h4 id="koopmans-theorem-koopmans-定理">“Koopmans’ theorem” (Koopmans
+定理)</h4>
+<ul>
+<li><strong>含义</strong>:
+这是一个<strong>近似</strong>方法，它将电离能/电子亲和能与<strong>单次</strong>
+HF 计算得到的<strong>轨道能量</strong>直接关联起来。</li>
+<li><strong>定理内容</strong>:
+<ul>
+<li><strong>电离能</strong>: <span class="math inline">\(I \approx
+-\epsilon_{HOMO}\)</span> (电离能约等于 HOMO 轨道能量的负值)</li>
+<li><strong>电子亲和能</strong>: <span class="math inline">\(A \approx
+-\epsilon_{LUMO}\)</span> (电子亲和能约等于 LUMO 轨道能量的负值)</li>
+</ul></li>
+<li><strong>特点</strong>:
+<ul>
+<li><strong>近似</strong>: 结果不如 <span class="math inline">\(\Delta
+SCF\)</span> 准确。</li>
+<li><strong>计算量小</strong>: 只需要对 N
+电子体系进行<strong>一次</strong> SCF
+计算，就能“免费”得到所有轨道能量，从而估算出 <span
+class="math inline">\(I\)</span> 和 <span
+class="math inline">\(A\)</span>。</li>
+</ul></li>
+</ul>
+<h4 id="frozen-orbital-approximation-冻结轨道近似">“frozen orbital
+approximation” (冻结轨道近似)</h4>
+<ul>
+<li><strong>含义</strong>: 这是 Koopmans
+定理背后的<strong>核心假设</strong>。</li>
+<li><strong>内容</strong>: 它假设当你从 N 电子体系中移出一个电子（例如从
+HOMO 移出）后，剩下的 (N-1) 个电子的轨道（<span
+class="math inline">\(\phi\)</span>）<strong>完全不发生任何改变</strong>（即被“冻结”了）。</li>
+<li><strong>推导</strong>: 白板上的 <span class="math inline">\(-I =
+E(N) - E(N-1)\)</span> 以及指向 <span
+class="math inline">\(E_{HF}\)</span>
+公式的箭头，就是在演示这个推导。如果你假设 <span
+class="math inline">\(E(N-1)\)</span> 只是 <span
+class="math inline">\(E(N)\)</span> 的公式中去掉了所有与 HOMO (设为
+<span class="math inline">\(k\)</span> 轨道) 相关的项，那么 <span
+class="math inline">\(E(N) - E(N-1)\)</span>
+经过数学推导后<strong>恰好等于</strong> <span
+class="math inline">\(\epsilon_k\)</span>（<span
+class="math inline">\(k\)</span> 轨道的轨道能量）。因此 <span
+class="math inline">\(I = -\epsilon_k\)</span>。</li>
+</ul>
+<h4 id="orbital-relaxation-轨道弛豫">“orbital relaxation”
+(轨道弛豫)</h4>
+<ul>
+<li><strong>含义</strong>: 这是 Koopmans
+定理<strong>出错的原因</strong>，也是“冻结轨道近似”所<strong>忽略</strong>的物理现实。</li>
+<li><strong>内容</strong>:
+<ul>
+<li><strong>真实情况是</strong>：当你移出一个电子后，电子-电子排斥<strong>减少</strong>了。</li>
+<li>剩下的 (N-1)
+个电子会“感觉”到更强的来自原子核的净吸引力，导致它们的轨道会<strong>收缩</strong>并<strong>重新排布</strong>（即“弛豫”），以达到一个新的、能量更低的稳定状态。</li>
+<li>因此，通过 <span class="math inline">\(\Delta SCF\)</span>
+计算得到的<strong>真实</strong> <span
+class="math inline">\(E(N-1)\)</span>（弛豫后的能量）<strong>总是低于</strong>
+Koopmans 定理所假设的 <span
+class="math inline">\(E(N-1)_{frozen}\)</span>（冻结轨道的能量）。</li>
+</ul></li>
+<li><strong>结论</strong>:
+<ul>
+<li><span class="math inline">\(I_{\Delta SCF} = E(N-1)_{relaxed} -
+E(N)\)</span></li>
+<li><span class="math inline">\(I_{Koopmans} = E(N-1)_{frozen} -
+E(N)\)</span></li>
+<li>因为 <span class="math inline">\(E(N-1)_{relaxed} &lt;
+E(N-1)_{frozen}\)</span>，所以 <strong><span
+class="math inline">\(I_{\Delta SCF} &lt;
+I_{Koopmans}\)</span></strong>。</li>
+<li>换句话说，<strong>Koopmans
+定理总是高估（overestimate）电离能</strong>。</li>
+</ul></li>
+</ul>
+<h3 id="总结">总结</h3>
+<ul>
+<li><strong><span class="math inline">\(\Delta SCF\)</span></strong>:
+准确（在 HF
+理论内）、计算量大。它通过计算两个不同体系的<strong>总能量之差</strong>来求
+<span
+class="math inline">\(I\)</span>，并<strong>包含了轨道弛豫</strong>效应。</li>
+<li><strong>Koopmans 定理</strong>:
+近似、计算量小。它通过一次计算的<strong>轨道能量</strong>来估算 <span
+class="math inline">\(I\)</span>，它基于<strong>冻结轨道近似</strong>，<strong>忽略了轨道弛豫</strong>。</li>
+</ul>
+<p><strong>Koopmans 定理的数学推导</strong>，并将其与<strong>带隙 (band
+gap)</strong> 的概念联系起来。</p>
+<h2 id="ii">II:</h2>
+<h3 id="koopmans-定理的数学推导电离能-i">1. Koopmans
+定理的数学推导（电离能 I）</h3>
+<p>在数学上证明为什么 <span class="math inline">\(I \approx
+-\epsilon_{HOMO}\)</span>。</p>
+<ul>
+<li><strong>起点</strong>: <span class="math inline">\(-I = E(N) -
+E(N-1)\)</span>
+<ul>
+<li>这是电离能 (I)
+定义的变形。我们现在要计算的是，在<strong>冻结轨道近似</strong>下，N
+电子体系的总能量 <span class="math inline">\(E(N)\)</span> 与 (N-1)
+电子体系的总能量 <span class="math inline">\(E(N-1)_{frozen}\)</span>
+之差。</li>
+<li>我们假设被移走的电子来自 HOMO 轨道，我们称之为轨道 <span
+class="math inline">\(k\)</span>（或白板上的 <span
+class="math inline">\(N\)</span>）。</li>
+</ul></li>
+<li><strong>中间的大型公式</strong>:
+<ul>
+<li><span class="math inline">\(E(N) - E(N-1)_{frozen}\)</span>
+的结果就是白板上写的这些项。当你从总能量 <span
+class="math inline">\(E_{HF}\)</span>（在第一张图中有）中减去一个“冻结”的
+(N-1)
+体系能量时，你剩下的<strong>恰好</strong>是与被移走的那个电子（来自轨道
+<span class="math inline">\(k\)</span>）相关的所有能量项。</li>
+<li>这些项是：
+<ol type="1">
+<li><strong>单电子能量</strong>: <span class="math inline">\(\langle
+\phi_k | \hat{h} | \phi_k \rangle\)</span> (白板上用 <span
+class="math inline">\(\hat{f}(\vec{r})\)</span> 等符号表示)。这是 <span
+class="math inline">\(k\)</span>
+电子自身的动能和它受到的所有原子核的吸引能。</li>
+<li><strong>库仑项 (J)</strong>: <span class="math inline">\(+ e^2
+\sum_{j} \iint ...\)</span>。这是 <span class="math inline">\(k\)</span>
+电子与<strong>所有</strong>其他 <span class="math inline">\(j\)</span>
+电子之间的经典库仑排斥能。</li>
+<li><strong>交换项 (K)</strong>: <span class="math inline">\(- e^2
+\sum_{j} \iint ...\)</span>。这是 <span class="math inline">\(k\)</span>
+电子与所有<strong>同自旋</strong>的 <span
+class="math inline">\(j\)</span> 电子之间的量子交换能。</li>
+</ol></li>
+</ul></li>
+<li><strong>关键等式</strong>: <span class="math inline">\(\hat{f}_i
+\phi_i = \epsilon_i \phi_i\)</span>
+<ul>
+<li>这是 <strong>Hartree-Fock 方程</strong>。它定义了<strong>轨道能量
+<span class="math inline">\(\epsilon_i\)</span></strong>。</li>
+<li><span class="math inline">\(\hat{f}_i\)</span> 是 <strong>Fock
+算符</strong>，它本身就包含了上述的三部分能量：单电子能量算符 (<span
+class="math inline">\(\hat{h}\)</span>)、所有其他电子的库仑算符 (<span
+class="math inline">\(\hat{J}\)</span>) 和交换算符 (<span
+class="math inline">\(\hat{K}\)</span>)。</li>
+<li>因此，上面那一大堆积分（<span class="math inline">\(k\)</span>
+电子的单电子能量 + 它与所有其他电子的 J 和 K
+相互作用）<strong>根据定义，就等于 <span
+class="math inline">\(\epsilon_k\)</span></strong>！</li>
+</ul></li>
+<li><strong>推导结论</strong>: <span class="math inline">\(= \epsilon_k
+= \epsilon_{HOMO}\)</span>
+<ul>
+<li>因为 <span class="math inline">\(E(N) - E(N-1)_{frozen} =
+\epsilon_k\)</span>（<span class="math inline">\(k\)</span> 是 HOMO
+轨道）。</li>
+<li>所以 <span class="math inline">\(-I =
+\epsilon_{HOMO}\)</span>。</li>
+<li><strong>最终得到: <span class="math inline">\(I =
+-\epsilon_{HOMO}\)</span></strong></li>
+<li><strong>总结</strong>: Koopmans
+定理的推导，其核心就是<strong>冻结轨道近似</strong>。这个近似使得 <span
+class="math inline">\(E(N)\)</span> 和 <span
+class="math inline">\(E(N-1)\)</span>
+之间的能量差，<strong>恰好</strong>等于被移走的那个电子的<strong>轨道能量</strong>。</li>
+</ul></li>
+</ul>
+<h3 id="koopmans-定理电子亲和能-a">2. Koopmans 定理（电子亲和能 A）</h3>
+<ul>
+<li><strong><span class="math inline">\(-A = E(N+1) -
+E(N)\)</span></strong>:
+<ul>
+<li>这是电子亲和能 <span class="math inline">\(A = E(N) -
+E(N+1)\)</span> 的变形。</li>
+<li>我们现在考虑在<strong>冻结轨道近似</strong>下，向 N 电子体系的 LUMO
+轨道<strong>加入</strong>一个电子。</li>
+</ul></li>
+<li><strong><span class="math inline">\(=
+\epsilon_{LUMO}\)</span></strong>:
+<ul>
+<li><strong>逻辑</strong>: 同样使用冻结轨道近似，我们假设 N
+电子体系中所有原来的轨道在加入新电子后<strong>不发生改变</strong>（不弛豫）。</li>
+<li>那么，(N+1) 电子体系的总能量 <span
+class="math inline">\(E(N+1)_{frozen}\)</span> 与 N 电子体系的总能量
+<span class="math inline">\(E(N)\)</span>
+之差，就<strong>恰好</strong>等于这个新电子被加入的那个轨道（即
+LUMO）的<strong>轨道能量</strong>。</li>
+<li>因此，<span class="math inline">\(-A =
+\epsilon_{LUMO}\)</span>。</li>
+<li><strong>最终得到: <span class="math inline">\(A =
+-\epsilon_{LUMO}\)</span></strong></li>
+</ul></li>
+</ul>
+<h3 id="带隙-band-gap">3. 带隙 (Band Gap)</h3>
+<ul>
+<li><strong><code>E_&#123;gap&#125; = I - A</code></strong>:
+<ul>
+<li>这是<strong>基本带隙 (Fundamental Gap)</strong>
+的<strong>严格定义</strong>。</li>
+<li>它代表了从体系中移出一个电子并将其放置到远离体系的无穷远处，然后再从无穷远处拿一个电子放回体系中（假设的），这两个过程的能量差。</li>
+<li>它是一个<strong>总能量 (Total Energy)</strong> 的差值，需要三次
+<span class="math inline">\(\Delta SCF\)</span> 计算（<span
+class="math inline">\(E(N)\)</span>, <span
+class="math inline">\(E(N-1)\)</span>, <span
+class="math inline">\(E(N+1)\)</span>）才能精确得到。</li>
+</ul></li>
+<li><strong><code>= \epsilon_&#123;LUMO&#125; - \epsilon_&#123;HOMO&#125;</code></strong>:
+<ul>
+<li>这是<strong>Koopmans 定理对基本带隙的近似</strong>。</li>
+<li>通过代入我们刚刚推导出的近似值：
+<ul>
+<li><span class="math inline">\(I \approx -\epsilon_{HOMO}\)</span></li>
+<li><span class="math inline">\(A \approx -\epsilon_{LUMO}\)</span></li>
+</ul></li>
+<li>我们得到：<span class="math inline">\(E_{gap} = I - A \approx
+(-\epsilon_{HOMO}) - (-\epsilon_{LUMO}) = \epsilon_{LUMO} -
+\epsilon_{HOMO}\)</span></li>
+<li><strong>关键结论</strong>: <span
+class="math inline">\(\epsilon_{LUMO} - \epsilon_{HOMO}\)</span>（即
+<strong>HOMO-LUMO 隙</strong>）是<strong>基本带隙</strong> <span
+class="math inline">\(I - A\)</span> 的一个近似值。</li>
+<li><strong>为什么是近似？</strong> 因为它完全忽略了计算 <span
+class="math inline">\(I\)</span> 和 <span
+class="math inline">\(A\)</span>
+时的<strong>轨道弛豫</strong>效应。</li>
+</ul></li>
+</ul>
+<h3 id="右下角的图示">4. 右下角的图示</h3>
+<ul>
+<li><strong>HOMO / LUMO</strong>:
+显示了最高占据和最低未占两个轨道能级。</li>
+<li><strong><code>~1.1 - 1.3 eV</code></strong>:
+这是一个<strong>示例</strong>数值，用来表示 HOMO-LUMO
+隙的典型大小（这个数值接近于硅的带隙，可能是一个具体的例子）。</li>
+<li><strong>上面的竖线</strong>: 代表了 LUMO
+之上的一系列能量更高、未被占据的<strong>虚拟轨道 (virtual
+orbitals)</strong>。在固体物理中，这对应于<strong>导带 (Conduction
+Band)</strong>。</li>
+<li><strong>HOMO 下的能级 (未画出)</strong>:
+代表了所有能量更低、已被占据的轨道。在固体物理中，这对应于<strong>价带
+(Valence Band)</strong>。</li>
+</ul>
+<h3 id="总结-1">总结</h3>
+<p>以上是Koopmans
+定理的数学论证，并得出了一个在计算化学和材料科学中非常重要（虽然是近似的）的结论：</p>
+<blockquote>
+<p><strong>基本带隙 (<span class="math inline">\(I - A\)</span>)
+可以通过单次 HF 计算得到的 HOMO-LUMO 隙 (<span
+class="math inline">\(\epsilon_{LUMO} - \epsilon_{HOMO}\)</span>)
+来估算。</strong></p>
+</blockquote>
+<p>这个近似的准确性取决于 “冻结轨道近似” 带来的误差（忽略轨道弛豫）与 HF
+理论本身带来的误差（忽略电子相关能）在多大程度上相互抵消。</p>
+<h2 id="iii">III:</h2>
+<p><strong>“后-HF” (post-Hartree-Fock) 方法</strong>。</p>
+<p>在前面的讨论中，我们确定了 HF 理论的两个主要缺陷： 1.
+<strong>忽略了轨道弛豫</strong>（导致 Koopmans 定理不准）。 2.
+<strong>忽略了电子相关能</strong>（HF
+是一个平均场理论，没有考虑电子的瞬时“躲避”行为）。</p>
+<p>介绍<strong>如何修正第二个（也是更根本的）缺陷</strong>。这个方法叫做
+<strong>“Configuration Interaction (CI)” (组态相互作用)</strong>。</p>
+<h3 id="phi_hf-frac1sqrtn-dots-slater-determinant">1. 📖 <span
+class="math inline">\(\Phi_{HF} = \frac{1}{\sqrt{N!}} | \dots |\)</span>
+(Slater Determinant)</h3>
+<ul>
+<li><strong>含义</strong>: 这是 Hartree-Fock (HF) 波函数 (<span
+class="math inline">\(\Phi_{HF}\)</span>)
+的<strong>数学定义</strong>。</li>
+<li><strong><span
+class="math inline">\(\frac{1}{\sqrt{N!}}\)</span></strong>:
+归一化常数。</li>
+<li><strong><span class="math inline">\(| \dots |\)</span></strong>:
+这是一个<strong>斯莱特行列式 (Slater Determinant)</strong>。
+<ul>
+<li>例如，对于一个 2 电子体系（如氦原子），它写作： <span
+class="math display">\[\Phi(1,2) = \frac{1}{\sqrt{2}} \begin{vmatrix}
+\phi_1(1) &amp; \phi_2(1) \\ \phi_1(2) &amp; \phi_2(2) \end{vmatrix} =
+\frac{1}{\sqrt{2}} [\phi_1(1)\phi_2(2) -
+\phi_1(2)\phi_2(1)]\]</span></li>
+<li><span class="math inline">\(\phi_1(1)\)</span> 表示电子 1 处于 <span
+class="math inline">\(\phi_1\)</span> 自旋轨道。</li>
+</ul></li>
+<li><strong>目的</strong>:
+这种行列式形式是满足<strong>泡利不相容原理</strong>（波函数在交换任意两个电子时必须反号）的最简洁的数学工具。</li>
+</ul>
+<p>HF 理论假设体系的<strong>真实波函数 <span
+class="math inline">\(\Psi\)</span></strong>
+可以被<strong>单个</strong>斯莱特行列式 <span
+class="math inline">\(\Phi_{HF}\)</span>
+<strong>很好地近似</strong>。</p>
+<h3 id="configuration-interaction-ci-组态相互作用">2. ⚡ “Configuration
+Interaction (CI)” (组态相互作用)</h3>
+<ul>
+<li><strong>核心思想</strong>: HF 理论的“平均场”假设（即 <span
+class="math inline">\(\Psi \approx
+\Phi_{HF}\)</span>）是一个<strong>近似</strong>。一个<strong>更精确</strong>的波函数
+<span class="math inline">\(\Psi\)</span>
+应该是一个<strong>线性组合</strong>，它不仅包含 HF 基态组态 <span
+class="math inline">\(\Phi_{HF}\)</span>，还包含所有可能的<strong>激发组态
+(excited configurations)</strong>。</li>
+<li><strong>能级图</strong>:
+<ul>
+<li>图显示了 HF 基态。轨道 1 和 2 被电子占据（<strong>占据轨道,
+occ</strong>），轨道 3, 4, 5… 是空的（<strong>虚拟轨道,
+virt</strong>）。</li>
+<li>这个基态组态就是 <span
+class="math inline">\(\Phi_{HF}\)</span>。</li>
+</ul></li>
+<li><strong>什么是激发组态?</strong>
+<ul>
+<li><strong>单激发 (Singles, S)</strong>: 将一个电子从一个占据轨道
+(<span class="math inline">\(i\)</span>) 激发到一个虚拟轨道 (<span
+class="math inline">\(a\)</span>)。记作 <span
+class="math inline">\(\Phi_i^a\)</span>。</li>
+<li><strong>双激发 (Doubles, D)</strong>: 将两个电子从占据轨道 (<span
+class="math inline">\(i, j\)</span>) 激发到虚拟轨道 (<span
+class="math inline">\(a, b\)</span>)。记作 <span
+class="math inline">\(\Phi_{ij}^{ab}\)</span>。</li>
+<li><strong>三激发 (Triples, T)</strong>: …以此类推。</li>
+</ul></li>
+<li><strong>CI 波函数</strong>: 真正的基态波函数 <span
+class="math inline">\(\Psi\)</span> 是所有这些可能组态的叠加： <span
+class="math display">\[\Psi = C_0 \Phi_{HF} + \sum_{i,a} C_i^a \Phi_i^a
++ \sum_{i,j,a,b} C_{ij}^{ab} \Phi_{ij}^{ab} + \sum_{i,j,k,a,b,c}
+C_{ijk}^{abc} \Phi_{ijk}^{abc} + \dots\]</span>
+<ul>
+<li><span class="math inline">\(C_0\)</span> 是 HF 基态的系数（通常接近
+1）。</li>
+<li><span class="math inline">\(C_i^a\)</span>, <span
+class="math inline">\(C_{ij}^{ab}\)</span>…
+是各种激发组态的<strong>系数</strong>（或“权重”）。</li>
+<li><strong>CI
+方法的目的</strong>就是通过求解一个巨大的矩阵本征值问题来找出所有这些
+<span class="math inline">\(C\)</span> 系数，从而获得更精确的波函数
+<span class="math inline">\(\Psi\)</span> 和能量 <span
+class="math inline">\(E\)</span>。</li>
+</ul></li>
+</ul>
+<h3 id="ci-公式">3. CI 公式</h3>
+<p>总波函数 <span class="math inline">\(\Psi\)</span>
+的各个组成部分：</p>
+<ul>
+<li><strong><span class="math inline">\(\Psi^{(1)} =
+\sum_{i}^{\text{occ}} \sum_{a}^{\text{virt}} C_i^a
+\Phi_i^a\)</span></strong>
+<ul>
+<li>这是波函数中所有<strong>单激发 (S)</strong> 组态的总和。</li>
+</ul></li>
+<li><strong><span class="math inline">\(\Psi^{(2)} =
+\sum_{i&lt;j}^{\text{occ}} \sum_{a&lt;b}^{\text{virt}} C_{ij}^{ab}
+\Phi_{ij}^{ab}\)</span></strong>
+<ul>
+<li>这是波函数中所有<strong>双激发 (D)</strong> 组态的总和。</li>
+</ul></li>
+<li><strong><span class="math inline">\(\Psi^{(3)} =
+\sum_{i&lt;j&lt;k}^{\text{occ}} \sum_{a&lt;b&lt;c}^{\text{virt}}
+C_{ijk}^{abc} \Phi_{ijk}^{abc}\)</span></strong>
+<ul>
+<li>这是波函数中所有<strong>三激发 (T)</strong> 组态的总和。</li>
+</ul></li>
+</ul>
+<h3 id="关键概念">4. 🔑 关键概念</h3>
+<ul>
+<li><strong><span class="math inline">\(\langle \Phi_{HF} | \Phi_i^a
+\rangle = 0\)</span></strong>
+<ul>
+<li><strong>含义</strong>: HF
+基态波函数与<strong>任意一个</strong>单激发态波函数都是<strong>正交</strong>的（即它们的重叠积分为
+0）。</li>
+<li><strong>重要推论 (Brillouin 定理)</strong>: 这意味着 HF 基态 <span
+class="math inline">\(\Phi_{HF}\)</span> 不会与单激发态 <span
+class="math inline">\(\Phi_i^a\)</span> 直接混合。换句话说，在 CI
+波函数中，所有的 <span class="math inline">\(C_i^a\)</span> 系数都将为
+0（<em>如果</em> <span class="math inline">\(\Phi_{HF}\)</span> 是严格的
+HF 波函数）。</li>
+<li><strong>结论</strong>: 对 HF
+基态能量的<strong>第一个修正</strong>来自于<strong>双激发
+(Doubles)</strong>。这就是为什么双激发在电子相关能中如此重要。</li>
+</ul></li>
+<li><strong>Full CI (FCI, 全组态相互作用)</strong>
+<ul>
+<li>如果你在 CI
+展开式中包含了<strong>所有</strong>可能的激发（单、双、三、…直到 N
+激发），你就得到了 <strong>Full CI</strong>。</li>
+<li>FCI 在给定的基组下，是求解薛定谔方程的<strong>精确解</strong>。</li>
+<li><strong>问题</strong>:
+计算量是<strong>天文数字</strong>（随体系大小呈指数增长），只能用于几个电子的微小体系。</li>
+</ul></li>
+<li><strong>Truncated CI (截断 CI)</strong>
+<ul>
+<li>由于 FCI 不可行，人们在实际中会<strong>截断</strong>这个求和。</li>
+<li><strong>CISD</strong>: 只包含<strong>单激发 (S)</strong> 和
+<strong>双激发 (D)</strong>。这是最常见的 CI 方法之一。</li>
+<li><strong>CISDT</strong>: 包含单、双、三激发。</li>
+</ul></li>
+</ul>
+<h3 id="总结-2">总结</h3>
+<p>从 HF 理论（一个<strong>单行列式</strong>近似）转向了 <strong>CI
+理论</strong>（一个<strong>多行列式</strong>方法）。</p>
+<p><strong>CI 的核心目的</strong>：通过将激发态组态（<span
+class="math inline">\(\Phi_i^a\)</span>, <span
+class="math inline">\(\Phi_{ij}^{ab}\)</span> 等）“混合”到 HF 基态组态
+(<span class="math inline">\(\Phi_{HF}\)</span>)
+中，来系统地<strong>恢复</strong> HF
+理论所忽略的<strong>电子相关能</strong>。</p>
+<p><strong>“二次量子化” (Second Quantization)</strong>。</p>
+<p>它是一种用来处理多粒子系统（如此处的电子）的强大工具，特别擅长描述粒子的产生和湮灭。</p>
+<h3 id="核心工具产生与湮灭算符">1. 核心工具：产生与湮灭算符</h3>
+<p>在二次量子化中，我们不再纠结于写出完整的、庞大的斯莱特行列式（像
+<span class="math inline">\(\Phi_{HF}\)</span>
+那样），而是定义两个基本的操作符：</p>
+<ul>
+<li><strong><span class="math inline">\(a_p^\dagger\)</span> (产生算符,
+Creation Operator)</strong>:
+<ul>
+<li><strong>作用</strong>: 当它作用在一个波函数上时，它会在<strong>轨道
+<span class="math inline">\(p\)</span></strong>
+中<strong>产生</strong>一个电子。</li>
+<li>例如，如果 <span class="math inline">\(p\)</span> 轨道是空的， <span
+class="math inline">\(a_p^\dagger\)</span> 会把一个电子放进去。</li>
+<li>如果 <span class="math inline">\(p\)</span>
+轨道已经被占据，根据泡利不相容原理， <span
+class="math inline">\(a_p^\dagger |\phi_p\rangle = 0\)</span>
+(你不能在同一个自旋轨道上放两个电子)。</li>
+</ul></li>
+<li><strong><span class="math inline">\(a_p\)</span> (湮灭算符,
+Annihilation Operator)</strong>:
+<ul>
+<li><strong>作用</strong>: 当它作用在一个波函数上时，它会从<strong>轨道
+<span class="math inline">\(p\)</span></strong>
+中<strong>湮灭</strong>（或移除）一个电子。</li>
+<li>例如，如果 <span class="math inline">\(p\)</span> 轨道是占据的，
+<span class="math inline">\(a_p\)</span> 会把这个电子移走。</li>
+<li>如果 <span class="math inline">\(p\)</span> 轨道本来就是空的， <span
+class="math inline">\(a_p |\text{empty}\rangle = 0\)</span>
+(你不能从一个空轨道中移走电子)。</li>
+</ul></li>
+</ul>
+<h3 id="定义基态-phi_hf">2. 定义基态 <span
+class="math inline">\(\Phi_{HF}\)</span></h3>
+<ul>
+<li>首先，我们定义一个真正的<strong>“真空态” (vacuum
+state)</strong>，记作 <span
+class="math inline">\(|0\rangle\)</span>，表示一个<strong>完全没有电子</strong>的空荡荡的体系。</li>
+<li>那么，<strong>HF 基态波函数 <span
+class="math inline">\(\Phi_{HF}\)</span></strong>（即所有占据轨道 <span
+class="math inline">\(i, j, k, \dots\)</span>
+都被填满的状态）就可以通过从真空态开始，不断“产生”电子来构建： <span
+class="math display">\[|\Phi_{HF}\rangle = a_1^\dagger a_2^\dagger
+a_3^\dagger \dots a_N^\dagger |0\rangle\]</span> (这里 <span
+class="math inline">\(1, 2, \dots, N\)</span> 是所有被占据的轨道)。</li>
+</ul>
+<h3 id="解释">3. 解释</h3>
+<p>。它们展示了如何从已知的 HF 基态 <span
+class="math inline">\(|\Phi_{HF}\rangle\)</span>
+<strong>构建</strong>出各种激发态。</p>
+<h4
+id="phi_ia-a_adagger-a_i-phi_hf"><code>| $\Phi_i^a$ &gt; = $a_a^\dagger a_i$ | $\Phi_&#123;HF&#125;$ &gt;</code></h4>
+<ul>
+<li><strong>含义</strong>: 这个公式在说：“单激发态 <span
+class="math inline">\(\Phi_i^a\)</span> 是如何得到的？”</li>
+<li><strong>操作</strong>:
+<ol type="1">
+<li>从 HF 基态 <span class="math inline">\(|\Phi_{HF}\rangle\)</span>
+开始。</li>
+<li>首先，应用<strong>湮灭算符 <span
+class="math inline">\(a_i\)</span></strong>。这会从<strong>占据轨道
+<span class="math inline">\(i\)</span></strong>
+中<strong>移走</strong>一个电子。</li>
+<li>然后，应用<strong>产生算符 <span
+class="math inline">\(a_a^\dagger\)</span></strong>。这会在<strong>虚拟轨道
+<span class="math inline">\(a\)</span></strong>
+中<strong>产生</strong>一个电子。</li>
+</ol></li>
+<li><strong>结果</strong>: 这个两步操作（“先湮灭 <span
+class="math inline">\(i\)</span>，再产生 <span
+class="math inline">\(a\)</span>”）的效果，就是将一个电子从轨道 <span
+class="math inline">\(i\)</span> 激发到了轨道 <span
+class="math inline">\(a\)</span>。这<strong>正是</strong>单激发态 <span
+class="math inline">\(\Phi_i^a\)</span> 的定义。</li>
+</ul>
+<h4
+id="phi_ijab-a_adagger-a_bdagger-a_j-a_i-phi_hf"><code>| $\Phi_&#123;ij&#125;^&#123;ab&#125;$ &gt; = $a_a^\dagger a_b^\dagger a_j a_i$ | $\Phi_&#123;HF&#125;$ &gt;</code></h4>
+<p><em>(白板上这个公式被部分遮挡了，但这是它的标准形式)</em></p>
+<ul>
+<li><strong>含义</strong>: 这个公式在说：“双激发态 <span
+class="math inline">\(\Phi_{ij}^{ab}\)</span> 是如何得到的？”</li>
+<li><strong>操作</strong>:
+<ol type="1">
+<li>从 HF 基态 <span class="math inline">\(|\Phi_{HF}\rangle\)</span>
+开始。</li>
+<li>应用 <span class="math inline">\(a_i\)</span>：从<strong>占据轨道
+<span class="math inline">\(i\)</span></strong>
+中<strong>移走</strong>一个电子。</li>
+<li>应用 <span class="math inline">\(a_j\)</span>：从<strong>占据轨道
+<span class="math inline">\(j\)</span></strong>
+中<strong>移走</strong>另一个电子。</li>
+<li>应用 <span
+class="math inline">\(a_b^\dagger\)</span>：在<strong>虚拟轨道 <span
+class="math inline">\(b\)</span></strong>
+中<strong>产生</strong>一个电子。</li>
+<li>应用 <span
+class="math inline">\(a_a^\dagger\)</span>：在<strong>虚拟轨道 <span
+class="math inline">\(a\)</span></strong>
+中<strong>产生</strong>另一个电子。</li>
+</ol></li>
+<li><strong>结果</strong>: 这个四步操作（“湮灭 <span
+class="math inline">\(i, j\)</span>；产生 <span class="math inline">\(a,
+b\)</span>”）的效果，就是将两个电子从轨道 <span class="math inline">\(i,
+j\)</span> 激发到了轨道 <span class="math inline">\(a,
+b\)</span>。这<strong>正是</strong>双激发态 <span
+class="math inline">\(\Phi_{ij}^{ab}\)</span> 的定义。</li>
+</ul>
+<h3 id="为什么这个方法更好">4. 为什么这个方法更好？</h3>
+<ul>
+<li><strong>简洁性</strong>: 你不需要再写出庞大的 <span
+class="math inline">\(N \times N\)</span> 行列式。你只需要简单地写 <span
+class="math inline">\(a_a^\dagger a_i |\Phi_{HF}\rangle\)</span>
+就可以<strong>精确地代表</strong>那个单激发的斯莱特行列式。</li>
+<li><strong>自动处理“交换 (exchange)”</strong>: 白板上提到了
+“exchange”。这些产生/湮灭算符被定义为<strong>费米子算符</strong>，它们自动满足一个称为<strong>“反对易关系”
+(anti-commutation relation)</strong> 的规则。
+<ul>
+<li>例如：<span class="math inline">\(a_i a_j = -a_j a_i\)</span> 且
+<span class="math inline">\(a_i^\dagger a_j^\dagger = -a_j
+a_i^\dagger\)</span>。</li>
+<li>这个负号<strong>自动地</strong>包含了泡利不相容原理和波函数的反对称性（即“交换”效应）。你不需要再手动去操心行列式的正负号问题。</li>
+</ul></li>
+</ul>
+<p><strong>总结</strong>:
+<strong>二次量子化</strong>的语言，它是一种更强大、更数学化的方式，用来描述
+CI（组态相互作用）理论中如何从 HF 基态构建出各种激发态。</p>
+<h2 id="iv">IV:</h2>
+<p>CI（组态相互作用）理论的总结性笔记。</p>
+<h3 id="波函数基组">1. 波函数基组</h3>
+<p><code>&#123; $\Phi_&#123;HF&#125;, \Phi_i^a, \Phi_&#123;ij&#125;^&#123;ab&#125;, \Phi_&#123;ijk&#125;^&#123;abc&#125;, \dots$ &#125;</code></p>
+<ul>
+<li><strong>含义</strong>: 这是一个<strong>集合
+(set)</strong>。它代表了在给定的单电子轨道基组下，所有可能构建出来的 N
+电子<strong>组态 (configurations)</strong>。</li>
+<li><strong><span class="math inline">\(\Phi_{HF}\)</span></strong>: HF
+基态组态（即电子占据能量最低的 N 个轨道）。</li>
+<li><strong><span class="math inline">\(\Phi_i^a\)</span></strong>:
+所有的<strong>单激发 (Singles)</strong> 组态。</li>
+<li><strong><span
+class="math inline">\(\Phi_{ij}^{ab}\)</span></strong>:
+所有的<strong>双激发 (Doubles)</strong> 组态。</li>
+<li><strong><span
+class="math inline">\(\Phi_{ijk}^{abc}\)</span></strong>:
+所有的<strong>三激发 (Triples)</strong> 组态。</li>
+<li><strong>…</strong>: 一直持续到 N 激发（即所有电子都被激发）。</li>
+<li><strong>重要性</strong>:
+这个无穷（但在有限基组下是有限的）集合构成了一个<strong>完备的 N
+电子基组</strong>。这意味着<strong>任何</strong>一个真实的 N 电子波函数
+<span
+class="math inline">\(\Psi\)</span>（即薛定谔方程的精确解），都可以被<strong>精确地</strong>表示为这个集合中所有组态的线性组合：
+<span class="math display">\[\Psi = C_0 \Phi_{HF} + \sum C_i^a \Phi_i^a
++ \sum C_{ij}^{ab} \Phi_{ij}^{ab} + \dots\]</span></li>
+</ul>
+<h3 id="exchange-交换-vs-correlation-相关">2. “exchange” (交换) vs
+“correlation” (相关)</h3>
+<ul>
+<li><strong>“exchange” (交换能)</strong>:
+<ul>
+<li>白板上将 “exchange” 指向了 HF 基态 <span
+class="math inline">\(\Phi_{HF}\)</span>。</li>
+<li><strong>含义</strong>: 这是 HF
+理论<strong>已经包含</strong>在内的量子效应。</li>
+<li>它源于泡利不相容原理，即两个自旋相同的电子不能占据同一空间位置。这导致同自旋电子之间存在一个“费米空穴
+(Fermi hole)”，使它们倾向于“避开”彼此。</li>
+<li>在 HF 能量公式中（见第一张白板），这表现为那个<strong>负的交换积分
+(-K)</strong> 项。</li>
+</ul></li>
+<li><strong>“correlation” (相关能)</strong>:
+<ul>
+<li>白板上将 “correlation” 指向了<strong>所有激发态</strong>（<span
+class="math inline">\(\Phi_i^a, \Phi_{ij}^{ab}, \dots\)</span>）。</li>
+<li><strong>含义</strong>: 这是 HF
+理论<strong>所忽略</strong>的效应。</li>
+<li><strong>HF 的缺陷</strong>: HF
+只考虑了同自旋电子的“交换”相关，但它<strong>忽略了不同自旋电子</strong>之间的瞬时相互作用。在
+HF（平均场）理论中，一个自旋向上的电子只感受到一个自旋向下电子云的<strong>平均</strong>排斥，而没有根据它俩的瞬时位置来“躲避”对方。</li>
+<li><strong>CI 的修正</strong>:
+通过在波函数中<strong>混入激发态</strong>（如 <span
+class="math inline">\(\Phi_{ij}^{ab}\)</span>），CI
+方法允许电子（包括不同自旋的电子）的运动<strong>相互关联</strong>起来，从而更有效地“躲避”彼此，进一步降低体系的总能量。</li>
+<li><strong>定义</strong>: <strong>相关能 = 真实能量 - HF
+能量</strong>。</li>
+<li><strong>结论</strong>: <strong>CI 方法（以及其他 post-HF
+方法）的目的就是为了“恢复” HF 理论所丢失的电子相关能</strong>。</li>
+</ul></li>
+</ul>
+<h3 id="能量图示">3. 能量图示</h3>
+<p>能量图：</p>
+<ul>
+<li><strong><span class="math inline">\(\uparrow\)</span></strong>:
+能量轴，能量向上增加。</li>
+<li><strong><code>HF</code></strong>: <strong>Hartree-Fock 能量（<span
+class="math inline">\(E_{HF}\)</span>）</strong>。
+<ul>
+<li>这是通过<strong>单个</strong>斯莱特行列式 <span
+class="math inline">\(\Phi_{HF}\)</span> 计算得到的能量。</li>
+<li>这是一个<strong>近似</strong>能量，它<strong>高于</strong>真实的基态能量。</li>
+</ul></li>
+<li><strong><code>Full CI</code></strong>:
+<strong>全组态相互作用能量（<span
+class="math inline">\(E_{FCI}\)</span>）</strong>。
+<ul>
+<li>这是通过将 <span class="math inline">\(\Psi\)</span>
+表示为<strong>所有</strong>可能组态（<span
+class="math inline">\(\Phi_{HF}, \Phi_i^a,
+\dots\)</span>）的线性组合，并求解得到的<strong>精确</strong>基态能量（在给定基组下的）。</li>
+<li><strong><span class="math inline">\(E_{FCI}\)</span>
+是我们能得到的最低、最准确的能量</strong>。</li>
+</ul></li>
+<li><strong><code>&#123;</code> (之间的能量差)</strong>:
+<ul>
+<li><strong><span class="math inline">\(E_{FCI}\)</span> 和 <span
+class="math inline">\(E_{HF}\)</span>
+之间的能量差，正是我们前面定义的“电子相关能 (Correlation
+Energy)”</strong>。</li>
+<li><span class="math display">\[E_{\text{corr}} = E_{FCI} -
+E_{HF}\]</span></li>
+</ul></li>
+</ul>
+<h3 id="二次量子化复习">4. 二次量子化（复习）</h3>
+<ul>
+<li><strong><code>| $\Phi_i^a$ &gt; = $a_a^\dagger a_i$ | $\Phi_&#123;HF&#125;$ &gt;</code></strong>
+(单激发)</li>
+<li><strong><code>| $\Phi_&#123;ij&#125;^&#123;ab&#125;$ &gt; = $a_a^\dagger a_b^\dagger a_j a_i$ | $\Phi_&#123;HF&#125;$ &gt;</code></strong>
+(双激发)
+<ul>
+<li>这重申了上一张白板的概念：使用<strong>产生 (<span
+class="math inline">\(a^\dagger\)</span>)</strong> 和<strong>湮灭 (<span
+class="math inline">\(a\)</span>)</strong> 算符，是从 HF
+基态构建所有其他激发态的最简洁的数学方式。</li>
+</ul></li>
+<li><strong><code>&#123; $a_i, a_j^\dagger$ &#125; = $\delta_&#123;ij&#125;$</code></strong>
+<ul>
+<li><strong>含义</strong>: 这是费米子算符的<strong>反对易关系
+(Anti-commutation relation)</strong>。</li>
+<li><strong><code>&#123;A, B&#125;</code></strong> 是一个简写，表示 <span
+class="math inline">\(AB + BA\)</span>。</li>
+<li>所以，这个公式的完整形式是：<strong><span class="math inline">\(a_i
+a_j^\dagger + a_j^\dagger a_i = \delta_{ij}\)</span></strong></li>
+<li><strong><span class="math inline">\(\delta_{ij}\)</span></strong>:
+<strong>克罗内克 delta 符号 (Kronecker delta)</strong>。
+<ul>
+<li>如果 <span class="math inline">\(i = j\)</span>，<span
+class="math inline">\(\delta_{ij} = 1\)</span>。</li>
+<li>如果 <span class="math inline">\(i \neq j\)</span>，<span
+class="math inline">\(\delta_{ij} = 0\)</span>。</li>
+</ul></li>
+<li><strong>物理意义</strong>:
+<ul>
+<li><strong>如果 <span class="math inline">\(i \neq j\)</span></strong>:
+<span class="math inline">\(a_i a_j^\dagger = -a_j^\dagger
+a_i\)</span>。这表示“在 <span class="math inline">\(j\)</span>
+轨道产生一个电子，再在 <span class="math inline">\(i\)</span>
+轨道湮灭一个电子”与“先在 <span class="math inline">\(i\)</span>
+湮灭，再在 <span class="math inline">\(j\)</span>
+产生”这两个操作的顺序是<strong>相反</strong>的（导致波函数变号）。</li>
+<li><strong>如果 <span class="math inline">\(i = j\)</span></strong>:
+<span class="math inline">\(a_i a_i^\dagger + a_i^\dagger a_i =
+1\)</span>。这个规则用于计算占据数，并确保了泡利不相容原理的正确执行。</li>
+</ul></li>
+</ul></li>
+</ul>
+<h3 id="总结-3">总结</h3>
+<p>清晰地总结了： 1. <strong>HF
+理论</strong>只是一种<strong>近似</strong>，它包含了<strong>交换能</strong>。
+2. 为了获得<strong>精确解 (Full CI)</strong>，必须将 HF
+基态与所有可能的<strong>激发态</strong>相混合。 3.
+这个混合过程所恢复的能量，就是 HF
+理论所忽略的<strong>电子相关能</strong>。 4. 二次量子化（<span
+class="math inline">\(a^\dagger, a\)</span>
+算符）是实现这一目标的标准数学工具。</p>
+<p>这一系列白板笔记非常连贯地从 HF 理论的基础，讲到了 Koopmans
+定理的近似，最后引入了更高级的 CI 方法来修正 HF
+的根本缺陷（即电子相关能）。</p>
+<h2 id="量子化学指南从-hartree-fock-到组态相互作用">量子化学指南：从
+Hartree-Fock 到组态相互作用</h2>
+<p>这份指南涵盖了量子化学中的两个核心主题： 1. <strong>Hartree-Fock (HF)
+理论</strong>：一种基础的、近似求解多电子体系的方法。 2.
+<strong>组态相互作用 (CI)</strong>：一种 “后-HF” 方法，用于系统地修正 HF
+理论的缺陷，以逼近精确解。</p>
+<h3 id="第一部分hartree-fock-hf-理论基础">第一部分：Hartree-Fock (HF)
+理论基础</h3>
+<p>HF 理论是求解多电子体系薛定谔方程的第一个、也是最重要的<strong>平均场
+(Mean-Field)</strong> 近似。</p>
+<h4 id="核心思想与波函数">1. 核心思想与波函数</h4>
+<ul>
+<li><strong>核心思想</strong>：HF
+理论将复杂的多电子问题（电子的运动是相互关联的）简化为一系列独立的单电子问题。它假设每个电子都在一个由原子核和其他所有电子共同产生的<strong>平均</strong>静电场中运动。</li>
+<li><strong>波函数 (<span
+class="math inline">\(\Phi_{HF}\)</span>)</strong>：HF
+理论使用<strong>单个斯莱特行列式 (Slater Determinant)</strong> 来描述 N
+电子体系的基态波函数。 <span class="math display">\[\Phi_{HF} =
+\frac{1}{\sqrt{N!}} \begin{vmatrix} \phi_1(1) &amp; \phi_2(1) &amp;
+\dots \\ \phi_1(2) &amp; \phi_2(2) &amp; \dots \\ \vdots &amp; \vdots
+&amp; \ddots \end{vmatrix}\]</span>
+这种形式自动满足了泡利不相容原理（即波函数在交换任意两个电子时反号）。</li>
+</ul>
+<h4 id="hf-总能量-e_hf">2. HF 总能量 (<span
+class="math inline">\(E_{HF}\)</span>)</h4>
+<p>HF 体系的总能量 <span
+class="math inline">\(E_{HF}\)</span>（如第一张白板上的公式所示）由三部分组成：</p>
+<ol type="1">
+<li><strong>单电子能量</strong>：所有电子的动能，以及它们与所有原子核的吸引势能。</li>
+<li><strong>库仑能 (J)</strong>：电子 <span
+class="math inline">\(i\)</span> 的电荷云与电子 <span
+class="math inline">\(j\)</span>
+的电荷云之间的<strong>经典静电排斥能</strong>。</li>
+<li><strong>交换能
+(K)</strong>：一个纯粹的量子效应，源自泡利不相容原理。它仅存在于<strong>自旋相同</strong>的电子之间。这个能量项是<strong>负值</strong>，它降低了体系的总能量，可以理解为同自旋电子有“避开”彼此的倾向（<strong>费米空穴,
+Fermi Hole</strong>）。</li>
+</ol>
+<h4 id="轨道能量-epsilon_i-vs-总能量-e_hf">3. 轨道能量 (<span
+class="math inline">\(\epsilon_i\)</span>) vs 总能量 (<span
+class="math inline">\(E_{HF}\)</span>)</h4>
+<ul>
+<li><strong>轨道能量 (<span
+class="math inline">\(\epsilon_i\)</span>)</strong>：是在求解 HF
+方程（<span class="math inline">\(\hat{f}\phi_i =
+\epsilon_i\phi_i\)</span>）时得到的本征值。它代表了电子 <span
+class="math inline">\(i\)</span> 在<strong>所有</strong>其他 (N-1)
+个电子的平均场中的能量。</li>
+<li><strong>关键区别</strong>：总能量 <strong>不等于</strong>
+轨道能量之和。 <span class="math display">\[E_{HF} \neq \sum_{i}
+\epsilon_i\]</span> <strong>原因</strong>：在 <span
+class="math inline">\(\sum \epsilon_i\)</span>
+中，每一对电子之间的排斥能（库仑和交换）都被计算了<strong>两次</strong>。正确的公式是
+<span class="math inline">\(E_{HF} = \sum \epsilon_i -
+V_{ee}\)</span>，其中 <span class="math inline">\(V_{ee}\)</span>
+是电子-电子排斥能项，用于修正重复计算。</li>
+</ul>
+<h3 id="第二部分物理可观测量-i-和-a">第二部分：物理可观测量 (I 和
+A)</h3>
+<p>HF 理论计算完成后，我们希望从中提取有物理意义的数据，例如电离能 (I)
+和电子亲和能 (A)。有两种主要方法：</p>
+<h4 id="deltascf-delta-scf-方法总能量之差">1. <span
+class="math inline">\(\Delta\)</span>SCF (Delta-SCF)
+方法：总能量之差</h4>
+<p>这是在 HF 理论框架内<strong>最准确</strong>的方法。“<span
+class="math inline">\(\Delta\)</span>” (Delta) 指的就是”差值”。</p>
+<ul>
+<li><strong>电离能 (I)</strong>：从 N 电子体系移出一个电子所需的能量。
+&gt; <span class="math inline">\(I = E(N-1) - E(N)\)</span>
+<ul>
+<li><strong>计算</strong>：你需要分别对 N 电子体系和 (N-1)
+电子体系（阳离子）进行<strong>两次独立</strong>的 SCF
+计算，然后求能量差。</li>
+</ul></li>
+<li><strong>电子亲和能 (A)</strong>：N
+电子体系获得一个电子所释放的能量。 &gt; <span class="math inline">\(A =
+E(N) - E(N+1)\)</span>
+<ul>
+<li><strong>计算</strong>：你需要分别对 N 电子体系和 (N+1)
+电子体系（阴离子）进行<strong>两次独立</strong>的 SCF 计算。</li>
+</ul></li>
+<li><strong>基本带隙 (Fundamental Gap)</strong>：被严格定义为 <span
+class="math inline">\(I - A\)</span>。 &gt; <span
+class="math inline">\(E_{gap} = I - A = E(N-1) + E(N+1) -
+2E(N)\)</span></li>
+</ul>
+<h4 id="koopmans-定理轨道能量近似">2. Koopmans 定理：轨道能量近似</h4>
+<p>这是一个非常有用，但<strong>计算上更便宜</strong>的<strong>近似</strong>方法。它<strong>仅需一次</strong>
+N 电子体系的 SCF 计算。</p>
+<ul>
+<li><strong>定理内容</strong>：
+<ul>
+<li><span class="math inline">\(I \approx -\epsilon_{HOMO}\)</span>
+(电离能约等于 HOMO 轨道能量的负值)</li>
+<li><span class="math inline">\(A \approx -\epsilon_{LUMO}\)</span>
+(电子亲和能约等于 LUMO 轨道能量的负值)</li>
+</ul></li>
+<li><strong>带隙近似</strong>：因此，基本带隙 <span
+class="math inline">\(I - A\)</span> 可以被 <strong>HOMO-LUMO
+隙</strong> 所近似。 &gt; <span class="math inline">\(E_{gap} = I - A
+\approx (-\epsilon_{HOMO}) - (-\epsilon_{LUMO}) = \epsilon_{LUMO} -
+\epsilon_{HOMO}\)</span></li>
+</ul>
+<h4 id="为什么-deltascf-和-koopmans-定理不同">3. 为什么 <span
+class="math inline">\(\Delta\)</span>SCF 和 Koopmans’ 定理不同？</h4>
+<p>答案在于两个关键概念：</p>
+<ul>
+<li><strong>“Frozen Orbital Approximation” (冻结轨道近似)</strong>：
+Koopmans
+定理的<strong>数学假设</strong>。它假设当你移走（或加入）一个电子时，所有其他
+(N-1) 个电子的轨道波函数<strong>完全不发生改变</strong>。</li>
+<li><strong>“Orbital Relaxation” (轨道弛豫)</strong>：
+<strong>物理现实</strong>。当你移走一个电子，电子间排斥力减小，剩下的
+(N-1)
+个电子会“感觉”到更强的核吸引力，它们的轨道会<strong>收缩</strong>并<strong>重新排布</strong>（即“弛豫”），以达到一个新的、能量更低的稳定状态。</li>
+</ul>
+<p><strong>结论</strong>： * <strong><span
+class="math inline">\(\Delta\)</span>SCF</strong>
+方法<strong>考虑了</strong>轨道弛豫，因为它为 (N-1)
+体系重新进行了完整的计算。 * <strong>Koopmans’</strong>
+定理<strong>忽略了</strong>轨道弛豫。 * 由于弛豫会使 (N-1)
+体系的能量<strong>进一步降低</strong>，Koopmans’ 定理（<span
+class="math inline">\(I \approx
+-\epsilon_{HOMO}\)</span>）<strong>总是高估</strong>真实的电离能。</p>
+<h3 id="第三部分hf-理论的根本缺陷相关能">第三部分：HF
+理论的根本缺陷（相关能）</h3>
+<p>HF 理论本身就是一个近似，它最大的缺陷是忽略了<strong>电子相关能
+(Electron Correlation Energy)</strong>。</p>
+<ul>
+<li><strong>“Exchange” (交换能)</strong>：HF
+理论<strong>已经包含</strong>。它只解决了<strong>同自旋</strong>电子（如
+<span class="math inline">\(\uparrow
+\uparrow\)</span>）因泡利不相容原理而相互“避开”的问题（费米空穴）。</li>
+<li><strong>“Correlation” (相关能)</strong>：HF
+理论<strong>完全忽略</strong>。这是指所有电子（特别是<strong>不同自旋</strong>的电子，如
+<span class="math inline">\(\uparrow
+\downarrow\)</span>）为了瞬时地“躲避”彼此而产生的运动关联（<strong>库仑空穴,
+Coulomb Hole</strong>）。HF
+作为一个平均场理论，只让电子感受到彼此的“平均”电荷云。</li>
+</ul>
+<p><strong>定义</strong>：电子相关能 <span
+class="math inline">\(E_{\text{corr}}\)</span>
+是体系的<strong>精确基态能量</strong> <span
+class="math inline">\(E_{\text{exact}}\)</span> 与 <strong>HF
+基态能量</strong> <span class="math inline">\(E_{HF}\)</span>
+之间的差值。</p>
+<blockquote>
+<p><strong><span class="math inline">\(E_{\text{corr}} =
+E_{\text{exact}} - E_{HF}\)</span></strong></p>
+</blockquote>
+<ul>
+<li>由于 HF 理论（平均场）高估了电子排斥，HF
+能量<strong>总是高于</strong>真实能量，所以<strong>相关能 <span
+class="math inline">\(E_{\text{corr}}\)</span>
+永远是负值</strong>。</li>
+</ul>
+<h3 id="第四部分组态相互作用-ci-修正-hf">第四部分：组态相互作用 (CI) ——
+修正 HF</h3>
+<p>CI 是一种系统地“恢复” HF 所丢失的相关能的方法。</p>
+<h4 id="核心思想">1. 核心思想</h4>
+<p>HF 理论假设基态波函数<strong>只是</strong>一个 <span
+class="math inline">\(\Phi_{HF}\)</span> 行列式。 CI
+理论认为，<strong>精确的</strong>基态波函数 <span
+class="math inline">\(\Psi\)</span> 应该是<strong>所有</strong>可能的 N
+电子组态的<strong>线性叠加</strong>。</p>
+<p>这个组态的完备基组包括： * <strong><span
+class="math inline">\(\Phi_{HF}\)</span></strong> (HF 基态组态) *
+<strong><span class="math inline">\(\Phi_i^a\)</span></strong>
+(单激发组态：电子 <span class="math inline">\(i \to a\)</span>) *
+<strong><span class="math inline">\(\Phi_{ij}^{ab}\)</span></strong>
+(双激发组态：电子 <span class="math inline">\(i, j \to a, b\)</span>) *
+<strong><span class="math inline">\(\Phi_{ijk}^{abc}\)</span></strong>
+(三激发组态) * … 一直到 N 激发</p>
+<h4 id="ci-波函数">2. CI 波函数</h4>
+<p>精确的波函数 <span class="math inline">\(\Psi\)</span> 被展开为：</p>
+<blockquote>
+<p><span class="math inline">\(\Psi = C_0 \Phi_{HF} + \sum_{i,a} C_i^a
+\Phi_i^a + \sum_{i,j,a,b} C_{ij}^{ab} \Phi_{ij}^{ab} +
+\sum_{i,j,k,a,b,c} C_{ijk}^{abc} \Phi_{ijk}^{abc} + \dots\)</span></p>
+</blockquote>
+<ul>
+<li><span class="math inline">\(C_0, C_i^a, C_{ij}^{ab} \dots\)</span>
+是混合系数，表示每个组态对真实波函数的“贡献”大小。</li>
+<li><strong>Full CI (FCI,
+全组态相互作用)</strong>：如果这个展开式包含了<strong>所有</strong>可能的激发态，那么它就是在给定基组下的<strong>精确解</strong>。</li>
+<li><strong>Truncated CI (截断 CI)</strong>：由于 FCI
+的计算量是天文数字，实际中通常会截断，例如
+<strong>CISD</strong>（只包含单激发和双激发）。</li>
+</ul>
+<h4 id="能量总结">3. 能量总结</h4>
+<p>白板上的能量图清晰地展示了这一点：</p>
+<ul>
+<li><strong><span class="math inline">\(E_{HF}\)</span></strong>：HF
+能量，是 <span class="math inline">\(E_{\text{exact}}\)</span>
+的一个<strong>上限</strong>（近似值）。</li>
+<li><strong><span class="math inline">\(E_{Full
+CI}\)</span></strong>：Full CI 能量，是<strong>精确值</strong> <span
+class="math inline">\(E_{\text{exact}}\)</span>。</li>
+<li><strong><span class="math inline">\(E_{HF} - E_{Full
+CI}\)</span></strong>：这个能量差就是<strong>电子相关能 <span
+class="math inline">\(E_{\text{corr}}\)</span></strong>。</li>
+</ul>
+<h4 id="高级工具二次量子化">4. 高级工具：二次量子化</h4>
+<p>CI 理论在数学上通常用<strong>产生算符 <span
+class="math inline">\(a^\dagger\)</span></strong> 和<strong>湮灭算符
+<span class="math inline">\(a\)</span></strong> 来表述。</p>
+<ul>
+<li><strong><span
+class="math inline">\(a_p^\dagger\)</span></strong>：在轨道 <span
+class="math inline">\(p\)</span> 中<strong>产生</strong>一个电子。</li>
+<li><strong><span class="math inline">\(a_p\)</span></strong>：在轨道
+<span class="math inline">\(p\)</span>
+中<strong>湮灭</strong>一个电子。</li>
+</ul>
+<p>使用这个工具，构建激发态变得非常简洁： *
+<strong>单激发</strong>：<span class="math inline">\(|\Phi_i^a\rangle =
+a_a^\dagger a_i |\Phi_{HF}\rangle\)</span> （含义：在 HF
+基态上，先湮灭轨道 <span class="math inline">\(i\)</span>
+的电子，再产生轨道 <span class="math inline">\(a\)</span> 的电子） *
+<strong>双激发</strong>：<span
+class="math inline">\(|\Phi_{ij}^{ab}\rangle = a_a^\dagger a_b^\dagger
+a_j a_i |\Phi_{HF}\rangle\)</span> （含义：湮灭 <span
+class="math inline">\(i, j\)</span> 的电子，产生 <span
+class="math inline">\(a, b\)</span> 的电子）</p>
+<p>这些算符自动满足<strong>反对易关系</strong>（如 <span
+class="math inline">\(\{ a_i, a_j^\dagger \} =
+\delta_{ij}\)</span>），这保证了波函数自动满足泡利不相容原理。</p>
+<h3 id="总结幸运的误差抵消">总结：“幸运的误差抵消”</h3>
+<p>最后，一个有趣的问题：为什么 Koopmans 定理（<span
+class="math inline">\(I \approx
+-\epsilon_{HOMO}\)</span>）这个“粗糙”的近似，在实际中经常比“更准确”的
+<span class="math inline">\(\Delta SCF\)</span> 方法（<span
+class="math inline">\(I = E(N-1) -
+E(N)\)</span>）<strong>更接近实验值</strong>？</p>
+<p>答案是 <strong>“幸运的误差抵消”</strong>：</p>
+<ol type="1">
+<li><strong>误差 1 (轨道弛豫)</strong>：Koopmans’
+定理忽略了轨道弛豫，这使得它计算的 <span
+class="math inline">\(I\)</span> <strong>偏高</strong>。</li>
+<li><strong>误差 2 (电子相关能)</strong>：Koopmans’ 定理（作为 HF
+理论的一部分）忽略了电子相关能。相关能对 N
+电子体系的稳定化（能量降低）比对 (N-1) 体系更显著，这使得 HF 计算的
+<span class="math inline">\(I\)</span> <strong>偏低</strong>。</li>
+</ol>
+<p>因此，<strong>Koopmans’ 定理（<span class="math inline">\(I \approx
+-\epsilon_{HOMO}\)</span>）</strong> 在与<strong>实验值</strong>比较时：
+* <strong>误差 1（高估 <span class="math inline">\(I\)</span>）</strong>
+和 <strong>误差 2（低估 <span
+class="math inline">\(I\)</span>）</strong>
+在一定程度上<strong>相互抵消</strong>了！ *
+这使得这个“错上加错”的近似，最终给出了一个出奇“准确”的结果。</p>
 
       
     </div>
@@ -11160,1946 +12370,6 @@ correction formula should not be used.</p></li>
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://tianyaoblogs.github.io/2025/10/01/5054C4/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="John Doe">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="TianyaoBlogs">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2025/10/01/5054C4/" class="post-title-link" itemprop="url">MSDM 5054 - Statistical Machine Learning-L4</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2025-10-01 21:00:00" itemprop="dateCreated datePublished" datetime="2025-10-01T21:00:00+08:00">2025-10-01</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2025-10-18 23:00:24" itemprop="dateModified" datetime="2025-10-18T23:00:24+08:00">2025-10-18</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Machine-Learning/" itemprop="url" rel="index"><span itemprop="name">Machine Learning</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>统计机器学习Lecture-4</p>
-<p><a target="_blank" rel="noopener" href="https://www.math.hkust.edu.hk/~madxia/">Lecturer: Prof.XIA
-DONG</a></p>
-<h1 id="what-is-classification">1. What is Classification?</h1>
-<p>Classification is a type of <strong>supervised machine
-learning</strong> where the goal is to predict a
-<strong>categorical</strong> or qualitative response. Unlike regression
-where you predict a continuous numerical value (like a price or
-temperature), classification assigns an input to a specific category or
-class.
-分类是一种<strong>监督式机器学习</strong>，其目标是预测<strong>分类</strong>或定性响应。与预测连续数值（例如价格或温度）的回归不同，分类将输入分配到特定的类别或类别。</p>
-<p><strong>Key characteristics:</strong></p>
-<ul>
-<li><p><strong>Goal:</strong> Predict the class of a subject based on
-input features.</p></li>
-<li><p><strong>Output (Response):</strong> The output is a category,
-such as ‘Yes’/‘No’, ‘Spam’/‘Not Spam’, or
-‘High’/‘Medium’/‘Low’.</p></li>
-<li><p><strong>Applications:</strong> Common examples include email spam
-detectors, medical diagnosis (e.g., virus carrier vs. non-carrier), and
-fraud detection.</p>
-<ul>
-<li><strong>目标</strong>：根据输入特征预测主题的类别。</li>
-<li><strong>输出（响应）：</strong>输出是一个类别，例如“是”/“否”、“垃圾邮件”/“非垃圾邮件”或“高”/“中”/“低”。</li>
-<li><strong>应用</strong>：常见示例包括垃圾邮件检测器、医学诊断（例如，病毒携带者与非病毒携带者）和欺诈检测。
-The example used in the slides is a credit card <strong>Default
-dataset</strong>. The goal is to predict whether a customer will
-<strong>default</strong> (‘Yes’ or ‘No’) on their payments based on
-their monthly <strong>income</strong> and account
-<strong>balance</strong>.</li>
-</ul></li>
-</ul>
-<p>## Why Not Use Linear Regression?为什么不使用线性回归？</p>
-<p>At first, it might seem possible to use linear regression for
-classification. For a binary (two-class) problem like the default
-dataset, you could code the outcomes as numbers, for example:</p>
-<ul>
-<li>Default = ‘No’ =&gt; <span class="math inline">\(y = 0\)</span></li>
-<li>Default = ‘Yes’ =&gt; <span class="math inline">\(y =
-1\)</span></li>
-</ul>
-<p>You could then fit a standard linear regression model: <span
-class="math inline">\(Y \approx \beta_0 + \beta_1 X\)</span>. In this
-context, we would interpret the prediction <span
-class="math inline">\(\hat{y}\)</span> as the <em>probability</em> of
-default, so we’d be modeling <span class="math inline">\(P(Y=1|X) =
-\beta_0 + \beta_1 X\)</span>.</p>
-<p>However, this approach has two major problems:
-然而，这种方法有两个主要问题： <strong>1. The Output Is Not a
-Probability</strong> A linear model can produce outputs that are less
-than 0 or greater than 1. This doesn’t make sense for a probability,
-which must always be between 0 and 1.</p>
-<p>The image below is the most important one for understanding this
-issue. The left plot shows a linear regression line fit to the 0/1
-default data. You can see the line goes below 0 and would eventually go
-above 1 for higher balances. The right plot shows a logistic regression
-curve, which always stays between 0 and 1.</p>
-<ul>
-<li><strong>Left (Linear Regression):</strong> The straight blue line
-predicts probabilities &lt; 0 for low balances.</li>
-<li><strong>Right (Logistic Regression):</strong> The S-shaped blue
-curve correctly constrains the probability output between 0 and 1.</li>
-</ul>
-<p><strong>2. It Doesn’t Work for Multi-Class Problems</strong> If you
-have more than two categories (e.g., ‘mild’, ‘moderate’, ‘severe’), you
-might code them as 0, 1, and 2. A linear regression model would
-incorrectly assume that the “distance” between ‘mild’ and ‘moderate’ is
-the same as the distance between ‘moderate’ and ‘severe’, which is
-usually not a valid assumption.</p>
-<p><strong>1. 输出不是概率</strong> 线性模型可以产生小于 0 或大于 1
-的输出。这对于概率来说毫无意义，因为概率必须始终介于 0 和 1 之间。</p>
-<p>下图是理解这个问题最重要的图。左图显示了与 0/1
-默认数据拟合的线性回归线。您可以看到，该线低于
-0，并且最终会随着余额的增加而高于
-1。右图显示了逻辑回归曲线，它始终保持在 0 和 1 之间。</p>
-<ul>
-<li><strong>左图（线性回归）：</strong>蓝色直线预测低余额的概率小于
-0。</li>
-<li><strong>右图（逻辑回归）：</strong>S
-形蓝色曲线正确地将概率输出限制在 0 和 1 之间。</li>
-</ul>
-<p><strong>2.它不适用于多类别问题</strong>
-如果您有两个以上的类别（例如，“轻度”、“中度”、“重度”），您可能会将它们编码为
-0、1 和
-2。线性回归模型会错误地假设“轻度”和“中度”之间的“距离”与“中度”和“重度”之间的距离相同，这通常不是一个有效的假设。</p>
-<p>## The Solution: Logistic Regression</p>
-<p>Instead of modeling the response <span
-class="math inline">\(y\)</span> directly, logistic regression models
-the <strong>probability</strong> that <span
-class="math inline">\(y\)</span> belongs to a particular class. To solve
-the issue of the output not being a probability, it uses the
-<strong>logistic function</strong> (also known as the sigmoid
-function).</p>
-<p>This function takes any real-valued input and squeezes it into an
-output between 0 and 1.</p>
-<p>The formula for the probability in a logistic regression model is:
-<span class="math display">\[P(Y=1|X) = \frac{e^{\beta_0 + \beta_1 X}}{1
-+ e^{\beta_0 + \beta_1 X}}\]</span> This S-shaped function, shown in the
-right-hand plot above, ensures that the output is always a valid
-probability. We can then set a threshold (e.g., 0.5) to make the final
-class prediction. If <span class="math inline">\(P(Y=1|X) &gt;
-0.5\)</span>, we predict ‘Yes’; otherwise, we predict ‘No’.</p>
-<p>## 解决方案：逻辑回归</p>
-<p>逻辑回归不是直接对响应 <span class="math inline">\(y\)</span>
-进行建模，而是对 <span class="math inline">\(y\)</span>
-属于特定类别的<strong>概率</strong>进行建模。为了解决输出不是概率的问题，它使用了<strong>逻辑函数</strong>（也称为
-S 型函数）。</p>
-<p>此函数接受任何实值输入，并将其压缩为介于 0 和 1 之间的输出。</p>
-<p>逻辑回归模型中的概率公式为： <span class="math display">\[P(Y=1|X) =
-\frac{e^{\beta_0 + \beta_1 X}}{1 + e^{\beta_0 + \beta_1 X}}\]</span>
-如上图右侧所示，这个 S
-形函数确保输出始终是有效概率。然后，我们可以设置一个阈值（例如
-0.5）来进行最终的类别预测。如果 <span class="math inline">\(P(Y=1|X)
-&gt; 0.5\)</span>，则预测“是”；否则，预测“否”。</p>
-<p>## Data Visualization &amp; Code in Python</p>
-<p>The slides use R to visualize the data. The boxplots are particularly
-important because they show which variable is a better predictor.</p>
-<ul>
-<li><p><strong>Balance vs. Default:</strong> The boxplots for balance
-show a clear difference. The median balance for those who default
-(‘Yes’) is much higher than for those who do not (‘No’). This suggests
-<strong>balance is a strong predictor</strong>.</p></li>
-<li><p><strong>Income vs. Default:</strong> The boxplots for income show
-a lot of overlap. The median incomes for both groups are very similar.
-This suggests <strong>income is a weak predictor</strong>.</p></li>
-<li><p><strong>余额
-vs. 违约</strong>：余额的箱线图显示出明显的差异。违约者（“是”）的余额中位数远高于未违约者（“否”）。这表明<strong>余额是一个强有力的预测指标</strong>。</p></li>
-<li><p><strong>收入
-vs. 违约</strong>：收入的箱线图显示出很大的重叠。两组的收入中位数非常相似。这表明<strong>收入是一个弱的预测指标</strong>。</p></li>
-</ul>
-<p>Here’s how you could perform similar analysis and modeling in Python
-using <code>seaborn</code> and <code>scikit-learn</code>.</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"><span class="keyword">import</span> seaborn <span class="keyword">as</span> sns</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">from</span> sklearn.linear_model <span class="keyword">import</span> LogisticRegression</span><br><span class="line"><span class="keyword">from</span> sklearn.model_selection <span class="keyword">import</span> train_test_split</span><br><span class="line"><span class="keyword">from</span> sklearn.metrics <span class="keyword">import</span> accuracy_score</span><br><span class="line"></span><br><span class="line"><span class="comment"># Assume &#x27;default_data.csv&#x27; has columns: &#x27;default&#x27; (Yes/No), &#x27;balance&#x27;, &#x27;income&#x27;</span></span><br><span class="line"><span class="comment"># You would load your data like this:</span></span><br><span class="line"><span class="comment"># df = pd.read_csv(&#x27;default_data.csv&#x27;)</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># For demonstration, let&#x27;s create some sample data</span></span><br><span class="line">data = &#123;</span><br><span class="line">    <span class="string">&#x27;balance&#x27;</span>: [<span class="number">1200</span>, <span class="number">2100</span>, <span class="number">800</span>, <span class="number">1800</span>, <span class="number">500</span>, <span class="number">1600</span>, <span class="number">2200</span>, <span class="number">1900</span>],</span><br><span class="line">    <span class="string">&#x27;income&#x27;</span>: [<span class="number">45000</span>, <span class="number">60000</span>, <span class="number">30000</span>, <span class="number">55000</span>, <span class="number">25000</span>, <span class="number">48000</span>, <span class="number">70000</span>, <span class="number">65000</span>],</span><br><span class="line">    <span class="string">&#x27;default&#x27;</span>: [<span class="string">&#x27;No&#x27;</span>, <span class="string">&#x27;Yes&#x27;</span>, <span class="string">&#x27;No&#x27;</span>, <span class="string">&#x27;Yes&#x27;</span>, <span class="string">&#x27;No&#x27;</span>, <span class="string">&#x27;No&#x27;</span>, <span class="string">&#x27;Yes&#x27;</span>, <span class="string">&#x27;Yes&#x27;</span>]</span><br><span class="line">&#125;</span><br><span class="line">df = pd.DataFrame(data)</span><br><span class="line"></span><br><span class="line"><span class="comment"># --- 1. Data Visualization (like the slides) ---</span></span><br><span class="line">fig, axes = plt.subplots(<span class="number">1</span>, <span class="number">2</span>, figsize=(<span class="number">14</span>, <span class="number">5</span>))</span><br><span class="line">fig.suptitle(<span class="string">&#x27;Predictor Analysis for Default&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Boxplot for Balance</span></span><br><span class="line">sns.boxplot(ax=axes[<span class="number">0</span>], x=<span class="string">&#x27;default&#x27;</span>, y=<span class="string">&#x27;balance&#x27;</span>, data=df)</span><br><span class="line">axes[<span class="number">0</span>].set_title(<span class="string">&#x27;Balance vs. Default Status&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Boxplot for Income</span></span><br><span class="line">sns.boxplot(ax=axes[<span class="number">1</span>], x=<span class="string">&#x27;default&#x27;</span>, y=<span class="string">&#x27;income&#x27;</span>, data=df)</span><br><span class="line">axes[<span class="number">1</span>].set_title(<span class="string">&#x27;Income vs. Default Status&#x27;</span>)</span><br><span class="line"></span><br><span class="line">plt.show()</span><br><span class="line"></span><br><span class="line"><span class="comment"># --- 2. Logistic Regression Modeling ---</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Convert categorical &#x27;default&#x27; column to 0s and 1s</span></span><br><span class="line">df[<span class="string">&#x27;default_encoded&#x27;</span>] = df[<span class="string">&#x27;default&#x27;</span>].apply(<span class="keyword">lambda</span> x: <span class="number">1</span> <span class="keyword">if</span> x == <span class="string">&#x27;Yes&#x27;</span> <span class="keyword">else</span> <span class="number">0</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Define features (X) and target (y)</span></span><br><span class="line">X = df[[<span class="string">&#x27;balance&#x27;</span>, <span class="string">&#x27;income&#x27;</span>]]</span><br><span class="line">y = df[<span class="string">&#x27;default_encoded&#x27;</span>]</span><br><span class="line"></span><br><span class="line"><span class="comment"># Split data into training and testing sets</span></span><br><span class="line">X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=<span class="number">0.3</span>, random_state=<span class="number">42</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Create and train the logistic regression model</span></span><br><span class="line">model = LogisticRegression()</span><br><span class="line">model.fit(X_train, y_train)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Make predictions on new data</span></span><br><span class="line"><span class="comment"># For example, a person with a $2000 balance and $50,000 income</span></span><br><span class="line">new_customer = [[<span class="number">2000</span>, <span class="number">50000</span>]]</span><br><span class="line">predicted_prob = model.predict_proba(new_customer)</span><br><span class="line">prediction = model.predict(new_customer)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;Customer data: Balance=2000, Income=50000&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;Probability of No Default vs. Default: <span class="subst">&#123;predicted_prob&#125;</span>&quot;</span>) <span class="comment"># [[P(No), P(Yes)]]</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;Final Prediction (0=No, 1=Yes): <span class="subst">&#123;prediction&#125;</span>&quot;</span>)</span><br></pre></td></tr></table></figure>
-<h1 id="the-mathematical-foundation-of-logistic-regression">2. the
-mathematical foundation of logistic regression</h1>
-<p>This set of slides explains the mathematical foundation of logistic
-regression, how its parameters are estimated using Maximum Likelihood
-Estimation (MLE), and how an iterative algorithm called Newton-Raphson
-is used to perform this estimation.</p>
-<p>逻辑回归的数学基础、如何使用最大似然估计 (MLE)
-估计其参数，以及如何使用名为 Newton-Raphson 的迭代算法进行估计。</p>
-<h2
-id="the-logistic-regression-model-from-probabilities-to-log-odds逻辑回归模型从概率到对数几率">2.1
-The Logistic Regression Model: From Probabilities to
-Log-Odds逻辑回归模型：从概率到对数几率</h2>
-<p>The core of logistic regression is transforming a linear model into a
-valid probability. This is done using the <strong>logistic
-function</strong>, also known as the sigmoid function.
-逻辑回归的核心是将线性模型转换为有效的概率。这可以通过<strong>逻辑函数</strong>（也称为
-S 型函数）来实现。 #### <strong>Key Mathematical Formulas</strong></p>
-<ol type="1">
-<li><p><strong>Probability of Class 1:</strong> The model assumes the
-probability of an observation <span
-class="math inline">\(\mathbf{x}\)</span> belonging to class 1 is given
-by the sigmoid function: <span class="math display">\[
-P(y=1|\mathbf{x}) = \frac{1}{1 + \exp(-\beta^T \mathbf{x})} =
-\frac{\exp(\beta^T \mathbf{x})}{1 + \exp(\beta^T \mathbf{x})}
-\]</span> This function always outputs a value between 0 and 1, making
-it perfect for modeling probabilities.</p></li>
-<li><p><strong>Odds:</strong> The odds are the ratio of the probability
-of an event happening to the probability of it not happening. <span
-class="math display">\[
-\text{Odds} = \frac{P(y=1|\mathbf{x})}{P(y=0|\mathbf{x})} = \exp(\beta^T
-\mathbf{x})
-\]</span></p></li>
-<li><p><strong>Log-Odds (Logit):</strong> By taking the natural
-logarithm of the odds, we get a linear relationship with the predictors.
-This is called the <strong>logit transformation</strong>. <span
-class="math display">\[
-\text{logit}(P(y=1|\mathbf{x})) =
-\log\left(\frac{P(y=1|\mathbf{x})}{P(y=0|\mathbf{x})}\right) = \beta^T
-\mathbf{x}
-\]</span> This final equation is the heart of the model. It states that
-the log-odds of the outcome are a linear function of the predictors.
-This provides a great interpretation: a one-unit increase in a predictor
-<span class="math inline">\(x_j\)</span> changes the log-odds by <span
-class="math inline">\(\beta_j\)</span>.</p></li>
-<li><p><strong>类别 1 的概率</strong>：该模型假设观测值 <span
-class="math inline">\(\mathbf{x}\)</span> 属于类别 1 的概率由 S
-型函数给出： <span class="math display">\[
-P(y=1|\mathbf{x}) = \frac{1}{1 + \exp(-\beta^T \mathbf{x})} =
-\frac{\exp(\beta^T \mathbf{x})}{1 + \exp(\beta^T \mathbf{x})}
-\]</span> 此函数的输出值始终介于 0 和 1
-之间，非常适合用于概率建模。</p></li>
-<li><p><strong>几率</strong>：**几率是事件发生的概率与不发生的概率之比。
-<span class="math display">\[
-\text{Odds} = \frac{P(y=1|\mathbf{x})}{P(y=0|\mathbf{x})} = \exp(\beta^T
-\mathbf{x})
-\]</span></p></li>
-<li><p><strong>对数概率
-(Logit)</strong>：通过对概率取自然对数，我们可以得到概率与预测变量之间的线性关系。这被称为<strong>logit
-变换</strong>。 <span class="math display">\[
-\text{logit}(P(y=1|\mathbf{x})) =
-\log\left(\frac{P(y=1|\mathbf{x})}{P(y=0|\mathbf{x})}\right) = \beta^T
-\mathbf{x}
-\]</span>
-最后一个方程是模型的核心。它指出结果的对数概率是预测变量的线性函数。这提供了一个很好的解释：预测变量
-<span class="math inline">\(x_j\)</span>
-每增加一个单位，对数概率就会改变 <span
-class="math inline">\(\beta_j\)</span>。</p></li>
-</ol>
-<h2
-id="fitting-the-model-maximum-likelihood-estimation-mle-拟合模型最大似然估计-mle">2.2
-Fitting the Model: Maximum Likelihood Estimation (MLE)
-拟合模型：最大似然估计 (MLE)</h2>
-<p>Unlike linear regression, which uses least squares to find the
-best-fit line, logistic regression uses <strong>Maximum Likelihood
-Estimation (MLE)</strong>. The goal of MLE is to find the parameter
-values (the <span class="math inline">\(\beta\)</span> coefficients)
-that maximize the probability of observing the actual data that we have.
-与使用最小二乘法寻找最佳拟合线的线性回归不同，逻辑回归使用<strong>最大似然估计
-(MLE)</strong>。MLE
-的目标是找到使观测到实际数据的概率最大化的参数值（<span
-class="math inline">\(\beta\)</span> 系数）。</p>
-<ol type="1">
-<li><p><strong>Likelihood Function:</strong> This is the joint
-probability of observing all the data points in our sample. Assuming
-each observation is independent, it’s the product of the individual
-probabilities:
-1.<strong>似然函数</strong>：这是观测到样本中所有数据点的联合概率。假设每个观测值都是独立的，它是各个概率的乘积：
-<span class="math display">\[
-L(\beta) = \prod_{i=1}^{n} P(y_i|\mathbf{x}_i)
-\]</span> A clever way to write this for a binary (0/1) outcome is:
-<span class="math display">\[
-L(\beta) = \prod_{i=1}^{n} \frac{\exp(y_i \beta^T \mathbf{x}_i)}{1 +
-\exp(\beta^T \mathbf{x}_i)}
-\]</span></p></li>
-<li><p><strong>Log-Likelihood Function:</strong> Products are difficult
-to work with mathematically, so we work with the logarithm of the
-likelihood, which turns the product into a sum. Maximizing the
-log-likelihood is the same as maximizing the likelihood.</p></li>
-<li><p><strong>对数似然函数</strong>：乘积在数学上很难处理，所以我们使用似然的对数，将乘积转化为和。最大化对数似然与最大化似然相同。
-<span class="math display">\[
-\ell(\beta) = \log(L(\beta)) = \sum_{i=1}^{n} \left[ y_i \beta^T
-\mathbf{x}_i - \log(1 + \exp(\beta^T \mathbf{x}_i)) \right]
-\]</span> <strong>Key Takeaway:</strong> The slides correctly state that
-there is <strong>no explicit formula</strong> to solve for the <span
-class="math inline">\(\hat{\beta}\)</span> that maximizes this function.
-We must find it using a numerical optimization algorithm.
-没有<strong>明确的公式</strong>来求解最大化该函数的<span
-class="math inline">\(\hat{\beta}\)</span>。我们必须使用数值优化算法来找到它。</p></li>
-</ol>
-<h2 id="the-algorithm-newton-raphson-算法牛顿-拉夫森算法">2.3 The
-Algorithm: Newton-Raphson 算法：牛顿-拉夫森算法</h2>
-<p>The slides introduce the <strong>Newton-Raphson algorithm</strong> as
-the method to find the optimal <span
-class="math inline">\(\hat{\beta}\)</span>. It’s an efficient iterative
-algorithm for finding the roots of a function (i.e., where <span
-class="math inline">\(f(x)=0\)</span>).</p>
-<p><strong>How does this apply to logistic regression?</strong> To
-maximize the log-likelihood function <span
-class="math inline">\(\ell(\beta)\)</span>, we need to find the point
-where its derivative (gradient) is equal to zero. So, Newton-Raphson is
-used to solve <span class="math inline">\(\frac{d\ell(\beta)}{d\beta} =
-0\)</span>.</p>
-<p>它是一种高效的迭代算法，用于求函数的根（即，当<span
-class="math inline">\(f(x)=0\)</span>时）。</p>
-<p><strong>这如何应用于逻辑回归？</strong> 为了最大化对数似然函数 <span
-class="math inline">\(\ell(\beta)\)</span>，我们需要找到其导数（梯度）等于零的点。因此，牛顿-拉夫森法用于求解
-<span class="math inline">\(\frac{d\ell(\beta)}{d\beta} =
-0\)</span>。</p>
-<h4 id="the-general-newton-raphson-method"><strong>The General
-Newton-Raphson Method</strong></h4>
-<p>The algorithm starts with an initial guess, <span
-class="math inline">\(x^{old}\)</span>, and iteratively refines it using
-the following update rule, which is based on a Taylor series
-approximation: <span class="math display">\[
-x^{new} = x^{old} - \frac{f(x^{old})}{f&#39;(x^{old})}
-\]</span> where <span class="math inline">\(f&#39;(x)\)</span> is the
-derivative of <span class="math inline">\(f(x)\)</span>. You repeat this
-step until the value of <span class="math inline">\(x\)</span>
-converges.</p>
-<p>该算法从初始估计 <span class="math inline">\(x^{old}\)</span>
-开始，并使用以下基于泰勒级数近似的更新规则迭代地对其进行优化： <span
-class="math display">\[
-x^{new} = x^{old} - \frac{f(x^{old})}{f&#39;(x^{old})}
-\]</span> 其中 <span class="math inline">\(f&#39;(x)\)</span> 是 <span
-class="math inline">\(f(x)\)</span> 的导数。重复此步骤，直到 <span
-class="math inline">\(x\)</span> 的值收敛。</p>
-<h4
-id="important-image-newton-raphson-example-x3---4-0"><strong>Important
-Image: Newton-Raphson Example (<span class="math inline">\(x^3 - 4 =
-0\)</span>)</strong></h4>
-<p>[Image showing iterations of Newton-Raphson]</p>
-<p>This slide is a great illustration of the algorithm’s power. *
-<strong>Goal:</strong> Find <span class="math inline">\(x\)</span> such
-that <span class="math inline">\(f(x) = x^3 - 4 = 0\)</span>. *
-<strong>Function:</strong> <span class="math inline">\(f(x) = x^3 -
-4\)</span> * <strong>Derivative:</strong> <span
-class="math inline">\(f&#39;(x) = 3x^2\)</span> * <strong>Update
-Rule:</strong> <span class="math inline">\(x^{new} = x^{old} -
-\frac{(x^{old})^3 - 4}{3(x^{old})^2}\)</span> Starting with a guess of
-<span class="math inline">\(x^{old} = 2\)</span>, the algorithm
-converges to the true answer (<span class="math inline">\(4^{1/3}
-\approx 1.5874\)</span>) in just 4 steps.</p>
-<ul>
-<li><strong>目标</strong>：找到 <span
-class="math inline">\(x\)</span>，使得 <span class="math inline">\(f(x)
-= x^3 - 4 = 0\)</span>。</li>
-<li><strong>函数</strong>：<span class="math inline">\(f(x) = x^3 -
-4\)</span></li>
-<li><strong>导数</strong>：<span class="math inline">\(f&#39;(x) =
-3x^2\)</span></li>
-<li><strong>更新规则</strong>：<span class="math inline">\(x^{new} =
-x^{old} - \frac{(x^{old})^3 - 4}{3(x^{old})^2}\)</span> 从 <span
-class="math inline">\(x^{old} = 2\)</span> 的猜测开始，该算法仅用 4
-步就收敛到真实答案 (<span class="math inline">\(4^{1/3} \approx
-1.5874\)</span>)。</li>
-</ul>
-<h4 id="code-understanding-python"><strong>Code Understanding
-(Python)</strong></h4>
-<p>The slides show Python code implementing Newton-Raphson. Let’s break
-down the key function.</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line"><span class="comment"># Define the function we want to find the root of</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">f</span>(<span class="params">x</span>):</span><br><span class="line">    <span class="keyword">return</span> np.exp(x) - x*x + <span class="number">3</span> * np.sin(x)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Define its derivative</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">f_prime</span>(<span class="params">x</span>):</span><br><span class="line">    <span class="keyword">return</span> np.exp(x) - <span class="number">2</span>*x + <span class="number">3</span> * np.cos(x)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Newton-Raphson method</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">newton_raphson</span>(<span class="params">x0, tol=<span class="number">1e-10</span>, max_iter=<span class="number">100</span></span>):</span><br><span class="line">    x = x0 <span class="comment"># Start with the initial guess</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(max_iter):</span><br><span class="line">        fx = f(x)      <span class="comment"># Calculate f(x_old)</span></span><br><span class="line">        fpx = f_prime(x) <span class="comment"># Calculate f&#x27;(x_old)</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> fpx == <span class="number">0</span>: <span class="comment"># Cannot divide by zero</span></span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&quot;Zero derivative. No solution found.&quot;</span>)</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">None</span></span><br><span class="line"></span><br><span class="line">        <span class="comment"># This is the core update rule</span></span><br><span class="line">        x_new = x - fx / fpx</span><br><span class="line"></span><br><span class="line">        <span class="comment"># Check if the change is small enough to stop</span></span><br><span class="line">        <span class="keyword">if</span> <span class="built_in">abs</span>(x_new - x) &lt; tol:</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">f&quot;Converged to <span class="subst">&#123;x_new&#125;</span> after <span class="subst">&#123;i+<span class="number">1</span>&#125;</span> iterations.&quot;</span>)</span><br><span class="line">            <span class="keyword">return</span> x_new</span><br><span class="line"></span><br><span class="line">        <span class="comment"># Update x for the next iteration</span></span><br><span class="line">        x = x_new</span><br><span class="line">    </span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;Exceeded maximum iterations. No solution found.&quot;</span>)</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">None</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Initial guess and execution</span></span><br><span class="line">x0 = <span class="number">0.5</span></span><br><span class="line">root = newton_raphson(x0)</span><br></pre></td></tr></table></figure>
-<p>The slides show that with a good initial guess
-(<code>x0 = 0.5</code>), the algorithm converges quickly. With a bad one
-(<code>x0 = 50</code>), it still converges but takes many more steps.
-This highlights the importance of the starting point. The slides also
-show an implementation of <strong>Gradient Descent</strong>, another
-popular optimization algorithm which uses the update rule
-<code>x_new = x - learning_rate * gradient</code>.</p>
-<h1
-id="provide-a-great-case-study-on-logistic-regression-particularly-on-the-important-concept-of-confounding-variables.-heres-a-summary-covering-the-math-code-and-key-insights.">Provide
-a great case study on logistic regression, particularly on the important
-concept of confounding variables. Here’s a summary covering the math,
-code, and key insights.</h1>
-<ol start="3" type="1">
-<li><h1 id="core-concept-logistic-regression-核心概念逻辑回归">Core
-Concept: Logistic Regression 📈 # 核心概念：逻辑回归 📈</h1></li>
-</ol>
-<p>Logistic regression is a statistical method used for <strong>binary
-classification</strong>, which means predicting an outcome that can only
-be one of two things (e.g., Yes/No, True/False, 1/0).</p>
-<p>In this example, the goal is to predict the probability that a
-customer will <strong>default</strong> on a loan (Yes or No) based on
-factors like their account <code>balance</code>, <code>income</code>,
-and whether they are a <code>student</code>.</p>
-<p>The core of logistic regression is the <strong>sigmoid (or logistic)
-function</strong>, which takes any real-valued number and squishes it to
-a value between 0 and 1, representing a probability.</p>
-<p><span class="math display">\[
-\hat{P}(Y=1|X) = \frac{1}{1 + e^{-(\beta_0 + \beta_1 X_1 + ... + \beta_p
-X_p)}}
-\]</span></p>
-<ul>
-<li><span class="math inline">\(\hat{P}(Y=1|X)\)</span> is the predicted
-probability of the outcome being “Yes” (e.g., default).</li>
-<li><span class="math inline">\(\beta_0\)</span> is the intercept.</li>
-<li><span class="math inline">\(\beta_1, ..., \beta_p\)</span> are the
-coefficients for each input variable (<span class="math inline">\(X_1,
-..., X_p\)</span>). The model’s job is to find the best values for these
-<span class="math inline">\(\beta\)</span> coefficients.</li>
-</ul>
-<hr />
-<p>逻辑回归是一种用于<strong>二元分类</strong>的统计方法，这意味着预测结果只能是两种情况之一（例如，是/否、真/假、1/0）。</p>
-<p>在本例中，目标是根据客户账户“余额”、“收入”以及是否为“学生”等因素，预测客户<strong>拖欠</strong>贷款（是或否）的概率。</p>
-<p>逻辑回归的核心是<strong>Sigmoid（或逻辑）函数</strong>，它将任何实数压缩为介于
-0 和 1 之间的值，以表示概率。</p>
-<p><span class="math display">\[
-\hat{P}(Y=1|X) = \frac{1}{1 + e^{-(\beta_0 + \beta_1 X_1 + ... + \beta_p
-X_p)}}
-\]</span></p>
-<ul>
-<li><span class="math inline">\(\hat{P}(Y=1|X)\)</span>
-是结果为“是”（例如，默认）的预测概率。</li>
-<li><span class="math inline">\(\beta_0\)</span> 是截距。</li>
-<li><span class="math inline">\(\beta_1, ..., \beta_p\)</span>
-是每个输入变量 (<span class="math inline">\(X_1, ..., X_p\)</span>)
-的系数。模型的任务是找到这些 <span class="math inline">\(\beta\)</span>
-系数的最佳值。</li>
-</ul>
-<h2 id="how-the-model-learns-mathematical-foundation">3.1 How the Model
-“Learns” (Mathematical Foundation)</h2>
-<p>The slides show that the model’s coefficients (<span
-class="math inline">\(\beta\)</span>) are found using an algorithm like
-<strong>Newton-Raphson</strong>. This is an iterative process to find
-the values that <strong>maximize the log-likelihood function</strong>.
-Think of this as finding the coefficient values that make the observed
-data most
-probable.这是一个迭代过程，用于查找<strong>最大化对数似然函数</strong>的值。可以将其视为查找使观测数据概率最大的系数值。</p>
-<p>The key slide for this is the one titled “Newton-Raphson Iterative
-Algorithm”. It shows the formulas for: * The <strong>Gradient</strong>
-(<span class="math inline">\(\nabla\ell\)</span>): The direction of the
-steepest ascent of the log-likelihood function. * The
-<strong>Hessian</strong> (<span class="math inline">\(H\)</span>): The
-curvature of the log-likelihood function.</p>
-<ul>
-<li><strong>梯度</strong> (<span
-class="math inline">\(\nabla\ell\)</span>)：对数似然函数最陡上升的方向。</li>
-<li><strong>黑森矩阵</strong> (<span
-class="math inline">\(H\)</span>)：对数似然函数的曲率。</li>
-</ul>
-<p>The updating rule is given by: <span class="math display">\[
-\beta^{new} = \beta^{old} - H^{-1}\nabla\ell
-\]</span> This formula is used repeatedly until the coefficient values
-stop changing significantly, meaning the algorithm has converged to the
-best fit. This process is also referred to as <strong>Iteratively
-Reweighted Least Squares (IRLS)</strong>.
-此公式反复使用，直到系数值不再发生显著变化，这意味着算法已收敛到最佳拟合值。此过程也称为<strong>迭代重加权最小二乘法
-(IRLS)</strong>。</p>
-<hr />
-<h2 id="the-puzzle-a-tale-of-two-models">3.2 The Puzzle: A Tale of Two
-Models 🕵️‍♂️</h2>
-<p>The most important story in these slides is how the effect of being a
-student changes depending on the model. This is a classic example of a
-<strong>confounding variable</strong>.</p>
-<h4 id="model-1-simple-logistic-regression-default-vs.-student">Model 1:
-Simple Logistic Regression (Default vs. Student)</h4>
-<p>When predicting default using <em>only</em> student status, the model
-is: <code>default ~ student</code></p>
-<p>From the slides, the coefficients are: * Intercept (<span
-class="math inline">\(\beta_0\)</span>): -3.5041 * student[Yes] (<span
-class="math inline">\(\beta_1\)</span>): <strong>0.4049</strong>
-(positive)</p>
-<p>The equation for the log-odds is: <span class="math display">\[
-\log\left(\frac{P(\text{default})}{1-P(\text{default})}\right) = -3.5041
-+ 0.4049 \times (\text{is\_student})
-\]</span></p>
-<p><strong>Conclusion:</strong> The positive coefficient (0.4049)
-suggests that <strong>students are more likely to default</strong> than
-non-students. The slides calculate the probabilities: * <strong>Student
-Default Probability:</strong> 4.31% * <strong>Non-Student Default
-Probability:</strong> 2.92%</p>
-<p>学生身份的影响如何根据模型而变化。这是一个典型的<strong>混杂变量</strong>的例子。</p>
-<h4 id="模型-1简单逻辑回归违约-vs.-学生">模型 1：简单逻辑回归（违约
-vs. 学生）</h4>
-<p>仅使用学生身份预测违约时，模型为： <code>default ~ student</code></p>
-<p>幻灯片中显示的系数为： * 截距 (<span
-class="math inline">\(\beta_0\)</span>): -3.5041 * 学生[是] (<span
-class="math inline">\(\beta_1\)</span>):
-<strong>0.4049</strong>（正）</p>
-<p>对数概率公式为： <span class="math display">\[
-\log\left(\frac{P(\text{default})}{1-P(\text{default})}\right) = -3.5041
-+ 0.4049 \times (\text{is\_student})
-\]</span></p>
-<p><strong>结论</strong>：正系数 (0.4049)
-表明<strong>学生比非学生更有可能违约</strong>。幻灯片计算了以下概率： *
-<strong>学生违约概率</strong>：4.31% *
-<strong>非学生违约概率</strong>：2.92%</p>
-<h2
-id="model-2-multiple-logistic-regression-default-vs.-all-variables-模型-2多元逻辑回归违约-vs.-所有变量">3.3
-Model 2: Multiple Logistic Regression (Default vs. All Variables) 模型
-2：多元逻辑回归（违约 vs. 所有变量）</h2>
-<p>When we add <code>balance</code> and <code>income</code> to the
-model, it becomes: <code>default ~ student + balance + income</code></p>
-<p>From the slides, the new coefficients are: * Intercept (<span
-class="math inline">\(\beta_0\)</span>): -10.8690 * balance (<span
-class="math inline">\(\beta_1\)</span>): 0.0057 * income (<span
-class="math inline">\(\beta_2\)</span>): 0.0030 * student[Yes] (<span
-class="math inline">\(\beta_3\)</span>): <strong>-0.6468</strong>
-(negative)</p>
-<p><strong>The Shocking Twist!</strong> The coefficient for
-<code>student[Yes]</code> is now <strong>negative</strong>.</p>
-<p><strong>Conclusion:</strong> When we control for balance and income,
-<strong>students are actually <em>less</em> likely to default</strong>
-than non-students with the same balance and income.</p>
-<h4 id="why-the-change-the-confounding-variable-explained">Why the
-Change? The Confounding Variable Explained</h4>
-<p>The key insight, explained on the slide with multi-colored text
-bubbles, is that <strong>students, on average, have higher credit card
-balances</strong>.</p>
-<ul>
-<li>In the simple model, the <code>student</code> variable was
-inadvertently capturing the risk associated with having a high
-<code>balance</code>. The model mistakenly concluded “being a student
-causes default.”</li>
-<li>In the multiple model, the <code>balance</code> variable properly
-accounts for the risk from a high balance. With that effect isolated,
-the <code>student</code> variable can show its true, underlying
-relationship with default, which is negative.</li>
-</ul>
-<p>This demonstrates why it’s crucial to consider multiple relevant
-variables to avoid drawing incorrect conclusions. <strong>The most
-important slides are the ones that present this paradox and its
-explanation.</strong></p>
-<p><strong>令人震惊的转折！</strong> <code>student[Yes]</code>
-的系数现在为<strong>负</strong>。</p>
-<p><strong>结论：</strong>当我们控制余额和收入时，<strong>学生实际上比具有相同余额和收入的非学生更<em>低</em>于违约</strong>。</p>
-<h4 id="为什么会有变化混杂变量解释">为什么会有变化？混杂变量解释</h4>
-<p>幻灯片上用彩色文字气泡解释了关键的见解，即<strong>学生平均拥有更高的信用卡余额</strong>。</p>
-<ul>
-<li>在简单模型中，“学生”变量无意中捕捉到了高余额带来的风险。该模型错误地得出了“学生身份导致违约”的结论。</li>
-<li>在多元模型中，“余额”变量正确地解释了高余额带来的风险。在分离出这一影响后，“学生”变量可以显示其与违约之间真实的潜在关系，即负相关关系。</li>
-</ul>
-<p>这说明了为什么考虑多个相关变量以避免得出错误结论至关重要。</p>
-<hr />
-<h3 id="code-implementation-r-vs.-python">Code Implementation: R
-vs. Python</h3>
-<p>The slides use R’s <code>glm()</code> (Generalized Linear Model)
-function. Here’s how you would replicate this in Python.</p>
-<h4 id="r-code-from-slides">R Code (from slides)</h4>
-<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Simple Model</span></span><br><span class="line">glmod2 <span class="operator">&lt;-</span> glm<span class="punctuation">(</span>default <span class="operator">~</span> student<span class="punctuation">,</span> data<span class="operator">=</span>Default<span class="punctuation">,</span> family<span class="operator">=</span>binomial<span class="punctuation">)</span></span><br><span class="line">summary<span class="punctuation">(</span>glmod2<span class="punctuation">)</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Multiple Model</span></span><br><span class="line">glmod3 <span class="operator">&lt;-</span> glm<span class="punctuation">(</span>default <span class="operator">~</span> .<span class="punctuation">,</span> data<span class="operator">=</span>Default<span class="punctuation">,</span> family<span class="operator">=</span>binomial<span class="punctuation">)</span> <span class="comment"># &#x27;.&#x27; means all other variables</span></span><br><span class="line">summary<span class="punctuation">(</span>glmod3<span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
-<h4 id="python-equivalent">Python Equivalent</h4>
-<p>We can use two popular libraries: <code>statsmodels</code> (which
-gives R-style summaries) and <code>scikit-learn</code> (the standard for
-machine learning).</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"><span class="keyword">import</span> statsmodels.api <span class="keyword">as</span> sm</span><br><span class="line"><span class="keyword">from</span> sklearn.linear_model <span class="keyword">import</span> LogisticRegression</span><br><span class="line"></span><br><span class="line"><span class="comment"># Assume &#x27;Default&#x27; is a pandas DataFrame with columns:</span></span><br><span class="line"><span class="comment"># &#x27;default&#x27; (0/1), &#x27;student&#x27; (0/1), &#x27;balance&#x27;, &#x27;income&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># --- Using statsmodels (recommended for interpretation) ---</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Prepare the data</span></span><br><span class="line"><span class="comment"># For statsmodels, we need to manually add the intercept</span></span><br><span class="line">X_simple = Default[[<span class="string">&#x27;student&#x27;</span>]]</span><br><span class="line">X_simple = sm.add_constant(X_simple)</span><br><span class="line">y = Default[<span class="string">&#x27;default&#x27;</span>]</span><br><span class="line"></span><br><span class="line">X_multiple = Default[[<span class="string">&#x27;student&#x27;</span>, <span class="string">&#x27;balance&#x27;</span>, <span class="string">&#x27;income&#x27;</span>]]</span><br><span class="line">X_multiple = sm.add_constant(X_multiple)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Simple Model: default ~ student</span></span><br><span class="line">model_simple = sm.Logit(y, X_simple).fit()</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;--- Simple Model ---&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(model_simple.summary())</span><br><span class="line"></span><br><span class="line"><span class="comment"># Multiple Model: default ~ student + balance + income</span></span><br><span class="line">model_multiple = sm.Logit(y, X_multiple).fit()</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;\n--- Multiple Model ---&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(model_multiple.summary())</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># --- Using scikit-learn (recommended for prediction tasks) ---</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Prepare the data (scikit-learn adds intercept by default)</span></span><br><span class="line">X_simple_sk = Default[[<span class="string">&#x27;student&#x27;</span>]]</span><br><span class="line">y_sk = Default[<span class="string">&#x27;default&#x27;</span>]</span><br><span class="line"></span><br><span class="line">X_multiple_sk = Default[[<span class="string">&#x27;student&#x27;</span>, <span class="string">&#x27;balance&#x27;</span>, <span class="string">&#x27;income&#x27;</span>]]</span><br><span class="line"></span><br><span class="line"><span class="comment"># Simple Model</span></span><br><span class="line">clf_simple = LogisticRegression().fit(X_simple_sk, y_sk)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;\nSimple Model Intercept (scikit-learn): <span class="subst">&#123;clf_simple.intercept_&#125;</span>&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;Simple Model Coefficient (scikit-learn): <span class="subst">&#123;clf_simple.coef_&#125;</span>&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Multiple Model</span></span><br><span class="line">clf_multiple = LogisticRegression().fit(X_multiple_sk, y_sk)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;\nMultiple Model Intercept (scikit-learn): <span class="subst">&#123;clf_multiple.intercept_&#125;</span>&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;Multiple Model Coefficients (scikit-learn): <span class="subst">&#123;clf_multiple.coef_&#125;</span>&quot;</span>)</span><br></pre></td></tr></table></figure>
-<h1
-id="making-predictions-and-the-decision-boundary-进行预测和决策边界">4
-Making Predictions and the Decision Boundary 🎯进行预测和决策边界</h1>
-<p>Once the model is trained (i.e., we have the coefficients <span
-class="math inline">\(\hat{\beta}\)</span>), we can make predictions.
-一旦模型训练完成（即，我们有了系数 <span
-class="math inline">\(\hat{\beta}\)</span>），我们就可以进行预测了。 ##
-Math Behind Predictions</p>
-<p>The model outputs the <strong>log-odds</strong>, which can be
-converted into a probability. A key concept is the <strong>decision
-boundary</strong>, which is the threshold where the model is uncertain
-(probability = 50%).
-模型输出<strong>对数概率</strong>，它可以转换为概率。一个关键概念是<strong>决策边界</strong>，它是模型不确定的阈值（概率
-= 50%）。</p>
-<ol type="1">
-<li><p><strong>The Estimated Odds</strong>: The core output of the
-linear part of the model is the exponential of the linear equation,
-which gives the odds of the outcome being ‘Yes’ (or 1).
-<strong>估计概率</strong>：模型线性部分的核心输出是线性方程的指数，它给出了结果为“是”（或
-1）的概率。</p>
-<p><span class="math display">\[
-\]</span>$$\frac{\hat{P}(y=1|\mathbf{x}_0)}{\hat{P}(y=0|\mathbf{x}_0)} =
-\exp(\hat{\beta}^\top \mathbf{x}_0)</p>
-<p><span class="math display">\[
-\]</span><span class="math display">\[
-\]</span></p></li>
-<li><p><strong>The Decision Rule</strong>: We classify a new observation
-<span class="math inline">\(\mathbf{x}_0\)</span> by comparing its
-predicted odds to a threshold <span
-class="math inline">\(\delta\)</span>.
-<strong>决策规则</strong>：我们通过比较新观测值 <span
-class="math inline">\(\mathbf{x}_0\)</span> 的预测概率与阈值 <span
-class="math inline">\(\delta\)</span> 来对其进行分类。</p>
-<ul>
-<li>Predict <span class="math inline">\(y=1\)</span> if <span
-class="math inline">\(\exp(\hat{\beta}^\top \mathbf{x}_0) &gt;
-\delta\)</span></li>
-<li>Predict <span class="math inline">\(y=0\)</span> if <span
-class="math inline">\(\exp(\hat{\beta}^\top \mathbf{x}_0) &lt;
-\delta\)</span> A common default is <span
-class="math inline">\(\delta=1\)</span>, which means we predict ‘Yes’ if
-the probability is greater than 0.5.</li>
-</ul></li>
-<li><p><strong>The Linear Boundary</strong>: The decision boundary
-itself is where the odds are exactly equal to the threshold. By taking
-the logarithm, we see that this boundary is a <strong>linear
-equation</strong>. This is why logistic regression is called a
-<strong>linear classifier</strong>.
-<strong>线性边界</strong>：决策边界本身就是概率恰好等于阈值的地方。取对数后，我们发现这个边界是一个<strong>线性方程</strong>。这就是逻辑回归被称为<strong>线性分类器</strong>的原因。
-<span class="math display">\[
-\]</span>$$\hat{\beta}^\top \mathbf{x} = \log(\delta)</p>
-<p><span class="math display">\[
-\]</span>$$For <span class="math inline">\(\delta=1\)</span>, the
-boundary is simply <span class="math inline">\(\hat{\beta}^\top
-\mathbf{x} = 0\)</span>.</p></li>
-</ol>
-<p>This concept is visualized perfectly in the slide titled “Linear
-Classifier,” which shows a straight line neatly separating two classes
-of data points.
-题为“线性分类器”的幻灯片完美地展示了这一概念，它展示了一条直线，将两类数据点巧妙地分隔开来。</p>
-<h2 id="visualizing-the-confounding-effect">Visualizing the Confounding
-Effect</h2>
-<p>The most important image in this set is <strong>Figure 4.3</strong>,
-as it visually explains the confounding puzzle from the first set of
-slides.</p>
-<ul>
-<li><strong>Right Panel (Boxplots)</strong>: This shows that
-<strong>students (Yes) tend to have higher credit card balances</strong>
-than non-students (No). This is the source of the confounding.</li>
-<li><strong>Left Panel (Default Rates)</strong>:
-<ul>
-<li>The <strong>dashed lines</strong> show the <em>overall</em> default
-rates. The orange line (students) is higher than the blue line
-(non-students). This matches our simple model
-(<code>default ~ student</code>).</li>
-<li>The <strong>solid S-shaped curves</strong> show the probability of
-default as a function of balance. For any <em>given</em> balance, the
-blue curve (non-students) is slightly higher than the orange curve
-(students). This means that <strong>at the same level of debt, students
-are <em>less</em> likely to default</strong>. This matches our multiple
-regression model
-(<code>default ~ student + balance + income</code>).</li>
-</ul></li>
-</ul>
-<p>This single figure brilliantly illustrates how a variable can appear
-to have one effect in isolation but the opposite effect when controlling
-for a confounding factor. *
-<strong>右侧面板（箱线图）</strong>：这表明<strong>学生（是）的信用卡余额往往高于非学生（否）。这就是混杂效应的根源。
-* </strong>左图（违约率）<strong>： *
-</strong>虚线<strong>显示<em>总体</em>违约率。橙色线（学生）高于蓝色线（非学生）。这与我们的简单模型（“违约
-~ 学生”）相符。 * </strong>S
-形实线<strong>显示违约概率与余额的关系。对于任何<em>给定</em>的余额，蓝色曲线（非学生）略高于橙色曲线（学生）。这意味着</strong>在相同的债务水平下，学生违约的可能性<em>较小</em>。这与我们的多元回归模型（“违约
-~ 学生 + 余额 + 收入”）相符。</p>
-<p>这张图巧妙地说明了为什么一个变量在单独使用时似乎会产生一种影响，但在控制混杂因素后却会产生相反的影响。</p>
-<h2 id="an-important-edge-case-perfect-separation">An Important Edge
-Case: Perfect Separation ⚠️</h2>
-<p>What happens if the data can be perfectly separated by a straight
-line? 如果数据可以用一条直线完美分离，会发生什么？</p>
-<p>One might think this is the ideal scenario, but it causes a problem
-for the logistic regression algorithm. The model will try to find
-coefficients that make the probabilities for each class as close to 1
-and 0 as possible. To do this, the magnitude of the coefficients (<span
-class="math inline">\(\hat{\beta}\)</span>) must grow infinitely large.
-人们可能认为这是理想情况，但它会给逻辑回归算法带来问题。模型会尝试找到使每个类别的概率尽可能接近
-1 和 0 的系数。为此，系数 (<span
-class="math inline">\(\hat{\beta}\)</span>) 的大小必须无限大。</p>
-<p>The slide “Non-convergence for perfectly separated case” demonstrates
-this:</p>
-<ul>
-<li><p><strong>The Code</strong>: It generates two distinct,
-non-overlapping clusters of data points using Python’s
-<code>scikit-learn</code>.</p></li>
-<li><p><strong>Parameter Estimates Graph</strong>: It shows the
-<code>Intercept</code>, <code>Coefficient 1</code>, and
-<code>Coefficient 2</code> values increasing or decreasing without limit
-as the algorithm runs through more iterations. They never converge to a
-stable value.</p></li>
-<li><p><strong>Decision Boundary Graph</strong>: The decision boundary
-itself might look reasonable, but the underlying coefficients are
-unstable.</p></li>
-<li><p><strong>代码</strong>：它使用 Python 的 <code>scikit-learn</code>
-生成两个不同的、不重叠的数据点聚类。</p></li>
-<li><p><strong>参数估计图</strong>：它显示“截距”、“系数 1”和“系数
-2”的值随着算法迭代次数的增加或减少而无限增大或减小。它们永远不会收敛到一个稳定的值。</p></li>
-<li><p><strong>决策边界图</strong>：决策边界本身可能看起来合理，但底层系数是不稳定的。</p></li>
-</ul>
-<p><strong>Key Takeaway</strong>: If your logistic regression model
-fails to converge, the first thing you should check for is perfect
-separation in your training data.
-<strong>关键要点</strong>：如果您的逻辑回归模型未能收敛，您应该检查的第一件事就是训练数据是否完美分离。</p>
-<h2 id="code-understanding">Code Understanding</h2>
-<p>The slides provide useful code snippets in both R and Python.</p>
-<h2 id="r-code-plotting-predictions">R Code (Plotting Predictions)</h2>
-<p>This code generates the plot with the two S-shaped curves (one for
-students, one for non-students) showing the probability of default as
-balance increases.</p>
-<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator">/</span><span class="operator">/</span> <span class="comment"># Create a data frame for prediction with a range of balances</span></span><br><span class="line"><span class="operator">/</span><span class="operator">/</span> <span class="comment"># One version for students, one for non-students</span></span><br><span class="line">Default.st <span class="operator">&lt;-</span> data.frame<span class="punctuation">(</span>balance<span class="operator">=</span>seq<span class="punctuation">(</span><span class="number">500</span><span class="punctuation">,</span> <span class="number">2500</span><span class="punctuation">,</span> by<span class="operator">=</span><span class="number">1</span><span class="punctuation">)</span><span class="punctuation">,</span> student<span class="operator">=</span><span class="string">&quot;Yes&quot;</span><span class="punctuation">)</span></span><br><span class="line">Default.nonst <span class="operator">&lt;-</span> data.frame<span class="punctuation">(</span>balance<span class="operator">=</span>seq<span class="punctuation">(</span><span class="number">500</span><span class="punctuation">,</span> <span class="number">2500</span><span class="punctuation">,</span> by<span class="operator">=</span><span class="number">1</span><span class="punctuation">)</span><span class="punctuation">,</span> student<span class="operator">=</span><span class="string">&quot;No&quot;</span><span class="punctuation">)</span></span><br><span class="line"></span><br><span class="line"><span class="operator">/</span><span class="operator">/</span> <span class="comment"># Use the trained multiple regression model (glmod3) to predict probabilities</span></span><br><span class="line">pred.st <span class="operator">&lt;-</span> predict<span class="punctuation">(</span>glmod3<span class="punctuation">,</span> Default.st<span class="punctuation">,</span> type<span class="operator">=</span><span class="string">&quot;response&quot;</span><span class="punctuation">)</span></span><br><span class="line">pred.nonst <span class="operator">&lt;-</span> predict<span class="punctuation">(</span>glmod3<span class="punctuation">,</span> Default.nonst<span class="punctuation">,</span> type<span class="operator">=</span><span class="string">&quot;response&quot;</span><span class="punctuation">)</span></span><br><span class="line"></span><br><span class="line"><span class="operator">/</span><span class="operator">/</span> <span class="comment"># Plot the results</span></span><br><span class="line">plot<span class="punctuation">(</span>Default.st<span class="operator">$</span>balance<span class="punctuation">,</span> pred.st<span class="punctuation">,</span> type<span class="operator">=</span><span class="string">&quot;l&quot;</span><span class="punctuation">,</span> col<span class="operator">=</span><span class="string">&quot;red&quot;</span><span class="punctuation">,</span> ...<span class="punctuation">)</span> <span class="operator">/</span><span class="operator">/</span> Students</span><br><span class="line">lines<span class="punctuation">(</span>Default.nonst<span class="operator">$</span>balance<span class="punctuation">,</span> pred.nonst<span class="punctuation">,</span> col<span class="operator">=</span><span class="string">&quot;blue&quot;</span><span class="punctuation">,</span> ...<span class="punctuation">)</span> <span class="operator">/</span><span class="operator">/</span> Non<span class="operator">-</span>students</span><br></pre></td></tr></table></figure>
-<h4 id="python-code-visualizing-the-decision-boundary">Python Code
-(Visualizing the Decision Boundary)</h4>
-<p>This Python code uses <code>scikit-learn</code> and
-<code>matplotlib</code> to create the plot showing the linear decision
-boundary.</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Import necessary libraries</span></span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">from</span> sklearn.datasets <span class="keyword">import</span> make_classification</span><br><span class="line"><span class="keyword">from</span> sklearn.linear_model <span class="keyword">import</span> LogisticRegression</span><br><span class="line"></span><br><span class="line"><span class="comment"># 1. Generate synthetic data with two classes</span></span><br><span class="line">X, y = make_classification(...)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 2. Initialize and fit the logistic regression model</span></span><br><span class="line">model = LogisticRegression()</span><br><span class="line">model.fit(X, y)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 3. Create a mesh grid of points to make predictions over the entire plot area</span></span><br><span class="line">xx, yy = np.meshgrid(...)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 4. Predict the probability for each point on the grid</span></span><br><span class="line">probs = model.predict_proba(np.c_[xx.ravel(), yy.ravel()])[:, <span class="number">1</span>]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 5. Plot the decision boundary where the probability is 0.5</span></span><br><span class="line">plt.contour(xx, yy, probs.reshape(xx.shape), levels=[<span class="number">0.5</span>], ...)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 6. Scatter plot the actual data points</span></span><br><span class="line">plt.scatter(X[:, <span class="number">0</span>], X[:, <span class="number">1</span>], c=y, ...)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
-<h3 id="other-important-remarks">Other Important Remarks</h3>
-<p>The “Remarks” slide briefly mentions some key extensions:</p>
-<ul>
-<li><p><strong>Probit Model</strong>: An alternative to logistic
-regression that uses the cumulative distribution function (CDF) of the
-standard normal distribution instead of the sigmoid function. The
-results are often very similar.</p></li>
-<li><p><strong>Softmax Regression</strong>: An extension of logistic
-regression used for multi-class classification (when there are more than
-two possible outcomes).</p></li>
-<li><p><strong>Probit
-模型</strong>：逻辑回归的替代方法，它使用标准正态分布的累积分布函数
-(CDF) 代替 S 型函数。结果通常非常相似。</p></li>
-<li><p><strong>Softmax
-回归</strong>：逻辑回归的扩展，用于多类分类（当存在两个以上可能结果时）。</p></li>
-</ul>
-<h1
-id="here-is-a-summary-of-the-slides-on-linear-discriminant-analysis-lda-including-the-key-mathematical-formulas-visual-explanations-and-how-to-implement-it-in-python.">5.
-Here is a summary of the slides on Linear Discriminant Analysis (LDA),
-including the key mathematical formulas, visual explanations, and how to
-implement it in Python.</h1>
-<h2
-id="the-main-idea-classification-using-probabilities-使用概率进行分类">The
-Main Idea: Classification Using Probabilities 使用概率进行分类</h2>
-<p>Linear Discriminant Analysis (LDA) is a classification method. For a
-given input <strong>x</strong>, it calculates the probability that
-<strong>x</strong> belongs to each class and then assigns
-<strong>x</strong> to the class with the <strong>highest
-probability</strong>.</p>
-<p>It does this using <strong>Bayes’ Theorem</strong>, which provides a
-formula for the posterior probability <span class="math inline">\(P(Y=k
-| X=x)\)</span>, or the probability that the class is <span
-class="math inline">\(k\)</span> given the input <span
-class="math inline">\(x\)</span>. 线性判别分析 (LDA)
-是一种分类方法。对于给定的输入 <strong>x</strong>，它计算
-<strong>x</strong> 属于每个类别的概率，然后将 <strong>x</strong>
-分配给<strong>概率最高</strong>的类别。</p>
-<p>它使用<strong>贝叶斯定理</strong>来实现这一点，该定理提供了后验概率
-<span class="math inline">\(P(Y=k | X=x)\)</span> 的公式，即给定输入
-<span class="math inline">\(x\)</span>，该类别属于 <span
-class="math inline">\(k\)</span> 的概率。 <span class="math display">\[
-p_k(x) = P(Y=k|X=x) = \frac{\pi_k f_k(x)}{\sum_{l=1}^{K} \pi_l f_l(x)}
-\]</span></p>
-<ul>
-<li><span class="math inline">\(p_k(x)\)</span> is the <strong>posterior
-probability</strong> we want to maximize.</li>
-<li><span class="math inline">\(\pi_k = P(Y=k)\)</span> is the
-<strong>prior probability</strong> of class <span
-class="math inline">\(k\)</span> (how common the class is overall).</li>
-<li><span class="math inline">\(f_k(x) = f(x|Y=k)\)</span> is the
-<strong>class-conditional probability density function</strong> of
-observing input <span class="math inline">\(x\)</span> if it belongs to
-class <span class="math inline">\(k\)</span>.</li>
-</ul>
-<p>To classify a new observation <span class="math inline">\(x\)</span>,
-we simply find the class <span class="math inline">\(k\)</span> that
-makes <span class="math inline">\(p_k(x)\)</span> the largest.
-为了对新的观察值 <span class="math inline">\(x\)</span>
-进行分类，我们只需找到使 <span class="math inline">\(p_k(x)\)</span>
-最大的类别 <span class="math inline">\(k\)</span> 即可。</p>
-<hr />
-<h2 id="key-assumptions-of-lda">Key Assumptions of LDA</h2>
-<p>LDA’s power comes from a specific, simplifying assumption about the
-data’s distribution. LDA
-的强大之处在于它对数据分布进行了特定的简化假设。</p>
-<ol type="1">
-<li><p><strong>Gaussian Distribution:</strong> LDA assumes that the data
-within each class <span class="math inline">\(k\)</span> follows a
-p-dimensional multivariate normal (or Gaussian) distribution, denoted as
-<span class="math inline">\(X|Y=k \sim \mathcal{N}(\mu_k,
-\Sigma)\)</span>.</p></li>
-<li><p><strong>Common Covariance:</strong> A crucial assumption is that
-all classes share the <strong>same covariance matrix</strong> <span
-class="math inline">\(\Sigma\)</span>. This means that while the classes
-may have different centers (means, <span
-class="math inline">\(\mu_k\)</span>), their shape and orientation
-(covariance, <span class="math inline">\(\Sigma\)</span>) are
-identical.</p></li>
-<li><p><strong>高斯分布</strong>：LDA 假设每个类 <span
-class="math inline">\(k\)</span> 中的数据服从 p
-维多元正态（或高斯）分布，表示为 <span class="math inline">\(X|Y=k \sim
-\mathcal{N}(\mu_k, \Sigma)\)</span>。</p></li>
-<li><p><strong>共同协方差</strong>：一个关键假设是所有类共享<strong>相同的协方差矩阵</strong>
-<span
-class="math inline">\(\Sigma\)</span>。这意味着虽然类可能具有不同的中心（均值，<span
-class="math inline">\(\mu_k\)</span>），但它们的形状和方向（协方差，<span
-class="math inline">\(\Sigma\)</span>）是相同的。</p></li>
-</ol>
-<p>The probability density function for a class <span
-class="math inline">\(k\)</span> is: <span class="math display">\[
-f_k(x) = \frac{1}{(2\pi)^{p/2}|\Sigma|^{1/2}} \exp \left( -\frac{1}{2}(x
-- \mu_k)^T \Sigma^{-1} (x - \mu_k) \right)
-\]</span></p>
-<p>The image above (from your slide “Knowing normal distribution”)
-illustrates this. The two “bells” have different centers (different
-<span class="math inline">\(\mu_k\)</span>) but similar shapes. The one
-on the right is “tilted,” indicating correlation between variables,
-which is captured in the shared covariance matrix <span
-class="math inline">\(\Sigma\)</span>.
-上图（摘自幻灯片“了解正态分布”）说明了这一点。两个“钟”形的中心不同（<span
-class="math inline">\(\mu_k\)</span>
-不同），但形状相似。右边的钟形“倾斜”，表示变量之间存在相关性，这体现在共享协方差矩阵
-<span class="math inline">\(\Sigma\)</span> 中。</p>
-<hr />
-<h2 id="the-math-behind-lda-the-discriminant-function-判别函数">The Math
-Behind LDA: The Discriminant Function 判别函数</h2>
-<p>Since we only need to find the class <span
-class="math inline">\(k\)</span> that maximizes the posterior
-probability <span class="math inline">\(p_k(x)\)</span>, we can simplify
-the math. The denominator in Bayes’ theorem is the same for all classes,
-so we only need to maximize the numerator: <span
-class="math inline">\(\pi_k f_k(x)\)</span>.
-由于我们只需要找到使后验概率 <span class="math inline">\(p_k(x)\)</span>
-最大化的类别 <span
-class="math inline">\(k\)</span>，因此可以简化数学计算。贝叶斯定理中的分母对于所有类别都是相同的，因此我们只需要最大化分子：<span
-class="math inline">\(\pi_k f_k(x)\)</span>。 Taking the logarithm
-(which doesn’t change which class is maximal) and removing constant
-terms gives us the <strong>linear discriminant function</strong>, <span
-class="math inline">\(\delta_k(x)\)</span>:
-取对数（这不会改变哪个类别是最大值）并移除常数项，得到<strong>线性判别函数</strong>，<span
-class="math inline">\(\delta_k(x)\)</span>：</p>
-<p><span class="math display">\[
-\delta_k(x) = x^T \Sigma^{-1} \mu_k - \frac{1}{2} \mu_k^T \Sigma^{-1}
-\mu_k + \log(\pi_k)
-\]</span></p>
-<p>This function is <strong>linear</strong> in <span
-class="math inline">\(x\)</span>, which is why the method is called
-<em>Linear</em> Discriminant Analysis. The decision boundary between any
-two classes, say class <span class="math inline">\(k\)</span> and class
-<span class="math inline">\(l\)</span>, is the set of points where <span
-class="math inline">\(\delta_k(x) = \delta_l(x)\)</span>, which defines
-a linear hyperplane. 该函数关于 <span class="math inline">\(x\)</span>
-是<strong>线性</strong>的，因此该方法被称为<em>线性</em>判别分析。任意两个类别（例如类别
-<span class="math inline">\(k\)</span> 和类别 <span
-class="math inline">\(l\)</span>）之间的决策边界是满足 <span
-class="math inline">\(\delta_k(x) = \delta_l(x)\)</span>
-的点的集合，这定义了一个线性超平面。</p>
-<p>The image above (from your “Graph of LDA” slide) is very important. *
-<strong>Left:</strong> The ellipses show the true 95% probability
-contours for three Gaussian classes. The dashed lines are the ideal
-Bayes decision boundaries, which are perfectly linear because the
-assumption of common covariance holds. * <strong>Right:</strong> This
-shows a sample of data points drawn from those distributions. The solid
-lines are the LDA decision boundaries calculated from the sample. They
-are a very good estimate of the ideal boundaries. 上图（来自您的“LDA
-图”幻灯片）非常重要。 *
-<strong>左图：</strong>椭圆显示了三个高斯类别的真实 95%
-概率轮廓。虚线是理想的贝叶斯决策边界，由于共同协方差假设成立，因此它们是完美的线性。
-*
-<strong>右图：</strong>这显示了从这些分布中抽取的数据点样本。实线是根据样本计算出的
-LDA 决策边界。它们是对理想边界的非常好的估计。 ***</p>
-<h2
-id="practical-implementation-estimating-the-parameters-实际应用估计参数">Practical
-Implementation: Estimating the Parameters 实际应用：估计参数</h2>
-<p>In a real-world scenario, we don’t know the true parameters (<span
-class="math inline">\(\mu_k\)</span>, <span
-class="math inline">\(\Sigma\)</span>, <span
-class="math inline">\(\pi_k\)</span>). Instead, we
-<strong>estimate</strong> them from our training data (<span
-class="math inline">\(n\)</span> total samples, with <span
-class="math inline">\(n_k\)</span> samples in class <span
-class="math inline">\(k\)</span>).
-在实际场景中，我们不知道真正的参数（<span
-class="math inline">\(\mu_k\)</span>、<span
-class="math inline">\(\Sigma\)</span>、<span
-class="math inline">\(\pi_k\)</span>）。相反，我们根据训练数据（<span
-class="math inline">\(n\)</span> 个样本，<span
-class="math inline">\(n_k\)</span> 个样本属于 <span
-class="math inline">\(k\)</span> 类）来<strong>估计</strong>它们。</p>
-<ul>
-<li><strong>Prior Probability (<span
-class="math inline">\(\hat{\pi}_k\)</span>):</strong> The proportion of
-training samples in class <span class="math inline">\(k\)</span>. <span
-class="math display">\[\hat{\pi}_k = \frac{n_k}{n}\]</span></li>
-<li><strong>Class Mean (<span
-class="math inline">\(\hat{\mu}_k\)</span>):</strong> The average of the
-training samples in class <span class="math inline">\(k\)</span>. <span
-class="math display">\[\hat{\mu}_k = \frac{1}{n_k} \sum_{i: y_i=k}
-x_i\]</span></li>
-<li><strong>Common Covariance (<span
-class="math inline">\(\hat{\Sigma}\)</span>):</strong> A weighted
-average of the sample covariance matrices for each class. This is often
-called the “pooled” covariance. <span
-class="math display">\[\hat{\Sigma} = \frac{1}{n-K} \sum_{k=1}^{K}
-\sum_{i: y_i=k} (x_i - \hat{\mu}_k)(x_i - \hat{\mu}_k)^T\]</span></li>
-<li><strong>先验概率 (<span
-class="math inline">\(\hat{\pi}_k\)</span>)：</strong>训练样本在 <span
-class="math inline">\(k\)</span> 类中的比例。 <span
-class="math display">\[\hat{\pi}_k = \frac{n_k}{n}\]</span></li>
-<li><strong>类别均值 (<span
-class="math inline">\(\hat{\mu}_k\)</span>)：</strong>训练样本在 <span
-class="math inline">\(k\)</span> 类中的平均值。 <span
-class="math display">\[\hat{\mu}_k = \frac{1}{n_k} \sum_{i: y_i=k}
-x_i\]</span></li>
-<li><strong>公共协方差 (<span
-class="math inline">\(\hat{\Sigma}\)</span>)：</strong>每个类的样本协方差矩阵的加权平均值。这通常被称为“合并”协方差。
-<span class="math display">\[\hat{\Sigma} = \frac{1}{n-K} \sum_{k=1}^{K}
-\sum_{i: y_i=k} (x_i - \hat{\mu}_k)(x_i - \hat{\mu}_k)^T\]</span></li>
-</ul>
-<p>We then plug these estimates into the discriminant function to get
-<span class="math inline">\(\hat{\delta}_k(x)\)</span> and classify a
-new observation <span class="math inline">\(x\)</span> to the class with
-the largest score. 然后，我们将这些估计值代入判别函数，得到 <span
-class="math inline">\(\hat{\delta}_k(x)\)</span>，并将新的观测值 <span
-class="math inline">\(x\)</span> 归类到得分最高的类别。 ***</p>
-<h2 id="evaluating-performance">Evaluating Performance</h2>
-<p>After training the model, we evaluate its performance using a
-<strong>confusion matrix</strong>.
-训练模型后，我们使用<strong>混淆矩阵</strong>来评估其性能。</p>
-<p>This matrix shows the true classes versus the predicted classes. *
-<strong>Diagonal elements</strong> (9644, 81) are correct predictions. *
-<strong>Off-diagonal elements</strong> (23, 252) are errors.
-该矩阵显示了真实类别与预测类别的对比。 * <strong>对角线元素</strong>
-(9644, 81) 表示正确预测。 * <strong>非对角线元素</strong> (23, 252)
-表示错误预测。</p>
-<p>From this matrix, we can calculate key metrics: * <strong>Overall
-Error Rate:</strong> Total incorrect predictions / Total predictions. *
-Example: <span class="math inline">\((252 + 23) / 10000 =
-2.75\%\)</span> * <strong>Sensitivity (True Positive Rate):</strong>
-Correctly predicted positives / Total actual positives. It answers: “Of
-all the people who actually defaulted, what fraction did we catch?” *
-Example: <span class="math inline">\(81 / 333 = 24.3\%\)</span>. The
-sensitivity is <span class="math inline">\(1 - 75.7\% = 24.3\%\)</span>.
-* <strong>Specificity (True Negative Rate):</strong> Correctly predicted
-negatives / Total actual negatives. It answers: “Of all the people who
-did not default, what fraction did we correctly identify?” * Example:
-<span class="math inline">\(9644 / 9667 = 99.8\%\)</span>. The
-specificity is <span class="math inline">\(1 - 0.24\% =
-99.8\%\)</span>.</p>
-<p>The example in your slides shows a high error rate for “default”
-people (75.7%) because the classes are <strong>unbalanced</strong>—there
-are far fewer defaulters. This highlights the importance of looking at
-class-specific metrics, not just the overall error rate.</p>
-<hr />
-<h2 id="python-code-understanding">Python Code Understanding</h2>
-<p>In Python, you can easily implement LDA using the
-<code>scikit-learn</code> library. The code conceptually mirrors the
-steps we discussed.</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">from</span> sklearn.discriminant_analysis <span class="keyword">import</span> LinearDiscriminantAnalysis</span><br><span class="line"><span class="keyword">from</span> sklearn.model_selection <span class="keyword">import</span> train_test_split</span><br><span class="line"><span class="keyword">from</span> sklearn.metrics <span class="keyword">import</span> confusion_matrix, classification_report</span><br><span class="line"></span><br><span class="line"><span class="comment"># Assume you have your data X (features) and y (labels)</span></span><br><span class="line"><span class="comment"># X = features (e.g., balance, income)</span></span><br><span class="line"><span class="comment"># y = labels (e.g., 0 for &#x27;no-default&#x27;, 1 for &#x27;default&#x27;)</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 1. Split data into training and testing sets</span></span><br><span class="line">X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=<span class="number">0.3</span>, random_state=<span class="number">42</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 2. Create an instance of the LDA model</span></span><br><span class="line">lda = LinearDiscriminantAnalysis()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 3. Fit the model to the training data</span></span><br><span class="line"><span class="comment"># This is where the model calculates the estimates:</span></span><br><span class="line"><span class="comment">#  - Prior probabilities (pi_k)</span></span><br><span class="line"><span class="comment">#  - Class means (mu_k)</span></span><br><span class="line"><span class="comment">#  - Pooled covariance matrix (Sigma)</span></span><br><span class="line">lda.fit(X_train, y_train)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 4. Make predictions on new, unseen data</span></span><br><span class="line">predictions = lda.predict(X_test)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 5. Evaluate the model&#x27;s performance</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Confusion Matrix:&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(confusion_matrix(y_test, predictions))</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;\nClassification Report:&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(classification_report(y_test, predictions))</span><br></pre></td></tr></table></figure>
-<ul>
-<li><code>LinearDiscriminantAnalysis()</code> creates the classifier
-object.</li>
-<li><code>lda.fit(X_train, y_train)</code> is the core training step
-where the model learns the <span
-class="math inline">\(\hat{\pi}_k\)</span>, <span
-class="math inline">\(\hat{\mu}_k\)</span>, and <span
-class="math inline">\(\hat{\Sigma}\)</span> parameters from the
-data.</li>
-<li><code>lda.predict(X_test)</code> uses the learned discriminant
-function <span class="math inline">\(\hat{\delta}_k(x)\)</span> to
-classify each sample in the test set.</li>
-<li><code>confusion_matrix</code> and <code>classification_report</code>
-are tools to evaluate the results, just like in the slides.</li>
-</ul>
-<h1
-id="here-is-a-summary-of-the-provided-slides-on-linear-discriminant-analysis-lda-focusing-on-mathematical-concepts-python-code-interpretation-and-key-visuals.">6.
-Here is a summary of the provided slides on Linear Discriminant Analysis
-(LDA), focusing on mathematical concepts, Python code interpretation,
-and key visuals.</h1>
-<h2 id="core-concept-lda-for-classification">Core Concept: LDA for
-Classification</h2>
-<p>Linear Discriminant Analysis (LDA) is a classification method that
-models the probability that an observation belongs to a certain class.
-It works by finding a linear combination of features that best separates
-two or more classes.</p>
-<p>The decision is based on <strong>Bayes’ theorem</strong>. For a given
-observation with features <span class="math inline">\(X=x\)</span>, LDA
-calculates the <strong>posterior probability</strong>, <span
-class="math inline">\(p_k(x) = Pr(Y=k|X=x)\)</span>, for each class
-<span class="math inline">\(k\)</span>. This is the probability that the
-observation belongs to class <span class="math inline">\(k\)</span>
-given its features. 线性判别分析 (LDA)
-是一种分类方法，它对观测值属于某个类别的概率进行建模。它的工作原理是找到能够最好地区分两个或多个类别的特征的线性组合。</p>
-<p>该决策基于<strong>贝叶斯定理</strong>。对于特征为 <span
-class="math inline">\(X=x\)</span> 的给定观测值，LDA 会计算每个类别
-<span class="math inline">\(k\)</span>
-的<strong>后验概率</strong>，<span class="math inline">\(p_k(x) =
-Pr(Y=k|X=x)\)</span>。这是给定观测值的特征后，该观测值属于类别 <span
-class="math inline">\(k\)</span> 的概率。</p>
-<p>By default, the Bayes classifier assigns an observation to the class
-with the highest posterior probability. For a binary (two-class) problem
-like ‘Yes’ vs. ‘No’, this means:
-默认情况下，贝叶斯分类器将观测值分配给后验概率最高的类别。对于像“是”与“否”这样的二分类问题，这意味着：</p>
-<ul>
-<li>Assign to ‘Yes’ if <span class="math inline">\(Pr(Y=\text{Yes}|X=x)
-&gt; 0.5\)</span></li>
-<li>Assign to ‘No’ otherwise</li>
-</ul>
-<h2 id="modifying-the-decision-threshold">Modifying the Decision
-Threshold</h2>
-<p>The default 0.5 threshold isn’t always optimal. In many real-world
-scenarios, the cost of one type of error is much higher than another.
-For example, in credit card default prediction: 默认的 0.5
-阈值并非总是最优的。在许多实际场景中，一种错误的代价远高于另一种。例如，在信用卡违约预测中：</p>
-<ul>
-<li><strong>False Negative:</strong> Incorrectly classifying a person
-who will default as someone who won’t. (The bank loses money).</li>
-<li><strong>False Positive:</strong> Incorrectly classifying a person
-who won’t default as someone who will. (The bank loses a potential
-customer).</li>
-</ul>
-<p>A bank might decide that missing a defaulter is much worse than
-denying a good customer. To catch more potential defaulters, they can
-<strong>lower the probability threshold</strong>.
-银行可能会认为错过一个违约者比拒绝一个优质客户更糟糕。为了捕捉更多潜在的违约者，他们可以<strong>降低概率阈值</strong>。</p>
-<p>A modified rule could be: <span class="math display">\[
-Pr(\text{default}=\text{Yes}|X=x) &gt; 0.2
-\]</span> This makes the model more “sensitive” to flagging potential
-defaulters, even at the cost of misclassifying more non-defaulters.
-降低阈值<strong>会提高敏感度</strong>，但<strong>会降低特异性</strong>。</p>
-<p>This decision leads to a <strong>trade-off</strong> between two key
-performance metrics: * <strong>Sensitivity (True Positive
-Rate):</strong> The ability to correctly identify positive cases. (e.g.,
-<code>Correctly identified defaulters / Total actual defaulters</code>).
-* <strong>Specificity (True Negative Rate):</strong> The ability to
-correctly identify negative cases. (e.g.,
-<code>Correctly identified non-defaulters / Total actual non-defaulters</code>).</p>
-<p>这一决策会导致两个关键绩效指标之间的<strong>权衡</strong>： *
-<strong>敏感度（真阳性率）：</strong>正确识别阳性案例的能力。（例如，“正确识别的违约者/实际违约者总数”）。
-*
-<strong>特异性（真阴性率）：</strong>正确识别阴性案例的能力。（例如，“正确识别的非违约者/实际非违约者总数”）。</p>
-<p>Lowering the threshold <strong>increases sensitivity</strong> but
-<strong>decreases specificity</strong>. ## Python Code Explained</p>
-<p>The slides show how to implement and adjust LDA using Python’s
-<code>scikit-learn</code> library.</p>
-<h2 id="basic-lda-implementation">Basic LDA Implementation</h2>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Import the necessary library</span></span><br><span class="line"><span class="keyword">from</span> sklearn.discriminant_analysis <span class="keyword">import</span> LinearDiscriminantAnalysis</span><br><span class="line"></span><br><span class="line"><span class="comment"># Initialize and train the LDA model</span></span><br><span class="line">lda = LinearDiscriminantAnalysis()</span><br><span class="line">lda_train = lda.fit(X, y)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Get predictions using the default 0.5 threshold</span></span><br><span class="line">y_pred = lda.predict(X)</span><br></pre></td></tr></table></figure>
-<p>This code trains an LDA model and makes predictions using the
-standard 50% probability boundary.</p>
-<h2 id="adjusting-the-prediction-threshold">Adjusting the Prediction
-Threshold</h2>
-<p>To use a custom threshold (e.g., 0.2), you don’t use the
-<code>.predict()</code> method. Instead, you get the class probabilities
-with <code>.predict_proba()</code> and apply the threshold manually.</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 1. Get the probabilities for each class</span></span><br><span class="line"><span class="comment"># lda.predict_proba(X) returns an array like [[P(No), P(Yes)], ...]</span></span><br><span class="line"><span class="comment"># We select the second column [:, 1] for the &#x27;Yes&#x27; class probability</span></span><br><span class="line">lda_probs = lda.predict_proba(X)[:, <span class="number">1</span>]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 2. Define a custom threshold</span></span><br><span class="line">threshold = <span class="number">0.2</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 3. Apply the threshold to get new predictions</span></span><br><span class="line"><span class="comment"># This creates a boolean array (True where prob &gt; 0.2, else False)</span></span><br><span class="line"><span class="comment"># We then convert True/False to &#x27;Yes&#x27;/&#x27;No&#x27; labels</span></span><br><span class="line">lda_pred1 = np.where(lda_probs &gt; threshold, <span class="string">&quot;Yes&quot;</span>, <span class="string">&quot;No&quot;</span>)</span><br></pre></td></tr></table></figure>
-<p>This is the core technique for tuning the classifier’s behavior to
-meet specific business needs, as demonstrated on slides 55 and 56 for
-both LDA and Logistic Regression.</p>
-<h2 id="important-images-to-understand">Important Images to
-Understand</h2>
-<ol type="1">
-<li><strong>Confusion Matrix (Slide 49):</strong> This table is crucial.
-It breaks down the model’s predictions into True Positives, True
-Negatives, False Positives, and False Negatives. All key metrics like
-error rate, sensitivity, and specificity are calculated from this
-matrix. <strong>混淆矩阵（幻灯片
-49）：</strong>这张表至关重要。它将模型的预测分解为真阳性、真阴性、假阳性和假阴性。所有关键指标，例如错误率、灵敏度和特异性，都基于此矩阵计算得出。</li>
-<li><strong>LDA Decision Boundaries (Slide 51):</strong> This plot
-provides a powerful visual intuition. It shows the data points for two
-classes and the decision boundary line. The different parallel lines
-show how changing the threshold from 0.5 to 0.1 or 0.9 shifts the
-boundary, making the model classify more or fewer points into the
-minority class. <strong>LDA 决策边界（幻灯片
-51）：</strong>这张图提供了强大的视觉直观性。它展示了两个类别的数据点和决策边界线。不同的平行线显示了将阈值从
-0.5 更改为 0.1 或 0.9
-时边界如何移动，从而使模型将更多或更少的点归入少数类</li>
-<li><strong>Error Rate Tradeoff Curve (Slide 53):</strong> This graph is
-the most important for understanding the business implication of
-changing the threshold. It clearly shows that as the threshold changes,
-the error rate for one class goes down while the error rate for the
-other goes up. The overall error is minimized at a certain point, but
-that may not be the optimal point from a business perspective.
-<strong>错误率权衡曲线（幻灯片
-53）：</strong>这张图对于理解更改阈值的业务含义至关重要。它清楚地表明，随着阈值的变化，一个类别的错误率下降，而另一个类别的错误率上升。总体误差在某个点达到最小，但从业务角度来看，这可能并非最佳点。</li>
-<li><strong>ROC Curve (Slides 54 &amp; 55):</strong> The Receiver
-Operating Characteristic (ROC) curve plots Sensitivity vs. (1 -
-Specificity) for <em>all possible thresholds</em>. An ideal classifier
-has a curve that “hugs” the top-left corner, indicating high sensitivity
-and high specificity. It’s a standard way to visualize and compare the
-overall performance of different classifiers. <strong>ROC 曲线（幻灯片
-54 和 55）：</strong> 接收者操作特性 (ROC)
-曲线绘制了<em>所有可能阈值</em>的灵敏度与（1 -
-特异性）的关系。理想的分类器曲线“紧贴”左上角，表示高灵敏度和高特异性。这是可视化和比较不同分类器整体性能的标准方法。</li>
-</ol>
-<h1
-id="here-is-a-summary-of-the-provided-slides-on-linear-and-quadratic-discriminant-analysis-including-the-key-formulas-python-code-equivalents-and-explanations-of-the-important-concepts.">7.
-Here is a summary of the provided slides on Linear and Quadratic
-Discriminant Analysis, including the key formulas, Python code
-equivalents, and explanations of the important concepts.</h1>
-<h2 id="key-goal-classification"><strong>Key Goal:
-Classification</strong></h2>
-<p>Both <strong>Linear Discriminant Analysis (LDA)</strong> and
-<strong>Quadratic Discriminant Analysis (QDA)</strong> are
-classification algorithms. Their main goal is to find a decision
-boundary to separate different classes (e.g., “default” vs. “not
-default”) in the data. <strong>线性判别分析 (LDA)</strong> 和
-<strong>二次判别分析 (QDA)</strong>
-都是分类算法。它们的主要目标是找到一个决策边界来区分数据中的不同类别（例如，“默认”与“非默认”）。</p>
-<h3 id="linear-discriminant-analysis-lda">## Linear Discriminant
-Analysis (LDA)</h3>
-<p>LDA creates a <strong>linear</strong> decision boundary between
-classes. LDA 在类别之间创建<strong>线性</strong>决策边界。</p>
-<h4 id="core-idea-fishers-interpretation"><strong>Core Idea (Fisher’s
-Interpretation)</strong></h4>
-<p>Imagine you have data points for different classes in a 3D space.
-Fisher’s idea is to find the best angle to shine a “flashlight” on the
-data to project its shadow onto a 2D wall (or a 1D line). The “best”
-projection is the one where the shadows of the different classes are
-<strong>as far apart from each other as possible</strong>, while the
-shadows within each class are <strong>as tightly packed as
-possible</strong>. 想象一下，你在三维空间中拥有不同类别的数据点。Fisher
-的思想是找到最佳角度，用“手电筒”照射数据，将其阴影投射到二维墙壁（或一维线上）。
-“最佳”投影是不同类别的阴影<strong>彼此之间尽可能远</strong>，而每个类别内的阴影<strong>尽可能紧密</strong>的投影。</p>
-<ul>
-<li><strong>Maximize:</strong> The distance between the means of the
-projected classes (Between-Class Variance).
-投影类别均值之间的距离（类间方差）。</li>
-<li><strong>Minimize:</strong> The spread or variance within each
-projected class (Within-Class Variance).
-每个投影类别内的扩散或方差（类内方差）。 This is the most important
-image for understanding the intuition behind LDA. It shows how
-projecting the data onto a specific line (defined by vector
-<code>w</code>) can make the two classes clearly separable.
-这是理解LDA背后直觉的最重要图像。它展示了如何将数据投影到特定直线（由向量“w”定义）上，从而使两个类别清晰可分。</li>
-</ul>
-<h4 id="key-mathematical-formulas"><strong>Key Mathematical
-Formulas</strong></h4>
-<p>To achieve this, LDA maximizes a ratio called the <strong>Rayleigh
-quotient</strong>. LDA最大化一个称为<strong>瑞利商</strong>的比率。</p>
-<ol type="1">
-<li><strong>Within-Class Covariance (<span
-class="math inline">\(\hat{\Sigma}_W\)</span>)</strong>: Measures the
-spread of data <em>inside</em> each class. <strong>类内协方差 (<span
-class="math inline">\(\hat{\Sigma}_W\)</span>)</strong>：衡量每个类别<em>内部</em>数据的扩散程度。
-<span class="math display">\[\hat{\Sigma}_W = \frac{1}{n-K}
-\sum_{k=1}^{K} \sum_{i: y_i=k} (x_i - \hat{\mu}_k)(x_i -
-\hat{\mu}_k)^\top\]</span></li>
-<li><strong>Between-Class Covariance (<span
-class="math inline">\(\hat{\Sigma}_B\)</span>)</strong>: Measures the
-spread <em>between</em> the means of different classes.
-<strong>类间协方差 (<span
-class="math inline">\(\hat{\Sigma}_B\)</span>)</strong>：衡量不同类别均值<em>之间</em>的差异。
-<span class="math display">\[\hat{\Sigma}_B = \sum_{k=1}^{K} n_k
-(\hat{\mu}_k - \hat{\mu})(\hat{\mu}_k - \hat{\mu})^\top\]</span></li>
-<li><strong>Objective Function</strong>: Find the projection vector
-<span class="math inline">\(w\)</span> that maximizes the ratio of
-between-class variance to within-class variance.
-<strong>目标函数</strong>：找到投影向量 <span
-class="math inline">\(w\)</span>，使类间方差与类内方差之比最大化。 <span
-class="math display">\[\max_w \frac{w^\top \hat{\Sigma}_B w}{w^\top
-\hat{\Sigma}_W w}\]</span></li>
-</ol>
-<h4 id="ldas-main-assumption"><strong>LDA’s Main
-Assumption</strong></h4>
-<p>The key assumption of LDA is that all classes share the <strong>same
-covariance matrix (<span
-class="math inline">\(\Sigma\)</span>)</strong>. They can have different
-means (<span class="math inline">\(\mu_k\)</span>), but their spread and
-orientation must be identical. This assumption is what results in a
-linear decision boundary. LDA
-的关键假设是所有类别共享<strong>相同的协方差矩阵 (<span
-class="math inline">\(\Sigma\)</span>)</strong>。它们可以具有不同的均值
-(<span
-class="math inline">\(\mu_k\)</span>)，但它们的散度和方向必须相同。正是这一假设导致了线性决策边界。</p>
-<h3 id="quadratic-discriminant-analysis-qda">## Quadratic Discriminant
-Analysis (QDA)</h3>
-<p>QDA is a more flexible extension of LDA that creates a
-<strong>quadratic</strong> (curved) decision boundary. QDA 是 LDA
-的更灵活的扩展，它创建了<strong>二次</strong>（曲线）决策边界。 ####
-<strong>Core Idea &amp; Key Assumption</strong></p>
-<p>QDA starts with the same principles as LDA but drops the key
-assumption. QDA assumes that <strong>each class has its own unique
-covariance matrix (<span
-class="math inline">\(\Sigma_k\)</span>)</strong>. QDA 的原理与 LDA
-相同，但放弃了关键假设。QDA 假设<strong>每个类别都有自己独特的协方差矩阵
-(<span class="math inline">\(\Sigma_k\)</span>)</strong>。</p>
-<p>This means each class can have its own spread, shape, and
-orientation. This additional flexibility allows for a more complex,
-curved decision boundary.
-这意味着每个类别可以拥有自己的散度、形状和方向。这种额外的灵活性使得决策边界更加复杂、曲线化。</p>
-<h4 id="key-mathematical-formula"><strong>Key Mathematical
-Formula</strong></h4>
-<p>The classification is made using a discrimination function, <span
-class="math inline">\(\delta_k(x)\)</span>. We assign a data point <span
-class="math inline">\(x\)</span> to the class <span
-class="math inline">\(k\)</span> for which <span
-class="math inline">\(\delta_k(x)\)</span> is largest. The function for
-QDA is: <span class="math display">\[\delta_k(x) = -\frac{1}{2}(x -
-\mu_k)^\top \Sigma_k^{-1}(x - \mu_k) - \frac{1}{2}\log(|\Sigma_k|) +
-\log \pi_k\]</span> The term containing <span
-class="math inline">\(x^\top \Sigma_k^{-1} x\)</span> makes this
-function a <strong>quadratic</strong> function of <span
-class="math inline">\(x\)</span>.</p>
-<h3 id="lda-vs.-qda-the-trade-off">## LDA vs. QDA: The Trade-Off</h3>
-<p>The choice between LDA and QDA is a classic <strong>bias-variance
-trade-off</strong>. 在 LDA 和 QDA
-之间进行选择是典型的<strong>偏差-方差权衡</strong>。</p>
-<ul>
-<li><p><strong>Use LDA when:</strong></p>
-<ul>
-<li>The assumption of a common covariance matrix is reasonable (the
-classes have similar shapes).</li>
-<li>You have a small amount of training data, as LDA is less prone to
-overfitting.</li>
-<li>Simplicity is preferred. LDA is less flexible (high bias) but has
-lower variance.</li>
-<li>假设共同协方差矩阵是合理的（类别具有相似的形状）。</li>
-<li>训练数据量较少，因为 LDA 不易过拟合。</li>
-<li>简洁是首选。LDA 灵活性较差（偏差较大），但方差较小。</li>
-</ul></li>
-<li><p><strong>Use QDA when:</strong></p>
-<ul>
-<li>The classes have clearly different shapes and spreads (different
-covariance matrices).</li>
-<li>You have a large amount of training data to properly estimate the
-separate covariance matrices for each class.</li>
-<li>QDA is more flexible (low bias) but can have high variance, meaning
-it might overfit on smaller datasets.</li>
-<li>类别具有明显不同的形状和分布（不同的协方差矩阵）。</li>
-<li>拥有大量训练数据，可以正确估计每个类别的独立协方差矩阵。</li>
-<li>QDA
-更灵活（偏差较小），但方差较大，这意味着它可能在较小的数据集上过拟合。
-<strong>Rule of Thumb:</strong> If the class variances are equal or
-close, LDA is better. Otherwise, QDA is better.
-<strong>经验法则：</strong> 如果类别方差相等或接近，则 LDA
-更佳。否则，QDA 更好。</li>
-</ul></li>
-</ul>
-<h3 id="code-understanding-python-equivalent">## Code Understanding
-(Python Equivalent)</h3>
-<p>The slides show code in R. Here’s how you would perform LDA and
-evaluate it in Python using the popular <code>scikit-learn</code>
-library.</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"><span class="keyword">from</span> sklearn.model_selection <span class="keyword">import</span> train_test_split</span><br><span class="line"><span class="keyword">from</span> sklearn.discriminant_analysis <span class="keyword">import</span> LinearDiscriminantAnalysis, QuadraticDiscriminantAnalysis</span><br><span class="line"><span class="keyword">from</span> sklearn.metrics <span class="keyword">import</span> confusion_matrix, accuracy_score, roc_curve, auc</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"></span><br><span class="line"><span class="comment"># Assume &#x27;df&#x27; is your DataFrame with features and a &#x27;target&#x27; column</span></span><br><span class="line"><span class="comment"># X = df.drop(&#x27;target&#x27;, axis=1)</span></span><br><span class="line"><span class="comment"># y = df[&#x27;target&#x27;]</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 1. Split data into training and testing sets</span></span><br><span class="line"><span class="comment"># X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 2. Fit an LDA model (equivalent to lda() in R)</span></span><br><span class="line">lda = LinearDiscriminantAnalysis()</span><br><span class="line">lda.fit(X_train, y_train)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 3. Make predictions (equivalent to predict() in R)</span></span><br><span class="line">y_pred_lda = lda.predict(X_test)</span><br><span class="line"></span><br><span class="line"><span class="comment"># To fit a QDA model, the process is identical:</span></span><br><span class="line"><span class="comment"># qda = QuadraticDiscriminantAnalysis()</span></span><br><span class="line"><span class="comment"># qda.fit(X_train, y_train)</span></span><br><span class="line"><span class="comment"># y_pred_qda = qda.predict(X_test)</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 4. Create a confusion matrix (equivalent to table())</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;LDA Confusion Matrix:&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(confusion_matrix(y_test, y_pred_lda))</span><br><span class="line"></span><br><span class="line"><span class="comment"># 5. Plot the ROC Curve (equivalent to the R code for ROC)</span></span><br><span class="line"><span class="comment"># Get prediction probabilities for the positive class</span></span><br><span class="line">y_pred_proba = lda.predict_proba(X_test)[:, <span class="number">1</span>]</span><br><span class="line"></span><br><span class="line"><span class="comment"># Calculate ROC curve points</span></span><br><span class="line">fpr, tpr, thresholds = roc_curve(y_test, y_pred_proba)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Calculate Area Under the Curve (AUC)</span></span><br><span class="line">roc_auc = auc(fpr, tpr)</span><br><span class="line"></span><br><span class="line">plt.figure(figsize=(<span class="number">8</span>, <span class="number">6</span>))</span><br><span class="line">plt.plot(fpr, tpr, color=<span class="string">&#x27;blue&#x27;</span>, lw=<span class="number">2</span>, label=<span class="string">f&#x27;LDA ROC curve (area = <span class="subst">&#123;roc_auc:<span class="number">.2</span>f&#125;</span>)&#x27;</span>)</span><br><span class="line">plt.plot([<span class="number">0</span>, <span class="number">1</span>], [<span class="number">0</span>, <span class="number">1</span>], color=<span class="string">&#x27;gray&#x27;</span>, lw=<span class="number">2</span>, linestyle=<span class="string">&#x27;--&#x27;</span>) <span class="comment"># Random guess line</span></span><br><span class="line">plt.xlim([<span class="number">0.0</span>, <span class="number">1.0</span>])</span><br><span class="line">plt.ylim([<span class="number">0.0</span>, <span class="number">1.05</span>])</span><br><span class="line">plt.xlabel(<span class="string">&#x27;False Positive Rate (1 - Specificity)&#x27;</span>)</span><br><span class="line">plt.ylabel(<span class="string">&#x27;True Positive Rate (Sensitivity)&#x27;</span>)</span><br><span class="line">plt.title(<span class="string">&#x27;Receiver Operating Characteristic (ROC) Curve&#x27;</span>)</span><br><span class="line">plt.legend(loc=<span class="string">&quot;lower right&quot;</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
-<h4 id="understanding-the-roc-curve"><strong>Understanding the ROC
-Curve</strong></h4>
-<p>The <strong>ROC Curve</strong> is another important image. It helps
-you visualize a classifier’s performance across all possible
-classification thresholds. <strong>ROC 曲线</strong>
-是另一个重要的图像。它可以帮助您直观地了解分类器在所有可能的分类阈值下的性能。</p>
-<ul>
-<li>The <strong>Y-axis</strong> is the <strong>True Positive
-Rate</strong> (Sensitivity): “Of all the actual positives, how many did
-we correctly identify?”</li>
-<li>The <strong>X-axis</strong> is the <strong>False Positive
-Rate</strong>: “Of all the actual negatives, how many did we incorrectly
-label as positive?”</li>
-<li>A perfect classifier would have a curve that goes straight up to the
-top-left corner (100% TPR, 0% FPR). The diagonal line represents a
-random guess. The <strong>Area Under the Curve (AUC)</strong> summarizes
-the model’s performance; a value closer to 1.0 is better.</li>
-<li><strong>Y 轴</strong>
-表示<strong>真阳性率</strong>（敏感度）：“在所有实际的阳性样本中，我们正确识别了多少个？”</li>
-<li><strong>X 轴</strong>
-表示<strong>假阳性率</strong>：“在所有实际的阴性样本中，我们错误地将多少个标记为阳性？”</li>
-<li>一个完美的分类器应该有一条直线上升到左上角的曲线（真阳性率
-100%，假阳性率 0%）。对角线表示随机猜测。<strong>曲线下面积
-(AUC)</strong> 概括了模型的性能；该值越接近 1.0 越好。</li>
-</ul>
-<h1
-id="here-is-a-summary-of-the-provided-slides-on-quadratic-discriminant-analysis-qda-including-the-key-formulas-code-explanations-with-python-equivalents-and-a-guide-to-the-most-important-images.">8.
-Here is a summary of the provided slides on Quadratic Discriminant
-Analysis (QDA), including the key formulas, code explanations with
-Python equivalents, and a guide to the most important images.</h1>
-<h3 id="core-concept-qda-vs.-lda">## Core Concept: QDA vs. LDA</h3>
-<p>The main difference between <strong>Linear Discriminant Analysis
-(LDA)</strong> and <strong>Quadratic Discriminant Analysis
-(QDA)</strong> lies in their assumptions about the data.
-<strong>线性判别分析 (LDA)</strong> 和 <strong>二次判别分析
-(QDA)</strong> 的主要区别在于它们对数据的假设。 * <strong>LDA</strong>
-assumes that all classes share the <strong>same covariance
-matrix</strong> (<span class="math inline">\(\Sigma\)</span>). It models
-each class as a normal distribution with a different mean (<span
-class="math inline">\(\mu_k\)</span>) but the same shape and
-orientation. This results in a <em>linear</em> decision boundary between
-classes. 假设所有类别共享<strong>相同的协方差矩阵</strong> (<span
-class="math inline">\(\Sigma\)</span>)。它将每个类别建模为均值不同
-(<span class="math inline">\(\mu_k\)</span>)
-但形状和方向相同的正态分布。这会导致类别之间出现 <em>线性</em>
-决策边界。 * <strong>QDA</strong> is more flexible. It assumes that each
-class <span class="math inline">\(k\)</span> has its <strong>own,
-separate covariance matrix</strong> (<span
-class="math inline">\(\Sigma_k\)</span>). This allows each class’s
-distribution to have a unique shape, size, and orientation. This
-flexibility results in a <em>quadratic</em> decision boundary (like a
-parabola, hyperbola, or ellipse). 更灵活。它假设每个类别 <span
-class="math inline">\(k\)</span> 都有其<strong>独立的协方差矩阵</strong>
-(<span
-class="math inline">\(\Sigma_k\)</span>)。这使得每个类别的分布具有独特的形状、大小和方向。这种灵活性导致了<em>二次</em>决策边界（类似于抛物线、双曲线或椭圆）。
-<strong>Analogy</strong> 💡: Imagine you’re drawing boundaries around
-different clusters of stars. LDA gives you only straight lines to
-separate the clusters. QDA gives you curved lines (circles, ellipses),
-which can create a much better fit if the clusters themselves are
-elliptical and point in different directions.
-想象一下，你正在围绕不同的星团绘制边界。LDA 只提供直线来分隔星团。QDA
-提供曲线（圆形、椭圆形），如果星团本身是椭圆形且指向不同的方向，则可以产生更好的拟合效果。</p>
-<h3 id="the-math-behind-qda">## The Math Behind QDA</h3>
-<p>QDA classifies a new observation <span
-class="math inline">\(x\)</span> to the class <span
-class="math inline">\(k\)</span> that has the highest discriminant
-score, <span class="math inline">\(\delta_k(x)\)</span>. The formula for
-this score is what makes the boundary quadratic. QDA 将新的观测值 <span
-class="math inline">\(x\)</span> 归类到具有最高判别分数 <span
-class="math inline">\(\delta_k(x)\)</span> 的类 <span
-class="math inline">\(k\)</span>
-中。该分数的公式使得边界具有二次项。</p>
-<p>The discriminant function for class <span
-class="math inline">\(k\)</span> is: <span
-class="math display">\[\delta_k(x) = -\frac{1}{2}(x - \mu_k)^T
-\Sigma_k^{-1}(x - \mu_k) - \frac{1}{2}\log(|\Sigma_k|) +
-\log(\pi_k)\]</span></p>
-<p>Let’s break it down:</p>
-<ul>
-<li><span class="math inline">\((x - \mu_k)^T \Sigma_k^{-1}(x -
-\mu_k)\)</span>: This is a quadratic term (since it involves <span
-class="math inline">\(x^T \Sigma_k^{-1} x\)</span>). It measures the
-squared Mahalanobis distance from <span class="math inline">\(x\)</span>
-to the class mean <span class="math inline">\(\mu_k\)</span>, scaled by
-that class’s specific covariance <span
-class="math inline">\(\Sigma_k\)</span>.</li>
-<li><span class="math inline">\(\log(|\Sigma_k|)\)</span>: A term that
-penalizes classes with larger variance.</li>
-<li><span class="math inline">\(\log(\pi_k)\)</span>: The prior
-probability of class <span class="math inline">\(k\)</span>. This is our
-initial belief about how likely class <span
-class="math inline">\(k\)</span> is, before seeing the data.
-<ul>
-<li><span class="math inline">\((x - \mu_k)^T \Sigma_k^{-1}(x -
-\mu_k)\)</span>：这是一个二次项（因为它涉及 <span
-class="math inline">\(x^T \Sigma_k^{-1} x\)</span>）。它测量从 <span
-class="math inline">\(x\)</span> 到类均值 <span
-class="math inline">\(\mu_k\)</span>
-的平方马氏距离，并根据该类的特定协方差 <span
-class="math inline">\(\Sigma_k\)</span> 进行缩放。</li>
-<li><span
-class="math inline">\(\log(|\Sigma_k|)\)</span>：用于惩罚方差较大的类的项。</li>
-<li><span class="math inline">\(\log(\pi_k)\)</span>：类 <span
-class="math inline">\(k\)</span> 的先验概率。这是我们在看到数据之前对类
-<span class="math inline">\(k\)</span> 可能性的初始信念。 Because each
-class <span class="math inline">\(k\)</span> has its own <span
-class="math inline">\(\Sigma_k\)</span>, the quadratic term doesn’t
-cancel out when comparing scores between classes, leading to a quadratic
-boundary. 由于每个类 <span class="math inline">\(k\)</span> 都有其自己的
-<span
-class="math inline">\(\Sigma_k\)</span>，因此在比较类之间的分数时，二次项不会抵消，从而导致二次边界。
-<strong>Key Trade-off</strong>:</li>
-</ul></li>
-<li>If the class variances (<span
-class="math inline">\(\Sigma_k\)</span>) are truly different,
-<strong>QDA is better</strong>.</li>
-<li>If the class variances are similar, <strong>LDA is often
-better</strong> because it’s less flexible and less likely to overfit,
-especially with a small number of training samples.</li>
-<li>如果类方差 (<span class="math inline">\(\Sigma_k\)</span>)
-确实不同，<strong>QDA 更好</strong>。</li>
-<li>如果类方差相似，<strong>LDA
-通常更好</strong>，因为它的灵活性较差，并且不太可能过拟合，尤其是在训练样本数量较少的情况下。</li>
-</ul>
-<h3 id="code-implementation-r-and-python">## Code Implementation: R and
-Python</h3>
-<p>The slides provide R code for fitting a QDA model and evaluating it.
-Below is an explanation of the R code and its equivalent in Python using
-the popular <code>scikit-learn</code> library.</p>
-<h4 id="r-code-from-the-slides">R Code (from the slides)</h4>
-<p>The code uses the <code>MASS</code> library for QDA and the
-<code>ROCR</code> library for evaluation.</p>
-<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ######## QDA ##########</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 1. Fit the model on the training data</span></span><br><span class="line"><span class="comment"># This formula `Default~.` means &quot;predict &#x27;Default&#x27; using all other variables&quot;.</span></span><br><span class="line">qda.fit.mod2 <span class="operator">&lt;-</span> qda<span class="punctuation">(</span>Default<span class="operator">~</span>.<span class="punctuation">,</span> data<span class="operator">=</span>Default<span class="punctuation">,</span> subset<span class="operator">=</span>train.ids<span class="punctuation">)</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 2. Make predictions on the test data</span></span><br><span class="line"><span class="comment"># We are interested in the posterior probabilities for the ROC curve</span></span><br><span class="line">qda.fit.pred3 <span class="operator">&lt;-</span> predict<span class="punctuation">(</span>qda.fit.mod2<span class="punctuation">,</span> Default_test<span class="punctuation">)</span><span class="operator">$</span>posterior<span class="punctuation">[</span><span class="punctuation">,</span><span class="number">2</span><span class="punctuation">]</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 3. Evaluate using ROC and AUC</span></span><br><span class="line"><span class="comment"># &#x27;prediction&#x27; and &#x27;performance&#x27; are functions from the ROCR library</span></span><br><span class="line">perf <span class="operator">&lt;-</span> performance<span class="punctuation">(</span>prediction<span class="punctuation">(</span>qda.fit.pred3<span class="punctuation">,</span> Default_test<span class="operator">$</span>Default<span class="punctuation">)</span><span class="punctuation">,</span> <span class="string">&quot;auc&quot;</span><span class="punctuation">)</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 4. Get the AUC value</span></span><br><span class="line">auc_value <span class="operator">&lt;-</span> perf<span class="operator">@</span>y.values<span class="punctuation">[[</span><span class="number">1</span><span class="punctuation">]</span><span class="punctuation">]</span></span><br><span class="line"><span class="comment"># Result from slide: 0.9638683</span></span><br></pre></td></tr></table></figure>
-<h4 id="python-equivalent-scikit-learn">Python Equivalent
-(<code>scikit-learn</code>)</h4>
-<p>Here’s how you would perform the same steps in Python.</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"><span class="keyword">from</span> sklearn.model_selection <span class="keyword">import</span> train_test_split</span><br><span class="line"><span class="keyword">from</span> sklearn.discriminant_analysis <span class="keyword">import</span> QuadraticDiscriminantAnalysis</span><br><span class="line"><span class="keyword">from</span> sklearn.metrics <span class="keyword">import</span> roc_auc_score, roc_curve</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"></span><br><span class="line"><span class="comment"># Assume &#x27;Default&#x27; is your DataFrame and &#x27;default&#x27; is the target column</span></span><br><span class="line"><span class="comment"># (preprocessing &#x27;student&#x27; and &#x27;default&#x27; columns to numbers)</span></span><br><span class="line"><span class="comment"># Default[&#x27;default_num&#x27;] = Default[&#x27;default&#x27;].apply(lambda x: 1 if x == &#x27;Yes&#x27; else 0)</span></span><br><span class="line"><span class="comment"># X = Default[[&#x27;balance&#x27;, &#x27;income&#x27;, ...]]</span></span><br><span class="line"><span class="comment"># y = Default[&#x27;default_num&#x27;]</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 1. Split data into training and testing sets</span></span><br><span class="line"><span class="comment"># X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.1, random_state=42)</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 2. Initialize and fit the QDA model</span></span><br><span class="line">qda = QuadraticDiscriminantAnalysis()</span><br><span class="line">qda.fit(X_train, y_train)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 3. Predict probabilities on the test set</span></span><br><span class="line"><span class="comment"># We need the probability of the positive class (&#x27;Yes&#x27;) for the AUC calculation</span></span><br><span class="line">y_pred_proba = qda.predict_proba(X_test)[:, <span class="number">1</span>]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 4. Calculate the AUC score</span></span><br><span class="line">auc_score = roc_auc_score(y_test, y_pred_proba)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;AUC Score for QDA: <span class="subst">&#123;auc_score:<span class="number">.7</span>f&#125;</span>&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># You can also plot the ROC curve</span></span><br><span class="line"><span class="comment"># fpr, tpr, thresholds = roc_curve(y_test, y_pred_proba)</span></span><br><span class="line"><span class="comment"># plt.plot(fpr, tpr)</span></span><br><span class="line"><span class="comment"># plt.show()</span></span><br></pre></td></tr></table></figure>
-<h3 id="model-evaluation-roc-and-auc">## Model Evaluation: ROC and
-AUC</h3>
-<p>The slides correctly emphasize using the <strong>ROC curve</strong>
-and the <strong>Area Under the Curve (AUC)</strong> to compare model
-performance.</p>
-<ul>
-<li><p><strong>ROC Curve (Receiver Operating Characteristic)</strong>:
-This plot shows how well a model can distinguish between two classes. It
-plots the <strong>True Positive Rate</strong> (y-axis) against the
-<strong>False Positive Rate</strong> (x-axis) at all possible
-classification thresholds. A better model has a curve that is closer to
-the top-left corner.</p></li>
-<li><p><strong>AUC (Area Under the Curve)</strong>: This is a single
-number that summarizes the entire ROC curve.</p>
-<ul>
-<li><strong>AUC = 1</strong>: Perfect classifier.</li>
-<li><strong>AUC = 0.5</strong>: A useless classifier (equivalent to
-random guessing).</li>
-<li><strong>AUC &gt; 0.7</strong>: Generally considered an acceptable
-model.</li>
-</ul></li>
-<li><p><strong>ROC
-曲线（接收者操作特征）</strong>：此图显示了模型区分两个类别的能力。它绘制了所有可能的分类阈值下的
-<strong>真阳性率</strong>（y 轴）与 <strong>假阳性率</strong>（x
-轴）的对比图。更好的模型的曲线越靠近左上角，效果就越好。</p>
-<ul>
-<li><p><strong>AUC（曲线下面积）</strong>：这是一个概括整个 ROC
-曲线的数值。</p></li>
-<li><p><strong>AUC = 1</strong>：完美的分类器。</p></li>
-<li><p><strong>AUC =
-0.5</strong>：无用的分类器（相当于随机猜测）。</p></li>
-<li><p><strong>AUC &gt;
-0.7</strong>：通常被认为是可接受的模型。</p></li>
-</ul></li>
-</ul>
-<p>The slides show that for the <code>Default</code> dataset,
-<strong>LDA’s AUC (0.9647) was slightly higher than QDA’s
-(0.9639)</strong>. This suggests that the assumption of a common
-covariance matrix (LDA) was a slightly better fit for this particular
-test set, possibly because QDA’s extra flexibility wasn’t needed and it
-may have slightly overfit the training data.
-这表明，对于这个特定的测试集，公共协方差矩阵 (LDA)
-的假设拟合度略高，可能是因为 QDA
-的额外灵活性并非必需，并且可能对训练数据略微过拟合。</p>
-<h3 id="key-takeaways-and-important-images">## Key Takeaways and
-Important Images</h3>
-<h3
-id="heres-a-ranking-of-the-most-important-visual-aids-in-your-slides">Here’s
-a ranking of the most important visual aids in your slides:</h3>
-<ol type="1">
-<li><p><strong>Slide 68/69 (Model Assumption &amp; Formula)</strong>:
-These are the <strong>most critical</strong> slides. They present the
-core theoretical difference between LDA and QDA and provide the
-mathematical foundation (the discriminant function formula).
-Understanding these is key to understanding QDA.</p></li>
-<li><p><strong>Slide 73 (ROC Comparison)</strong>: This is the most
-important image for <strong>practical evaluation</strong>. It visually
-compares the performance of LDA and QDA side-by-side, making it easy to
-see which one performs better on this specific dataset. The concept of
-AUC is introduced here as the method for comparison.</p></li>
-<li><p><strong>Slide 71 (Decision Boundaries with Different
-Thresholds)</strong>: This is an excellent conceptual image. It shows
-how the quadratic decision boundary (the curved lines) separates the
-data points. It also illustrates how changing the probability threshold
-(from 0.1 to 0.5 to 0.9) shifts the boundary, trading off between
-precision and recall.</p></li>
-</ol>
-<p>Of course. Here is a summary of the remaining slides, which compare
-QDA to other popular classification models like Logistic Regression and
-K-Nearest Neighbors (KNN).</p>
-<hr />
-<h3 id="visualizing-the-core-trade-off-lda-vs.-qda">Visualizing the Core
-Trade-off: LDA vs. QDA</h3>
-<p>This is the most important concept in these slides. The choice
-between LDA and QDA depends entirely on the underlying structure of your
-data.</p>
-<p>The slide shows two scenarios: 1. <strong>Left Plot (<span
-class="math inline">\(\Sigma_1 = \Sigma_2\)</span>):</strong> When the
-true covariance matrices of the classes are the same, the optimal
-decision boundary (the Bayes classifier) is a straight line. LDA, which
-assumes equal covariances, creates a linear boundary that approximates
-this optimal boundary very well. QDA’s flexible, curved boundary is
-unnecessarily complex and might overfit the training data. <strong>In
-this case, LDA is better.</strong> 2. <strong>Right Plot (<span
-class="math inline">\(\Sigma_1 \neq \Sigma_2\)</span>):</strong> When
-the true covariance matrices are different, the optimal decision
-boundary is a curve. QDA’s quadratic model can capture this
-non-linearity much better than LDA’s rigid linear model. <strong>In this
-case, QDA is better.</strong></p>
-<p>This perfectly illustrates the <strong>bias-variance
-tradeoff</strong>. LDA has higher bias (it’s less flexible) but lower
-variance. QDA has lower bias (it’s more flexible) but higher
-variance.</p>
-<hr />
-<h3 id="comparing-performance-on-the-default-dataset">Comparing
-Performance on the “Default” Dataset</h3>
-<p>The slides compare four different models on the same classification
-task. Let’s look at their performance using the <strong>Area Under the
-Curve (AUC)</strong>, where a higher score is better.</p>
-<ul>
-<li><strong>LDA AUC:</strong> 0.9647</li>
-<li><strong>QDA AUC:</strong> 0.9639</li>
-<li><strong>Logistic Regression AUC:</strong> 0.9645</li>
-<li><strong>K-Nearest Neighbors (KNN):</strong> The plot shows test
-error vs. K. The error is lowest around K=4, but it’s not directly
-converted to an AUC score in the slides.</li>
-</ul>
-<p>Interestingly, for this particular dataset, LDA, QDA, and Logistic
-Regression perform almost identically. This suggests that the decision
-boundary for this problem is likely very close to linear, meaning the
-extra flexibility of QDA isn’t providing much benefit.</p>
-<hr />
-<h3 id="pros-and-cons-which-model-to-choose">Pros and Cons: Which Model
-to Choose?</h3>
-<p>The final slide asks for a comparison of the models. Here’s a summary
-of their key characteristics:</p>
-<table>
-<colgroup>
-<col style="width: 20%" />
-<col style="width: 20%" />
-<col style="width: 20%" />
-<col style="width: 20%" />
-<col style="width: 20%" />
-</colgroup>
-<thead>
-<tr>
-<th style="text-align: left;">Model</th>
-<th style="text-align: left;">Type</th>
-<th style="text-align: left;">Decision Boundary</th>
-<th style="text-align: left;">Key Pro</th>
-<th style="text-align: left;">Key Con</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: left;"><strong>Logistic Regression</strong></td>
-<td style="text-align: left;">Parametric</td>
-<td style="text-align: left;">Linear</td>
-<td style="text-align: left;">Highly interpretable, no strong
-assumptions about data distribution.</td>
-<td style="text-align: left;">Inflexible; cannot capture non-linear
-relationships.</td>
-</tr>
-<tr>
-<td style="text-align: left;"><strong>Linear Discriminant Analysis
-(LDA)</strong></td>
-<td style="text-align: left;">Parametric</td>
-<td style="text-align: left;">Linear</td>
-<td style="text-align: left;">More stable than Logistic Regression when
-classes are well-separated.</td>
-<td style="text-align: left;">Assumes data is normally distributed with
-equal covariance matrices for all classes.</td>
-</tr>
-<tr>
-<td style="text-align: left;"><strong>Quadratic Discriminant Analysis
-(QDA)</strong></td>
-<td style="text-align: left;">Parametric</td>
-<td style="text-align: left;">Quadratic (Curved)</td>
-<td style="text-align: left;">More flexible than LDA; can model
-non-linear boundaries.</td>
-<td style="text-align: left;">Requires more data to estimate parameters
-and is more prone to overfitting. Assumes normality.</td>
-</tr>
-<tr>
-<td style="text-align: left;"><strong>K-Nearest Neighbors
-(KNN)</strong></td>
-<td style="text-align: left;">Non-Parametric</td>
-<td style="text-align: left;">Highly Non-linear</td>
-<td style="text-align: left;">Extremely flexible; makes no assumptions
-about the data’s distribution.</td>
-<td style="text-align: left;">Can be slow on large datasets and suffers
-from the “curse of dimensionality.” Less interpretable.</td>
-</tr>
-</tbody>
-</table>
-<h4 id="summary-of-the-comparison">Summary of the Comparison:</h4>
-<ul>
-<li><strong>Linear Models (Logistic Regression &amp; LDA):</strong>
-Choose these for simplicity, interpretability, and when you believe the
-relationship between predictors and the class is linear. LDA often
-outperforms Logistic Regression if its normality assumptions are
-met.</li>
-<li><strong>Non-Linear Models (QDA &amp; KNN):</strong> Choose these
-when the decision boundary is likely more complex. QDA is a good middle
-ground, offering more flexibility than LDA without being as completely
-data-driven as KNN. KNN is the most flexible but requires careful tuning
-of the parameter K to avoid overfitting or underfitting.</li>
-</ul>
-<h1
-id="here-is-a-more-detailed-slide-by-slide-analysis-of-the-presentation.">9.
-Here is a more detailed, slide-by-slide analysis of the
-presentation.</h1>
-<h2 id="four-classification-methods-comparison-by-simulation">4.6 Four
-Classification Methods: Comparison by Simulation</h2>
-<p>This section (slides 81-87) introduces four classification methods
-and systematically compares their performance on six different simulated
-datasets. The goal is to see which method works best under different
-conditions (e.g., linear vs. non-linear boundaries, normal
-vs. non-normal data).</p>
-<p>The four methods being compared are: * <strong>Logistic
-Regression:</strong> A linear method that models the log-odds as a
-linear function of the predictors. * <strong>Linear Discriminant
-Analysis (LDA):</strong> Another linear method. It also assumes a linear
-decision boundary but makes stronger assumptions than logistic
-regression (e.g., that data within each class is normally distributed
-with a common covariance matrix). * <strong>Quadratic Discriminant
-Analysis (QDA):</strong> A non-linear method. It assumes the log-odds
-are a <em>quadratic</em> function, which creates a more flexible, curved
-decision boundary. It assumes data within each class is normally
-distributed, but <em>without</em> a common covariance matrix. *
-<strong>K-Nearest Neighbors (KNN):</strong> A non-parametric, highly
-flexible method. Two versions are tested: * <strong>KNN-1 (<span
-class="math inline">\(K=1\)</span>):</strong> A very flexible (high
-variance) model. * <strong>KNN-CV:</strong> A tuned model where the best
-<span class="math inline">\(K\)</span> is chosen via
-cross-validation.</p>
-<p>比较的四种方法是： *
-<strong>逻辑回归</strong>：一种将对数概率建模为预测变量线性函数的线性方法。
-* <strong>线性判别分析
-(LDA)</strong>：另一种线性方法。它也假设线性决策边界，但比逻辑回归做出更强的假设（例如，每个类中的数据呈正态分布，且具有共同的协方差矩阵）。
-* <strong>二次判别分析
-(QDA)</strong>：一种非线性方法。它假设对数概率为<em>二次</em>函数，从而创建一个更灵活、更弯曲的决策边界。它假设每个类中的数据服从正态分布，但<em>没有</em>共同的协方差矩阵。
-* <strong>K最近邻
-(KNN)</strong>：一种非参数化、高度灵活的方法。测试了两个版本： *
-<strong>KNN-1 (<span
-class="math inline">\(K=1\)</span>)</strong>：一个非常灵活（高方差）的模型。
-*
-<strong>KNN-CV</strong>：一个经过调整的模型，通过交叉验证选择最佳的<span
-class="math inline">\(K\)</span>。</p>
-<h3 id="analysis-of-simulation-scenarios">Analysis of Simulation
-Scenarios</h3>
-<p>The performance is measured by the <strong>test error rate</strong>
-(lower is better), shown in the boxplots for each scenario.
-性能通过<strong>测试错误率</strong>（越低越好）来衡量，每个场景的箱线图都显示了该错误率。</p>
-<ul>
-<li><strong>Scenario 1 (Slide 82):</strong>
-<ul>
-<li><strong>Setup:</strong> A <strong>linear</strong> decision boundary.
-Data is <strong>normally distributed</strong> with <em>uncorrelated</em>
-predictors.</li>
-<li><strong>Result:</strong> <strong>LDA and Logistic Regression perform
-best</strong>. Their test error rates are low and similar. This is
-expected, as the setup perfectly matches their core assumption (linear
-boundary). QDA is slightly worse because its extra flexibility (being
-quadratic) is unnecessary. KNN-1 is the worst, as its high flexibility
-leads to high variance (overfitting).</li>
-<li><strong>结果：</strong> <strong>LDA
-和逻辑回归表现最佳</strong>。它们的测试错误率较低且相似。这是意料之中的，因为设置完全符合它们的核心假设（线性边界）。QDA
-略差，因为其额外的灵活性（二次方）是不必要的。KNN-1
-最差，因为其高灵活性导致方差较大（过拟合）。</li>
-</ul></li>
-<li><strong>Scenario 2 (Slide 83):</strong>
-<ul>
-<li><strong>Setup:</strong> Same as Scenario 1 (<strong>linear</strong>
-boundary, <strong>normal</strong> data), but now the two predictors have
-a <strong>correlation of 0.5</strong>.</li>
-<li><strong>Result:</strong> <strong>Almost no change</strong> from
-Scenario 1. <strong>LDA and Logistic Regression are still the
-best</strong>. This shows that these linear methods are robust to
-correlation between predictors.</li>
-<li><strong>结果：</strong>与场景 1
-相比<strong>几乎没有变化</strong>。<strong>LDA
-和逻辑回归仍然是最佳</strong>。这表明这些线性方法对预测因子之间的相关性具有鲁棒性。</li>
-</ul></li>
-<li><strong>Scenario 3 (Slide 84):</strong>
-<ul>
-<li><strong>Setup:</strong> A <strong>linear</strong> decision boundary,
-but the data is drawn from a <strong>t-distribution</strong> (which is
-non-normal and has “heavy tails,” or more extreme outliers).</li>
-<li><strong>Result:</strong> <strong>Logistic Regression is the clear
-winner</strong>. LDA’s performance gets worse because its assumption of
-<em>normality</em> is violated by the t-distribution. QDA’s performance
-deteriorates significantly due to the non-normality. This highlights a
-key difference: logistic regression is more robust to violations of the
-normality assumption.</li>
-<li><strong>结果：</strong>逻辑回归明显胜出**。LDA 的性能会变差，因为 t
-分布违反了其正态性假设。QDA
-的性能由于非正态性而显著下降。这凸显了一个关键区别：逻辑回归对违反正态性假设的情况更稳健。</li>
-</ul></li>
-<li><strong>Scenario 4 (Slide 85):</strong>
-<ul>
-<li><strong>Setup:</strong> A <strong>quadratic</strong> decision
-boundary. Data is <strong>normally distributed</strong> with different
-correlations in each class.</li>
-<li><strong>Result:</strong> <strong>QDA is the clear winner</strong> by
-a large margin. This setup perfectly matches QDA’s assumption (quadratic
-boundary from normal data with different covariance structures). All
-other methods (LDA, Logistic, KNN) are linear or not flexible enough, so
-they perform poorly.</li>
-<li><strong>结果：</strong>QDA 明显胜出**，且遥遥领先。此设置完全符合
-QDA
-的假设（来自具有不同协方差结构的正态数据的二次边界）。所有其他方法（LDA、Logistic、KNN）都是线性的或不够灵活，因此性能不佳。</li>
-</ul></li>
-<li><strong>Scenario 5 (Slide 86):</strong>
-<ul>
-<li><strong>Setup:</strong> Another <strong>quadratic</strong> boundary,
-but generated in a different way (using a logistic function of quadratic
-terms).</li>
-<li><strong>Result:</strong> <strong>QDA performs best again</strong>,
-closely followed by the flexible <strong>KNN-CV</strong>. The linear
-methods (LDA, Logistic) have poor performance because they cannot
-capture the curve.</li>
-<li><strong>结果：QDA
-再次表现最佳</strong>，紧随其后的是灵活的<strong>KNN-CV</strong>。线性方法（LDA、Logistic）性能较差，因为它们无法捕捉曲线。</li>
-</ul></li>
-<li><strong>Scenario 6 (Slide 87):</strong>
-<ul>
-<li><strong>Setup:</strong> A <strong>complex, non-linear</strong>
-decision boundary (more complex than a simple quadratic curve).</li>
-<li><strong>Result:</strong> The <strong>flexible KNN-CV method is the
-winner</strong>. Its non-parametric nature allows it to approximate the
-complex shape. QDA is not flexible <em>enough</em> and performs worse.
-This slide highlights the bias-variance trade-off: the overly simple
-KNN-1 is the worst, but the <em>tuned</em> KNN-CV is the best.</li>
-<li><strong>结果：</strong>灵活的 KNN-CV
-方法胜出**。其非参数特性使其能够近似复杂的形状。 QDA
-不够灵活，性能较差。这张幻灯片重点介绍了偏差-方差权衡：过于简单的 KNN-1
-最差，而 <em>调整后的</em> KNN-CV 最好。</li>
-</ul></li>
-</ul>
-<h2 id="r-example-on-smarket-data">4.7 R Example on Smarket Data</h2>
-<p>This section (slides 88-93) applies Logistic Regression and LDA to
-the <code>Smarket</code> dataset from the <code>ISLR</code> package to
-predict the stock market’s <code>Direction</code> (Up or Down).
-本节（幻灯片 88-93）将逻辑回归和 LDA
-应用于“ISLR”包中的“Smarket”数据集，以预测股市的“方向”（上涨或下跌）。
-### Data Preparation (Slides 88, 89, 90)</p>
-<ol type="1">
-<li><strong>Load Data:</strong> The <code>ISLR</code> library is loaded,
-and the <code>Smarket</code> dataset is explored. It contains daily
-percentage returns (<code>Lag1</code>…<code>Lag5</code> for the previous
-5 days, <code>Today</code>), <code>Volume</code>, and the
-<code>Year</code>.</li>
-<li><strong>Explore Data:</strong> A correlation matrix
-(<code>cor(Smarket[,-9])</code>) is computed, and a plot of
-<code>Volume</code> over time is generated.</li>
-<li><strong>Split Data:</strong> The data is split into a training set
-(Years 2001-2004) and a test set (Year 2005).
-<ul>
-<li><code>train &lt;- (Year&lt;2005)</code></li>
-<li><code>Smarket.2005 &lt;- Smarket[!train,]</code></li>
-<li><code>Direction.2005 &lt;- Direction[!train]</code></li>
-<li>The test set has 252 observations.</li>
-</ul></li>
-<li><strong>加载数据</strong>：加载“ISLR”库，并探索“Smarket”数据集。该数据集包含每日百分比收益率（前
-5 天的“Lag1”…“Lag5”，“今日”）、“成交量”和“年份”。</li>
-<li><strong>探索数据</strong>：计算相关矩阵
-(<code>cor(Smarket[,-9])</code>)，并生成“成交量”随时间变化的图表。</li>
-<li><strong>拆分数据</strong>：将数据拆分为训练集（年份
-2001-2004）和测试集（年份 2005）。
-<ul>
-<li><code>train &lt;- (Year&lt;2005)</code></li>
-<li><code>Smarket.2005 &lt;- Smarket[!train,]</code></li>
-<li><code>Direction.2005 &lt;- Direction[!train]</code></li>
-<li>测试集包含 252 个观测值。</li>
-</ul></li>
-</ol>
-<h3 id="model-1-logistic-regression-all-predictors-slide-90">Model 1:
-Logistic Regression (All Predictors) (Slide 90)</h3>
-<ul>
-<li><strong>Model:</strong> A logistic regression model is fit on the
-training data using <em>all</em> predictors.
-<ul>
-<li><code>glm.fit &lt;- glm(Direction ~ Lag1 + Lag2 + Lag3 + Lag4 + Lag5 + Volume, data=Smarket, family=binomial, subset=train)</code></li>
-</ul></li>
-<li><strong>Prediction:</strong> The model is used to predict the
-direction for the 2005 test data.
-<ul>
-<li><code>glm.probs &lt;- predict(glm.fit, Smarket.2005, type="response")</code></li>
-<li>A threshold of 0.5 is used to classify: if <span
-class="math inline">\(P(\text{Up}) &gt; 0.5\)</span>, predict “Up”.</li>
-</ul></li>
-<li><strong>Results:</strong>
-<ul>
-<li><strong>Test Error Rate:</strong> 0.5198 (or <strong>48.0%
-accuracy</strong>).</li>
-<li><strong>Conclusion:</strong> This is “not good!”—it’s worse than
-flipping a coin. This suggests the model is either too complex or the
-predictors are not useful.</li>
-</ul></li>
-</ul>
-<h3 id="model-2-logistic-regression-lag1-lag2-slide-91">Model 2:
-Logistic Regression (Lag1 &amp; Lag2) (Slide 91)</h3>
-<ul>
-<li><strong>Model:</strong> Based on the poor results, a simpler model
-is tried, using only <code>Lag1</code> and <code>Lag2</code>.
-<ul>
-<li><code>glm.fit &lt;- glm(Direction ~ Lag1 + Lag2, data=Smarket, family=binomial, subset=train)</code></li>
-</ul></li>
-<li><strong>Prediction:</strong> Predictions are made on the 2005 test
-set.</li>
-<li><strong>Results:</strong>
-<ul>
-<li><strong>Test Error Rate:</strong> 0.4404 (or <strong>55.95%
-accuracy</strong>). This is an improvement.</li>
-<li><strong>Confusion Matrix:</strong> | | True Down | True Up | | :— |
-:— | :— | | <strong>Pred Down</strong> | 77 | 69 | | <strong>Pred
-Up</strong> | 35 | 71 |</li>
-<li><strong>ROC and AUC:</strong> The ROC (Receiver Operating
-Characteristic) curve is plotted, and the AUC (Area Under the Curve) is
-calculated.</li>
-<li><strong>AUC Value:</strong> <strong>0.5584</strong>. This is very
-close to 0.5 (which represents a random-chance model), indicating that
-the model has very weak predictive power, even though its accuracy is
-above 50%.</li>
-</ul></li>
-</ul>
-<h3 id="model-3-lda-lag1-lag2-slide-92">Model 3: LDA (Lag1 &amp; Lag2)
-(Slide 92)</h3>
-<ul>
-<li><strong>Model:</strong> LDA is now performed using the same setup:
-<code>Lag1</code> and <code>Lag2</code> as predictors, trained on the
-2001-2004 data.
-<ul>
-<li><code>library(MASS)</code></li>
-<li><code>lda.fit &lt;- lda(Direction ~ Lag1 + Lag2, data=Smarket, subset=train)</code></li>
-</ul></li>
-<li><strong>Prediction:</strong> Predictions are made on the 2005 test
-set.
-<ul>
-<li><code>lda.pred &lt;- predict(lda.fit, Smarket.2005)</code></li>
-</ul></li>
-<li><strong>Results:</strong>
-<ul>
-<li><strong>Test Error Rate:</strong> 0.4404 (or <strong>55.95%
-accuracy</strong>).</li>
-<li><strong>Confusion Matrix:</strong> | | True Down | True Up | | :— |
-:— | :— | | <strong>Pred Down</strong> | 77 | 69 | | <strong>Pred
-Up</strong> | 35 | 71 |</li>
-<li><strong>Observation:</strong> The confusion matrix and accuracy are
-<em>identical</em> to the logistic regression model.</li>
-</ul></li>
-</ul>
-<h3 id="final-comparison-slide-93">Final Comparison (Slide 93)</h3>
-<ul>
-<li><strong>ROC and AUC for LDA:</strong> The ROC curve for the LDA
-model is plotted.</li>
-<li><strong>AUC Value:</strong> <strong>0.5584</strong>.</li>
-<li><strong>Main Conclusion:</strong> As highlighted in the green box,
-<strong>“LDA has identical performance as Logistic regression!”</strong>
-In this specific practical example, using these two predictors, both
-linear methods produce the exact same confusion matrix, the same
-accuracy (56%), and the same AUC (0.558). This reinforces the
-theoretical idea that both are fitting a linear boundary.</li>
-</ul>
-<h3 id="最终比较幻灯片-93">最终比较（幻灯片 93）</h3>
-<ul>
-<li><strong>LDA 的 ROC 和 AUC：</strong>绘制了 LDA 模型的 ROC
-曲线。</li>
-<li><strong>AUC 值：</strong>0.5584**。</li>
-<li><strong>主要结论：</strong>如绿色方框所示，“LDA 的性能与 Logistic
-回归相同！”**
-在这个具体的实际示例中，使用这两个预测变量，两种线性方法都产生了完全相同的混淆矩阵、相同的准确率（56%）和相同的
-AUC（0.558）。这强化了两者均拟合线性边界的理论观点。</li>
-</ul>
-<h2 id="r-example-on-smarket-data-continued">4.7 R Example on Smarket
-Data (Continued)</h2>
-<p>The previous slides showed that Logistic Regression and Linear
-Discriminant Analysis (LDA) had <strong>identical performance</strong>
-on the Smarket dataset (using <code>Lag1</code> and <code>Lag2</code>),
-both achieving 56% test accuracy and an AUC of 0.558. The analysis now
-tests a more flexible method, QDA.</p>
-<h3 id="model-3-qda-lag1-lag2-slides-94-95">Model 3: QDA (Lag1 &amp;
-Lag2) (Slides 94-95)</h3>
-<ul>
-<li><strong>Model:</strong> A Quadratic Discriminant Analysis (QDA)
-model is fit on the same training data (2001-2004) using only the
-<code>Lag1</code> and <code>Lag2</code> predictors.
-<ul>
-<li><code>qda.fit &lt;- qda(Direction ~ Lag1 + Lag2, data=Smarket, subset=train)</code></li>
-</ul></li>
-<li><strong>Prediction:</strong> The model is used to predict the market
-direction for the 2005 test set.</li>
-<li><strong>Results:</strong>
-<ul>
-<li><strong>Test Accuracy:</strong> The model achieves a test accuracy
-of <strong>0.5992 (or 60%)</strong>.</li>
-<li><strong>AUC:</strong> The Area Under the Curve (AUC) for the QDA
-model is <strong>0.562</strong>.</li>
-</ul></li>
-<li><strong>Conclusion:</strong> As the slide highlights, <strong>“QDA
-has better test performance than LDA and Logistic
-regression!”</strong></li>
-</ul>
-<h3 id="smarket-example-summary">Smarket Example Summary</h3>
-<table>
-<thead>
-<tr>
-<th style="text-align: left;">Method</th>
-<th style="text-align: left;">Model Type</th>
-<th style="text-align: left;">Test Accuracy</th>
-<th style="text-align: left;">AUC</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: left;"><strong>Logistic Regression</strong></td>
-<td style="text-align: left;">Linear</td>
-<td style="text-align: left;">~56%</td>
-<td style="text-align: left;">0.558</td>
-</tr>
-<tr>
-<td style="text-align: left;"><strong>LDA</strong></td>
-<td style="text-align: left;">Linear</td>
-<td style="text-align: left;">~56%</td>
-<td style="text-align: left;">0.558</td>
-</tr>
-<tr>
-<td style="text-align: left;"><strong>QDA</strong></td>
-<td style="text-align: left;">Quadratic</td>
-<td style="text-align: left;"><strong>~60%</strong></td>
-<td style="text-align: left;"><strong>0.562</strong></td>
-</tr>
-</tbody>
-</table>
-<p>This practical example reinforces the lessons from the simulations
-(Section 4.6). The two linear methods (LDA, Logistic) had identical
-performance. The more flexible, non-linear QDA model performed better,
-suggesting that the true decision boundary between “Up” and “Down”
-(based on <code>Lag1</code> and <code>Lag2</code>) is not perfectly
-linear.</p>
-<h2 id="kernel-lda">4.8 Kernel LDA</h2>
-<p>This new section introduces an even more advanced non-linear method,
-Kernel LDA.</p>
-<h3 id="the-problem-linear-inseparability-slide-97">The Problem: Linear
-Inseparability (Slide 97)</h3>
-<p>The section starts with a clear visual example. A dataset of two
-concentric circles (a “donut” shape) is <strong>linearly
-inseparable</strong>. It is impossible to draw a single straight line to
-separate the inner (purple) class from the outer (yellow) class.</p>
-<h3 id="the-solution-the-kernel-trick-slides-97-99">The Solution: The
-Kernel Trick (Slides 97, 99)</h3>
-<ol type="1">
-<li><strong>Nonlinear Transformation:</strong> The data is “lifted” into
-a higher-dimensional <em>feature space</em> using a <strong>nonlinear
-transformation</strong>, <span class="math inline">\(x \mapsto
-\phi(x)\)</span>. In the example on the slide, the 2D data is
-transformed, and in this new space, the two classes <em>become</em>
-<strong>linearly separable</strong>.</li>
-<li><strong>The “Kernel Trick”:</strong> The main idea (from slide 99)
-is that we don’t need to explicitly compute this complex transformation
-<span class="math inline">\(\phi(x)\)</span>. LDA (based on Fisher’s
-approach) only requires inner products of the data points. The “kernel
-trick” allows us to replace the inner product in the high-dimensional
-feature space (<span class="math inline">\(x_i^T x_j\)</span>) with a
-simple <strong>kernel function</strong>, <span
-class="math inline">\(k(x_i, x_j)\)</span>, computed in the original,
-low-dimensional space.
-<ul>
-<li>An example of such a kernel is the <strong>Gaussian (RBF)
-kernel</strong>: <span class="math inline">\(k(x_i, x_j) \propto
-e^{-\|x_i - x_j\|^2 / \sigma^2}\)</span>.</li>
-</ul></li>
-</ol>
-<h3 id="academic-foundations-slide-98">Academic Foundations (Slide
-98)</h3>
-<p>This method is based on foundational academic papers that generalized
-linear methods using kernels: * <strong>Fisher discriminant analysis
-with kernels</strong> (Mika, 1999) * <strong>Generalized Discriminant
-Analysis Using a Kernel Approach</strong> (Baudat, 2000) *
-<strong>Kernel principal component analysis</strong> (Schölkopf,
-1997)</p>
-<p>In short, Kernel LDA is an extension of LDA that uses the kernel
-trick to find a linear boundary in a high-dimensional feature space,
-which corresponds to a highly non-linear boundary in the original
-space.</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -13169,7 +12439,7 @@ space.</p>
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">22</span>
+          <span class="site-state-item-count">23</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>

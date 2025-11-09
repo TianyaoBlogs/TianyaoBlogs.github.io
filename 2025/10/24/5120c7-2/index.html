@@ -1,0 +1,1618 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"tianyaoblogs.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="PHYS 5120 - 计算能源材料和电子结构模拟 Lecture Lecturer: Prof.PAN DING 好的，让我们来详细解析白板上的每一个公式和概念。 I: 1. 基本概念与定义 “HF theory” (Hartree-Fock 理论) 这是一种在量子化学中用于近似求解多电子体系（如分子）薛定谔方程的从头计算法 (ab initio method)。  核心思">
+<meta property="og:type" content="article">
+<meta property="og:title" content="PHYS 5120 - Computational Energy Materials and Electronic Structure Simulations-W7-2">
+<meta property="og:url" content="https://tianyaoblogs.github.io/2025/10/24/5120c7-2/index.html">
+<meta property="og:site_name" content="TianyaoBlogs">
+<meta property="og:description" content="PHYS 5120 - 计算能源材料和电子结构模拟 Lecture Lecturer: Prof.PAN DING 好的，让我们来详细解析白板上的每一个公式和概念。 I: 1. 基本概念与定义 “HF theory” (Hartree-Fock 理论) 这是一种在量子化学中用于近似求解多电子体系（如分子）薛定谔方程的从头计算法 (ab initio method)。  核心思">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2025-10-24T14:00:00.000Z">
+<meta property="article:modified_time" content="2025-11-09T17:59:59.328Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="PHYS-5120">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://tianyaoblogs.github.io/2025/10/24/5120c7-2/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>PHYS 5120 - Computational Energy Materials and Electronic Structure Simulations-W7-2 | TianyaoBlogs</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">TianyaoBlogs</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://tianyaoblogs.github.io/2025/10/24/5120c7-2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="TianyaoBlogs">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          PHYS 5120 - Computational Energy Materials and Electronic Structure Simulations-W7-2
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2025-10-24 22:00:00" itemprop="dateCreated datePublished" datetime="2025-10-24T22:00:00+08:00">2025-10-24</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2025-11-10 01:59:59" itemprop="dateModified" datetime="2025-11-10T01:59:59+08:00">2025-11-10</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/PHYS-5120/" itemprop="url" rel="index"><span itemprop="name">PHYS-5120</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>PHYS 5120 - 计算能源材料和电子结构模拟 Lecture</p>
+<p><a target="_blank" rel="noopener" href="https://chem.hkust.edu.hk/people/ding-pan-panding">Lecturer:
+Prof.PAN DING</a></p>
+<p>好的，让我们来详细解析白板上的每一个公式和概念。</p>
+<h2 id="i">I:</h2>
+<h3 id="基本概念与定义">1. 基本概念与定义</h3>
+<h4 id="hf-theory-hartree-fock-理论">“HF theory” (Hartree-Fock
+理论)</h4>
+<p>这是一种在量子化学中用于近似求解多电子体系（如分子）薛定谔方程的<strong>从头计算法
+(ab initio method)</strong>。</p>
+<ul>
+<li><strong>核心思想</strong>:
+它将复杂的多电子问题简化为一系列独立的单电子问题。它假设每个电子都在一个由原子核和其他所有电子共同产生的<strong>平均场</strong>中运动。</li>
+<li><strong>波函数</strong>: 它使用一个<strong>斯莱特行列式 (Slater
+determinant)</strong> 来描述 N
+电子体系的波函数，这自动满足了泡利不相容原理（即波函数在交换任意两个电子时反号）。</li>
+</ul>
+<h4 id="e_hf-neq-sum_i-epsilon_i"><span class="math inline">\(E_{HF}
+\neq \sum_{i} \epsilon_i\)</span></h4>
+<ul>
+<li><strong><span class="math inline">\(E_{HF}\)</span></strong>:
+<strong>HF 总能量</strong>。这是整个 N
+电子体系的<strong>总能量</strong>，包含了所有电子的动能、电子与原子核的吸引能、以及电子与电子之间的排斥能。</li>
+<li><strong><span class="math inline">\(\epsilon_i\)</span></strong>:
+<strong>轨道能量 (Orbital Energy)</strong>。这是第 <span
+class="math inline">\(i\)</span> 个电子在所有其他 <span
+class="math inline">\(N-1\)</span> 个电子的平均场中所具有的能量。</li>
+<li><strong><span class="math inline">\(\sum_{i}
+\epsilon_i\)</span></strong>:
+所有<strong>被占据</strong>轨道能量的总和。</li>
+<li><strong>为什么不相等?</strong>:
+<ul>
+<li>在计算总能量 <span class="math inline">\(E_{HF}\)</span>
+时，电子-电子排斥能 <span class="math inline">\(V_{ee}\)</span>
+只计算一次。</li>
+<li>在计算每个轨道能量 <span class="math inline">\(\epsilon_i\)</span>
+时，它包含了第 <span class="math inline">\(i\)</span>
+个电子与<strong>所有</strong> <span class="math inline">\(j\)</span>
+电子（<span class="math inline">\(j \neq i\)</span>）的排斥。</li>
+<li>当你把所有的 <span class="math inline">\(\epsilon_i\)</span> 相加时
+(<span class="math inline">\(\sum_i \epsilon_i\)</span>)，每一对电子
+(<span class="math inline">\(i\)</span> 和 <span
+class="math inline">\(j\)</span>)
+之间的排斥能被计算了<strong>两次</strong>（一次在 <span
+class="math inline">\(\epsilon_i\)</span> 中，一次在 <span
+class="math inline">\(\epsilon_j\)</span> 中）。</li>
+<li><strong>正确的公式是</strong>: <span class="math inline">\(E_{HF} =
+\sum_{i} \epsilon_i - V_{ee}\)</span>，或者更准确地写为： <span
+class="math display">\[E_{HF} = \sum_{i} \epsilon_i - \frac{1}{2}
+\sum_{i,j} (J_{ij} - K_{ij})\]</span> (这里的 <span
+class="math inline">\(J_{ij}\)</span> 和 <span
+class="math inline">\(K_{ij}\)</span>
+是下面会讲到的库仑积分和交换积分)。这个 <span
+class="math inline">\(\frac{1}{2}\)</span> 就是为了修正重复计算。</li>
+</ul></li>
+</ul>
+<h4 id="band-gap-带隙">“band gap” (带隙)</h4>
+<p>这个图显示了两个关键的分子轨道： * <strong>HOMO</strong>:
+<strong>Highest Occupied Molecular Orbital</strong>
+(最高占据分子轨道)。这是在体系基态下，能量最高的、包含电子的轨道。 *
+<strong>LUMO</strong>: <strong>Lowest Unoccupied Molecular
+Orbital</strong>
+(最低未占分子轨道)。这是在体系基态下，能量最低的、没有电子的轨道。 *
+<strong>HOMO-LUMO 隙</strong>: <span class="math inline">\(E_{LUMO} -
+E_{HOMO}\)</span>。在分子中，这通常被粗略地称为“带隙”，它大致对应于将电子从基态激发到第一激发态所需的最低能量（光学带隙）。</p>
+<h4 id="fundamental-band-gap-i---a">“fundamental band gap = I - A”</h4>
+<ul>
+<li><strong>解释</strong>:
+这是<strong>基本带隙</strong>（或称准粒子带隙）的<strong>严格定义</strong>。它和
+HOMO-LUMO 隙是<strong>不同</strong>的概念。</li>
+<li>它代表了在不考虑电子-空穴相互作用（激子效应）的情况下，产生一个分离的电子和一个空穴所需的能量。</li>
+<li><span class="math inline">\(I - A = [E(N-1) - E(N)] - [E(N) -
+E(N+1)] = E(N-1) + E(N+1) - 2E(N)\)</span>。</li>
+</ul>
+<h4 id="ionization-energy-i-en-1---en-0">“ionization energy: I = E(N-1)
+- E(N) &gt; 0”</h4>
+<ul>
+<li><strong>电离能 (I)</strong>:
+<ul>
+<li><strong><span class="math inline">\(E(N)\)</span></strong>: 具有 N
+个电子的中性体系的基态总能量。</li>
+<li><strong><span class="math inline">\(E(N-1)\)</span></strong>:
+移走一个电子后，具有 (N-1) 个电子的阳离子的基态总能量。</li>
+<li><strong>定义</strong>:
+从一个体系中移走一个电子所需的<strong>最小能量</strong>。</li>
+<li>因为电子被原子核束缚，移走它需要外界提供能量，所以 <span
+class="math inline">\(I\)</span> 总是大于 0。</li>
+</ul></li>
+</ul>
+<h4 id="electron-affinity-a-en---en1-0">“electron affinity: A = E(N) -
+E(N+1) &gt; 0”</h4>
+<ul>
+<li><strong>电子亲和能 (A)</strong>:
+<ul>
+<li><strong><span class="math inline">\(E(N+1)\)</span></strong>:
+增加一个电子后，具有 (N+1) 个电子的阴离子的基态总能量。</li>
+<li><strong>定义</strong>:
+一个中性体系获得一个电子并形成稳定阴离子时所<strong>释放</strong>的能量。</li>
+<li><strong>注意</strong>: 如果 <span class="math inline">\(E(N+1) &lt;
+E(N)\)</span>（即阴离子更稳定），则 <span class="math inline">\(A &gt;
+0\)</span>，体系释放能量。如果阴离子不稳定（<span
+class="math inline">\(E(N+1) &gt; E(N)\)</span>），则 <span
+class="math inline">\(A &lt; 0\)</span>。白板上的 <span
+class="math inline">\(&gt; 0\)</span> 假设了形成稳定阴离子的情况。</li>
+</ul></li>
+</ul>
+<h3 id="hartree-fock-总能量公式">2. Hartree-Fock 总能量公式</h3>
+<p><strong><span class="math inline">\(E_{HF}\)</span>（HF
+总能量）的完整表达式</strong>。它由三部分组成：</p>
+<h4 id="第一行单电子能量-one-electron-energy">第一行：单电子能量
+(One-Electron Energy)</h4>
+<p><span class="math display">\[\sum_{i\sigma} \int d\vec{r}
+\phi_i^*(\vec{r}) \left( -\frac{\hbar^2}{2m} \nabla^2 + V_{ext} \right)
+\phi_i(\vec{r})\]</span></p>
+<ul>
+<li><strong><span
+class="math inline">\(\sum_{i\sigma}\)</span></strong>:
+对所有被占据的<strong>自旋轨道 (spin-orbital)</strong> <span
+class="math inline">\(i\)</span> (自旋为 <span
+class="math inline">\(\sigma\)</span>) 求和。</li>
+<li><strong><span class="math inline">\(\int d\vec{r}\)</span></strong>:
+对空间坐标 <span class="math inline">\(\vec{r}\)</span> 积分。</li>
+<li><strong><span
+class="math inline">\(\phi_i(\vec{r})\)</span></strong>: 第 <span
+class="math inline">\(i\)</span> 个自旋轨道的波函数。<span
+class="math inline">\(\phi_i^*\)</span> 是它的复共轭。</li>
+<li><strong><span class="math inline">\(-\frac{\hbar^2}{2m}
+\nabla^2\)</span></strong>: <strong>动能算符</strong>。<span
+class="math inline">\(\hbar\)</span> 是约化普朗克常数，<span
+class="math inline">\(m\)</span> 是电子质量，<span
+class="math inline">\(\nabla^2\)</span> 是拉普拉斯算符。</li>
+<li><strong><span class="math inline">\(V_{ext}\)</span></strong>:
+<strong>外势场</strong>。这是来自所有原子核对电子的<strong>库仑吸引势</strong>。</li>
+<li><strong>含义</strong>:
+这一整行代表了所有电子的<strong>动能</strong>与它们受到原子核<strong>吸引势能</strong>的总和。</li>
+</ul>
+<h4 id="第二行库仑项-coulomb-term-j">第二行：库仑项 (Coulomb Term,
+J)</h4>
+<p><span class="math display">\[+ \frac{e^2}{2} \sum_{i\sigma,
+j\sigma&#39;} \iint d\vec{r} d\vec{r}&#39; \frac{|\phi_i(\vec{r})|^2
+|\phi_j(\vec{r}&#39;)|^2}{|\vec{r} - \vec{r}&#39;|}\]</span></p>
+<ul>
+<li><strong><span class="math inline">\(\frac{e^2}{2} \sum_{i\sigma,
+j\sigma&#39;}\)</span></strong>: 对<strong>所有</strong>电子对 (<span
+class="math inline">\(i\)</span> 和 <span
+class="math inline">\(j\)</span>，无论自旋 <span
+class="math inline">\(\sigma\)</span> 和 <span
+class="math inline">\(\sigma&#39;\)</span> 是否相同) 求和。<span
+class="math inline">\(e\)</span> 是电子电荷。</li>
+<li><strong><span class="math inline">\(\frac{1}{2}\)</span></strong>:
+修正因子，因为求和时 (<span class="math inline">\(i,j\)</span>) 和
+(<span class="math inline">\(j,i\)</span>)
+被计算了两次，而它们是同一种相互作用。</li>
+<li><strong><span
+class="math inline">\(|\phi_i(\vec{r})|^2\)</span></strong>: 电子 <span
+class="math inline">\(i\)</span> 在 <span
+class="math inline">\(\vec{r}\)</span>
+处出现的<strong>概率密度</strong>（即电荷密度）。</li>
+<li><strong><span class="math inline">\(\frac{...}{|\vec{r} -
+\vec{r}&#39;|}\)</span></strong>: 两个点电荷之间的库仑排斥。</li>
+<li><strong>含义</strong>: 这是电子 <span
+class="math inline">\(i\)</span> 的电荷云和电子 <span
+class="math inline">\(j\)</span>
+的电荷云之间的<strong>经典静电排斥能</strong>。这是一个纯粹的经典概念。</li>
+</ul>
+<h4 id="第三行交换项-exchange-term-k">第三行：交换项 (Exchange Term,
+K)</h4>
+<p><span class="math display">\[- \frac{e^2}{2} \sum_{i\sigma, j\sigma}
+\iint d\vec{r} d\vec{r}&#39; \frac{\phi_i^*(\vec{r}) \phi_j(\vec{r})
+\phi_j^*(\vec{r}&#39;) \phi_i(\vec{r}&#39;)}{|\vec{r} -
+\vec{r}&#39;|}\]</span> <em>（注意：白板上的公式在 <span
+class="math inline">\(\phi\)</span>
+的变量上似乎有些笔误，这里写的是标准形式）</em> * <strong><span
+class="math inline">\(\sum_{i\sigma, j\sigma}\)</span></strong>:
+<strong>关键区别！</strong> 这里的求和<strong>只对自旋相同</strong>
+(<span class="math inline">\(\sigma\)</span>) 的电子对进行。 *
+<strong>含义</strong>:
+这是一个纯粹的<strong>量子力学效应</strong>，没有经典对应。它源于波函数必须满足泡利不相容原理（反对称性）。
+*
+它修正了库仑项。由于泡利不相容，自旋相同的电子有“避开”彼此的倾向（称为<strong>费米空穴
+(Fermi
+hole)</strong>），这导致它们的实际排斥能<strong>小于</strong>经典的库仑排斥能。交换项
+<span class="math inline">\(K\)</span>
+是一个正值，因此在总能量中它是一个<strong>负的贡献</strong>（使能量更低，体系更稳定）。</p>
+<h3 id="核心对比delta-scf-与-koopmans-定理">3. 核心对比：<span
+class="math inline">\(\Delta SCF\)</span> 与 Koopmans 定理</h3>
+<p>核心是比较计算 <span class="math inline">\(I\)</span> 和 <span
+class="math inline">\(A\)</span> 的两种方法。</p>
+<h4 id="delta-scf-delta-scf">“<span class="math inline">\(\Delta
+SCF\)</span>” (Delta SCF)</h4>
+<ul>
+<li><strong>含义</strong>: “<span class="math inline">\(\Delta\)</span>”
+(Delta) 指的是<strong>差值</strong>，“SCF” (Self-Consistent Field,
+自洽场) 是求解 HF 方程的计算过程。</li>
+<li><strong>方法</strong>:
+<ol type="1">
+<li>对 N 电子体系进行一次<strong>完整的 SCF 计算</strong>，得到总能量
+<span class="math inline">\(E(N)\)</span>。</li>
+<li>对 (N-1) 电子体系（阳离子）进行<strong>另一次完整的 SCF
+计算</strong>，得到总能量 <span
+class="math inline">\(E(N-1)\)</span>。</li>
+<li><span class="math inline">\(I = E(N-1) - E(N)\)</span>。</li>
+</ol></li>
+<li><strong>特点</strong>:
+<ul>
+<li><strong>准确</strong>: 这是在 HF
+理论框架内计算电离能的<strong>最准确</strong>方法。</li>
+<li><strong>计算量大</strong>: 需要进行两次（或多次）独立的、昂贵的 SCF
+计算。</li>
+</ul></li>
+</ul>
+<h4 id="koopmans-theorem-koopmans-定理">“Koopmans’ theorem” (Koopmans
+定理)</h4>
+<ul>
+<li><strong>含义</strong>:
+这是一个<strong>近似</strong>方法，它将电离能/电子亲和能与<strong>单次</strong>
+HF 计算得到的<strong>轨道能量</strong>直接关联起来。</li>
+<li><strong>定理内容</strong>:
+<ul>
+<li><strong>电离能</strong>: <span class="math inline">\(I \approx
+-\epsilon_{HOMO}\)</span> (电离能约等于 HOMO 轨道能量的负值)</li>
+<li><strong>电子亲和能</strong>: <span class="math inline">\(A \approx
+-\epsilon_{LUMO}\)</span> (电子亲和能约等于 LUMO 轨道能量的负值)</li>
+</ul></li>
+<li><strong>特点</strong>:
+<ul>
+<li><strong>近似</strong>: 结果不如 <span class="math inline">\(\Delta
+SCF\)</span> 准确。</li>
+<li><strong>计算量小</strong>: 只需要对 N
+电子体系进行<strong>一次</strong> SCF
+计算，就能“免费”得到所有轨道能量，从而估算出 <span
+class="math inline">\(I\)</span> 和 <span
+class="math inline">\(A\)</span>。</li>
+</ul></li>
+</ul>
+<h4 id="frozen-orbital-approximation-冻结轨道近似">“frozen orbital
+approximation” (冻结轨道近似)</h4>
+<ul>
+<li><strong>含义</strong>: 这是 Koopmans
+定理背后的<strong>核心假设</strong>。</li>
+<li><strong>内容</strong>: 它假设当你从 N 电子体系中移出一个电子（例如从
+HOMO 移出）后，剩下的 (N-1) 个电子的轨道（<span
+class="math inline">\(\phi\)</span>）<strong>完全不发生任何改变</strong>（即被“冻结”了）。</li>
+<li><strong>推导</strong>: 白板上的 <span class="math inline">\(-I =
+E(N) - E(N-1)\)</span> 以及指向 <span
+class="math inline">\(E_{HF}\)</span>
+公式的箭头，就是在演示这个推导。如果你假设 <span
+class="math inline">\(E(N-1)\)</span> 只是 <span
+class="math inline">\(E(N)\)</span> 的公式中去掉了所有与 HOMO (设为
+<span class="math inline">\(k\)</span> 轨道) 相关的项，那么 <span
+class="math inline">\(E(N) - E(N-1)\)</span>
+经过数学推导后<strong>恰好等于</strong> <span
+class="math inline">\(\epsilon_k\)</span>（<span
+class="math inline">\(k\)</span> 轨道的轨道能量）。因此 <span
+class="math inline">\(I = -\epsilon_k\)</span>。</li>
+</ul>
+<h4 id="orbital-relaxation-轨道弛豫">“orbital relaxation”
+(轨道弛豫)</h4>
+<ul>
+<li><strong>含义</strong>: 这是 Koopmans
+定理<strong>出错的原因</strong>，也是“冻结轨道近似”所<strong>忽略</strong>的物理现实。</li>
+<li><strong>内容</strong>:
+<ul>
+<li><strong>真实情况是</strong>：当你移出一个电子后，电子-电子排斥<strong>减少</strong>了。</li>
+<li>剩下的 (N-1)
+个电子会“感觉”到更强的来自原子核的净吸引力，导致它们的轨道会<strong>收缩</strong>并<strong>重新排布</strong>（即“弛豫”），以达到一个新的、能量更低的稳定状态。</li>
+<li>因此，通过 <span class="math inline">\(\Delta SCF\)</span>
+计算得到的<strong>真实</strong> <span
+class="math inline">\(E(N-1)\)</span>（弛豫后的能量）<strong>总是低于</strong>
+Koopmans 定理所假设的 <span
+class="math inline">\(E(N-1)_{frozen}\)</span>（冻结轨道的能量）。</li>
+</ul></li>
+<li><strong>结论</strong>:
+<ul>
+<li><span class="math inline">\(I_{\Delta SCF} = E(N-1)_{relaxed} -
+E(N)\)</span></li>
+<li><span class="math inline">\(I_{Koopmans} = E(N-1)_{frozen} -
+E(N)\)</span></li>
+<li>因为 <span class="math inline">\(E(N-1)_{relaxed} &lt;
+E(N-1)_{frozen}\)</span>，所以 <strong><span
+class="math inline">\(I_{\Delta SCF} &lt;
+I_{Koopmans}\)</span></strong>。</li>
+<li>换句话说，<strong>Koopmans
+定理总是高估（overestimate）电离能</strong>。</li>
+</ul></li>
+</ul>
+<h3 id="总结">总结</h3>
+<ul>
+<li><strong><span class="math inline">\(\Delta SCF\)</span></strong>:
+准确（在 HF
+理论内）、计算量大。它通过计算两个不同体系的<strong>总能量之差</strong>来求
+<span
+class="math inline">\(I\)</span>，并<strong>包含了轨道弛豫</strong>效应。</li>
+<li><strong>Koopmans 定理</strong>:
+近似、计算量小。它通过一次计算的<strong>轨道能量</strong>来估算 <span
+class="math inline">\(I\)</span>，它基于<strong>冻结轨道近似</strong>，<strong>忽略了轨道弛豫</strong>。</li>
+</ul>
+<p><strong>Koopmans 定理的数学推导</strong>，并将其与<strong>带隙 (band
+gap)</strong> 的概念联系起来。</p>
+<h2 id="ii">II:</h2>
+<h3 id="koopmans-定理的数学推导电离能-i">1. Koopmans
+定理的数学推导（电离能 I）</h3>
+<p>在数学上证明为什么 <span class="math inline">\(I \approx
+-\epsilon_{HOMO}\)</span>。</p>
+<ul>
+<li><strong>起点</strong>: <span class="math inline">\(-I = E(N) -
+E(N-1)\)</span>
+<ul>
+<li>这是电离能 (I)
+定义的变形。我们现在要计算的是，在<strong>冻结轨道近似</strong>下，N
+电子体系的总能量 <span class="math inline">\(E(N)\)</span> 与 (N-1)
+电子体系的总能量 <span class="math inline">\(E(N-1)_{frozen}\)</span>
+之差。</li>
+<li>我们假设被移走的电子来自 HOMO 轨道，我们称之为轨道 <span
+class="math inline">\(k\)</span>（或白板上的 <span
+class="math inline">\(N\)</span>）。</li>
+</ul></li>
+<li><strong>中间的大型公式</strong>:
+<ul>
+<li><span class="math inline">\(E(N) - E(N-1)_{frozen}\)</span>
+的结果就是白板上写的这些项。当你从总能量 <span
+class="math inline">\(E_{HF}\)</span>（在第一张图中有）中减去一个“冻结”的
+(N-1)
+体系能量时，你剩下的<strong>恰好</strong>是与被移走的那个电子（来自轨道
+<span class="math inline">\(k\)</span>）相关的所有能量项。</li>
+<li>这些项是：
+<ol type="1">
+<li><strong>单电子能量</strong>: <span class="math inline">\(\langle
+\phi_k | \hat{h} | \phi_k \rangle\)</span> (白板上用 <span
+class="math inline">\(\hat{f}(\vec{r})\)</span> 等符号表示)。这是 <span
+class="math inline">\(k\)</span>
+电子自身的动能和它受到的所有原子核的吸引能。</li>
+<li><strong>库仑项 (J)</strong>: <span class="math inline">\(+ e^2
+\sum_{j} \iint ...\)</span>。这是 <span class="math inline">\(k\)</span>
+电子与<strong>所有</strong>其他 <span class="math inline">\(j\)</span>
+电子之间的经典库仑排斥能。</li>
+<li><strong>交换项 (K)</strong>: <span class="math inline">\(- e^2
+\sum_{j} \iint ...\)</span>。这是 <span class="math inline">\(k\)</span>
+电子与所有<strong>同自旋</strong>的 <span
+class="math inline">\(j\)</span> 电子之间的量子交换能。</li>
+</ol></li>
+</ul></li>
+<li><strong>关键等式</strong>: <span class="math inline">\(\hat{f}_i
+\phi_i = \epsilon_i \phi_i\)</span>
+<ul>
+<li>这是 <strong>Hartree-Fock 方程</strong>。它定义了<strong>轨道能量
+<span class="math inline">\(\epsilon_i\)</span></strong>。</li>
+<li><span class="math inline">\(\hat{f}_i\)</span> 是 <strong>Fock
+算符</strong>，它本身就包含了上述的三部分能量：单电子能量算符 (<span
+class="math inline">\(\hat{h}\)</span>)、所有其他电子的库仑算符 (<span
+class="math inline">\(\hat{J}\)</span>) 和交换算符 (<span
+class="math inline">\(\hat{K}\)</span>)。</li>
+<li>因此，上面那一大堆积分（<span class="math inline">\(k\)</span>
+电子的单电子能量 + 它与所有其他电子的 J 和 K
+相互作用）<strong>根据定义，就等于 <span
+class="math inline">\(\epsilon_k\)</span></strong>！</li>
+</ul></li>
+<li><strong>推导结论</strong>: <span class="math inline">\(= \epsilon_k
+= \epsilon_{HOMO}\)</span>
+<ul>
+<li>因为 <span class="math inline">\(E(N) - E(N-1)_{frozen} =
+\epsilon_k\)</span>（<span class="math inline">\(k\)</span> 是 HOMO
+轨道）。</li>
+<li>所以 <span class="math inline">\(-I =
+\epsilon_{HOMO}\)</span>。</li>
+<li><strong>最终得到: <span class="math inline">\(I =
+-\epsilon_{HOMO}\)</span></strong></li>
+<li><strong>总结</strong>: Koopmans
+定理的推导，其核心就是<strong>冻结轨道近似</strong>。这个近似使得 <span
+class="math inline">\(E(N)\)</span> 和 <span
+class="math inline">\(E(N-1)\)</span>
+之间的能量差，<strong>恰好</strong>等于被移走的那个电子的<strong>轨道能量</strong>。</li>
+</ul></li>
+</ul>
+<h3 id="koopmans-定理电子亲和能-a">2. Koopmans 定理（电子亲和能 A）</h3>
+<ul>
+<li><strong><span class="math inline">\(-A = E(N+1) -
+E(N)\)</span></strong>:
+<ul>
+<li>这是电子亲和能 <span class="math inline">\(A = E(N) -
+E(N+1)\)</span> 的变形。</li>
+<li>我们现在考虑在<strong>冻结轨道近似</strong>下，向 N 电子体系的 LUMO
+轨道<strong>加入</strong>一个电子。</li>
+</ul></li>
+<li><strong><span class="math inline">\(=
+\epsilon_{LUMO}\)</span></strong>:
+<ul>
+<li><strong>逻辑</strong>: 同样使用冻结轨道近似，我们假设 N
+电子体系中所有原来的轨道在加入新电子后<strong>不发生改变</strong>（不弛豫）。</li>
+<li>那么，(N+1) 电子体系的总能量 <span
+class="math inline">\(E(N+1)_{frozen}\)</span> 与 N 电子体系的总能量
+<span class="math inline">\(E(N)\)</span>
+之差，就<strong>恰好</strong>等于这个新电子被加入的那个轨道（即
+LUMO）的<strong>轨道能量</strong>。</li>
+<li>因此，<span class="math inline">\(-A =
+\epsilon_{LUMO}\)</span>。</li>
+<li><strong>最终得到: <span class="math inline">\(A =
+-\epsilon_{LUMO}\)</span></strong></li>
+</ul></li>
+</ul>
+<h3 id="带隙-band-gap">3. 带隙 (Band Gap)</h3>
+<ul>
+<li><strong><code>E_&#123;gap&#125; = I - A</code></strong>:
+<ul>
+<li>这是<strong>基本带隙 (Fundamental Gap)</strong>
+的<strong>严格定义</strong>。</li>
+<li>它代表了从体系中移出一个电子并将其放置到远离体系的无穷远处，然后再从无穷远处拿一个电子放回体系中（假设的），这两个过程的能量差。</li>
+<li>它是一个<strong>总能量 (Total Energy)</strong> 的差值，需要三次
+<span class="math inline">\(\Delta SCF\)</span> 计算（<span
+class="math inline">\(E(N)\)</span>, <span
+class="math inline">\(E(N-1)\)</span>, <span
+class="math inline">\(E(N+1)\)</span>）才能精确得到。</li>
+</ul></li>
+<li><strong><code>= \epsilon_&#123;LUMO&#125; - \epsilon_&#123;HOMO&#125;</code></strong>:
+<ul>
+<li>这是<strong>Koopmans 定理对基本带隙的近似</strong>。</li>
+<li>通过代入我们刚刚推导出的近似值：
+<ul>
+<li><span class="math inline">\(I \approx -\epsilon_{HOMO}\)</span></li>
+<li><span class="math inline">\(A \approx -\epsilon_{LUMO}\)</span></li>
+</ul></li>
+<li>我们得到：<span class="math inline">\(E_{gap} = I - A \approx
+(-\epsilon_{HOMO}) - (-\epsilon_{LUMO}) = \epsilon_{LUMO} -
+\epsilon_{HOMO}\)</span></li>
+<li><strong>关键结论</strong>: <span
+class="math inline">\(\epsilon_{LUMO} - \epsilon_{HOMO}\)</span>（即
+<strong>HOMO-LUMO 隙</strong>）是<strong>基本带隙</strong> <span
+class="math inline">\(I - A\)</span> 的一个近似值。</li>
+<li><strong>为什么是近似？</strong> 因为它完全忽略了计算 <span
+class="math inline">\(I\)</span> 和 <span
+class="math inline">\(A\)</span>
+时的<strong>轨道弛豫</strong>效应。</li>
+</ul></li>
+</ul>
+<h3 id="右下角的图示">4. 右下角的图示</h3>
+<ul>
+<li><strong>HOMO / LUMO</strong>:
+显示了最高占据和最低未占两个轨道能级。</li>
+<li><strong><code>~1.1 - 1.3 eV</code></strong>:
+这是一个<strong>示例</strong>数值，用来表示 HOMO-LUMO
+隙的典型大小（这个数值接近于硅的带隙，可能是一个具体的例子）。</li>
+<li><strong>上面的竖线</strong>: 代表了 LUMO
+之上的一系列能量更高、未被占据的<strong>虚拟轨道 (virtual
+orbitals)</strong>。在固体物理中，这对应于<strong>导带 (Conduction
+Band)</strong>。</li>
+<li><strong>HOMO 下的能级 (未画出)</strong>:
+代表了所有能量更低、已被占据的轨道。在固体物理中，这对应于<strong>价带
+(Valence Band)</strong>。</li>
+</ul>
+<h3 id="总结-1">总结</h3>
+<p>以上是Koopmans
+定理的数学论证，并得出了一个在计算化学和材料科学中非常重要（虽然是近似的）的结论：</p>
+<blockquote>
+<p><strong>基本带隙 (<span class="math inline">\(I - A\)</span>)
+可以通过单次 HF 计算得到的 HOMO-LUMO 隙 (<span
+class="math inline">\(\epsilon_{LUMO} - \epsilon_{HOMO}\)</span>)
+来估算。</strong></p>
+</blockquote>
+<p>这个近似的准确性取决于 “冻结轨道近似” 带来的误差（忽略轨道弛豫）与 HF
+理论本身带来的误差（忽略电子相关能）在多大程度上相互抵消。</p>
+<h2 id="iii">III:</h2>
+<p><strong>“后-HF” (post-Hartree-Fock) 方法</strong>。</p>
+<p>在前面的讨论中，我们确定了 HF 理论的两个主要缺陷： 1.
+<strong>忽略了轨道弛豫</strong>（导致 Koopmans 定理不准）。 2.
+<strong>忽略了电子相关能</strong>（HF
+是一个平均场理论，没有考虑电子的瞬时“躲避”行为）。</p>
+<p>介绍<strong>如何修正第二个（也是更根本的）缺陷</strong>。这个方法叫做
+<strong>“Configuration Interaction (CI)” (组态相互作用)</strong>。</p>
+<h3 id="phi_hf-frac1sqrtn-dots-slater-determinant">1. 📖 <span
+class="math inline">\(\Phi_{HF} = \frac{1}{\sqrt{N!}} | \dots |\)</span>
+(Slater Determinant)</h3>
+<ul>
+<li><strong>含义</strong>: 这是 Hartree-Fock (HF) 波函数 (<span
+class="math inline">\(\Phi_{HF}\)</span>)
+的<strong>数学定义</strong>。</li>
+<li><strong><span
+class="math inline">\(\frac{1}{\sqrt{N!}}\)</span></strong>:
+归一化常数。</li>
+<li><strong><span class="math inline">\(| \dots |\)</span></strong>:
+这是一个<strong>斯莱特行列式 (Slater Determinant)</strong>。
+<ul>
+<li>例如，对于一个 2 电子体系（如氦原子），它写作： <span
+class="math display">\[\Phi(1,2) = \frac{1}{\sqrt{2}} \begin{vmatrix}
+\phi_1(1) &amp; \phi_2(1) \\ \phi_1(2) &amp; \phi_2(2) \end{vmatrix} =
+\frac{1}{\sqrt{2}} [\phi_1(1)\phi_2(2) -
+\phi_1(2)\phi_2(1)]\]</span></li>
+<li><span class="math inline">\(\phi_1(1)\)</span> 表示电子 1 处于 <span
+class="math inline">\(\phi_1\)</span> 自旋轨道。</li>
+</ul></li>
+<li><strong>目的</strong>:
+这种行列式形式是满足<strong>泡利不相容原理</strong>（波函数在交换任意两个电子时必须反号）的最简洁的数学工具。</li>
+</ul>
+<p>HF 理论假设体系的<strong>真实波函数 <span
+class="math inline">\(\Psi\)</span></strong>
+可以被<strong>单个</strong>斯莱特行列式 <span
+class="math inline">\(\Phi_{HF}\)</span>
+<strong>很好地近似</strong>。</p>
+<h3 id="configuration-interaction-ci-组态相互作用">2. ⚡ “Configuration
+Interaction (CI)” (组态相互作用)</h3>
+<ul>
+<li><strong>核心思想</strong>: HF 理论的“平均场”假设（即 <span
+class="math inline">\(\Psi \approx
+\Phi_{HF}\)</span>）是一个<strong>近似</strong>。一个<strong>更精确</strong>的波函数
+<span class="math inline">\(\Psi\)</span>
+应该是一个<strong>线性组合</strong>，它不仅包含 HF 基态组态 <span
+class="math inline">\(\Phi_{HF}\)</span>，还包含所有可能的<strong>激发组态
+(excited configurations)</strong>。</li>
+<li><strong>能级图</strong>:
+<ul>
+<li>图显示了 HF 基态。轨道 1 和 2 被电子占据（<strong>占据轨道,
+occ</strong>），轨道 3, 4, 5… 是空的（<strong>虚拟轨道,
+virt</strong>）。</li>
+<li>这个基态组态就是 <span
+class="math inline">\(\Phi_{HF}\)</span>。</li>
+</ul></li>
+<li><strong>什么是激发组态?</strong>
+<ul>
+<li><strong>单激发 (Singles, S)</strong>: 将一个电子从一个占据轨道
+(<span class="math inline">\(i\)</span>) 激发到一个虚拟轨道 (<span
+class="math inline">\(a\)</span>)。记作 <span
+class="math inline">\(\Phi_i^a\)</span>。</li>
+<li><strong>双激发 (Doubles, D)</strong>: 将两个电子从占据轨道 (<span
+class="math inline">\(i, j\)</span>) 激发到虚拟轨道 (<span
+class="math inline">\(a, b\)</span>)。记作 <span
+class="math inline">\(\Phi_{ij}^{ab}\)</span>。</li>
+<li><strong>三激发 (Triples, T)</strong>: …以此类推。</li>
+</ul></li>
+<li><strong>CI 波函数</strong>: 真正的基态波函数 <span
+class="math inline">\(\Psi\)</span> 是所有这些可能组态的叠加： <span
+class="math display">\[\Psi = C_0 \Phi_{HF} + \sum_{i,a} C_i^a \Phi_i^a
++ \sum_{i,j,a,b} C_{ij}^{ab} \Phi_{ij}^{ab} + \sum_{i,j,k,a,b,c}
+C_{ijk}^{abc} \Phi_{ijk}^{abc} + \dots\]</span>
+<ul>
+<li><span class="math inline">\(C_0\)</span> 是 HF 基态的系数（通常接近
+1）。</li>
+<li><span class="math inline">\(C_i^a\)</span>, <span
+class="math inline">\(C_{ij}^{ab}\)</span>…
+是各种激发组态的<strong>系数</strong>（或“权重”）。</li>
+<li><strong>CI
+方法的目的</strong>就是通过求解一个巨大的矩阵本征值问题来找出所有这些
+<span class="math inline">\(C\)</span> 系数，从而获得更精确的波函数
+<span class="math inline">\(\Psi\)</span> 和能量 <span
+class="math inline">\(E\)</span>。</li>
+</ul></li>
+</ul>
+<h3 id="ci-公式">3. CI 公式</h3>
+<p>总波函数 <span class="math inline">\(\Psi\)</span>
+的各个组成部分：</p>
+<ul>
+<li><strong><span class="math inline">\(\Psi^{(1)} =
+\sum_{i}^{\text{occ}} \sum_{a}^{\text{virt}} C_i^a
+\Phi_i^a\)</span></strong>
+<ul>
+<li>这是波函数中所有<strong>单激发 (S)</strong> 组态的总和。</li>
+</ul></li>
+<li><strong><span class="math inline">\(\Psi^{(2)} =
+\sum_{i&lt;j}^{\text{occ}} \sum_{a&lt;b}^{\text{virt}} C_{ij}^{ab}
+\Phi_{ij}^{ab}\)</span></strong>
+<ul>
+<li>这是波函数中所有<strong>双激发 (D)</strong> 组态的总和。</li>
+</ul></li>
+<li><strong><span class="math inline">\(\Psi^{(3)} =
+\sum_{i&lt;j&lt;k}^{\text{occ}} \sum_{a&lt;b&lt;c}^{\text{virt}}
+C_{ijk}^{abc} \Phi_{ijk}^{abc}\)</span></strong>
+<ul>
+<li>这是波函数中所有<strong>三激发 (T)</strong> 组态的总和。</li>
+</ul></li>
+</ul>
+<h3 id="关键概念">4. 🔑 关键概念</h3>
+<ul>
+<li><strong><span class="math inline">\(\langle \Phi_{HF} | \Phi_i^a
+\rangle = 0\)</span></strong>
+<ul>
+<li><strong>含义</strong>: HF
+基态波函数与<strong>任意一个</strong>单激发态波函数都是<strong>正交</strong>的（即它们的重叠积分为
+0）。</li>
+<li><strong>重要推论 (Brillouin 定理)</strong>: 这意味着 HF 基态 <span
+class="math inline">\(\Phi_{HF}\)</span> 不会与单激发态 <span
+class="math inline">\(\Phi_i^a\)</span> 直接混合。换句话说，在 CI
+波函数中，所有的 <span class="math inline">\(C_i^a\)</span> 系数都将为
+0（<em>如果</em> <span class="math inline">\(\Phi_{HF}\)</span> 是严格的
+HF 波函数）。</li>
+<li><strong>结论</strong>: 对 HF
+基态能量的<strong>第一个修正</strong>来自于<strong>双激发
+(Doubles)</strong>。这就是为什么双激发在电子相关能中如此重要。</li>
+</ul></li>
+<li><strong>Full CI (FCI, 全组态相互作用)</strong>
+<ul>
+<li>如果你在 CI
+展开式中包含了<strong>所有</strong>可能的激发（单、双、三、…直到 N
+激发），你就得到了 <strong>Full CI</strong>。</li>
+<li>FCI 在给定的基组下，是求解薛定谔方程的<strong>精确解</strong>。</li>
+<li><strong>问题</strong>:
+计算量是<strong>天文数字</strong>（随体系大小呈指数增长），只能用于几个电子的微小体系。</li>
+</ul></li>
+<li><strong>Truncated CI (截断 CI)</strong>
+<ul>
+<li>由于 FCI 不可行，人们在实际中会<strong>截断</strong>这个求和。</li>
+<li><strong>CISD</strong>: 只包含<strong>单激发 (S)</strong> 和
+<strong>双激发 (D)</strong>。这是最常见的 CI 方法之一。</li>
+<li><strong>CISDT</strong>: 包含单、双、三激发。</li>
+</ul></li>
+</ul>
+<h3 id="总结-2">总结</h3>
+<p>从 HF 理论（一个<strong>单行列式</strong>近似）转向了 <strong>CI
+理论</strong>（一个<strong>多行列式</strong>方法）。</p>
+<p><strong>CI 的核心目的</strong>：通过将激发态组态（<span
+class="math inline">\(\Phi_i^a\)</span>, <span
+class="math inline">\(\Phi_{ij}^{ab}\)</span> 等）“混合”到 HF 基态组态
+(<span class="math inline">\(\Phi_{HF}\)</span>)
+中，来系统地<strong>恢复</strong> HF
+理论所忽略的<strong>电子相关能</strong>。</p>
+<p><strong>“二次量子化” (Second Quantization)</strong>。</p>
+<p>它是一种用来处理多粒子系统（如此处的电子）的强大工具，特别擅长描述粒子的产生和湮灭。</p>
+<h3 id="核心工具产生与湮灭算符">1. 核心工具：产生与湮灭算符</h3>
+<p>在二次量子化中，我们不再纠结于写出完整的、庞大的斯莱特行列式（像
+<span class="math inline">\(\Phi_{HF}\)</span>
+那样），而是定义两个基本的操作符：</p>
+<ul>
+<li><strong><span class="math inline">\(a_p^\dagger\)</span> (产生算符,
+Creation Operator)</strong>:
+<ul>
+<li><strong>作用</strong>: 当它作用在一个波函数上时，它会在<strong>轨道
+<span class="math inline">\(p\)</span></strong>
+中<strong>产生</strong>一个电子。</li>
+<li>例如，如果 <span class="math inline">\(p\)</span> 轨道是空的， <span
+class="math inline">\(a_p^\dagger\)</span> 会把一个电子放进去。</li>
+<li>如果 <span class="math inline">\(p\)</span>
+轨道已经被占据，根据泡利不相容原理， <span
+class="math inline">\(a_p^\dagger |\phi_p\rangle = 0\)</span>
+(你不能在同一个自旋轨道上放两个电子)。</li>
+</ul></li>
+<li><strong><span class="math inline">\(a_p\)</span> (湮灭算符,
+Annihilation Operator)</strong>:
+<ul>
+<li><strong>作用</strong>: 当它作用在一个波函数上时，它会从<strong>轨道
+<span class="math inline">\(p\)</span></strong>
+中<strong>湮灭</strong>（或移除）一个电子。</li>
+<li>例如，如果 <span class="math inline">\(p\)</span> 轨道是占据的，
+<span class="math inline">\(a_p\)</span> 会把这个电子移走。</li>
+<li>如果 <span class="math inline">\(p\)</span> 轨道本来就是空的， <span
+class="math inline">\(a_p |\text{empty}\rangle = 0\)</span>
+(你不能从一个空轨道中移走电子)。</li>
+</ul></li>
+</ul>
+<h3 id="定义基态-phi_hf">2. 定义基态 <span
+class="math inline">\(\Phi_{HF}\)</span></h3>
+<ul>
+<li>首先，我们定义一个真正的<strong>“真空态” (vacuum
+state)</strong>，记作 <span
+class="math inline">\(|0\rangle\)</span>，表示一个<strong>完全没有电子</strong>的空荡荡的体系。</li>
+<li>那么，<strong>HF 基态波函数 <span
+class="math inline">\(\Phi_{HF}\)</span></strong>（即所有占据轨道 <span
+class="math inline">\(i, j, k, \dots\)</span>
+都被填满的状态）就可以通过从真空态开始，不断“产生”电子来构建： <span
+class="math display">\[|\Phi_{HF}\rangle = a_1^\dagger a_2^\dagger
+a_3^\dagger \dots a_N^\dagger |0\rangle\]</span> (这里 <span
+class="math inline">\(1, 2, \dots, N\)</span> 是所有被占据的轨道)。</li>
+</ul>
+<h3 id="解释">3. 解释</h3>
+<p>。它们展示了如何从已知的 HF 基态 <span
+class="math inline">\(|\Phi_{HF}\rangle\)</span>
+<strong>构建</strong>出各种激发态。</p>
+<h4
+id="phi_ia-a_adagger-a_i-phi_hf"><code>| $\Phi_i^a$ &gt; = $a_a^\dagger a_i$ | $\Phi_&#123;HF&#125;$ &gt;</code></h4>
+<ul>
+<li><strong>含义</strong>: 这个公式在说：“单激发态 <span
+class="math inline">\(\Phi_i^a\)</span> 是如何得到的？”</li>
+<li><strong>操作</strong>:
+<ol type="1">
+<li>从 HF 基态 <span class="math inline">\(|\Phi_{HF}\rangle\)</span>
+开始。</li>
+<li>首先，应用<strong>湮灭算符 <span
+class="math inline">\(a_i\)</span></strong>。这会从<strong>占据轨道
+<span class="math inline">\(i\)</span></strong>
+中<strong>移走</strong>一个电子。</li>
+<li>然后，应用<strong>产生算符 <span
+class="math inline">\(a_a^\dagger\)</span></strong>。这会在<strong>虚拟轨道
+<span class="math inline">\(a\)</span></strong>
+中<strong>产生</strong>一个电子。</li>
+</ol></li>
+<li><strong>结果</strong>: 这个两步操作（“先湮灭 <span
+class="math inline">\(i\)</span>，再产生 <span
+class="math inline">\(a\)</span>”）的效果，就是将一个电子从轨道 <span
+class="math inline">\(i\)</span> 激发到了轨道 <span
+class="math inline">\(a\)</span>。这<strong>正是</strong>单激发态 <span
+class="math inline">\(\Phi_i^a\)</span> 的定义。</li>
+</ul>
+<h4
+id="phi_ijab-a_adagger-a_bdagger-a_j-a_i-phi_hf"><code>| $\Phi_&#123;ij&#125;^&#123;ab&#125;$ &gt; = $a_a^\dagger a_b^\dagger a_j a_i$ | $\Phi_&#123;HF&#125;$ &gt;</code></h4>
+<p><em>(白板上这个公式被部分遮挡了，但这是它的标准形式)</em></p>
+<ul>
+<li><strong>含义</strong>: 这个公式在说：“双激发态 <span
+class="math inline">\(\Phi_{ij}^{ab}\)</span> 是如何得到的？”</li>
+<li><strong>操作</strong>:
+<ol type="1">
+<li>从 HF 基态 <span class="math inline">\(|\Phi_{HF}\rangle\)</span>
+开始。</li>
+<li>应用 <span class="math inline">\(a_i\)</span>：从<strong>占据轨道
+<span class="math inline">\(i\)</span></strong>
+中<strong>移走</strong>一个电子。</li>
+<li>应用 <span class="math inline">\(a_j\)</span>：从<strong>占据轨道
+<span class="math inline">\(j\)</span></strong>
+中<strong>移走</strong>另一个电子。</li>
+<li>应用 <span
+class="math inline">\(a_b^\dagger\)</span>：在<strong>虚拟轨道 <span
+class="math inline">\(b\)</span></strong>
+中<strong>产生</strong>一个电子。</li>
+<li>应用 <span
+class="math inline">\(a_a^\dagger\)</span>：在<strong>虚拟轨道 <span
+class="math inline">\(a\)</span></strong>
+中<strong>产生</strong>另一个电子。</li>
+</ol></li>
+<li><strong>结果</strong>: 这个四步操作（“湮灭 <span
+class="math inline">\(i, j\)</span>；产生 <span class="math inline">\(a,
+b\)</span>”）的效果，就是将两个电子从轨道 <span class="math inline">\(i,
+j\)</span> 激发到了轨道 <span class="math inline">\(a,
+b\)</span>。这<strong>正是</strong>双激发态 <span
+class="math inline">\(\Phi_{ij}^{ab}\)</span> 的定义。</li>
+</ul>
+<h3 id="为什么这个方法更好">4. 为什么这个方法更好？</h3>
+<ul>
+<li><strong>简洁性</strong>: 你不需要再写出庞大的 <span
+class="math inline">\(N \times N\)</span> 行列式。你只需要简单地写 <span
+class="math inline">\(a_a^\dagger a_i |\Phi_{HF}\rangle\)</span>
+就可以<strong>精确地代表</strong>那个单激发的斯莱特行列式。</li>
+<li><strong>自动处理“交换 (exchange)”</strong>: 白板上提到了
+“exchange”。这些产生/湮灭算符被定义为<strong>费米子算符</strong>，它们自动满足一个称为<strong>“反对易关系”
+(anti-commutation relation)</strong> 的规则。
+<ul>
+<li>例如：<span class="math inline">\(a_i a_j = -a_j a_i\)</span> 且
+<span class="math inline">\(a_i^\dagger a_j^\dagger = -a_j
+a_i^\dagger\)</span>。</li>
+<li>这个负号<strong>自动地</strong>包含了泡利不相容原理和波函数的反对称性（即“交换”效应）。你不需要再手动去操心行列式的正负号问题。</li>
+</ul></li>
+</ul>
+<p><strong>总结</strong>:
+<strong>二次量子化</strong>的语言，它是一种更强大、更数学化的方式，用来描述
+CI（组态相互作用）理论中如何从 HF 基态构建出各种激发态。</p>
+<h2 id="iv">IV:</h2>
+<p>CI（组态相互作用）理论的总结性笔记。</p>
+<h3 id="波函数基组">1. 波函数基组</h3>
+<p><code>&#123; $\Phi_&#123;HF&#125;, \Phi_i^a, \Phi_&#123;ij&#125;^&#123;ab&#125;, \Phi_&#123;ijk&#125;^&#123;abc&#125;, \dots$ &#125;</code></p>
+<ul>
+<li><strong>含义</strong>: 这是一个<strong>集合
+(set)</strong>。它代表了在给定的单电子轨道基组下，所有可能构建出来的 N
+电子<strong>组态 (configurations)</strong>。</li>
+<li><strong><span class="math inline">\(\Phi_{HF}\)</span></strong>: HF
+基态组态（即电子占据能量最低的 N 个轨道）。</li>
+<li><strong><span class="math inline">\(\Phi_i^a\)</span></strong>:
+所有的<strong>单激发 (Singles)</strong> 组态。</li>
+<li><strong><span
+class="math inline">\(\Phi_{ij}^{ab}\)</span></strong>:
+所有的<strong>双激发 (Doubles)</strong> 组态。</li>
+<li><strong><span
+class="math inline">\(\Phi_{ijk}^{abc}\)</span></strong>:
+所有的<strong>三激发 (Triples)</strong> 组态。</li>
+<li><strong>…</strong>: 一直持续到 N 激发（即所有电子都被激发）。</li>
+<li><strong>重要性</strong>:
+这个无穷（但在有限基组下是有限的）集合构成了一个<strong>完备的 N
+电子基组</strong>。这意味着<strong>任何</strong>一个真实的 N 电子波函数
+<span
+class="math inline">\(\Psi\)</span>（即薛定谔方程的精确解），都可以被<strong>精确地</strong>表示为这个集合中所有组态的线性组合：
+<span class="math display">\[\Psi = C_0 \Phi_{HF} + \sum C_i^a \Phi_i^a
++ \sum C_{ij}^{ab} \Phi_{ij}^{ab} + \dots\]</span></li>
+</ul>
+<h3 id="exchange-交换-vs-correlation-相关">2. “exchange” (交换) vs
+“correlation” (相关)</h3>
+<ul>
+<li><strong>“exchange” (交换能)</strong>:
+<ul>
+<li>白板上将 “exchange” 指向了 HF 基态 <span
+class="math inline">\(\Phi_{HF}\)</span>。</li>
+<li><strong>含义</strong>: 这是 HF
+理论<strong>已经包含</strong>在内的量子效应。</li>
+<li>它源于泡利不相容原理，即两个自旋相同的电子不能占据同一空间位置。这导致同自旋电子之间存在一个“费米空穴
+(Fermi hole)”，使它们倾向于“避开”彼此。</li>
+<li>在 HF 能量公式中（见第一张白板），这表现为那个<strong>负的交换积分
+(-K)</strong> 项。</li>
+</ul></li>
+<li><strong>“correlation” (相关能)</strong>:
+<ul>
+<li>白板上将 “correlation” 指向了<strong>所有激发态</strong>（<span
+class="math inline">\(\Phi_i^a, \Phi_{ij}^{ab}, \dots\)</span>）。</li>
+<li><strong>含义</strong>: 这是 HF
+理论<strong>所忽略</strong>的效应。</li>
+<li><strong>HF 的缺陷</strong>: HF
+只考虑了同自旋电子的“交换”相关，但它<strong>忽略了不同自旋电子</strong>之间的瞬时相互作用。在
+HF（平均场）理论中，一个自旋向上的电子只感受到一个自旋向下电子云的<strong>平均</strong>排斥，而没有根据它俩的瞬时位置来“躲避”对方。</li>
+<li><strong>CI 的修正</strong>:
+通过在波函数中<strong>混入激发态</strong>（如 <span
+class="math inline">\(\Phi_{ij}^{ab}\)</span>），CI
+方法允许电子（包括不同自旋的电子）的运动<strong>相互关联</strong>起来，从而更有效地“躲避”彼此，进一步降低体系的总能量。</li>
+<li><strong>定义</strong>: <strong>相关能 = 真实能量 - HF
+能量</strong>。</li>
+<li><strong>结论</strong>: <strong>CI 方法（以及其他 post-HF
+方法）的目的就是为了“恢复” HF 理论所丢失的电子相关能</strong>。</li>
+</ul></li>
+</ul>
+<h3 id="能量图示">3. 能量图示</h3>
+<p>能量图：</p>
+<ul>
+<li><strong><span class="math inline">\(\uparrow\)</span></strong>:
+能量轴，能量向上增加。</li>
+<li><strong><code>HF</code></strong>: <strong>Hartree-Fock 能量（<span
+class="math inline">\(E_{HF}\)</span>）</strong>。
+<ul>
+<li>这是通过<strong>单个</strong>斯莱特行列式 <span
+class="math inline">\(\Phi_{HF}\)</span> 计算得到的能量。</li>
+<li>这是一个<strong>近似</strong>能量，它<strong>高于</strong>真实的基态能量。</li>
+</ul></li>
+<li><strong><code>Full CI</code></strong>:
+<strong>全组态相互作用能量（<span
+class="math inline">\(E_{FCI}\)</span>）</strong>。
+<ul>
+<li>这是通过将 <span class="math inline">\(\Psi\)</span>
+表示为<strong>所有</strong>可能组态（<span
+class="math inline">\(\Phi_{HF}, \Phi_i^a,
+\dots\)</span>）的线性组合，并求解得到的<strong>精确</strong>基态能量（在给定基组下的）。</li>
+<li><strong><span class="math inline">\(E_{FCI}\)</span>
+是我们能得到的最低、最准确的能量</strong>。</li>
+</ul></li>
+<li><strong><code>&#123;</code> (之间的能量差)</strong>:
+<ul>
+<li><strong><span class="math inline">\(E_{FCI}\)</span> 和 <span
+class="math inline">\(E_{HF}\)</span>
+之间的能量差，正是我们前面定义的“电子相关能 (Correlation
+Energy)”</strong>。</li>
+<li><span class="math display">\[E_{\text{corr}} = E_{FCI} -
+E_{HF}\]</span></li>
+</ul></li>
+</ul>
+<h3 id="二次量子化复习">4. 二次量子化（复习）</h3>
+<ul>
+<li><strong><code>| $\Phi_i^a$ &gt; = $a_a^\dagger a_i$ | $\Phi_&#123;HF&#125;$ &gt;</code></strong>
+(单激发)</li>
+<li><strong><code>| $\Phi_&#123;ij&#125;^&#123;ab&#125;$ &gt; = $a_a^\dagger a_b^\dagger a_j a_i$ | $\Phi_&#123;HF&#125;$ &gt;</code></strong>
+(双激发)
+<ul>
+<li>这重申了上一张白板的概念：使用<strong>产生 (<span
+class="math inline">\(a^\dagger\)</span>)</strong> 和<strong>湮灭 (<span
+class="math inline">\(a\)</span>)</strong> 算符，是从 HF
+基态构建所有其他激发态的最简洁的数学方式。</li>
+</ul></li>
+<li><strong><code>&#123; $a_i, a_j^\dagger$ &#125; = $\delta_&#123;ij&#125;$</code></strong>
+<ul>
+<li><strong>含义</strong>: 这是费米子算符的<strong>反对易关系
+(Anti-commutation relation)</strong>。</li>
+<li><strong><code>&#123;A, B&#125;</code></strong> 是一个简写，表示 <span
+class="math inline">\(AB + BA\)</span>。</li>
+<li>所以，这个公式的完整形式是：<strong><span class="math inline">\(a_i
+a_j^\dagger + a_j^\dagger a_i = \delta_{ij}\)</span></strong></li>
+<li><strong><span class="math inline">\(\delta_{ij}\)</span></strong>:
+<strong>克罗内克 delta 符号 (Kronecker delta)</strong>。
+<ul>
+<li>如果 <span class="math inline">\(i = j\)</span>，<span
+class="math inline">\(\delta_{ij} = 1\)</span>。</li>
+<li>如果 <span class="math inline">\(i \neq j\)</span>，<span
+class="math inline">\(\delta_{ij} = 0\)</span>。</li>
+</ul></li>
+<li><strong>物理意义</strong>:
+<ul>
+<li><strong>如果 <span class="math inline">\(i \neq j\)</span></strong>:
+<span class="math inline">\(a_i a_j^\dagger = -a_j^\dagger
+a_i\)</span>。这表示“在 <span class="math inline">\(j\)</span>
+轨道产生一个电子，再在 <span class="math inline">\(i\)</span>
+轨道湮灭一个电子”与“先在 <span class="math inline">\(i\)</span>
+湮灭，再在 <span class="math inline">\(j\)</span>
+产生”这两个操作的顺序是<strong>相反</strong>的（导致波函数变号）。</li>
+<li><strong>如果 <span class="math inline">\(i = j\)</span></strong>:
+<span class="math inline">\(a_i a_i^\dagger + a_i^\dagger a_i =
+1\)</span>。这个规则用于计算占据数，并确保了泡利不相容原理的正确执行。</li>
+</ul></li>
+</ul></li>
+</ul>
+<h3 id="总结-3">总结</h3>
+<p>清晰地总结了： 1. <strong>HF
+理论</strong>只是一种<strong>近似</strong>，它包含了<strong>交换能</strong>。
+2. 为了获得<strong>精确解 (Full CI)</strong>，必须将 HF
+基态与所有可能的<strong>激发态</strong>相混合。 3.
+这个混合过程所恢复的能量，就是 HF
+理论所忽略的<strong>电子相关能</strong>。 4. 二次量子化（<span
+class="math inline">\(a^\dagger, a\)</span>
+算符）是实现这一目标的标准数学工具。</p>
+<p>这一系列白板笔记非常连贯地从 HF 理论的基础，讲到了 Koopmans
+定理的近似，最后引入了更高级的 CI 方法来修正 HF
+的根本缺陷（即电子相关能）。</p>
+<h2 id="量子化学指南从-hartree-fock-到组态相互作用">量子化学指南：从
+Hartree-Fock 到组态相互作用</h2>
+<p>这份指南涵盖了量子化学中的两个核心主题： 1. <strong>Hartree-Fock (HF)
+理论</strong>：一种基础的、近似求解多电子体系的方法。 2.
+<strong>组态相互作用 (CI)</strong>：一种 “后-HF” 方法，用于系统地修正 HF
+理论的缺陷，以逼近精确解。</p>
+<h3 id="第一部分hartree-fock-hf-理论基础">第一部分：Hartree-Fock (HF)
+理论基础</h3>
+<p>HF 理论是求解多电子体系薛定谔方程的第一个、也是最重要的<strong>平均场
+(Mean-Field)</strong> 近似。</p>
+<h4 id="核心思想与波函数">1. 核心思想与波函数</h4>
+<ul>
+<li><strong>核心思想</strong>：HF
+理论将复杂的多电子问题（电子的运动是相互关联的）简化为一系列独立的单电子问题。它假设每个电子都在一个由原子核和其他所有电子共同产生的<strong>平均</strong>静电场中运动。</li>
+<li><strong>波函数 (<span
+class="math inline">\(\Phi_{HF}\)</span>)</strong>：HF
+理论使用<strong>单个斯莱特行列式 (Slater Determinant)</strong> 来描述 N
+电子体系的基态波函数。 <span class="math display">\[\Phi_{HF} =
+\frac{1}{\sqrt{N!}} \begin{vmatrix} \phi_1(1) &amp; \phi_2(1) &amp;
+\dots \\ \phi_1(2) &amp; \phi_2(2) &amp; \dots \\ \vdots &amp; \vdots
+&amp; \ddots \end{vmatrix}\]</span>
+这种形式自动满足了泡利不相容原理（即波函数在交换任意两个电子时反号）。</li>
+</ul>
+<h4 id="hf-总能量-e_hf">2. HF 总能量 (<span
+class="math inline">\(E_{HF}\)</span>)</h4>
+<p>HF 体系的总能量 <span
+class="math inline">\(E_{HF}\)</span>（如第一张白板上的公式所示）由三部分组成：</p>
+<ol type="1">
+<li><strong>单电子能量</strong>：所有电子的动能，以及它们与所有原子核的吸引势能。</li>
+<li><strong>库仑能 (J)</strong>：电子 <span
+class="math inline">\(i\)</span> 的电荷云与电子 <span
+class="math inline">\(j\)</span>
+的电荷云之间的<strong>经典静电排斥能</strong>。</li>
+<li><strong>交换能
+(K)</strong>：一个纯粹的量子效应，源自泡利不相容原理。它仅存在于<strong>自旋相同</strong>的电子之间。这个能量项是<strong>负值</strong>，它降低了体系的总能量，可以理解为同自旋电子有“避开”彼此的倾向（<strong>费米空穴,
+Fermi Hole</strong>）。</li>
+</ol>
+<h4 id="轨道能量-epsilon_i-vs-总能量-e_hf">3. 轨道能量 (<span
+class="math inline">\(\epsilon_i\)</span>) vs 总能量 (<span
+class="math inline">\(E_{HF}\)</span>)</h4>
+<ul>
+<li><strong>轨道能量 (<span
+class="math inline">\(\epsilon_i\)</span>)</strong>：是在求解 HF
+方程（<span class="math inline">\(\hat{f}\phi_i =
+\epsilon_i\phi_i\)</span>）时得到的本征值。它代表了电子 <span
+class="math inline">\(i\)</span> 在<strong>所有</strong>其他 (N-1)
+个电子的平均场中的能量。</li>
+<li><strong>关键区别</strong>：总能量 <strong>不等于</strong>
+轨道能量之和。 <span class="math display">\[E_{HF} \neq \sum_{i}
+\epsilon_i\]</span> <strong>原因</strong>：在 <span
+class="math inline">\(\sum \epsilon_i\)</span>
+中，每一对电子之间的排斥能（库仑和交换）都被计算了<strong>两次</strong>。正确的公式是
+<span class="math inline">\(E_{HF} = \sum \epsilon_i -
+V_{ee}\)</span>，其中 <span class="math inline">\(V_{ee}\)</span>
+是电子-电子排斥能项，用于修正重复计算。</li>
+</ul>
+<h3 id="第二部分物理可观测量-i-和-a">第二部分：物理可观测量 (I 和
+A)</h3>
+<p>HF 理论计算完成后，我们希望从中提取有物理意义的数据，例如电离能 (I)
+和电子亲和能 (A)。有两种主要方法：</p>
+<h4 id="deltascf-delta-scf-方法总能量之差">1. <span
+class="math inline">\(\Delta\)</span>SCF (Delta-SCF)
+方法：总能量之差</h4>
+<p>这是在 HF 理论框架内<strong>最准确</strong>的方法。“<span
+class="math inline">\(\Delta\)</span>” (Delta) 指的就是”差值”。</p>
+<ul>
+<li><strong>电离能 (I)</strong>：从 N 电子体系移出一个电子所需的能量。
+&gt; <span class="math inline">\(I = E(N-1) - E(N)\)</span>
+<ul>
+<li><strong>计算</strong>：你需要分别对 N 电子体系和 (N-1)
+电子体系（阳离子）进行<strong>两次独立</strong>的 SCF
+计算，然后求能量差。</li>
+</ul></li>
+<li><strong>电子亲和能 (A)</strong>：N
+电子体系获得一个电子所释放的能量。 &gt; <span class="math inline">\(A =
+E(N) - E(N+1)\)</span>
+<ul>
+<li><strong>计算</strong>：你需要分别对 N 电子体系和 (N+1)
+电子体系（阴离子）进行<strong>两次独立</strong>的 SCF 计算。</li>
+</ul></li>
+<li><strong>基本带隙 (Fundamental Gap)</strong>：被严格定义为 <span
+class="math inline">\(I - A\)</span>。 &gt; <span
+class="math inline">\(E_{gap} = I - A = E(N-1) + E(N+1) -
+2E(N)\)</span></li>
+</ul>
+<h4 id="koopmans-定理轨道能量近似">2. Koopmans 定理：轨道能量近似</h4>
+<p>这是一个非常有用，但<strong>计算上更便宜</strong>的<strong>近似</strong>方法。它<strong>仅需一次</strong>
+N 电子体系的 SCF 计算。</p>
+<ul>
+<li><strong>定理内容</strong>：
+<ul>
+<li><span class="math inline">\(I \approx -\epsilon_{HOMO}\)</span>
+(电离能约等于 HOMO 轨道能量的负值)</li>
+<li><span class="math inline">\(A \approx -\epsilon_{LUMO}\)</span>
+(电子亲和能约等于 LUMO 轨道能量的负值)</li>
+</ul></li>
+<li><strong>带隙近似</strong>：因此，基本带隙 <span
+class="math inline">\(I - A\)</span> 可以被 <strong>HOMO-LUMO
+隙</strong> 所近似。 &gt; <span class="math inline">\(E_{gap} = I - A
+\approx (-\epsilon_{HOMO}) - (-\epsilon_{LUMO}) = \epsilon_{LUMO} -
+\epsilon_{HOMO}\)</span></li>
+</ul>
+<h4 id="为什么-deltascf-和-koopmans-定理不同">3. 为什么 <span
+class="math inline">\(\Delta\)</span>SCF 和 Koopmans’ 定理不同？</h4>
+<p>答案在于两个关键概念：</p>
+<ul>
+<li><strong>“Frozen Orbital Approximation” (冻结轨道近似)</strong>：
+Koopmans
+定理的<strong>数学假设</strong>。它假设当你移走（或加入）一个电子时，所有其他
+(N-1) 个电子的轨道波函数<strong>完全不发生改变</strong>。</li>
+<li><strong>“Orbital Relaxation” (轨道弛豫)</strong>：
+<strong>物理现实</strong>。当你移走一个电子，电子间排斥力减小，剩下的
+(N-1)
+个电子会“感觉”到更强的核吸引力，它们的轨道会<strong>收缩</strong>并<strong>重新排布</strong>（即“弛豫”），以达到一个新的、能量更低的稳定状态。</li>
+</ul>
+<p><strong>结论</strong>： * <strong><span
+class="math inline">\(\Delta\)</span>SCF</strong>
+方法<strong>考虑了</strong>轨道弛豫，因为它为 (N-1)
+体系重新进行了完整的计算。 * <strong>Koopmans’</strong>
+定理<strong>忽略了</strong>轨道弛豫。 * 由于弛豫会使 (N-1)
+体系的能量<strong>进一步降低</strong>，Koopmans’ 定理（<span
+class="math inline">\(I \approx
+-\epsilon_{HOMO}\)</span>）<strong>总是高估</strong>真实的电离能。</p>
+<h3 id="第三部分hf-理论的根本缺陷相关能">第三部分：HF
+理论的根本缺陷（相关能）</h3>
+<p>HF 理论本身就是一个近似，它最大的缺陷是忽略了<strong>电子相关能
+(Electron Correlation Energy)</strong>。</p>
+<ul>
+<li><strong>“Exchange” (交换能)</strong>：HF
+理论<strong>已经包含</strong>。它只解决了<strong>同自旋</strong>电子（如
+<span class="math inline">\(\uparrow
+\uparrow\)</span>）因泡利不相容原理而相互“避开”的问题（费米空穴）。</li>
+<li><strong>“Correlation” (相关能)</strong>：HF
+理论<strong>完全忽略</strong>。这是指所有电子（特别是<strong>不同自旋</strong>的电子，如
+<span class="math inline">\(\uparrow
+\downarrow\)</span>）为了瞬时地“躲避”彼此而产生的运动关联（<strong>库仑空穴,
+Coulomb Hole</strong>）。HF
+作为一个平均场理论，只让电子感受到彼此的“平均”电荷云。</li>
+</ul>
+<p><strong>定义</strong>：电子相关能 <span
+class="math inline">\(E_{\text{corr}}\)</span>
+是体系的<strong>精确基态能量</strong> <span
+class="math inline">\(E_{\text{exact}}\)</span> 与 <strong>HF
+基态能量</strong> <span class="math inline">\(E_{HF}\)</span>
+之间的差值。</p>
+<blockquote>
+<p><strong><span class="math inline">\(E_{\text{corr}} =
+E_{\text{exact}} - E_{HF}\)</span></strong></p>
+</blockquote>
+<ul>
+<li>由于 HF 理论（平均场）高估了电子排斥，HF
+能量<strong>总是高于</strong>真实能量，所以<strong>相关能 <span
+class="math inline">\(E_{\text{corr}}\)</span>
+永远是负值</strong>。</li>
+</ul>
+<h3 id="第四部分组态相互作用-ci-修正-hf">第四部分：组态相互作用 (CI) ——
+修正 HF</h3>
+<p>CI 是一种系统地“恢复” HF 所丢失的相关能的方法。</p>
+<h4 id="核心思想">1. 核心思想</h4>
+<p>HF 理论假设基态波函数<strong>只是</strong>一个 <span
+class="math inline">\(\Phi_{HF}\)</span> 行列式。 CI
+理论认为，<strong>精确的</strong>基态波函数 <span
+class="math inline">\(\Psi\)</span> 应该是<strong>所有</strong>可能的 N
+电子组态的<strong>线性叠加</strong>。</p>
+<p>这个组态的完备基组包括： * <strong><span
+class="math inline">\(\Phi_{HF}\)</span></strong> (HF 基态组态) *
+<strong><span class="math inline">\(\Phi_i^a\)</span></strong>
+(单激发组态：电子 <span class="math inline">\(i \to a\)</span>) *
+<strong><span class="math inline">\(\Phi_{ij}^{ab}\)</span></strong>
+(双激发组态：电子 <span class="math inline">\(i, j \to a, b\)</span>) *
+<strong><span class="math inline">\(\Phi_{ijk}^{abc}\)</span></strong>
+(三激发组态) * … 一直到 N 激发</p>
+<h4 id="ci-波函数">2. CI 波函数</h4>
+<p>精确的波函数 <span class="math inline">\(\Psi\)</span> 被展开为：</p>
+<blockquote>
+<p><span class="math inline">\(\Psi = C_0 \Phi_{HF} + \sum_{i,a} C_i^a
+\Phi_i^a + \sum_{i,j,a,b} C_{ij}^{ab} \Phi_{ij}^{ab} +
+\sum_{i,j,k,a,b,c} C_{ijk}^{abc} \Phi_{ijk}^{abc} + \dots\)</span></p>
+</blockquote>
+<ul>
+<li><span class="math inline">\(C_0, C_i^a, C_{ij}^{ab} \dots\)</span>
+是混合系数，表示每个组态对真实波函数的“贡献”大小。</li>
+<li><strong>Full CI (FCI,
+全组态相互作用)</strong>：如果这个展开式包含了<strong>所有</strong>可能的激发态，那么它就是在给定基组下的<strong>精确解</strong>。</li>
+<li><strong>Truncated CI (截断 CI)</strong>：由于 FCI
+的计算量是天文数字，实际中通常会截断，例如
+<strong>CISD</strong>（只包含单激发和双激发）。</li>
+</ul>
+<h4 id="能量总结">3. 能量总结</h4>
+<p>白板上的能量图清晰地展示了这一点：</p>
+<ul>
+<li><strong><span class="math inline">\(E_{HF}\)</span></strong>：HF
+能量，是 <span class="math inline">\(E_{\text{exact}}\)</span>
+的一个<strong>上限</strong>（近似值）。</li>
+<li><strong><span class="math inline">\(E_{Full
+CI}\)</span></strong>：Full CI 能量，是<strong>精确值</strong> <span
+class="math inline">\(E_{\text{exact}}\)</span>。</li>
+<li><strong><span class="math inline">\(E_{HF} - E_{Full
+CI}\)</span></strong>：这个能量差就是<strong>电子相关能 <span
+class="math inline">\(E_{\text{corr}}\)</span></strong>。</li>
+</ul>
+<h4 id="高级工具二次量子化">4. 高级工具：二次量子化</h4>
+<p>CI 理论在数学上通常用<strong>产生算符 <span
+class="math inline">\(a^\dagger\)</span></strong> 和<strong>湮灭算符
+<span class="math inline">\(a\)</span></strong> 来表述。</p>
+<ul>
+<li><strong><span
+class="math inline">\(a_p^\dagger\)</span></strong>：在轨道 <span
+class="math inline">\(p\)</span> 中<strong>产生</strong>一个电子。</li>
+<li><strong><span class="math inline">\(a_p\)</span></strong>：在轨道
+<span class="math inline">\(p\)</span>
+中<strong>湮灭</strong>一个电子。</li>
+</ul>
+<p>使用这个工具，构建激发态变得非常简洁： *
+<strong>单激发</strong>：<span class="math inline">\(|\Phi_i^a\rangle =
+a_a^\dagger a_i |\Phi_{HF}\rangle\)</span> （含义：在 HF
+基态上，先湮灭轨道 <span class="math inline">\(i\)</span>
+的电子，再产生轨道 <span class="math inline">\(a\)</span> 的电子） *
+<strong>双激发</strong>：<span
+class="math inline">\(|\Phi_{ij}^{ab}\rangle = a_a^\dagger a_b^\dagger
+a_j a_i |\Phi_{HF}\rangle\)</span> （含义：湮灭 <span
+class="math inline">\(i, j\)</span> 的电子，产生 <span
+class="math inline">\(a, b\)</span> 的电子）</p>
+<p>这些算符自动满足<strong>反对易关系</strong>（如 <span
+class="math inline">\(\{ a_i, a_j^\dagger \} =
+\delta_{ij}\)</span>），这保证了波函数自动满足泡利不相容原理。</p>
+<h3 id="总结幸运的误差抵消">总结：“幸运的误差抵消”</h3>
+<p>最后，一个有趣的问题：为什么 Koopmans 定理（<span
+class="math inline">\(I \approx
+-\epsilon_{HOMO}\)</span>）这个“粗糙”的近似，在实际中经常比“更准确”的
+<span class="math inline">\(\Delta SCF\)</span> 方法（<span
+class="math inline">\(I = E(N-1) -
+E(N)\)</span>）<strong>更接近实验值</strong>？</p>
+<p>答案是 <strong>“幸运的误差抵消”</strong>：</p>
+<ol type="1">
+<li><strong>误差 1 (轨道弛豫)</strong>：Koopmans’
+定理忽略了轨道弛豫，这使得它计算的 <span
+class="math inline">\(I\)</span> <strong>偏高</strong>。</li>
+<li><strong>误差 2 (电子相关能)</strong>：Koopmans’ 定理（作为 HF
+理论的一部分）忽略了电子相关能。相关能对 N
+电子体系的稳定化（能量降低）比对 (N-1) 体系更显著，这使得 HF 计算的
+<span class="math inline">\(I\)</span> <strong>偏低</strong>。</li>
+</ol>
+<p>因此，<strong>Koopmans’ 定理（<span class="math inline">\(I \approx
+-\epsilon_{HOMO}\)</span>）</strong> 在与<strong>实验值</strong>比较时：
+* <strong>误差 1（高估 <span class="math inline">\(I\)</span>）</strong>
+和 <strong>误差 2（低估 <span
+class="math inline">\(I\)</span>）</strong>
+在一定程度上<strong>相互抵消</strong>了！ *
+这使得这个“错上加错”的近似，最终给出了一个出奇“准确”的结果。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/PHYS-5120/" rel="tag"># PHYS-5120</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2025/10/13/5054C6/" rel="prev" title="MSDM 5054 - Statistical Machine Learning-L6">
+      <i class="fa fa-chevron-left"></i> MSDM 5054 - Statistical Machine Learning-L6
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2025/10/31/5120-1031/" rel="next" title="PHYS 5120 - Computational Energy Materials and Electronic Structure Simulations-W8">
+      PHYS 5120 - Computational Energy Materials and Electronic Structure Simulations-W8 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#i"><span class="nav-number">1.</span> <span class="nav-text">I:</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5%E4%B8%8E%E5%AE%9A%E4%B9%89"><span class="nav-number">1.1.</span> <span class="nav-text">1. 基本概念与定义</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#hf-theory-hartree-fock-%E7%90%86%E8%AE%BA"><span class="nav-number">1.1.1.</span> <span class="nav-text">“HF theory” (Hartree-Fock
+理论)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#e_hf-neq-sum_i-epsilon_i"><span class="nav-number">1.1.2.</span> <span class="nav-text">\(E_{HF}
+\neq \sum_{i} \epsilon_i\)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#band-gap-%E5%B8%A6%E9%9A%99"><span class="nav-number">1.1.3.</span> <span class="nav-text">“band gap” (带隙)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#fundamental-band-gap-i---a"><span class="nav-number">1.1.4.</span> <span class="nav-text">“fundamental band gap &#x3D; I - A”</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ionization-energy-i-en-1---en-0"><span class="nav-number">1.1.5.</span> <span class="nav-text">“ionization energy: I &#x3D; E(N-1)
+- E(N) &gt; 0”</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#electron-affinity-a-en---en1-0"><span class="nav-number">1.1.6.</span> <span class="nav-text">“electron affinity: A &#x3D; E(N) -
+E(N+1) &gt; 0”</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#hartree-fock-%E6%80%BB%E8%83%BD%E9%87%8F%E5%85%AC%E5%BC%8F"><span class="nav-number">1.2.</span> <span class="nav-text">2. Hartree-Fock 总能量公式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%AC%AC%E4%B8%80%E8%A1%8C%E5%8D%95%E7%94%B5%E5%AD%90%E8%83%BD%E9%87%8F-one-electron-energy"><span class="nav-number">1.2.1.</span> <span class="nav-text">第一行：单电子能量
+(One-Electron Energy)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%AC%AC%E4%BA%8C%E8%A1%8C%E5%BA%93%E4%BB%91%E9%A1%B9-coulomb-term-j"><span class="nav-number">1.2.2.</span> <span class="nav-text">第二行：库仑项 (Coulomb Term,
+J)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%AC%AC%E4%B8%89%E8%A1%8C%E4%BA%A4%E6%8D%A2%E9%A1%B9-exchange-term-k"><span class="nav-number">1.2.3.</span> <span class="nav-text">第三行：交换项 (Exchange Term,
+K)</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A0%B8%E5%BF%83%E5%AF%B9%E6%AF%94delta-scf-%E4%B8%8E-koopmans-%E5%AE%9A%E7%90%86"><span class="nav-number">1.3.</span> <span class="nav-text">3. 核心对比：\(\Delta SCF\) 与 Koopmans 定理</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#delta-scf-delta-scf"><span class="nav-number">1.3.1.</span> <span class="nav-text">“\(\Delta
+SCF\)” (Delta SCF)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#koopmans-theorem-koopmans-%E5%AE%9A%E7%90%86"><span class="nav-number">1.3.2.</span> <span class="nav-text">“Koopmans’ theorem” (Koopmans
+定理)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#frozen-orbital-approximation-%E5%86%BB%E7%BB%93%E8%BD%A8%E9%81%93%E8%BF%91%E4%BC%BC"><span class="nav-number">1.3.3.</span> <span class="nav-text">“frozen orbital
+approximation” (冻结轨道近似)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#orbital-relaxation-%E8%BD%A8%E9%81%93%E5%BC%9B%E8%B1%AB"><span class="nav-number">1.3.4.</span> <span class="nav-text">“orbital relaxation”
+(轨道弛豫)</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">1.4.</span> <span class="nav-text">总结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ii"><span class="nav-number">2.</span> <span class="nav-text">II:</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#koopmans-%E5%AE%9A%E7%90%86%E7%9A%84%E6%95%B0%E5%AD%A6%E6%8E%A8%E5%AF%BC%E7%94%B5%E7%A6%BB%E8%83%BD-i"><span class="nav-number">2.1.</span> <span class="nav-text">1. Koopmans
+定理的数学推导（电离能 I）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#koopmans-%E5%AE%9A%E7%90%86%E7%94%B5%E5%AD%90%E4%BA%B2%E5%92%8C%E8%83%BD-a"><span class="nav-number">2.2.</span> <span class="nav-text">2. Koopmans 定理（电子亲和能 A）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B8%A6%E9%9A%99-band-gap"><span class="nav-number">2.3.</span> <span class="nav-text">3. 带隙 (Band Gap)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%B3%E4%B8%8B%E8%A7%92%E7%9A%84%E5%9B%BE%E7%A4%BA"><span class="nav-number">2.4.</span> <span class="nav-text">4. 右下角的图示</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%BB%E7%BB%93-1"><span class="nav-number">2.5.</span> <span class="nav-text">总结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#iii"><span class="nav-number">3.</span> <span class="nav-text">III:</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#phi_hf-frac1sqrtn-dots-slater-determinant"><span class="nav-number">3.1.</span> <span class="nav-text">1. 📖 \(\Phi_{HF} &#x3D; \frac{1}{\sqrt{N!}} | \dots |\)
+(Slater Determinant)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#configuration-interaction-ci-%E7%BB%84%E6%80%81%E7%9B%B8%E4%BA%92%E4%BD%9C%E7%94%A8"><span class="nav-number">3.2.</span> <span class="nav-text">2. ⚡ “Configuration
+Interaction (CI)” (组态相互作用)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ci-%E5%85%AC%E5%BC%8F"><span class="nav-number">3.3.</span> <span class="nav-text">3. CI 公式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B3%E9%94%AE%E6%A6%82%E5%BF%B5"><span class="nav-number">3.4.</span> <span class="nav-text">4. 🔑 关键概念</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%BB%E7%BB%93-2"><span class="nav-number">3.5.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A0%B8%E5%BF%83%E5%B7%A5%E5%85%B7%E4%BA%A7%E7%94%9F%E4%B8%8E%E6%B9%AE%E7%81%AD%E7%AE%97%E7%AC%A6"><span class="nav-number">3.6.</span> <span class="nav-text">1. 核心工具：产生与湮灭算符</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9A%E4%B9%89%E5%9F%BA%E6%80%81-phi_hf"><span class="nav-number">3.7.</span> <span class="nav-text">2. 定义基态 \(\Phi_{HF}\)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A7%A3%E9%87%8A"><span class="nav-number">3.8.</span> <span class="nav-text">3. 解释</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#phi_ia-a_adagger-a_i-phi_hf"><span class="nav-number">3.8.1.</span> <span class="nav-text">| $\Phi_i^a$ &gt; &#x3D; $a_a^\dagger a_i$ | $\Phi_{HF}$ &gt;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#phi_ijab-a_adagger-a_bdagger-a_j-a_i-phi_hf"><span class="nav-number">3.8.2.</span> <span class="nav-text">| $\Phi_{ij}^{ab}$ &gt; &#x3D; $a_a^\dagger a_b^\dagger a_j a_i$ | $\Phi_{HF}$ &gt;</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E8%BF%99%E4%B8%AA%E6%96%B9%E6%B3%95%E6%9B%B4%E5%A5%BD"><span class="nav-number">3.9.</span> <span class="nav-text">4. 为什么这个方法更好？</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#iv"><span class="nav-number">4.</span> <span class="nav-text">IV:</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B3%A2%E5%87%BD%E6%95%B0%E5%9F%BA%E7%BB%84"><span class="nav-number">4.1.</span> <span class="nav-text">1. 波函数基组</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#exchange-%E4%BA%A4%E6%8D%A2-vs-correlation-%E7%9B%B8%E5%85%B3"><span class="nav-number">4.2.</span> <span class="nav-text">2. “exchange” (交换) vs
+“correlation” (相关)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%83%BD%E9%87%8F%E5%9B%BE%E7%A4%BA"><span class="nav-number">4.3.</span> <span class="nav-text">3. 能量图示</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%8C%E6%AC%A1%E9%87%8F%E5%AD%90%E5%8C%96%E5%A4%8D%E4%B9%A0"><span class="nav-number">4.4.</span> <span class="nav-text">4. 二次量子化（复习）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%BB%E7%BB%93-3"><span class="nav-number">4.5.</span> <span class="nav-text">总结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%87%8F%E5%AD%90%E5%8C%96%E5%AD%A6%E6%8C%87%E5%8D%97%E4%BB%8E-hartree-fock-%E5%88%B0%E7%BB%84%E6%80%81%E7%9B%B8%E4%BA%92%E4%BD%9C%E7%94%A8"><span class="nav-number">5.</span> <span class="nav-text">量子化学指南：从
+Hartree-Fock 到组态相互作用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E4%B8%80%E9%83%A8%E5%88%86hartree-fock-hf-%E7%90%86%E8%AE%BA%E5%9F%BA%E7%A1%80"><span class="nav-number">5.1.</span> <span class="nav-text">第一部分：Hartree-Fock (HF)
+理论基础</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%A0%B8%E5%BF%83%E6%80%9D%E6%83%B3%E4%B8%8E%E6%B3%A2%E5%87%BD%E6%95%B0"><span class="nav-number">5.1.1.</span> <span class="nav-text">1. 核心思想与波函数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#hf-%E6%80%BB%E8%83%BD%E9%87%8F-e_hf"><span class="nav-number">5.1.2.</span> <span class="nav-text">2. HF 总能量 (\(E_{HF}\))</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%BD%A8%E9%81%93%E8%83%BD%E9%87%8F-epsilon_i-vs-%E6%80%BB%E8%83%BD%E9%87%8F-e_hf"><span class="nav-number">5.1.3.</span> <span class="nav-text">3. 轨道能量 (\(\epsilon_i\)) vs 总能量 (\(E_{HF}\))</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E4%BA%8C%E9%83%A8%E5%88%86%E7%89%A9%E7%90%86%E5%8F%AF%E8%A7%82%E6%B5%8B%E9%87%8F-i-%E5%92%8C-a"><span class="nav-number">5.2.</span> <span class="nav-text">第二部分：物理可观测量 (I 和
+A)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#deltascf-delta-scf-%E6%96%B9%E6%B3%95%E6%80%BB%E8%83%BD%E9%87%8F%E4%B9%8B%E5%B7%AE"><span class="nav-number">5.2.1.</span> <span class="nav-text">1. \(\Delta\)SCF (Delta-SCF)
+方法：总能量之差</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#koopmans-%E5%AE%9A%E7%90%86%E8%BD%A8%E9%81%93%E8%83%BD%E9%87%8F%E8%BF%91%E4%BC%BC"><span class="nav-number">5.2.2.</span> <span class="nav-text">2. Koopmans 定理：轨道能量近似</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88-deltascf-%E5%92%8C-koopmans-%E5%AE%9A%E7%90%86%E4%B8%8D%E5%90%8C"><span class="nav-number">5.2.3.</span> <span class="nav-text">3. 为什么 \(\Delta\)SCF 和 Koopmans’ 定理不同？</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E4%B8%89%E9%83%A8%E5%88%86hf-%E7%90%86%E8%AE%BA%E7%9A%84%E6%A0%B9%E6%9C%AC%E7%BC%BA%E9%99%B7%E7%9B%B8%E5%85%B3%E8%83%BD"><span class="nav-number">5.3.</span> <span class="nav-text">第三部分：HF
+理论的根本缺陷（相关能）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E5%9B%9B%E9%83%A8%E5%88%86%E7%BB%84%E6%80%81%E7%9B%B8%E4%BA%92%E4%BD%9C%E7%94%A8-ci-%E4%BF%AE%E6%AD%A3-hf"><span class="nav-number">5.4.</span> <span class="nav-text">第四部分：组态相互作用 (CI) ——
+修正 HF</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%A0%B8%E5%BF%83%E6%80%9D%E6%83%B3"><span class="nav-number">5.4.1.</span> <span class="nav-text">1. 核心思想</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ci-%E6%B3%A2%E5%87%BD%E6%95%B0"><span class="nav-number">5.4.2.</span> <span class="nav-text">2. CI 波函数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%83%BD%E9%87%8F%E6%80%BB%E7%BB%93"><span class="nav-number">5.4.3.</span> <span class="nav-text">3. 能量总结</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%AB%98%E7%BA%A7%E5%B7%A5%E5%85%B7%E4%BA%8C%E6%AC%A1%E9%87%8F%E5%AD%90%E5%8C%96"><span class="nav-number">5.4.4.</span> <span class="nav-text">4. 高级工具：二次量子化</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%BB%E7%BB%93%E5%B9%B8%E8%BF%90%E7%9A%84%E8%AF%AF%E5%B7%AE%E6%8A%B5%E6%B6%88"><span class="nav-number">5.5.</span> <span class="nav-text">总结：“幸运的误差抵消”</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">John Doe</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">23</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+          load: ['[tex]/mhchem'],
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+          packages: {'[+]': ['mhchem']},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+</body>
+</html>
