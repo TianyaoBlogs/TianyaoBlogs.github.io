@@ -1,0 +1,1018 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"tianyaoblogs.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="PHYS 5120 - 计算能源材料和电子结构模拟 Lecture Lecturer: Prof.PAN DING I: 这些内容共同构成了量子化学中用于计算分子电子结构的基石——Hartree-Fock (HF) 自洽场 (SCF) 方法。 核心概念：Hartree-Fock (HF) 近似  目标：求解多电子体系（如分子）的薛定谔方程。但这个方程非常复杂，无法精确求解。 核">
+<meta property="og:type" content="article">
+<meta property="og:title" content="PHYS 5120 - Computational Energy Materials and Electronic Structure Simulations-W7-1">
+<meta property="og:url" content="https://tianyaoblogs.github.io/2025/10/22/5120c7-1/index.html">
+<meta property="og:site_name" content="TianyaoBlogs">
+<meta property="og:description" content="PHYS 5120 - 计算能源材料和电子结构模拟 Lecture Lecturer: Prof.PAN DING I: 这些内容共同构成了量子化学中用于计算分子电子结构的基石——Hartree-Fock (HF) 自洽场 (SCF) 方法。 核心概念：Hartree-Fock (HF) 近似  目标：求解多电子体系（如分子）的薛定谔方程。但这个方程非常复杂，无法精确求解。 核">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://tianyaoblogs.github.io/imgs/5120/scf.jpg">
+<meta property="article:published_time" content="2025-10-22T14:00:00.000Z">
+<meta property="article:modified_time" content="2025-11-09T18:46:38.666Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="PHYS-5120">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://tianyaoblogs.github.io/imgs/5120/scf.jpg">
+
+<link rel="canonical" href="https://tianyaoblogs.github.io/2025/10/22/5120c7-1/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>PHYS 5120 - Computational Energy Materials and Electronic Structure Simulations-W7-1 | TianyaoBlogs</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">TianyaoBlogs</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://tianyaoblogs.github.io/2025/10/22/5120c7-1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="TianyaoBlogs">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          PHYS 5120 - Computational Energy Materials and Electronic Structure Simulations-W7-1
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2025-10-22 22:00:00" itemprop="dateCreated datePublished" datetime="2025-10-22T22:00:00+08:00">2025-10-22</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2025-11-10 02:46:38" itemprop="dateModified" datetime="2025-11-10T02:46:38+08:00">2025-11-10</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/PHYS-5120/" itemprop="url" rel="index"><span itemprop="name">PHYS-5120</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>PHYS 5120 - 计算能源材料和电子结构模拟 Lecture</p>
+<p><a target="_blank" rel="noopener" href="https://chem.hkust.edu.hk/people/ding-pan-panding">Lecturer:
+Prof.PAN DING</a></p>
+<h2 id="i">I:</h2>
+<p>这些内容共同构成了量子化学中用于计算分子电子结构的基石——<strong>Hartree-Fock
+(HF) 自洽场 (SCF)</strong> 方法。</p>
+<h3 id="核心概念hartree-fock-hf-近似">核心概念：Hartree-Fock (HF)
+近似</h3>
+<ul>
+<li><strong>目标</strong>：求解多电子体系（如分子）的薛定谔方程。但这个方程非常复杂，无法精确求解。</li>
+<li><strong>核心思想 (HF 近似)</strong>：
+<ol type="1">
+<li><strong>波恩-奥本海默近似</strong>：假定原子核固定不动，我们只关心电子的运动。</li>
+<li><strong>单电子近似</strong>：<em>这是 HF
+近似最关键的一步</em>。它假设每个电子的运动只受到一个“平均场”的影响，这个平均场是由原子核和其他所有电子共同产生的。</li>
+<li><strong>反对称性</strong>：电子是费米子，必须满足泡利不相容原理。HF
+方法通过一个称为“斯莱特行列式 (Slater
+Determinant)”的数学工具来构造总波函数，以自动满足这个要求。</li>
+</ol></li>
+</ul>
+<h3 id="基本算符与方程">⬅基本算符与方程</h3>
+<h4 id="hartree-fock-方程f-φi-εi-φi">1. Hartree-Fock
+方程：<code>f̂ |φi&gt; = εi |φi&gt;</code></h4>
+<p>它在形式上是一个本征方程。</p>
+<ul>
+<li><strong><code>|φi&gt;</code> (分子轨道)</strong>：这是我们要求解的第
+<code>i</code> 个单电子波函数（或称为轨道）。</li>
+<li><strong><code>f̂</code> (Fock
+算符)</strong>：这是一个等效的单电子哈密顿算符。它代表了一个电子在原子核和所有其他电子的“平均场”中所感受到的总能量。</li>
+<li><strong><code>εi</code> (轨道能量)</strong>：这是第 <code>i</code>
+个分子轨道的能量，即电子占据该轨道时的能量。</li>
+</ul>
+<h4 id="fock-算符的构成f-h₁r-σj-2jjr---kjr">2. Fock
+算符的构成：<code>f̂ = ĥ₁(r) + Σ[j] (2Ĵj(r) - K̂j(r))</code></h4>
+<p>这个公式详细定义了 Fock 算符 <code>f̂</code> 是由什么组成的。</p>
+<ul>
+<li><strong><code>ĥ₁(r)</code>
+(核心哈密顿算符)</strong>：这是“单电子”部分，与电子间的相互作用无关。它只包括：
+<ol type="1">
+<li><strong>电子的动能</strong>：白板上的 <code>-(ħ²/2m)∇²</code>
+项。</li>
+<li><strong>电子与所有原子核的吸引势能</strong>：白板上的
+<code>-Σ[I] (Z_I e² / |r - R_I|)</code> 项。</li>
+</ol></li>
+<li><strong><code>Σ[j] (2Ĵj(r) - K̂j(r))</code>
+(双电子相互作用)</strong>：这是描述电子 <code>i</code> 与其他所有电子
+<code>j</code> 之间平均相互作用的项（求和 <code>Σ[j]</code>
+遍历所有被占据的轨道）。
+<ul>
+<li><strong><code>Ĵj(r)</code> (库仑算符)</strong>：
+<ul>
+<li><strong>物理意义</strong>：描述了电子 <code>i</code> 与轨道
+<code>j</code> 上的电子云（密度为
+<code>|φj|²</code>）之间的<strong>经典静电排斥</strong>。</li>
+<li><strong>白板上的定义</strong>：<code>Ĵj(ψ) = &lt;φj | e² / |r - r'| | φj&gt; ψ</code>。这意味着
+<code>Ĵj</code> 作用在一个函数 <code>ψ(r)</code> 上时，它会计算
+<code>ψ(r)</code> 与 <code>φj(r')</code> 之间的平均排斥能。</li>
+</ul></li>
+<li><strong><code>K̂j(r)</code> (交换算符)</strong>：
+<ul>
+<li><strong>物理意义</strong>：这是一个纯粹的量子力学效应，<strong>没有经典对应</strong>。它源于波函数的反对称性要求（泡利不相容原理）。它修正了电子“自我排斥”的错误（因为
+<code>Ĵj</code> 包含了 <code>j=i</code>
+的情况），并降低了自旋平行电子相遇的概率，从而降低了能量。</li>
+<li><strong>白板上的定义</strong>：<code>K̂j(ψ) = &lt;φj | e² / |r - r'| | ψ&gt; φj</code>。注意
+<code>ψ</code> 和 <code>φj</code>
+在积分符号内的位置发生了“交换”，因此得名。</li>
+</ul></li>
+<li><strong>系数 “2”</strong>：在闭壳层（Closed-Shell）HF
+方法中，我们假设每个分子轨道 <code>j</code>
+都被两个自旋相反的电子（一个自旋向上 <code>α</code>，一个自旋向下
+<code>β</code>）占据。因此，<code>Ĵj</code> 的排斥作用要乘以 2。而
+<code>K̂j</code> 的交换作用只发生在自旋相同的电子之间，因此只有一个
+<code>K̂j</code> 被减去（例如，自旋向上的电子 <code>i</code>
+只与自旋向上的电子 <code>j</code> 发生交换）。</li>
+</ul></li>
+</ul>
+<h4 id="homo-lumo">3. HOMO / LUMO</h4>
+<ul>
+<li><strong>HOMO (Highest Occupied Molecular
+Orbital)</strong>：最高占据分子轨道。这是 HF 计算得到的 <code>εi</code>
+能量中，能量最高但仍被电子占据的那个轨道。</li>
+<li><strong>LUMO (Lowest Unoccupied Molecular
+Orbital)</strong>：最低未占分子轨道。这是 <code>εi</code>
+能量中，能量最低但没有电子占据的那个轨道。</li>
+<li><strong>意义</strong>：HOMO 和 LUMO
+统称为“前线轨道”。它们的能量差（HOMO-LUMO
+Gap）和形状在化学反应中至关重要，决定了分子倾向于从哪里给出电子 (HOMO)
+和从哪里接受电子 (LUMO)。</li>
+</ul>
+<h3 id="矩阵化-roothaan-hall-方法">矩阵化 (Roothaan-Hall 方法)</h3>
+<p>直接求解上面的 Hartree-Fock 方程（它是微分-积分方程）非常困难。C. C.
+J. Roothaan 和 G. G. Hall
+提出了一种将其转换为标准矩阵代数问题的方法。</p>
+<h4 id="lcao-展开">1. LCAO 展开</h4>
+<p>我们假设未知的分子轨道 <code>|φi&gt;</code>
+可以由一组已知的<strong>原子轨道 (Atomic Orbitals, AOs)</strong>
+<code>|χμ&gt;</code> 线性组合而成：
+<code>|φi&gt; = Σ[μ] Cμi |χμ&gt;</code> 其中 <code>Cμi</code>
+是我们要解的<strong>系数</strong>。</p>
+<h4 id="roothaan-hall-方程f-c-s-c-ε">2. Roothaan-Hall
+方程：<code>F C = S C ε</code></h4>
+<p>这是将 LCAO 展开代入 HF 方程后得到的<strong>矩阵方程</strong>。</p>
+<ul>
+<li><strong><code>F</code> (Fock
+矩阵)</strong>：<code>Fμν = &lt;χμ | f̂ | χν&gt;</code>。这是 Fock 算符
+<code>f̂</code> 在原子轨道基组下的矩阵表示。</li>
+<li><strong><code>C</code> (系数矩阵)</strong>：矩阵的每一列
+<code>i</code> 都是一个分子轨道 <code>φi</code> 的展开系数
+<code>Cμi</code>。</li>
+<li><strong><code>S</code>
+(重叠矩阵)</strong>：<code>Sμν = &lt;χμ | χν&gt;</code>。它描述了原子轨道基函数之间的重叠程度。如果基函数是“正交”的，<code>S</code>
+就是单位矩阵。</li>
+<li><strong><code>ε</code>
+(轨道能量矩阵)</strong>：这是一个对角矩阵，对角线上的元素
+<code>εi</code> 就是我们要求的分子轨道能量。</li>
+</ul>
+<h4 id="fock-矩阵元的计算fμν-hμνcore-gμν">3. Fock
+矩阵元的计算：<code>Fμν = Hμν^core + Gμν</code></h4>
+<p>这是求解的核心，它把 <code>F</code> 矩阵的计算分为两部分：</p>
+<ul>
+<li><strong>① <code>Hμν^core = &lt;χμ | ĥ₁ | χν&gt;</code>
+(核心哈密顿矩阵元)</strong>：
+<ul>
+<li><strong>物理意义</strong>：这是“单电子”部分，只包含电子动能和电子-原子核吸引能。</li>
+<li><strong>计算</strong>：这部分在整个计算过程中<strong>只用计算一次</strong>，因为它不依赖于电子的分布。</li>
+</ul></li>
+<li><strong><code>Gμν</code> (双电子积分项)</strong>：
+<ul>
+<li><strong>物理意义</strong>：这是“双电子”排斥部分，对应于
+<code>Σ[j] (2Ĵj - K̂j)</code>。</li>
+<li><strong>问题</strong>：计算 <code>Gμν</code>
+需要知道库仑和交换算符，而这些算符又依赖于分子轨道
+<code>|φj&gt;</code>，而 <code>|φj&gt;</code> 又是由我们要求解的系数
+<code>C</code> 决定的。这就形成了一个“鸡生蛋，蛋生鸡”的循环问题。</li>
+</ul></li>
+</ul>
+<h4 id="密度矩阵与-scf-循环">4. 密度矩阵与 SCF 循环</h4>
+<p>为了解决这个循环问题，我们引入了<strong>密度矩阵
+<code>P</code></strong>。</p>
+<ul>
+<li><strong>③ 密度矩阵 (Density Matrix) <code>P</code></strong>：
+<ul>
+<li><strong>白板上的定义</strong>：<code>Pαβ = 2 Σ[j=1 to N/2] Cαj* Cβj</code></li>
+<li><strong>物理意义</strong>：<code>P</code>
+描述了电子在原子轨道基组上的分布情况。它由系数矩阵 <code>C</code>
+构造。</li>
+</ul></li>
+<li><strong>使用 <code>P</code> 构建 Fock 矩阵 <code>F</code></strong>：
+<ul>
+<li><strong>白板上的公式</strong>：<code>Fμν = Hμν^core + Σ[αβ] Pαβ * (...)</code>
+（白板上 <code>(...)</code> 部分代表了 <code>(μν|αβ) - 1/2(μα|νβ)</code>
+这样的双电子积分项）。</li>
+<li><strong>关键点</strong>：<code>F</code>
+矩阵（代表电子间的相互作用）现在被表示为密度矩阵
+<code>P</code>（代表电子的分布）的函数。<code>F = F(P)</code>。</li>
+</ul></li>
+</ul>
+<h3 id="总结自洽场-scf-的完整流程">总结：自洽场 (SCF) 的完整流程</h3>
+<p>完整地描述了 <strong>“自洽场” (Self-Consistent Field, SCF)</strong>
+的计算流程：</p>
+<ol type="1">
+<li><strong>第 0 步</strong>：选择原子轨道基组
+<code>|χμ&gt;</code>，并计算所有<strong>不变的</strong>积分，如重叠矩阵
+<code>S</code> 和核心哈密顿矩阵 <code>H^core</code>。</li>
+<li><strong>第 1 步 (猜测)</strong>：对系数矩阵 <code>C</code>
+做一个初始<strong>猜测</strong>（例如，通过一个更简单的方法得到），并用它来构建一个初始的密度矩阵
+<code>P^(0)</code>。</li>
+<li><strong>第 2 步 (构建)</strong>：使用当前的密度矩阵
+<code>P^(k)</code> 来<strong>构建</strong> Fock 矩阵
+<code>F^(k)</code>。 <code>Fμν = Hμν^core + Gμν(P^(k))</code></li>
+<li><strong>第 3 步 (求解)</strong>：求解 Roothaan-Hall 矩阵方程
+<code>F^(k) C^(k+1) = S C^(k+1) ε^(k+1)</code>，得到一组<strong>新的</strong>系数矩阵
+<code>C^(k+1)</code> 和新的轨道能量 <code>ε^(k+1)</code>。</li>
+<li><strong>第 4 步 (更新)</strong>：使用新的系数 <code>C^(k+1)</code>
+来计算一个<strong>新的</strong>密度矩阵 <code>P^(k+1)</code>。</li>
+<li><strong>第 5 步
+(检查自洽)</strong>：比较<strong>新的</strong>密度矩阵
+<code>P^(k+1)</code> 和<strong>旧的</strong>密度矩阵
+<code>P^(k)</code>。
+<ul>
+<li><strong>如果</strong> <code>P^(k+1)</code> 和 <code>P^(k)</code>
+几乎相同（即“自洽”了），说明我们找到的电子分布 <code>P</code>
+所产生的“平均场” <code>F</code>，反过来再求解这个 <code>F</code>
+得到的电子分布恰好就是 <code>P</code>
+本身。计算<strong>收敛</strong>，循环结束。</li>
+<li><strong>如果</strong>它们不相同，就令
+<code>k = k+1</code>，返回<strong>第 2 步</strong>，用新的
+<code>P</code> 继续迭代。</li>
+</ul></li>
+</ol>
+<p>这个迭代过程，就是 Hartree-Fock 自洽场方法的核心。</p>
+<h2 id="ii">II:</h2>
+<p>两个关键部分：</p>
+<ol type="1">
+<li><strong>1.</strong>：继续详细推导如何使用<strong>密度矩阵 (Density
+Matrix)</strong> 来构建 Fock 矩阵中的双电子相互作用项。</li>
+<li><strong>2.</strong>：展示了如何从数学上求解 Roothaan-Hall 方程
+(<code>F C = S C ε</code>)，这是一个“广义本征值问题”，并将其转换为计算机可以轻松处理的“标准本征值问题”。</li>
+</ol>
+<h3 id="fock-矩阵元的最终形式">Fock 矩阵元的最终形式</h3>
+<p>这部分是整个 HF-SCF
+方法中最核心的数学推导之一。它展示了如何将复杂的双电子相互作用（<code>Gμν</code>）表示为密度矩阵
+<code>P</code> 和一堆预先计算好的积分的乘积。</p>
+<ul>
+<li><strong><code>Pαβ = 2 Σ[j=1 to N/2] Cαj* Cβj</code></strong>
+<ul>
+<li>重申<strong>密度矩阵 <code>P</code></strong> 的定义。它由系数矩阵
+<code>C</code> 构建。</li>
+</ul></li>
+<li><strong>推导
+<code>③</code>：<code>&lt;χμ | Σ[j] ... | χν&gt;</code></strong>
+<ul>
+<li>这一长串推导（从 <code>③</code> 开始，一直到
+<code>= Σ[αβ] Pαβ (...)</code>）是白板上最复杂的部分。</li>
+<li><strong>目标</strong>：计算 Fock 矩阵的双电子部分
+<code>Gμν = &lt;χμ | Σ[j] (2Ĵj - K̂j) | χν&gt;</code>。</li>
+<li><strong>步骤</strong>：
+<ol type="1">
+<li>将分子轨道 <code>|φj&gt;</code> 用原子轨道 <code>|χ&gt;</code>
+展开：<code>|φj&gt; = Σ[α] Cαj |χα&gt;</code>。</li>
+<li>将这个展开式代入 <code>Ĵj</code> 和 <code>K̂j</code>
+的积分定义中。</li>
+<li>这会产生涉及四个原子轨道基函数的积分，称为<strong>双电子积分
+(Two-Electron Integrals)</strong>，通常写作 <code>(μν|αβ)</code>。</li>
+<li>经过复杂的代数重排（将 <code>C</code> 和 <code>Σ[j]</code>
+重新组合），推导发现 <code>Gμν</code> 可以被写成：
+<code>Gμν = Σ[αβ] Pαβ * [ (μν|αβ) - 1/2 (μα|νβ) ]</code>
+<ul>
+<li><code>(μν|αβ)</code> 是库仑积分。</li>
+<li><code>(μα|νβ)</code> 是交换积分。</li>
+</ul></li>
+</ol></li>
+</ul></li>
+<li><strong><code>Fμν = Hμν^core + Σ[αβ] Pαβ (...)</code></strong>
+<ul>
+<li><strong>最终的 Fock 矩阵元公式</strong>。</li>
+<li><code>Fμν</code>（Fock 矩阵）=
+<code>Hμν^core</code>（核心哈密顿矩阵，只算一次）+
+<code>Gμν</code>（双电子排斥项）。</li>
+<li>关键在于 <code>Gμν</code> 是<strong>密度矩阵 <code>P</code>
+的线性函数</strong>。</li>
+<li>这完美地建立了 SCF 的循环关系：<code>C</code> → <code>P</code> →
+<code>F</code> → 求解 <code>F</code> 得到新的 <code>C</code>。</li>
+</ul></li>
+</ul>
+<h3 id="roothaan-hall-方程的求解问题">Roothaan-Hall 方程的求解问题</h3>
+<p>这部分转向了一个纯粹的数学（线性代数）问题：如何求解我们建立的矩阵方程。</p>
+<ul>
+<li><strong><code>S† F C = C ε</code> (笔误)</strong>
+<ul>
+<li>白板上划掉的 <code>S† F C = C ε</code> 及其旁边的推导
+<code>(S†F)† = ...</code>
+看起来像是一个错误的尝试或旁注，试图探索这个矩阵的厄米性
+(Hermiticity)。</li>
+<li><strong>正确的方程</strong>（在它下面）是
+<code>F C = S C ε</code>。</li>
+</ul></li>
+<li><strong><code>F C = S C ε</code> (Roothaan-Hall 方程)</strong>
+<ul>
+<li><strong>问题</strong>：这不是一个“标准本征值问题”
+(<code>A x = λ x</code>)，因为在等式右边多了一个<strong>重叠矩阵
+<code>S</code></strong>。<code>S</code> 不是单位矩阵
+<code>I</code>，因为原子轨道基组 <code>|χ&gt;</code>
+通常不是正交的。</li>
+<li><strong>术语</strong>：这被称为“<strong>广义本征值问题</strong>”。</li>
+</ul></li>
+<li><strong><code>S is positive definite</code> (S 是正定矩阵)</strong>
+<ul>
+<li>这是一个关键的数学性质。<code>S</code>
+是正定的，意味着它所有的本征值（<code>λi</code>）都大于零。</li>
+<li><strong>意义</strong>：因为 <code>S</code>
+是正定的，所以它保证是可逆的（<code>S⁻¹</code>
+存在），并且我们可以对它进行“开方”，即找到 <code>S^(1/2)</code> 和
+<code>S^(-1/2)</code>。</li>
+</ul></li>
+<li><strong><code>S = R† R</code> 或 <code>S = U† Λ U</code> (S
+的分解)</strong>
+<ul>
+<li>这是对 <code>S</code> 矩阵进行对角化或分解的标准方法。</li>
+<li><code>S = U† Λ U</code> 是<strong>谱分解</strong>：
+<ul>
+<li><code>U</code> 是 <code>S</code> 的本征向量矩阵。</li>
+<li><code>Λ</code> 是由 <code>S</code> 的本征值 <code>λi</code>
+组成的对角矩阵。</li>
+</ul></li>
+</ul></li>
+<li><strong><code>S^(1/2) = U† √Λ U</code> 和
+<code>S^(-1/2) = U† (1/√Λ) U</code></strong>
+<ul>
+<li>（右侧白板上有 <code>S^(-1/2)</code> 的定义）。</li>
+<li>这是利用 <code>S</code> 的分解来定义它的 <code>1/2</code> 次方和
+<code>-1/2</code> 次方矩阵。<code>√Λ</code> 就是简单地将对角矩阵
+<code>Λ</code> 上的每个元素 <code>λi</code> 都开方。</li>
+</ul></li>
+</ul>
+<h3 id="变换为标准本征值问题">变换为标准本征值问题</h3>
+<p>这部分展示了如何利用 <code>S^(-1/2)</code> 矩阵来“清除”方程中的
+<code>S</code>，将其变为标准本征值问题。这个过程称为<strong>正交化
+(Orthogonalization)</strong>。</p>
+<ol type="1">
+<li><strong>目标</strong>：将 <code>F C = S C ε</code> 变换为
+<code>F' C' = C' ε</code> 的形式。</li>
+<li><strong>定义新的系数矩阵 <code>C'</code></strong>：
+我们定义一组新的、在正交化基组下的系数 <code>C'</code>，它与原始系数
+<code>C</code> 的关系是： <code>C' = S^(1/2) C</code> （因此
+<code>C = S^(-1/2) C'</code>）</li>
+<li><strong>代入原方程</strong>： 将 <code>C = S^(-1/2) C'</code> 代入
+<code>F C = S C ε</code>：
+<code>F (S^(-1/2) C') = S (S^(-1/2) C') ε</code></li>
+<li><strong>两边左乘 <code>S^(-1/2)</code></strong>：
+<code>(S^(-1/2) F S^(-1/2)) C' = (S^(-1/2) S S^(-1/2)) C' ε</code></li>
+<li><strong>简化</strong>：
+<ul>
+<li><strong>右侧</strong>：如白板所示，<code>S^(-1/2) S S^(-1/2) = S^(-1/2) S^(1/2) S^(1/2) S^(-1/2) = I</code>（单位矩阵）。</li>
+<li><strong>左侧</strong>：我们定义一个新的、变换后的 Fock 矩阵
+<code>F'</code>：
+<strong><code>F' = S^(-1/2) F S^(-1/2)</code></strong></li>
+</ul></li>
+<li><strong>最终的标准本征值方程</strong>：
+<strong><code>F' C' = C' ε</code></strong></li>
+</ol>
+<h3 id="总结scf-循环的完整计算步骤">总结：SCF 循环的完整计算步骤</h3>
+<p>一个完整的 SCF 迭代步骤如下：</p>
+<ol type="1">
+<li><strong>猜测</strong> <code>C^(0)</code> (或
+<code>P^(0)</code>)。</li>
+<li><strong>构建 P</strong>：使用 <code>C^(k)</code> 计算密度矩阵
+<code>P^(k)</code>。</li>
+<li><strong>构建 F</strong>：使用 <code>P^(k)</code> 构建 Fock 矩阵
+<code>F^(k)</code>（如左侧推导所示）。</li>
+<li><strong>构建 F’</strong>：使用
+<code>S^(-1/2)</code>（它在计算开始前就算好了）和 <code>F^(k)</code>
+来构建变换后的 Fock 矩阵
+<strong><code>F'^(k) = S^(-1/2) F^(k) S^(-1/2)</code></strong>。</li>
+<li><strong>求解</strong>：<strong><code>F'^(k) C'^(k+1) = C'^(k+1) ε^(k+1)</code></strong>。这是一个标准本征值问题，计算机可以高效求解，得到新的
+<code>C'</code> 和 <code>ε</code>。</li>
+<li><strong>反变换</strong>：通过
+<strong><code>C^(k+1) = S^(-1/2) C'^(k+1)</code></strong>
+得到我们<strong>真正</strong>的系数矩阵 <code>C</code>。</li>
+<li><strong>检查收敛</strong>：用 <code>C^(k+1)</code> 计算新的
+<code>P^(k+1)</code>，与 <code>P^(k)</code> 比较。如果不收敛，返回第 2
+步。</li>
+</ol>
+<p>在数学上解决了如何在非正交基组下求解 HF 方程的实际计算问题。</p>
+<h2 id="iii">III:</h2>
+<p>两个主要部分：</p>
+<ol type="1">
+<li><strong>上部</strong>：完成 Roothaan-Hall 方程的数学求解变换。</li>
+<li><strong>下部</strong>：引入一个全新且至关重要的概念——<strong>Hartree-Fock
+(HF) 的总能量</strong>。</li>
+</ol>
+<h3 id="方程的最终求解形式">方程的最终求解形式</h3>
+<p>“标准本征值问题”变换的总结和补充。</p>
+<ul>
+<li><strong><code>S^(-1/2) = U† (1/√λ ... 0; 0 ... 1/λ_m) U</code></strong>
+<ul>
+<li>这是 <strong><code>S^(-1/2)</code>
+矩阵</strong>的明确计算方法，即通过对重叠矩阵 <code>S</code>
+进行“谱分解”：
+<ol type="1">
+<li>对角化 <code>S</code> 得到其本征向量矩阵 <code>U</code>
+和本征值对角矩阵 <code>Λ</code> (对角元为 <code>λ_i</code>)。</li>
+<li>计算 <code>Λ^(-1/2)</code>（即把每个 <code>λ_i</code> 替换为
+<code>1/√λ_i</code>）。</li>
+<li>重新组合 <code>U† Λ^(-1/2) U</code> 得到
+<code>S^(-1/2)</code>。</li>
+</ol></li>
+</ul></li>
+<li><strong><code>(blas, lapack)</code></strong>
+<ul>
+<li>这是一个非常实际的课堂笔记。<code>BLAS</code> (Basic Linear Algebra
+Subprograms) 和 <code>LAPACK</code> (Linear Algebra Package)
+是用于高性能科学计算（如矩阵对角化、求逆等）的<strong>黄金标准软件包</strong>。</li>
+<li>教授在这里的意思是：“这个矩阵运算（<code>S^(-1/2)</code>）我们手算不了，但计算机上的量子化学软件会调用
+<code>LAPACK</code> 库来高效地完成它。”</li>
+</ul></li>
+<li><strong><code>F' C' = C' ε</code></strong>
+<ul>
+<li><strong>最终方程</strong>。重申上一张白板的结论：我们已经成功地将广义本征值问题
+<code>F C = S C ε</code> 转换为了标准本征值问题
+<code>F' C' = C' ε</code>。</li>
+<li>这是计算机可以（通过 <code>LAPACK</code>）直接求解的。</li>
+</ul></li>
+<li><strong><code>F' = S^(-1/2) F S^(-1/2) = (F')†</code></strong>
+<ul>
+<li>这一行在确认一个重要的数学性质：<strong><code>F'</code> 矩阵也是厄米
+(Hermitian) 的</strong>。</li>
+<li><code>†</code> (dagger) 符号代表“厄米共轭”（转置并取复共轭）。</li>
+<li>因为 <code>F</code> 是厄米的 (<code>F† = F</code>)，<code>S</code>
+也是厄米的，所以 <code>F'</code>
+保证是厄米的。这确保了我们求解得到的轨道能量 <code>ε</code>
+必定是实数，这在物理上是必需的。</li>
+</ul></li>
+</ul>
+<h3 id="hartree-fock-hf-总能量">Hartree-Fock (HF) 总能量</h3>
+<p>这是本张白板的核心。在 SCF 迭代收敛后，我们得到了所有的轨道能量
+<code>ε_i</code>。那么，分子的<strong>总能量</strong> <code>E_HF</code>
+是多少？</p>
+<p><strong>一个常见的陷阱</strong>：你可能会认为总能量就是所有占据轨道的能量之和（<code>2 Σ ε_i</code>，因为每个轨道
+2 个电子）。<strong>白板明确指出：这是错误的！</strong></p>
+<ul>
+<li><p><strong><code>E_HF ≠ 2 Σ[i=1 to N/2] ε_i</code> (总能量 ≠
+轨道能量之和)</strong></p>
+<ul>
+<li><strong>为什么？</strong></li>
+<li>白板上的最后一行给出了答案。<strong>轨道能量
+<code>ε_i</code></strong> 的定义是：
+<code>ε_i = &lt;φ_i | f̂ | φ_i&gt; = ε_ii + Σ[j=1 to N/2] (2J_ij - K_ij)</code></li>
+<li><strong>物理含义</strong>：<code>ε_i</code> 不仅仅是电子
+<code>i</code> 的能量，它代表了将一个电子<strong>加入</strong>到轨道
+<code>i</code> 中所需要的能量。这个能量包括了：
+<ol type="1">
+<li><code>ε_ii</code>：电子 <code>i</code>
+自己的动能和它与<strong>所有原子核</strong>的吸引能。</li>
+<li><code>Σ[j] (2J_ij - K_ij)</code>：电子 <code>i</code>
+与<strong>所有其他</strong> <code>j</code>
+轨道电子的库仑排斥和交换作用。</li>
+</ol></li>
+<li><strong>双重计算问题</strong>：
+<ul>
+<li><code>ε_i</code> 包含了 <code>i</code> 与 <code>j</code>
+的排斥能。</li>
+<li><code>ε_j</code> 包含了 <code>j</code> 与 <code>i</code>
+的排斥能。</li>
+<li>如果你简单地将它们相加 <code>(ε_i + ε_j)</code>，你就把
+<code>i</code> 和 <code>j</code>
+之间的排斥能<strong>计算了两遍</strong>。</li>
+</ul></li>
+<li>因此，<code>2 Σ ε_i</code>
+会<strong>双倍计算</strong>所有的电子-电子排斥能，导致结果错误。</li>
+</ul></li>
+<li><p><strong>正确的 HF 总能量公式</strong>
+白板给出了两个等价的正确公式：</p>
+<ol type="1">
+<li><strong><code>E_HF = 2 Σ[i] ε_ii + Σ[i,j] (2J_ij - K_ij)</code></strong>
+(白板第一行)
+<ul>
+<li><code>2 Σ[i] ε_ii</code>：所有电子的动能 +
+电子-原子核吸引能（<code>ε_ii</code> 在这里是核心哈密顿积分
+<code>h_ii</code>）。</li>
+<li><code>Σ[i,j] (2J_ij - K_ij)</code>：所有电子对之间的排斥/交换能（<strong>只计算一次！</strong>）。</li>
+</ul></li>
+<li><strong><code>E_HF = Σ[i=1 to N/2] (ε_ii + ε_i)</code></strong>
+(白板中间行)
+<ul>
+<li>这是一个更巧妙、更简洁的公式。</li>
+<li>它将总能量表示为：对所有占据轨道 <code>i</code>
+求和，每一项是（<strong>核心哈密顿积分 <code>ε_ii</code></strong> +
+<strong>轨道能量 <code>ε_i</code></strong>）。</li>
+<li>这个公式通过只加一次 <code>ε_ii</code>（单电子项）和一次
+<code>ε_i</code>（包含单电子项和双电子项），巧妙地修正了双重计算问题，最终结果与公式
+1 完全等价。</li>
+</ul></li>
+</ol></li>
+</ul>
+<h3 id="总结">总结</h3>
+<p>从“如何求解”到“如何获取最终能量”的过渡。它展示了求解
+<code>F C = S C ε</code> 的实用计算方法，并着重强调了 HF 总能量
+<code>E_HF</code> 和轨道能量 <code>ε_i</code> 之间的关键区别。</p>
+<h2 id="iv">IV</h2>
+<p>它用一个清晰的<strong>流程图
+(Flowchart)</strong>，前面包含的所有复杂的数学公式和概念，总结成了一个完整的<strong>计算算法</strong>。</p>
+<p>这就是 <strong>Hartree-Fock 自洽场 (Self-Consistent Field,
+SCF)</strong> 迭代循环的<strong>标准计算流程</strong>。</p>
+<h3 id="scf-流程图详解">💡 SCF 流程图详解</h3>
+<p><img src="/imgs/5120/scf.jpg" alt="fusion"></p>
+<p>这个流程图展示了量子化学程序是如何一步步“猜”出正确答案的。</p>
+<h4 id="准备工作-循环开始前">1. 准备工作 (循环开始前)</h4>
+<ul>
+<li><strong><code>Calculate one, two-electron Integrals</code></strong>
+<ul>
+<li>这是计算的“第 0
+步”，在循环开始前<strong>只需要做一次</strong>。</li>
+<li>程序会计算所有需要的“积木块”：
+<ol type="1">
+<li><strong>单电子积分</strong>：重叠矩阵 <code>S</code>
+和核心哈密顿矩阵 <code>H_core</code>。</li>
+<li><strong>双电子积分</strong>：所有 <code>(μν|αβ)</code>
+形式的积分。这些积分数量极其庞大，是 HF 计算中最耗时的一步。</li>
+</ol></li>
+</ul></li>
+<li><strong><code>[ S -&gt; S^(-1/2) ]</code></strong>
+<ul>
+<li>利用第一步算出的 <code>S</code> 矩阵，计算出用于正交化的
+<code>S^(-1/2)</code> 矩阵。这也<strong>只需要做一次</strong>。</li>
+</ul></li>
+</ul>
+<h4 id="scf-迭代循环-the-loop">2. SCF 迭代循环 (The Loop)</h4>
+<ul>
+<li><strong><code>[ P_αβ ]</code> (起始点)</strong>
+<ul>
+<li><strong>第 1
+步：猜测</strong>。循环开始，我们必须提供一个初始的<strong>密度矩阵
+<code>P</code></strong>。</li>
+<li>白板上的 <code>P_αβ^ini = 0</code>
+是一个最简单的“零猜测”，实际程序通常会用更高级的猜测方法（如
+<code>H_core</code> 猜测）。</li>
+</ul></li>
+<li><strong><code>[ F_μν ]</code></strong>
+<ul>
+<li><strong>第 2 步：构建 Fock 矩阵</strong>。</li>
+<li>使用<strong>当前</strong>的密度矩阵
+<code>P_αβ</code>，根据我们在第二张白板上的公式
+<code>F = H_core + G(P)</code> 来构建<strong>当前</strong>的 Fock 矩阵
+<code>F</code>。</li>
+</ul></li>
+<li><strong><code>[ F' C' = C' ε ]</code></strong>
+<ul>
+<li><strong>第 3 步：求解 Roothaan-Hall 方程</strong>。</li>
+<li>正如第三张白板所示，我们不直接解 <code>F C = S C ε</code>。</li>
+<li>我们先进行变换：<strong><code>F' = S^(-1/2) F S^(-1/2)</code></strong>。</li>
+<li>然后求解这个“标准本征值问题”，得到新的<strong>轨道能量
+<code>ε</code></strong> 和<strong>变换后的系数
+<code>C'</code></strong>。</li>
+</ul></li>
+<li><strong><code>[ C = S^(-1/2) C' ]</code></strong>
+<ul>
+<li><strong>第 4 步：反变换</strong>。</li>
+<li>用 <code>S^(-1/2)</code> 矩阵将 <code>C'</code>
+转换回我们真正需要的、在原子轨道基组下的<strong>系数矩阵
+<code>C</code></strong>。</li>
+</ul></li>
+<li><strong><code>[ P_αβ^old ~ P_αβ^new ]</code> (决策点)</strong>
+<ul>
+<li><strong>第 5 步：检查自洽性 (Convergence Check)</strong>。</li>
+<li>使用第 4 步得到的<strong>新
+<code>C</code></strong>，计算出一个<strong>新的密度矩阵
+<code>P^new</code></strong>。</li>
+<li>比较这个 <code>P^new</code> 和我们在第 2 步中使用的
+<code>P^old</code>。</li>
+<li><strong><code>N</code> (No)：</strong> 如果 <code>P^new</code> 和
+<code>P^old</code> 差别很大（未收敛），则自洽尚未达成。
+<ul>
+<li><strong>循环</strong>：将 <code>P^new</code>
+作为<strong>下一次</strong>迭代的 <code>P</code>，<strong>返回第 2
+步</strong>（<code>[ F_μν ]</code>），用这个新的 <code>P</code>
+去构建新的 <code>F</code>。</li>
+</ul></li>
+<li><strong><code>Y</code> (Yes，未画出)：</strong> 如果
+<code>P^new</code> 和 <code>P^old</code>
+几乎完全相同（差值小于某个阈值，例如 10⁻⁸），则说明“自洽”达成！
+<ul>
+<li><strong>循环结束</strong>。</li>
+</ul></li>
+</ul></li>
+</ul>
+<h3 id="总结-1">总结</h3>
+<p>以上内容从“为什么”（HF 近似）到“是什么”（HF
+方程和矩阵）再到“怎么做”（SCF 流程图）。</p>
+<p>SCF 流程是所有基于 Hartree-Fock 方法（以及更高级的后 HF
+方法）的计算化学软件的核心算法。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/PHYS-5120/" rel="tag"># PHYS-5120</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2025/10/13/5054C6/" rel="prev" title="MSDM 5054 - Statistical Machine Learning-L6">
+      <i class="fa fa-chevron-left"></i> MSDM 5054 - Statistical Machine Learning-L6
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2025/10/24/5120c7-2/" rel="next" title="PHYS 5120 - Computational Energy Materials and Electronic Structure Simulations-W7-2">
+      PHYS 5120 - Computational Energy Materials and Electronic Structure Simulations-W7-2 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#i"><span class="nav-number">1.</span> <span class="nav-text">I:</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A0%B8%E5%BF%83%E6%A6%82%E5%BF%B5hartree-fock-hf-%E8%BF%91%E4%BC%BC"><span class="nav-number">1.1.</span> <span class="nav-text">核心概念：Hartree-Fock (HF)
+近似</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E7%AE%97%E7%AC%A6%E4%B8%8E%E6%96%B9%E7%A8%8B"><span class="nav-number">1.2.</span> <span class="nav-text">⬅基本算符与方程</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#hartree-fock-%E6%96%B9%E7%A8%8Bf-%CF%86i-%CE%B5i-%CF%86i"><span class="nav-number">1.2.1.</span> <span class="nav-text">1. Hartree-Fock
+方程：f̂ |φi&gt; &#x3D; εi |φi&gt;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#fock-%E7%AE%97%E7%AC%A6%E7%9A%84%E6%9E%84%E6%88%90f-h%E2%82%81r-%CF%83j-2jjr---kjr"><span class="nav-number">1.2.2.</span> <span class="nav-text">2. Fock
+算符的构成：f̂ &#x3D; ĥ₁(r) + Σ[j] (2Ĵj(r) - K̂j(r))</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#homo-lumo"><span class="nav-number">1.2.3.</span> <span class="nav-text">3. HOMO &#x2F; LUMO</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9F%A9%E9%98%B5%E5%8C%96-roothaan-hall-%E6%96%B9%E6%B3%95"><span class="nav-number">1.3.</span> <span class="nav-text">矩阵化 (Roothaan-Hall 方法)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#lcao-%E5%B1%95%E5%BC%80"><span class="nav-number">1.3.1.</span> <span class="nav-text">1. LCAO 展开</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#roothaan-hall-%E6%96%B9%E7%A8%8Bf-c-s-c-%CE%B5"><span class="nav-number">1.3.2.</span> <span class="nav-text">2. Roothaan-Hall
+方程：F C &#x3D; S C ε</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#fock-%E7%9F%A9%E9%98%B5%E5%85%83%E7%9A%84%E8%AE%A1%E7%AE%97f%CE%BC%CE%BD-h%CE%BC%CE%BDcore-g%CE%BC%CE%BD"><span class="nav-number">1.3.3.</span> <span class="nav-text">3. Fock
+矩阵元的计算：Fμν &#x3D; Hμν^core + Gμν</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AF%86%E5%BA%A6%E7%9F%A9%E9%98%B5%E4%B8%8E-scf-%E5%BE%AA%E7%8E%AF"><span class="nav-number">1.3.4.</span> <span class="nav-text">4. 密度矩阵与 SCF 循环</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%BB%E7%BB%93%E8%87%AA%E6%B4%BD%E5%9C%BA-scf-%E7%9A%84%E5%AE%8C%E6%95%B4%E6%B5%81%E7%A8%8B"><span class="nav-number">1.4.</span> <span class="nav-text">总结：自洽场 (SCF) 的完整流程</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ii"><span class="nav-number">2.</span> <span class="nav-text">II:</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#fock-%E7%9F%A9%E9%98%B5%E5%85%83%E7%9A%84%E6%9C%80%E7%BB%88%E5%BD%A2%E5%BC%8F"><span class="nav-number">2.1.</span> <span class="nav-text">Fock 矩阵元的最终形式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#roothaan-hall-%E6%96%B9%E7%A8%8B%E7%9A%84%E6%B1%82%E8%A7%A3%E9%97%AE%E9%A2%98"><span class="nav-number">2.2.</span> <span class="nav-text">Roothaan-Hall 方程的求解问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%98%E6%8D%A2%E4%B8%BA%E6%A0%87%E5%87%86%E6%9C%AC%E5%BE%81%E5%80%BC%E9%97%AE%E9%A2%98"><span class="nav-number">2.3.</span> <span class="nav-text">变换为标准本征值问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%BB%E7%BB%93scf-%E5%BE%AA%E7%8E%AF%E7%9A%84%E5%AE%8C%E6%95%B4%E8%AE%A1%E7%AE%97%E6%AD%A5%E9%AA%A4"><span class="nav-number">2.4.</span> <span class="nav-text">总结：SCF 循环的完整计算步骤</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#iii"><span class="nav-number">3.</span> <span class="nav-text">III:</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%B9%E7%A8%8B%E7%9A%84%E6%9C%80%E7%BB%88%E6%B1%82%E8%A7%A3%E5%BD%A2%E5%BC%8F"><span class="nav-number">3.1.</span> <span class="nav-text">方程的最终求解形式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#hartree-fock-hf-%E6%80%BB%E8%83%BD%E9%87%8F"><span class="nav-number">3.2.</span> <span class="nav-text">Hartree-Fock (HF) 总能量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">3.3.</span> <span class="nav-text">总结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#iv"><span class="nav-number">4.</span> <span class="nav-text">IV</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#scf-%E6%B5%81%E7%A8%8B%E5%9B%BE%E8%AF%A6%E8%A7%A3"><span class="nav-number">4.1.</span> <span class="nav-text">💡 SCF 流程图详解</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C-%E5%BE%AA%E7%8E%AF%E5%BC%80%E5%A7%8B%E5%89%8D"><span class="nav-number">4.1.1.</span> <span class="nav-text">1. 准备工作 (循环开始前)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#scf-%E8%BF%AD%E4%BB%A3%E5%BE%AA%E7%8E%AF-the-loop"><span class="nav-number">4.1.2.</span> <span class="nav-text">2. SCF 迭代循环 (The Loop)</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%BB%E7%BB%93-1"><span class="nav-number">4.2.</span> <span class="nav-text">总结</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">John Doe</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">24</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+          load: ['[tex]/mhchem'],
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+          packages: {'[+]': ['mhchem']},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+</body>
+</html>
