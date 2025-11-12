@@ -170,7 +170,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2025-11-12 21:00:00 / 修改时间：21:39:52" itemprop="dateCreated datePublished" datetime="2025-11-12T21:00:00+08:00">2025-11-12</time>
+              <time title="创建时间：2025-11-12 21:00:00 / 修改时间：21:44:14" itemprop="dateCreated datePublished" datetime="2025-11-12T21:00:00+08:00">2025-11-12</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -283,6 +283,85 @@ Debye）</td>
 </tr>
 </tbody>
 </table>
+<h1
+id="uni-mol2相关数据集及资源链接汇总表">Uni-Mol2相关数据集及资源链接汇总表</h1>
+<table>
+<colgroup>
+<col style="width: 9%" />
+<col style="width: 19%" />
+<col style="width: 31%" />
+<col style="width: 33%" />
+<col style="width: 6%" />
+</colgroup>
+<thead>
+<tr>
+<th>类别</th>
+<th>数据集/资源名称</th>
+<th>链接</th>
+<th>用途说明</th>
+<th>来源摘要编号</th>
+</tr>
+</thead>
+<tbody>
+</tbody>
+</table>
+<h2 id="一预训练数据集相关">一、预训练数据集相关</h2>
+<div class="line-block">预训练基础数据 | Uni-Mol1
+预训练配体数据（ligands.tar.gz） |
+https://bioos-hermite-beijing.tos-cn-beijing.volces.com/unimol_data/pre_train/ligands.tar.gz
+| Uni-Mol2 可复用的基础预训练数据，含分子3D构象信息 | 1 |<br />
+预训练扩展数据 | ZINC20 数据集文献参考（Uni-Mol2 用到） |
+https://pubs.acs.org/doi/10.1021/acs.jcim.0c00675 | Uni-Mol2
+预训练数据的核心来源之一（约1TB规模），需通过文献指引获取数据集 | 1
+|<br />
+数据加载代码 | Uni-Mol2 数据集加载代码（load_dataset） |
+https://github.com/deepmodeling/uni-mol/blob/main/unimol2/unimol2/tasks/unimol2.py
+| 适配Uni-Mol2数据集格式的核心代码，用于数据读取与预处理 | 1 |<br />
+项目基础代码 | Uni-Mol 项目主页（含基础数据入口） |
+https://github.com/deepmodeling/Uni-Mol |
+获取Uni-Mol系列（含Uni-Mol2）基础数据、预训练权重的核心入口 | 1、4
+|</div>
+<h2 id="二下游任务数据集qm9及衍生">二、下游任务数据集（QM9及衍生）</h2>
+<div class="line-block">QM9 原始数据 | QM9 分子结构数据（gdb9.tar.gz） |
+https://deepchemdata.s3-us-west-1.amazonaws.com/datasets/gdb9.tar.gz |
+含13.4万有机分子3D结构，用于量子化学性质预测任务 | 3 |<br />
+QM9 性质数据 | QM9 性质表格（qm9.csv） |
+https://deepchemdata.s3-us-west-1.amazonaws.com/datasets/qm9.csv |
+对应QM9分子的热力学、电子性质标签（如HOMO、LUMO、偶极矩等） | 3 |<br />
+QM9 加载代码 | deepchem QM9 数据集加载脚本 |
+https://github.com/deepchem/deepchem/blob/master/deepchem/molnet/load_function/qm9_datasets.py
+| 第三方（deepchem）实现的QM9数据加载代码，可辅助数据预处理 | 3 |<br />
+QM9 修正数据集 | curatedQM9 项目页（含13.3万修正分子） |
+https://moldis-group.github.io/curatedQM9/ |
+修正QM9中“未表征”分子的3D构象，含133660个有效分子，提供XYZ格式文件 | 6
+|</div>
+<h2 id="三uni-mol-docking-v2-相关衍生任务">三、Uni-Mol Docking V2
+相关（衍生任务）</h2>
+<div class="line-block">对接任务训练数据 | Uni-Mol Docking V2 训练数据集
+| https://zenodo.org/records/11191555 |
+用于配体-蛋白结合构象预测任务的训练/验证/测试数据 | 4 |<br />
+对接模型权重 | Uni-Mol Docking V2 预训练权重 |
+https://www.dropbox.com/scl/fi/sfhrtx1tjprce18wbvmdr/unimol_docking_v2_240517.pt?rlkey=5zg7bh150kcinalrqdhzmyyoo&amp;st=n6j0nt6c&amp;dl=0
+| 预训练完成的对接模型权重，可直接用于推理或微调 | 4 |<br />
+小分子预训练权重 | Uni-Mol 小分子基础预训练权重 |
+https://github.com/deepmodeling/Uni-Mol/releases/download/v0.1/mol_pre_no_h_220816.pt
+| Uni-Mol Docking V2 依赖的小分子编码器预训练权重 | 4 |<br />
+蛋白口袋预训练权重 | Uni-Mol 蛋白口袋基础预训练权重 |
+https://github.com/deepmodeling/Uni-Mol/releases/download/v0.1/pocket_pre_220816.pt
+| Uni-Mol Docking V2 依赖的蛋白口袋编码器预训练权重 | 4 |<br />
+对接微调数据集 | 蛋白-配体结合构象预测微调数据 |
+https://bioos-hermite-beijing.tos-cn-beijing.volces.com/unimol_data/finetune/protein_ligand_binding_pose_prediction.tar.gz
+| 用于微调对接模型的LMDB格式数据集（含训练/验证/测试集） | 4 |<br />
+对接模型项目页 | Uni-Mol Docking V2 代码与数据入口 |
+https://github.com/dptech-corp/uni-mol |
+获取对接模型完整代码、数据集更新及技术文档 | 5 |<br />
+对接在线服务 | Uni-Mol Docking V2 在线推理工具 |
+https://bohrium.dptech.com/apps/unimol_docking_v2 |
+无需本地部署，直接在线使用对接模型进行结合构象预测 | 5 |</div>
+<h2 id="四论文及核心参考">四、论文及核心参考</h2>
+<div class="line-block">Uni-Mol2 论文 | Uni-Mol2 官方论文（arXiv） |
+https://arxiv.org/abs/2406.14969v1 | Uni-Mol2
+模型设计、数据集构建及实验结果的核心参考 | 2 |</div>
 
       
     </div>
